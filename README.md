@@ -1,0 +1,2 @@
+# Inapp
+Inapplicable GUI algorithm

@@ -181,19 +181,19 @@ test_that("first.downpass works", {
 
     ## Testing tree 2
     for(node in 1:7) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass1_1[[2]][node+8], results1_inapp1[node])
     }
 
     ## Testing tree 2
     for(node in 1:8) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass1_2[[2]][node+9], results2_inapp1[node])
     }
     
     ## Testing tree 3
     for(node in 1:11) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass1_3_1[[2]][node+12], results3_1_inapp1[node])
         expect_equal(pass1_3_2[[2]][node+12], results3_2_inapp1[node])
         expect_equal(pass1_3_3[[2]][node+12], results3_3_inapp1[node])
@@ -223,19 +223,19 @@ test_that("first.uppass works", {
 
     ## Testing tree 2
     for(node in 1:7) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass2_1[[3]][node+8], results1_inapp2[node])
     }
 
     ## Testing tree 2
     for(node in 1:8) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass2_2[[3]][node+9], results2_inapp2[node])
     }
     
     ## Testing tree 3
     for(node in 1:11) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass2_3_1[[3]][node+12], results3_1_inapp2[node])
         expect_equal(pass2_3_2[[3]][node+12], results3_2_inapp2[node])
         expect_equal(pass2_3_3[[3]][node+12], results3_3_inapp2[node])
@@ -266,19 +266,19 @@ test_that("second.downpass works", {
 
     ## Testing tree 2
     for(node in 1:7) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass3_1[[4]][node+8], results1_inapp3[node])
     }
 
     ## Testing tree 2
     for(node in 1:8) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass3_2[[4]][node+9], results2_inapp3[node])
     }
     
     ## Testing tree 3
     for(node in 1:11) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass3_3_1[[4]][node+12], results3_1_inapp3[node])
         expect_equal(pass3_3_2[[4]][node+12], results3_2_inapp3[node])
         expect_equal(pass3_3_3[[4]][node+12], results3_3_inapp3[node])
@@ -309,19 +309,19 @@ test_that("second.uppass works", {
 
     ## Testing tree 2
     for(node in 1:7) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass4_1[[5]][node+8], results1_inapp4[node])
     }
 
     ## Testing tree 2
     for(node in 1:8) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass4_2[[5]][node+9], results2_inapp4[node])
     }
     
     ## Testing tree 3
     for(node in 1:11) {
-        cat(paste(node, " ", sep =""))
+        # cat(paste(node, " ", sep =""))
         expect_equal(pass4_3_1[[5]][node+12], results3_1_inapp4[node])
         expect_equal(pass4_3_2[[5]][node+12], results3_2_inapp4[node])
         expect_equal(pass4_3_3[[5]][node+12], results3_3_inapp4[node])

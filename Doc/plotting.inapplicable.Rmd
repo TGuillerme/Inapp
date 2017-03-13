@@ -1,0 +1,71 @@
+---
+title: "Plotting inapplicable ancestral states"
+author: "Thomas Guillerme"
+date: "`r Sys.Date()`"
+output:
+    rmarkdown::html_vignette:
+vignette: >
+  %\VignetteIndexEntry{Plotting inapplicable ancestral states}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+Before starting
+===============
+
+You'll need `ape` and `RCurl` (for downloading the code) installed. You can install everything by copy/pasting the following (the code checks what's needed).
+
+```{r, eval = FALSE}
+if(!require(ape)) install.packages("ape")
+if(!require(devtools)) install.packages("devtools")
+```
+
+After, you need to load all the code that's on the `morphy-developement` repo:
+
+```{r}
+source_url("https://raw.githubusercontent.com/mbrazeau/Morphy/development/R/InApp/plot.algorithm.R")
+```
+<!-- # source("~/Packaging/Morphy/R/plot.algorithm.R") -->
+
+Plotting the algorithm results
+===============
+
+The algorithm is pretty easy, it intakes as arguments:
+ * `tree` the tree in `phylo` format
+ * `character` the character either as a list, a vector of states or a `character`
+ * `passes` the passes to plot (for example `passes = c(1,4)`) only plots the first downpass and the second uppass (it does all the passes though, it's just visual).
+
+Otherwise it has couple of other graphical options but we don't care for now.
+
+Here it goes; plotting a silly character on a random tree with 5 taxa (`rtree(5)`) and only the first down and uppass (displayed as `x: y` where `x` is the pass number and `y` the nodal state for that pass:
+
+```{r, fig.width=6, fig.height=6}
+set.seed(1) # for repeatability
+tree_5t <- rtree(5)
+plot.inapplicable.algorithm(tree_5t, "11111", passes = c(1,2))
+```
+
+> Note that you can use the `stree` function (check `?stree`) that allows to generate less random trees (balanced, or ladderised left/right).
+
+For the tree, you can also import your own trees using the `read.tree` or `read.nexus` from `ape` or just by typing the tree manually. Here's the balance 12 tip tree with the classical Maddison problem:
+
+```{r, fig.width=6, fig.height=10}
+tree_12t <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+plot.inapplicable.algorithm(tree_12t, "1100----1100")
+```
+
+character argument
+----
+
+The character argument can intake the character as in morphy-like (the easiest) with `-` being inapplicable (of course!) and `?` being all states present. The code transforms the character string (`123-?`) into the normal characters and attributes them to the taxa in the order of appearance:
+
+```{r, fig.width=6, fig.height=6}
+plot.inapplicable.algorithm(tree_5t, "123-?")
+```
+
+But you can also input the character as properly read by the code (a `list`) with `-` being `-1` and `?` being all states:
+
+```{r, fig.width=6, fig.height=6}
+character <- list(c(1),c(2),c(3),c(-1), c(-1,1,2,3))
+plot.inapplicable.algorithm(tree_5t, character, passes = c(1,2))
+```

@@ -1,0 +1,393 @@
+	****************************************
+
+	  Welcome to the Morphy Test Interface
+
+	****************************************
+
+
+Missing data includes lowest order bit (1...1111).
+
+argv[0] == /Users/TGuillerme/Xcode/Morphy-dhtyrombwhsciqcfglwxmrvwnmbc/Build/Products/Debug/Morphy...
+
+Testing matrices:
+No symbols list supplied. Attempting to estimate state number from input matrix.
+Using the joint ctypes: 1
+The newick string processed: UNTITLED = [&R] ((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));
+Newick string is rooted
+
+======
+Enter the optimisation
+=====
+Node: 18
+1st Down: left = c(2)
+1st Down: right = c(3)
+1st Down: node = c(2,3)
+
+Node: 17
+1st Down: left = c(2,3)
+1st Down: right = c(-)
+1st Down: node = c(-,2,3)
+
+Node: 16
+1st Down: left = c(-,2,3)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 15
+1st Down: left = c(-)
+1st Down: right = c(1)
+1st Down: node = c(-,1)
+
+Node: 14
+1st Down: left = c(-,1)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 23
+1st Down: left = c(3)
+1st Down: right = c(2)
+1st Down: node = c(2,3)
+
+Node: 22
+1st Down: left = c(0)
+1st Down: right = c(2,3)
+1st Down: node = c(0,2,3)
+
+Node: 21
+1st Down: left = c(-)
+1st Down: right = c(0,2,3)
+1st Down: node = c(-,0,2,3)
+
+Node: 20
+1st Down: left = c(-)
+1st Down: right = c(-,0,2,3)
+1st Down: node = c(-)
+
+Node: 19
+1st Down: left = c(-)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 13
+1st Down: left = c(-)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+
+Here's the length after the downpass: 0
+BEGIN TEST tui_check_broken_tree()
+== PASS == tui_check_broken_tree(): input tree connections verified OK
+
+END broken tree test
+
+Node: 13
+1st Up: ancestor = c(-)
+1st Up: left = c(-)
+1st Up: right = c(-)
+1st Up: node = c(-)
+
+Node: 14
+1st Up: ancestor = c(-)
+1st Up: left = c(-,1)
+1st Up: right = c(-)
+1st Up: node = c(-)
+
+Node: 15
+1st Up: ancestor = c(-)
+1st Up: left = c(-)
+1st Up: right = c(1)
+1st Up: node = c(-)
+
+Node: 16
+1st Up: ancestor = c(-)
+1st Up: left = c(-,2,3)
+1st Up: right = c(-)
+1st Up: node = c(-)
+
+Node: 17
+1st Up: ancestor = c(-)
+1st Up: left = c(2,3)
+1st Up: right = c(-)
+1st Up: node = c(-)
+
+Node: 18
+1st Up: ancestor = c(-)
+1st Up: left = c(2)
+1st Up: right = c(3)
+1st Up: node = c(2,3)
+
+Node: 18
+2nd Down: left = c(2)
+2nd Down: right = c(3)
+2nd Down: node = c(2,3)
+
+Node: 17
+2nd Down: left = c(2,3)
+2nd Down: right = c(-)
+2nd Down: node = c(-)
+
+Node: 16
+2nd Down: left = c(-)
+2nd Down: right = c(-)
+2nd Down: node = c(-)
+
+Node: 15
+2nd Down: left = c(-)
+2nd Down: right = c(1)
+2nd Down: node = c(-)
+
+Node: 14
+2nd Down: left = c(-)
+2nd Down: right = c(-)
+2nd Down: node = c(-)
+
+Node: 19
+1st Up: ancestor = c(-)
+1st Up: left = c(-)
+1st Up: right = c(-)
+1st Up: node = c(-)
+
+Node: 20
+1st Up: ancestor = c(-)
+1st Up: left = c(-)
+1st Up: right = c(-,0,2,3)
+1st Up: node = c(-)
+
+Node: 21
+1st Up: ancestor = c(-)
+1st Up: left = c(-)
+1st Up: right = c(0,2,3)
+1st Up: node = c(-)
+
+Node: 22
+1st Up: ancestor = c(-)
+1st Up: left = c(0)
+1st Up: right = c(2,3)
+1st Up: node = c(0,2,3)
+
+Node: 23
+1st Up: ancestor = c(0,2,3)
+1st Up: left = c(3)
+1st Up: right = c(2)
+1st Up: node = c(2,3)
+
+Node: 23
+2nd Down: left = c(3)
+2nd Down: right = c(2)
+2nd Down: node = c(2,3)
+
+Node: 22
+2nd Down: left = c(0)
+2nd Down: right = c(2,3)
+2nd Down: node = c(0,2,3)
+
+Node: 21
+2nd Down: left = c(-)
+2nd Down: right = c(0,2,3)
+2nd Down: node = c(-)
+
+Node: 20
+2nd Down: left = c(-)
+2nd Down: right = c(-)
+2nd Down: node = c(-)
+
+Node: 19
+2nd Down: left = c(-)
+2nd Down: right = c(-)
+2nd Down: node = c(-)
+
+Node: 13
+2nd Down: left = c(-)
+2nd Down: right = c(-)
+2nd Down: node = c(-)
+
+Node: 13
+2nd Up: ancestor = c(-)
+2nd Up: left = c(-)
+2nd Up: right = c(-)
+2nd Up: node = c(-)
+
+Node: 14
+2nd Up: ancestor = c(-)
+2nd Up: left = c(-)
+2nd Up: right = c(-)
+2nd Up: node = c(-)
+
+Node: 15
+2nd Up: ancestor = c(-)
+2nd Up: left = c(-)
+2nd Up: right = c(1)
+2nd Up: node = c(-)
+
+Node: 16
+2nd Up: ancestor = c(-)
+2nd Up: left = c(-)
+2nd Up: right = c(-)
+2nd Up: node = c(-)
+
+Node: 17
+2nd Up: ancestor = c(-)
+2nd Up: left = c(2,3)
+2nd Up: right = c(-)
+2nd Up: node = c(-)
+
+Node: 18
+2nd Up: ancestor = c(-)
+2nd Up: left = c(2)
+2nd Up: right = c(3)
+2nd Up: node = c(2,3)
+
+Node: 19
+2nd Up: ancestor = c(-)
+2nd Up: left = c(-)
+2nd Up: right = c(-)
+2nd Up: node = c(-)
+
+Node: 20
+2nd Up: ancestor = c(-)
+2nd Up: left = c(-)
+2nd Up: right = c(-)
+2nd Up: node = c(-)
+
+Node: 21
+2nd Up: ancestor = c(-)
+2nd Up: left = c(-)
+2nd Up: right = c(0,2,3)
+2nd Up: node = c(-)
+
+Node: 22
+2nd Up: ancestor = c(-)
+2nd Up: left = c(0)
+2nd Up: right = c(2,3)
+2nd Up: node = c(0,2,3)
+
+Node: 23
+2nd Up: ancestor = c(0,2,3)
+2nd Up: left = c(3)
+2nd Up: right = c(2)
+2nd Up: node = c(0,2,3)
+
+
+
+
+
+
+
+
+
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(1)
+1st Down: right = c(-)
+1st Down: node = c(-,1)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(-,1)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(3)
+1st Down: right = c(-)
+1st Down: node = c(-,3)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(2)
+1st Down: node = c(-,2)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(2,3)
+1st Down: node = c(-,2,3)
+
+Node: 
+1st Down: left = c(-,1)
+1st Down: right = c(-,2,3)
+1st Down: node = c(-,1,2,3)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(-,1)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(-,0,2,3)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(0,2,3)
+1st Down: right = c(-)
+1st Down: node = c(-,0,2,3)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(-)
+1st Down: node = c(-)
+
+Node: 
+1st Down: left = c(2,3)
+1st Down: right = c(-)
+1st Down: node = c(-,2,3)
+
+Node: 
+1st Down: left = c(-)
+1st Down: right = c(0)
+1st Down: node = c(-,0)
+
+Node: 
+1st Down: left = c(2)
+1st Down: right = c(-,0)
+1st Down: node = c(0,2)
+
+Node: 
+1st Down: left = c(-,0)
+1st Down: right = c(3)
+1st Down: node = c(0,3)
+
+
+Here's the length after the uppass: 2
+======
+Exit the optimisation
+=====
+===================
+ Expected:   2
+ Calculated: 2
+===================
+
+SUMMARY:
+Test of all topologies for matrix 23--1----032; concluded
+All tests PASSED
+
+(lldb) 

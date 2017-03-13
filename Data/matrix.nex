@@ -1,0 +1,19 @@
+#NEXUS
+[Data written by write.nexus.data.R, Tue Feb  7 10:35:43 2017]
+BEGIN DATA;
+  DIMENSIONS NTAX=10 NCHAR=5;
+  FORMAT DATATYPE=DNA MISSING=? GAP=- INTERLEAVE=NO;
+  MATRIX
+    t5       12300
+    t6       12300
+    t8       12300
+    t4       12300
+    t10      12300
+    t2       12300
+    t1       12300
+    t3       12300
+    t9       12310
+    t7       12310
+  ;
+END;
+

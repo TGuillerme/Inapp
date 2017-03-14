@@ -18,7 +18,7 @@ shinyUI(fluidPage(
           conditionalPanel(
             condition = "input.tree == 2",
               textInput("newick_tree", label = h5("Enter a newick tree:"), value = "((a,b),(c,d));"),
-              helpText("Note: make sure the number of opening and closing brackets match and that no commas (',') or the semi-colon (';') was omitted."),
+              helpText("Note: make sure the number of opening and closing brackets match and that no commas (',') or the semi-colon (';') was omitted.")
           ),
           conditionalPanel(
             condition = "input.tree == 3",

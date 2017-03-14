@@ -338,7 +338,7 @@ first.uppass <- function(states_matrix, tree) {
         desc_anc <- desc.anc(node, tree)
         right <- states_matrix$Dp1[desc_anc[1]][[1]] # The node's right descendant
         left <- states_matrix$Dp1[desc_anc[2]][[1]] # The node's left descendant
-        ancestor <- states_matrix$Dp1[desc_anc[3]][[1]] # The node's ancestor
+        ancestor <- states_matrix$Up1[desc_anc[3]][[1]] # The node's ancestor
 
         if(any(curr_node == -1)) {
             ## If any of the states is inapplicable...

@@ -129,6 +129,7 @@ character3_2 <- "1---1111---1"
 character3_3 <- "1100----0011"
 character3_4 <- "23--1----032"
 character3_5 <- "01---1010101"
+character3_6 <- "210--100--21"
 
 context("fitch.downpass")
 test_that("fitch.downpass works", {
@@ -139,6 +140,7 @@ test_that("fitch.downpass works", {
     # results3_3_fitch1 <- list(c(),c(),c(),c(),c(),c(),c(),c(),c(),c(),c())
     # results3_4_fitch1 <- list(c(),c(),c(),c(),c(),c(),c(),c(),c(),c(),c())
     # results3_5_fitch1 <- list(c(),c(),c(),c(),c(),c(),c(),c(),c(),c(),c())
+    # results3_6_fitch1 <- list(c(),c(),c(),c(),c(),c(),c(),c(),c(),c(),c())
 })
 
 context("fitch.uppass")
@@ -150,6 +152,7 @@ test_that("fitch.uppass works", {
     # results3_3_fitch2 <- list(c(),c(),c(),c(),c(),c(),c(),c(),c(),c(),c())
     # results3_4_fitch2 <- list(c(),c(),c(),c(),c(),c(),c(),c(),c(),c(),c())
     # results3_5_fitch2 <- list(c(),c(),c(),c(),c(),c(),c(),c(),c(),c(),c())
+    # results3_6_fitch2 <- list(c(),c(),c(),c(),c(),c(),c(),c(),c(),c(),c())
 })
 
 ## Making the matrix
@@ -160,6 +163,7 @@ matrix3_2 <- make.states.matrix(tree3, character3_2)
 matrix3_3 <- make.states.matrix(tree3, character3_3)
 matrix3_4 <- make.states.matrix(tree3, character3_4)
 matrix3_5 <- make.states.matrix(tree3, character3_5)
+# matrix3_6 <- make.states.matrix(tree3, character3_6)
 
 ## Running the pass
 pass1_1 <- first.downpass(matrix1, tree1)
@@ -169,6 +173,8 @@ pass1_3_2 <- first.downpass(matrix3_2, tree3)
 pass1_3_3 <- first.downpass(matrix3_3, tree3)
 pass1_3_4 <- first.downpass(matrix3_4, tree3)
 pass1_3_5 <- first.downpass(matrix3_5, tree3)
+# pass1_3_6 <- first.downpass(matrix3_6, tree3)
+
 
 
 context("first.downpass")

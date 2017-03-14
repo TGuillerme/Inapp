@@ -1,5 +1,6 @@
 source("../plot.algorithm.R")
 library(testthat)
+library(ape)
 
 ## convert.char
 context("convert.char")
@@ -20,10 +21,11 @@ test_that("convert.char works", {
 
     ## Right conversion
     expect_true(all(mapply(function(X,Y) {all(X == Y)}, convert.char(list_out), list_out)))
-    expect_true(unlist(convert.char("01-?")[1]) == 0)
-    expect_true(unlist(convert.char("01-?")[2]) == 1)
-    expect_true(unlist(convert.char("01-?")[3]) == -1)
-    expect_true(all(unlist(convert.char("01-?")[4]) == c(-1,0,1)))
+    expect_warning(test <- convert.char("01-?")) # Warning is some weird NA management by testthat
+    expect_true(unlist(test[1]) == 0)
+    expect_true(unlist(test[2]) == 1)
+    expect_true(unlist(test[3]) == -1)
+    expect_true(all(unlist(test[4]) == c(-1,0,1)))
 })
 
 context("make.states.matrix")
@@ -36,7 +38,7 @@ test_that("make.states.matrix works", {
     expect_error(make.states.matrix(tree, 1, inapplicable = NULL))
 
     ## Right output style
-    matrix <- make.states.matrix(tree, character)
+    expect_warning(matrix <- make.states.matrix(tree, character))  # Warning is some weird NA management by testthat
     expect_is(matrix, "list")
     expect_equal(unique(unlist(lapply(matrix, class))), "list")
     expect_equal(unique(unlist(lapply(matrix, length))), 7)
@@ -44,9 +46,9 @@ test_that("make.states.matrix works", {
     expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2"))
 
     ## Right output values
-    expect_equal(unlist(make.states.matrix(tree, character)[[1]]), c(0,1,-1,-1,0,1))
-    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1))
-    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2)[[1]]), c(0,1,2,0,1,2))
+    expect_warning(expect_equal(unlist(make.states.matrix(tree, character)[[1]]), c(0,1,-1,-1,0,1)))  # Warning is some weird NA management by testthat
+    expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1)))  # Warning is some weird NA management by testthat
+    expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2)[[1]]), c(0,1,2,0,1,2)))  # Warning is some weird NA management by testthat
 })
 
 context("desc.anc")

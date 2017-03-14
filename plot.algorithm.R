@@ -460,14 +460,17 @@ second.uppass <- function(states_matrix, tree) {
         if(any(curr_node != -1)) { # If any state in the previous pass is not inapplicable
             if(any(ancestor != -1)) { # If any state in the ancestor is not inapplicable
                 common_anc_node <- get.common(ancestor, curr_node)
-                if(!is.null(common_anc_node)){ # If this there is a node in common
-                 # && any(common_anc_node %in% ancestor)) { # If there is a common state between the ancestor and the previous node state and that this commonality is equal to any of the ancestor state.
+                if(!is.null(common_anc_node) && length(common_anc_node) == length(ancestor) && all(common_anc_node == ancestor) ){ # If there is a common state between the ancestor and the previous node state and that this commonality is equal to any of the ancestor state.
                     states_matrix$Up2[[node]] <- common_anc_node
                 } else { # If the common state between the ancestor and the final is not the ancestor
-                    if(!is.null(get.common(left, right))) { # If there is a state in common between left and right
-                        states_matrix$Up2[[node]] <- get.union.incl(common_anc_node, get.common(ancestor, get.union.incl(left, right)))
-                                                    #get.union.incl(common_anc_node, get.union.incl(ancestor, get.common(left, right)))
-
+                    common_left_right <- get.common(left, right)
+                    if(!is.null(common_left_right)) { # If there is a state in common between left and right
+                        long_union <- get.union.incl(common_anc_node, get.common(ancestor, get.union.incl(left, right)))
+                        if(!is.null(long_union)) {
+                            states_matrix$Up2[[node]] <- long_union
+                        } else {
+                            states_matrix$Up2[[node]] <- common_left_right
+                        }
                     } else { # If there is no state in common between left and right
                         union_desc <- get.union.incl(left, right)
                         if(any(union_desc == -1)) { # If the union of left and right has the inapplicable character

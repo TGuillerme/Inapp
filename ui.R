@@ -12,13 +12,13 @@ shinyUI(fluidPage(
             condition = "input.tree == 1",
               selectInput("tree_type", label = "Tree topology type", choices = list("Random", "Balanced", "Left", "Right", "Left-Right"), selected = "Random"),
               sliderInput("n_taxa", label = "Number of taxa:", min = 3, max = 100, value = 12),
-              helpText("Note: if the tree type 'Balanced', the number of taxa must be a power of 2 (2,4,8, ...); if the tree type is 'Left-Right' the number of taxa must be even. In both cases, if the number of taxa does not match, a random tree is used instead."),
+              helpText("If the tree type 'Balanced', the number of taxa must be a power of 2 (2,4,8, ...); if the tree type is 'Left-Right' the number of taxa must be even. In both cases, if the number of taxa does not match, a random tree is used instead."),
               checkboxInput("showtiplabels", label = "Show tip labels", value = FALSE)
           ),
           conditionalPanel(
             condition = "input.tree == 2",
               textInput("newick_tree", label = h5("Enter a newick tree:"), value = "((a,b),(c,d));"),
-              helpText("Note: make sure the number of opening and closing brackets match and that no commas (',') or the semi-colon (';') was omitted.")
+              helpText("Make sure the number of opening and closing brackets match and that no commas (',') or the semi-colon (';') was omitted.")
           ),
           conditionalPanel(
             condition = "input.tree == 3",
@@ -32,7 +32,7 @@ shinyUI(fluidPage(
           conditionalPanel(
             condition = "input.character == 2",
               textInput("character_string", label = h5("Enter a character string:"), value = "1?2-"),
-              helpText("Note: the number of characters must match the size of the tree! Accepted states are any values from 0 to 9, - for the inapplicable token and ? for all states (missing data).")
+              helpText("The number of characters must match the size of the tree! Accepted states are any values from 0 to 9, - for the inapplicable token and ? for all states (missing data).")
           ),
           conditionalPanel(
             condition = "input.character == 3",
@@ -56,12 +56,22 @@ shinyUI(fluidPage(
               checkboxGroupInput("showPassFitch", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2), selected = c(1,2)),
               helpText("Tick the passes to be displayed on the nodes")
           ),
+
+          ## Add a count step interface
+
           hr(),
           actionButton("refresh", label = "Refresh")
         )
+
+
+       ## Output
+       ## export matrix? 
+       ## export tree? 
     )
   ),
   
+
+
   fluidRow(
     ## Plots the algorithm results
     # size <- uiOutput("plot_size"),

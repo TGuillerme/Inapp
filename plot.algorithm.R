@@ -206,6 +206,7 @@ fitch.downpass <- function(states_matrix, tree) {
         } else {
             ## Else set it to be the union of the descendants
             states_matrix$Dp1[[node]] <- get.union.incl(left, right)
+            ##@@@ COUNT A STEP HERE
         }
     }
 
@@ -226,15 +227,18 @@ fitch.uppass <- function(states_matrix, tree) {
     ## Transferring the characters in the right matrix column
     states_matrix$Up1 <- states_matrix$Char
 
+    ## Set up the root
+    states_matrix$Up1[[ape::Ntip(tree)+1]] <- states_matrix$Dp1[[ape::Ntip(tree)+1]]
+
     ## For each node from the root
     for(node in (ape::Ntip(tree)+2:ape::Nnode(tree))) { ## Start past the root (+2)
 
-        curr_node <- states_matrix$Dp1[[node]] # The current node
+        curr_node <- states_matrix$Dp1[[node]] # The current node (i.e. prelim)
         ## Select the descendants and ancestors
         desc_anc <- desc.anc(node, tree)
         right <- states_matrix$Dp1[desc_anc[1]][[1]] # The node's right descendant
         left <- states_matrix$Dp1[desc_anc[2]][[1]] # The node's left descendant
-        ancestor <- states_matrix$Dp1[desc_anc[3]][[1]] # The node's ancestor
+        ancestor <- states_matrix$Up1[desc_anc[3]][[1]] # The node's ancestor
 
         ## Get the states in common between the downpass and the ancestor
         common_anc <- get.common(ancestor, curr_node)
@@ -245,7 +249,7 @@ fitch.uppass <- function(states_matrix, tree) {
             states_matrix$Up1[[node]] <- common_anc
         } else {
             ## Get the states in common between the descendants
-            common_desc <-get.common(left, right)
+            common_desc <- get.common(left, right)
             if(!is.null(common_desc)) {
                 ## If there is a state in common, set the final to be the union of the prelim and the common state between the ancestor and the union of the descendants
                 states_matrix$Up1[[node]] <- get.union.incl(curr_node, get.common(ancestor, get.union.incl(left, right)))
@@ -483,9 +487,11 @@ second.uppass <- function(states_matrix, tree) {
                         } else { # If the union of left and right has no inapplicable character
                             union_node_anc <- get.union.incl(curr_node, ancestor)
                             states_matrix$Up2[[node]] <- union_node_anc
+                            options(warn = -1) ## Silence warnings for the following comparisons
                             if(all(union_node_anc == ancestor)) { # If the state in common between the node and the ancestor is the ancestor
                                 states_matrix$Up2[[node]] <- get.common(ancestor, states_matrix$Up2[[node]])
                             }
+                            options(warn = 0) ## Re-enable warnings
                         }
                     }
                 }
@@ -514,6 +520,7 @@ second.uppass <- function(states_matrix, tree) {
 #' @param tree \code{phylo}, a tree
 #' @param character \code{character}, a vector of character states
 #' @param passes \code{numeric}, the number of passes in the tree; from \code{1} to \code{4} (default)
+#' @param inapplicable \code{NULL}, \code{1}, \code{2} for respectively treat inapplicables as -, ? or n
 #' 
 #' @author Thomas Guillerme
 

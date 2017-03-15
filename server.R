@@ -148,7 +148,10 @@ shinyServer(
             ## Generate a random character
             if(input$character == 1) {
                 character <- paste(sample(c("0", "1", "2", "-", "?"), ape::Ntip(tree), prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
-                character[sample(1:length(character), 3)] <- "-"
+                ## Adding at least three inapplicable tokens (if there's at least 5 tips)
+                if(ape::Ntip(tree) >= 5) {
+                    character[sample(1:length(character), 3)] <- "-"
+                }
             }
 
             ## Character input as a character string

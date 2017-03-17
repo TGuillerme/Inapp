@@ -57,7 +57,8 @@ shinyUI(fluidPage(
               helpText("Tick the passes to be displayed on the nodes")
           ),
 
-          ## Add a count step interface
+          ## Add a count step interface - always count homoplasies + option where are the homoplasies and/or where are the activations
+          ## Add an ACCTRAN DELTRAN button for showing the transformations
 
           hr(),
           actionButton("refresh", label = "Refresh")

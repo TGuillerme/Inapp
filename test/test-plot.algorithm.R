@@ -41,9 +41,9 @@ test_that("make.states.matrix works", {
     expect_warning(matrix <- make.states.matrix(tree, character))  # Warning is some weird NA management by testthat
     expect_is(matrix, "list")
     expect_equal(unique(unlist(lapply(matrix, class))), "list")
-    expect_equal(unique(unlist(lapply(matrix, length))), 7)
-    expect_equal(length(matrix), 5)
-    expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2"))
+    expect_equal(unique(unlist(lapply(matrix, length))), c(7,4))
+    expect_equal(length(matrix), 6)
+    expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker"))
 
     ## Right output values
     expect_warning(expect_equal(unlist(make.states.matrix(tree, character)[[1]]), c(0,1,-1,-1,0,1)))  # Warning is some weird NA management by testthat
@@ -113,8 +113,8 @@ test_that("get.union.excl works", {
     expect_null(get.union.excl(c(1,1,1,1),1))
     expect_equal(get.union.excl(c(1,2,3,4),1), c(2,3,4))
     expect_equal(get.union.excl(c(4,2,5,1),c(2,1)), c(4,5))
-    expect_null(get.union.excl(2,1))
-    expect_null(get.union.excl(1,2))
+    expect_equal(get.union.excl(2,1), c(1,2))
+    expect_equal(get.union.excl(1,2), c(1,2))
 })
 
 ## Trees for testing
@@ -490,13 +490,62 @@ test_that("second.uppass works", {
     }
 })
 
+
+context("correct step counting")
+test_that("get.length works", {
+    ## Errors
+    expect_error(get.length(1))
+
+    ## Creating a dummy matrix
+    states_matrix <- make.states.matrix(rtree(8), "12345678")
+    states_matrix$tracker[[1]][[2]] <- c(0,1)
+    states_matrix$tracker[[1]][[3]] <- c(-1) 
+    states_matrix$tracker[[1]][[4]] <- c(-1) 
+    states_matrix$tracker[[2]][[1]] <- c(1) 
+    states_matrix$tracker[[2]][[3]] <- c(3) 
+    states_matrix$tracker[[4]][[5]] <- c(0,2) 
+
+    expect_is(get.length(states_matrix), "numeric")
+    expect_equal(get.length(states_matrix), 0)
+})
+
+test_that("right counting", {
+    ## Tree
+    tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+    ## Characters
+    character1 <- "23--1??--032"
+    character2 <- "1---1111---1"
+    character3 <- "1100----0011"
+    character4 <- "23--1----032"
+    character5 <- "01---1010101"
+    character6 <- "210--100--21"
+
+    ## Run algorithm
+    expect_warning(matrix1 <- inapplicable.algorithm(tree, character1, passes = 4, method = "Inapplicable", inapplicable = NULL))
+    matrix2 <- inapplicable.algorithm(tree, character2, passes = 4, method = "Inapplicable", inapplicable = NULL)
+    matrix3 <- inapplicable.algorithm(tree, character3, passes = 4, method = "Inapplicable", inapplicable = NULL)
+    matrix4 <- inapplicable.algorithm(tree, character4, passes = 4, method = "Inapplicable", inapplicable = NULL)
+    matrix5 <- inapplicable.algorithm(tree, character5, passes = 4, method = "Inapplicable", inapplicable = NULL)
+    expect_warning(matrix6 <- inapplicable.algorithm(tree, character6, passes = 4, method = "Inapplicable", inapplicable = NULL))
+
+    ## Test the output
+    expect_equal(get.length(matrix1), 2)
+    expect_equal(get.length(matrix2), 2)
+    expect_equal(get.length(matrix3), 2)
+    expect_equal(get.length(matrix4), 2)
+    expect_equal(get.length(matrix5), 4)
+    expect_equal(get.length(matrix6), 3)
+
+
+})
+
 context("inapplicable.algorithm")
 test_that("inapplicable.algorithm works", {
     ## Test the three cases
 })
 
-context("plot.convert.statem")
-test_that("plot.convert.statem works", {
+context("plot.convert.state")
+test_that("plot.convert.state works", {
 
 })
 

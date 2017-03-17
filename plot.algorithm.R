@@ -120,6 +120,8 @@ make.states.matrix <- function(tree, character, inapplicable = NULL) {
     ## Add the character into the list
     states_matrix$Char[1:ape::Ntip(tree)] <- character
 
+    ## Set up the active states tracker
+    states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
 
     return(states_matrix)
 }
@@ -166,7 +168,7 @@ get.union.incl <- function(a, b) {
 ## Get an intersection exclusive (^)
 get.union.excl <- function(a, b) {
     out <- get.union.incl(a,b)
-    out <- out[which(out != get.common(a,b))]
+    out <- out[!(out %in% get.common(a,b))]
     if(length(out) == 0) {
         return(NULL)
     } else {
@@ -180,8 +182,8 @@ get.union.excl <- function(a, b) {
 #'
 #' @description Applies a Fitch down pass to a node
 #'
-#' @param states_matrix \code{matrix}, the matrix containing all the states
-#' @param tree \code{phylo}, a tree
+#' @param states_matrix A \code{list} contains all the states and the activations
+#' @param tree A \code{phylo} tree
 #'
 #' @author Thomas Guillerme
 
@@ -206,7 +208,10 @@ fitch.downpass <- function(states_matrix, tree) {
         } else {
             ## Else set it to be the union of the descendants
             states_matrix$Dp1[[node]] <- get.union.incl(left, right)
-            ##@@@ COUNT A STEP HERE
+           
+            ## Activate the states
+            states_matrix$tracker$Dp1[[node]] <- get.union.incl(left, right)
+
         }
     }
 
@@ -217,8 +222,8 @@ fitch.downpass <- function(states_matrix, tree) {
 #'
 #' @description Applies a Fitch up pass to a node
 #'
-#' @param states_matrix \code{matrix}, the matrix containing all the states
-#' @param tree \code{phylo}, a tree
+#' @param states_matrix A \code{list} contains all the states and the activations
+#' @param tree A \code{phylo} tree
 #'
 #' @author Thomas Guillerme
 
@@ -267,8 +272,8 @@ fitch.uppass <- function(states_matrix, tree) {
 #'
 #' @description Applies a first down pass to a node
 #'
-#' @param states_matrix \code{matrix}, the matrix containing all the states
-#' @param tree \code{phylo}, a tree
+#' @param states_matrix A \code{list} contains all the states and the activations
+#' @param tree A \code{phylo} tree
 #'
 #' @author Thomas Guillerme
 
@@ -316,9 +321,8 @@ first.downpass <- function(states_matrix, tree) {
 #'
 #' @description Applies a first uppass pass to a node
 #'
-#' @param node \code{numeric}, the focal node
-#' @param tree \code{phylo}, a tree
-#' @param character \code{character}, a vector of character states
+#' @param states_matrix A \code{list} contains all the states and the activations
+#' @param tree A \code{phylo} tree
 #'
 #' @author Thomas Guillerme
 
@@ -385,9 +389,8 @@ first.uppass <- function(states_matrix, tree) {
 #'
 #' @description Applies a second down pass to a node
 #'
-#' @param node \code{numeric}, the focal node
-#' @param tree \code{phylo}, a tree
-#' @param character \code{character}, a vector of character states
+#' @param states_matrix A \code{list} contains all the states and the activations
+#' @param tree A \code{phylo} tree
 #'
 #' @author Thomas Guillerme
 
@@ -395,6 +398,9 @@ second.downpass <- function(states_matrix, tree) {
 
     ## Transferring the characters in the right matrix column
     states_matrix$Dp2 <- states_matrix$Char
+
+    ## Setting an active states buffer (NULL if for loop start)
+    actives <- NULL
     
     ## Loop through the nodes
     for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) {
@@ -420,13 +426,86 @@ second.downpass <- function(states_matrix, tree) {
                     states_matrix$Dp2[[node]] <- -1
                 }   
             } else {
-            ## Else set the node state to be the union of the descendants without the inapplicable tokens
+                ## Else set the node state to be the union of the descendants without the inapplicable tokens
                 union_desc <- get.union.incl(left, right)
                 states_matrix$Dp2[[node]] <- union_desc[which(union_desc != -1)]
+
+
+                ### In Morphy
+                # if (lft_char[i] & MORPHY_IS_APPLICABLE && rt_char[i] & MORPHY_IS_APPLICABLE) {
+                #     if (n_final[i] == (n_final[i] & actives[i])) {
+                #         if (length) {
+                #             *length += weights[i];
+                #         }
+                #     }
+                #     else {
+                #         actives[i] |= (n_final[i] & MORPHY_IS_APPLICABLE);
+                #     }
+                # }
+
+                ## If left and right have an applicable state
+                if(any(left != -1) && any(right != -1)) {
+                    ## If this is the first activation
+                    if(is.null(actives)) {
+                        ## Activate the states
+                        actives <- states_matrix$Dp2[[node]]
+                        
+                        ## Store the active states
+                        states_matrix$tracker$Dp2[[node]] <- actives
+                    } else {
+                        if(all(states_matrix$Dp2[[node]] != -1)) {
+                            ## Only activate the non-active states
+                            new_active <- get.union.excl(states_matrix$Dp2[[node]][which(states_matrix$Dp2[[node]] != -1)], actives)
+                            states_matrix$tracker$Dp2[[node]] <- new_active
+                            ## Updating the actives
+                            actives <- sort(c(new_active, actives))
+                        } else {
+                            ## Set actives to inapplicable (and "activate" inapplicable)
+                            states_matrix$tracker$Dp2[[node]] <- actives <- -1
+                        }
+                    }
+                } else {
+                    ## Set actives to inapplicable (and "activate" inapplicable)
+                    states_matrix$tracker$Dp2[[node]] <- actives <- -1
+                }
             }
         } else {
             ## Else, leave the state as it was after the first uppass
             states_matrix$Dp2[[node]] <- curr_node
+
+            ### In Morphy
+            # if (!(lft_char[i] & rt_char[i])) {
+                
+            #     temp = (lft_char[i] | rt_char[i]) & MORPHY_IS_APPLICABLE;
+                
+            #     actives[i] |= temp;
+            # }
+
+            ## If there is no common between the descendants
+            if(is.null(get.common(left, right))) {
+                ## If this is the first activation
+                if(is.null(actives)) {
+                    ## Activate the states
+                    actives <- get.union.incl(left, right)
+                    
+                    ## Store the active states
+                    states_matrix$tracker$Dp2[[node]] <- actives
+                } else {
+                    if(all(states_matrix$Dp2[[node]] != -1)) {
+                        ## Only activate the non-active states
+                        new_active <- get.union.excl(states_matrix$Dp2[[node]][which(states_matrix$Dp2[[node]] != -1)], actives)
+                        states_matrix$tracker$Dp2[[node]] <- new_active
+                        ## Updating the actives
+                        actives <- sort(c(new_active, actives))
+                    } else {
+                        ## Set actives to inapplicable (and "activate" inapplicable)
+                        states_matrix$tracker$Dp2[[node]] <- actives <- -1
+                    }
+                }
+            } else {
+                ## Set actives to inapplicable (and "activate" inapplicable)
+                states_matrix$tracker$Dp2[[node]] <- actives <- -1
+            }
         }
     }
 
@@ -437,9 +516,8 @@ second.downpass <- function(states_matrix, tree) {
 #'
 #' @description Applies a second up pass to a node
 #'
-#' @param node \code{numeric}, the focal node
-#' @param tree \code{phylo}, a tree
-#' @param character \code{character}, a vector of character states
+#' @param states_matrix A \code{list} contains all the states and the activations
+#' @param tree A \code{phylo} tree
 #'
 #' @author Thomas Guillerme
 
@@ -447,6 +525,9 @@ second.uppass <- function(states_matrix, tree) {
 
     ## Transferring the characters in the right matrix column
     states_matrix$Up2 <- states_matrix$Char
+
+    ## Setting an active states buffer (NULL if for loop start)
+    actives <- NULL
 
     ## Root state is inherited from the second downpass
     states_matrix$Up2[[ape::Ntip(tree)+1]] <- states_matrix$Dp2[[ape::Ntip(tree)+1]]
@@ -505,12 +586,102 @@ second.uppass <- function(states_matrix, tree) {
             }
         } else { # If there is no applicable state in the previous pass
             states_matrix$Up2[[node]] <- curr_node
+
+
+            ## In Morphy
+            #  if (!(lft_char[i] & rt_char[i])) {
+            #     if ((lft_char[i] | rt_char[i]) & actives[i]) {
+            #         if (length) {
+            #             *length += weights[i];
+            #         }
+            #     }
+            # }
+            ## If there is no state in common between the descendants
+            if(is.null(get.common(left, right))) {
+                ## If this is the first activation
+                if(is.null(actives)) {
+                    ## Activate the states
+                    actives <- get.union.incl(left, right)
+                    
+                    ## Store the active states
+                    states_matrix$tracker$Up2[[node]] <- actives
+                } else {
+                    if(all(states_matrix$Up2[[node]] != -1)) {
+                        ## Only activate the non-active states
+                        new_active <- get.union.excl(states_matrix$Up2[[node]][which(states_matrix$Up2[[node]] != -1)], actives)
+                        states_matrix$tracker$Up2[[node]] <- new_active
+                        ## Updating the actives
+                        actives <- sort(c(new_active, actives))
+                    } else {
+                        ## Set actives to inapplicable (and "activate" inapplicable)
+                        states_matrix$tracker$Up2[[node]] <- actives <- -1
+                    }
+                }
+            } else {
+                ## Set actives to inapplicable (and "activate" inapplicable)
+                states_matrix$tracker$Up2[[node]] <- actives <- -1
+            }
         }
 
-        # warning("DEBUG 4th pass") ; print(states_matrix$Up2[[node]])
+        ## In Morphy
+        # if (!(lft_char[i] & rt_char[i])) {
+        #     if (actives) {
+        #         actives[i] |= (lft_char[i] | rt_char[i]) & MORPHY_IS_APPLICABLE;
+        #     }
+        # }
+        ## If there is no common between the descendants
+        if(is.null(get.common(left, right))) {
+            ## If this is the first activation
+            if(is.null(actives)) {
+                ## Activate the states
+                actives <- get.union.incl(left, right)
+                
+                ## Store the active states
+                states_matrix$tracker$Up2[[node]] <- actives
+            } else {
+                if(all(states_matrix$Up2[[node]] != -1)) {
+                    ## Only activate the non-active states
+                    new_active <- get.union.excl(states_matrix$Up2[[node]][which(states_matrix$Up2[[node]] != -1)], actives)
+                    states_matrix$tracker$Up2[[node]] <- new_active
+                    ## Updating the actives
+                    actives <- sort(c(new_active, actives))
+                } else {
+                    ## Set actives to inapplicable (and "activate" inapplicable)
+                    states_matrix$tracker$Up2[[node]] <- actives <- -1
+                }
+            }
+        } else {
+            ## Set actives to inapplicable (and "activate" inapplicable)
+            states_matrix$tracker$Up2[[node]] <- actives <- -1
+        }    
+
     }
     return(states_matrix)
 }
+
+#' @title Inapplicable algorithm
+#'
+#' @description Runs a full inapplicable algorithm
+#'
+#' @param states_matrix A \code{list} contains all the states and the activations
+#' 
+#' @author Thomas Guillerme
+
+get.length <- function(states_matrix) {
+    ## Length for one pass
+    get.length.pass <- function(one_pass) {
+        ## Get the activations
+        counts <- unlist(one_pass)
+        ## Count the activations
+        activations <- table(counts[which(counts != -1)])
+        ## Count the length (states activated only once don't add to length)
+        return(sum(activations - 1))
+    }
+
+    ## Full length
+    return(sum(unlist(lapply(states_matrix$tracker, get.length.pass))))
+}
+
 
 
 #' @title Inapplicable algorithm
@@ -520,7 +691,7 @@ second.uppass <- function(states_matrix, tree) {
 #' @param tree \code{phylo}, a tree
 #' @param character \code{character}, a vector of character states
 #' @param passes \code{numeric}, the number of passes in the tree; from \code{1} to \code{4} (default)
-#' @param inapplicable \code{NULL}, \code{1}, \code{2} for respectively treat inapplicables as -, ? or n
+#' @param inapplicable \code{NULL}, \code{1}, \code{2} for respectively treat inapplicable as -, ? or n
 #' 
 #' @author Thomas Guillerme
 

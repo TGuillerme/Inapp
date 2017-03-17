@@ -394,6 +394,23 @@ first.uppass <- function(states_matrix, tree) {
 #'
 #' @author Thomas Guillerme
 
+
+## DEBUG
+# tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+# # character <- "23--1??--032"
+# # character <- "1---1111---1" # Not activating anything on the uppass? Missing 1 count
+# character <- "1100----0011"
+# # character <- "23--1----032"
+# # character <- "01---1010101"
+# # character <- "210--100--21"
+
+# states_matrix <- make.states.matrix(tree, character, inapplicable = NULL)
+# n_passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
+# for (pass in 1:3) {
+#         states_matrix <- n_passes[[pass]](states_matrix, tree)
+#     }
+# get.length(states_matrix)
+
 second.downpass <- function(states_matrix, tree) {
 
     ## Transferring the characters in the right matrix column
@@ -429,83 +446,10 @@ second.downpass <- function(states_matrix, tree) {
                 ## Else set the node state to be the union of the descendants without the inapplicable tokens
                 union_desc <- get.union.incl(left, right)
                 states_matrix$Dp2[[node]] <- union_desc[which(union_desc != -1)]
-
-
-                ### In Morphy
-                # if (lft_char[i] & MORPHY_IS_APPLICABLE && rt_char[i] & MORPHY_IS_APPLICABLE) {
-                #     if (n_final[i] == (n_final[i] & actives[i])) {
-                #         if (length) {
-                #             *length += weights[i];
-                #         }
-                #     }
-                #     else {
-                #         actives[i] |= (n_final[i] & MORPHY_IS_APPLICABLE);
-                #     }
-                # }
-
-                ## If left and right have an applicable state
-                if(any(left != -1) && any(right != -1)) {
-                    ## If this is the first activation
-                    if(is.null(actives)) {
-                        ## Activate the states
-                        actives <- states_matrix$Dp2[[node]]
-                        
-                        ## Store the active states
-                        states_matrix$tracker$Dp2[[node]] <- actives
-                    } else {
-                        if(all(states_matrix$Dp2[[node]] != -1)) {
-                            ## Only activate the non-active states
-                            new_active <- get.union.excl(states_matrix$Dp2[[node]][which(states_matrix$Dp2[[node]] != -1)], actives)
-                            states_matrix$tracker$Dp2[[node]] <- new_active
-                            ## Updating the actives
-                            actives <- sort(c(new_active, actives))
-                        } else {
-                            ## Set actives to inapplicable (and "activate" inapplicable)
-                            states_matrix$tracker$Dp2[[node]] <- actives <- -1
-                        }
-                    }
-                } else {
-                    ## Set actives to inapplicable (and "activate" inapplicable)
-                    states_matrix$tracker$Dp2[[node]] <- actives <- -1
-                }
             }
         } else {
             ## Else, leave the state as it was after the first uppass
             states_matrix$Dp2[[node]] <- curr_node
-
-            ### In Morphy
-            # if (!(lft_char[i] & rt_char[i])) {
-                
-            #     temp = (lft_char[i] | rt_char[i]) & MORPHY_IS_APPLICABLE;
-                
-            #     actives[i] |= temp;
-            # }
-
-            ## If there is no common between the descendants
-            if(is.null(get.common(left, right))) {
-                ## If this is the first activation
-                if(is.null(actives)) {
-                    ## Activate the states
-                    actives <- get.union.incl(left, right)
-                    
-                    ## Store the active states
-                    states_matrix$tracker$Dp2[[node]] <- actives
-                } else {
-                    if(all(states_matrix$Dp2[[node]] != -1)) {
-                        ## Only activate the non-active states
-                        new_active <- get.union.excl(states_matrix$Dp2[[node]][which(states_matrix$Dp2[[node]] != -1)], actives)
-                        states_matrix$tracker$Dp2[[node]] <- new_active
-                        ## Updating the actives
-                        actives <- sort(c(new_active, actives))
-                    } else {
-                        ## Set actives to inapplicable (and "activate" inapplicable)
-                        states_matrix$tracker$Dp2[[node]] <- actives <- -1
-                    }
-                }
-            } else {
-                ## Set actives to inapplicable (and "activate" inapplicable)
-                states_matrix$tracker$Dp2[[node]] <- actives <- -1
-            }
         }
     }
 
@@ -586,75 +530,7 @@ second.uppass <- function(states_matrix, tree) {
             }
         } else { # If there is no applicable state in the previous pass
             states_matrix$Up2[[node]] <- curr_node
-
-
-            ## In Morphy
-            #  if (!(lft_char[i] & rt_char[i])) {
-            #     if ((lft_char[i] | rt_char[i]) & actives[i]) {
-            #         if (length) {
-            #             *length += weights[i];
-            #         }
-            #     }
-            # }
-            ## If there is no state in common between the descendants
-            if(is.null(get.common(left, right))) {
-                ## If this is the first activation
-                if(is.null(actives)) {
-                    ## Activate the states
-                    actives <- get.union.incl(left, right)
-                    
-                    ## Store the active states
-                    states_matrix$tracker$Up2[[node]] <- actives
-                } else {
-                    if(all(states_matrix$Up2[[node]] != -1)) {
-                        ## Only activate the non-active states
-                        new_active <- get.union.excl(states_matrix$Up2[[node]][which(states_matrix$Up2[[node]] != -1)], actives)
-                        states_matrix$tracker$Up2[[node]] <- new_active
-                        ## Updating the actives
-                        actives <- sort(c(new_active, actives))
-                    } else {
-                        ## Set actives to inapplicable (and "activate" inapplicable)
-                        states_matrix$tracker$Up2[[node]] <- actives <- -1
-                    }
-                }
-            } else {
-                ## Set actives to inapplicable (and "activate" inapplicable)
-                states_matrix$tracker$Up2[[node]] <- actives <- -1
-            }
         }
-
-        ## In Morphy
-        # if (!(lft_char[i] & rt_char[i])) {
-        #     if (actives) {
-        #         actives[i] |= (lft_char[i] | rt_char[i]) & MORPHY_IS_APPLICABLE;
-        #     }
-        # }
-        ## If there is no common between the descendants
-        if(is.null(get.common(left, right))) {
-            ## If this is the first activation
-            if(is.null(actives)) {
-                ## Activate the states
-                actives <- get.union.incl(left, right)
-                
-                ## Store the active states
-                states_matrix$tracker$Up2[[node]] <- actives
-            } else {
-                if(all(states_matrix$Up2[[node]] != -1)) {
-                    ## Only activate the non-active states
-                    new_active <- get.union.excl(states_matrix$Up2[[node]][which(states_matrix$Up2[[node]] != -1)], actives)
-                    states_matrix$tracker$Up2[[node]] <- new_active
-                    ## Updating the actives
-                    actives <- sort(c(new_active, actives))
-                } else {
-                    ## Set actives to inapplicable (and "activate" inapplicable)
-                    states_matrix$tracker$Up2[[node]] <- actives <- -1
-                }
-            }
-        } else {
-            ## Set actives to inapplicable (and "activate" inapplicable)
-            states_matrix$tracker$Up2[[node]] <- actives <- -1
-        }    
-
     }
     return(states_matrix)
 }

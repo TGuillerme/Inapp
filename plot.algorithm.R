@@ -123,6 +123,9 @@ make.states.matrix <- function(tree, character, inapplicable = NULL) {
     ## Set up the active states tracker
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
 
+    ## Set a length buffer
+    states_matrix$length <- NULL
+
     return(states_matrix)
 }
 
@@ -395,30 +398,30 @@ first.uppass <- function(states_matrix, tree) {
 #' @author Thomas Guillerme
 
 
-## DEBUG
+# # DEBUG
 # tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
-# # character <- "23--1??--032"
+# character <- "23--1??--032"
 # # character <- "1---1111---1" # Not activating anything on the uppass? Missing 1 count
-# character <- "1100----0011"
+# # character <- "1100----0011"
 # # character <- "23--1----032"
 # # character <- "01---1010101"
 # # character <- "210--100--21"
 
 # states_matrix <- make.states.matrix(tree, character, inapplicable = NULL)
 # n_passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
-# for (pass in 1:3) {
+# for (pass in 1:4) {
 #         states_matrix <- n_passes[[pass]](states_matrix, tree)
 #     }
 # get.length(states_matrix)
 
 second.downpass <- function(states_matrix, tree) {
+    
+    ## Active states
+    actives <- NULL
 
     ## Transferring the characters in the right matrix column
     states_matrix$Dp2 <- states_matrix$Char
 
-    ## Setting an active states buffer (NULL if for loop start)
-    actives <- NULL
-    
     ## Loop through the nodes
     for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) {
 
@@ -446,10 +449,34 @@ second.downpass <- function(states_matrix, tree) {
                 ## Else set the node state to be the union of the descendants without the inapplicable tokens
                 union_desc <- get.union.incl(left, right)
                 states_matrix$Dp2[[node]] <- union_desc[which(union_desc != -1)]
+
+                ## Morphy style counting
+                if(any(left != -1) && any(right != -1)) {
+                    if(!is.null(get.common(states_matrix$Dp2[[node]], actives))) {
+                        states_matrix$length <- states_matrix$length+1
+                    } else {
+                        actives <- unique(c(states_matrix$Dp2[[node]], actives))
+                        actives <- actives[which(actives != -1)]
+                    }
+                }
+
+                ## Adding activation
+                # states_matrix$tracker$Dp2[[node]] <- states_matrix$Dp2[[node]]
+
             }
         } else {
             ## Else, leave the state as it was after the first uppass
             states_matrix$Dp2[[node]] <- curr_node
+
+            if(is.null(get.common(left, right))) {
+                ## Adding activation
+                union_desc <- get.union.incl(left, right)
+                # states_matrix$tracker$Dp2[[node]] <- union_desc[which(union_desc != -1)]
+                
+                ## Morphy counting
+                actives <- unique(c(union_desc, actives))
+                actives <- actives[which(actives != -1)]
+            }
         }
     }
 
@@ -467,11 +494,11 @@ second.downpass <- function(states_matrix, tree) {
 
 second.uppass <- function(states_matrix, tree) {
 
+    ## Active states
+    actives <- NULL
+
     ## Transferring the characters in the right matrix column
     states_matrix$Up2 <- states_matrix$Char
-
-    ## Setting an active states buffer (NULL if for loop start)
-    actives <- NULL
 
     ## Root state is inherited from the second downpass
     states_matrix$Up2[[ape::Ntip(tree)+1]] <- states_matrix$Dp2[[ape::Ntip(tree)+1]]
@@ -526,18 +553,74 @@ second.uppass <- function(states_matrix, tree) {
                     states_matrix$Up2[[node]] <- common_desc
                 } else { # If there is no state in common between left and right
                     states_matrix$Up2[[node]] <- curr_node
+    
+                    ## Morphy counting
+                    if(!is.null(get.common(get.union.incl(left, right), actives))) {
+                        states_matrix$length <- states_matrix$length+1
+                    }
+
+
+                    ## Adding activation
+                    #union_desc <- get.union.incl(left, right)
+                    #states_matrix$tracker$Up2[[node]] <- union_desc[which(union_desc != -1)]
                 }
             }
         } else { # If there is no applicable state in the previous pass
             states_matrix$Up2[[node]] <- curr_node
+
+            if(is.null(get.common(left, right))) {
+                ## Adding activation
+                union_desc <- get.union.incl(left, right)
+                #states_matrix$tracker$Up2[[node]] <- union_desc[which(union_desc != -1)]
+
+                ## Morphy counting
+                actives <- unique(c(union_desc, actives))
+                actives <- actives[which(actives != -1)]
+            }
         }
     }
     return(states_matrix)
 }
 
-#' @title Inapplicable algorithm
+
+#' @title Get tree length
 #'
-#' @description Runs a full inapplicable algorithm
+#' @description Counts the length of a tree
+#'
+#' @param states_matrix A \code{list} contains all the states and the activations
+#' @param tree A \code{phylo} tree
+#' 
+#' @author Thomas Guillerme
+
+get.actives <- function(states_matrix, tree, method = "Inapplicable") {
+
+    if(method == "Inapplicable") {
+
+        actives <- NULL
+        ## Solving the second downpass
+        for(node in (ape::Ntip(tree)+2:ape::Nnode(tree))) {
+
+            if(!is.null(states_matrix$tracker$Dp2[[node]])) {
+                ## If the node state is not null, activate it
+                actives <- states_matrix$tracker$Dp2[[node]]
+            } else {
+                ## 
+                new_actives <- get.union.excl(states_matrix$Dp2[[node]], actives)
+            }
+
+
+        }
+
+    }
+    states_matrix$tracker$Dp2
+
+    return(states_matrix)
+}
+
+
+#' @title Get tree length
+#'
+#' @description Counts the length of a tree
 #'
 #' @param states_matrix A \code{list} contains all the states and the activations
 #' 
@@ -698,6 +781,7 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
     ## Plotting the tree
     plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5) ; warning("DEBUG plot")
+    # legend("topleft", paste("Tree length is", states_matrix$length), border = "white")
 
     ## Add the tip states
     if(class(character) == "character" && length(character) == 1) {

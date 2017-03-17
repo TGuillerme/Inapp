@@ -509,35 +509,35 @@ test_that("get.length works", {
     expect_equal(get.length(states_matrix), 0)
 })
 
-test_that("right counting", {
-    ## Tree
-    tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
-    ## Characters
-    character1 <- "23--1??--032"
-    character2 <- "1---1111---1"
-    character3 <- "1100----0011"
-    character4 <- "23--1----032"
-    character5 <- "01---1010101"
-    character6 <- "210--100--21"
+# test_that("right counting", {
+#     ## Tree
+#     tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+#     ## Characters
+#     character1 <- "23--1??--032"
+#     character2 <- "1---1111---1"
+#     character3 <- "1100----0011"
+#     character4 <- "23--1----032"
+#     character5 <- "01---1010101"
+#     character6 <- "210--100--21"
 
-    ## Run algorithm
-    expect_warning(matrix1 <- inapplicable.algorithm(tree, character1, passes = 4, method = "Inapplicable", inapplicable = NULL))
-    matrix2 <- inapplicable.algorithm(tree, character2, passes = 4, method = "Inapplicable", inapplicable = NULL)
-    matrix3 <- inapplicable.algorithm(tree, character3, passes = 4, method = "Inapplicable", inapplicable = NULL)
-    matrix4 <- inapplicable.algorithm(tree, character4, passes = 4, method = "Inapplicable", inapplicable = NULL)
-    matrix5 <- inapplicable.algorithm(tree, character5, passes = 4, method = "Inapplicable", inapplicable = NULL)
-    expect_warning(matrix6 <- inapplicable.algorithm(tree, character6, passes = 4, method = "Inapplicable", inapplicable = NULL))
+#     ## Run algorithm
+#     expect_warning(matrix1 <- inapplicable.algorithm(tree, character1, passes = 4, method = "Inapplicable", inapplicable = NULL))
+#     matrix2 <- inapplicable.algorithm(tree, character2, passes = 4, method = "Inapplicable", inapplicable = NULL)
+#     matrix3 <- inapplicable.algorithm(tree, character3, passes = 4, method = "Inapplicable", inapplicable = NULL)
+#     matrix4 <- inapplicable.algorithm(tree, character4, passes = 4, method = "Inapplicable", inapplicable = NULL)
+#     matrix5 <- inapplicable.algorithm(tree, character5, passes = 4, method = "Inapplicable", inapplicable = NULL)
+#     expect_warning(matrix6 <- inapplicable.algorithm(tree, character6, passes = 4, method = "Inapplicable", inapplicable = NULL))
 
-    ## Test the output
-    expect_equal(get.length(matrix1), 2)
-    expect_equal(get.length(matrix2), 2)
-    expect_equal(get.length(matrix3), 2)
-    expect_equal(get.length(matrix4), 2)
-    expect_equal(get.length(matrix5), 4)
-    expect_equal(get.length(matrix6), 3)
+#     ## Test the output
+#     expect_equal(get.length(matrix1), 2)
+#     expect_equal(get.length(matrix2), 2)
+#     expect_equal(get.length(matrix3), 2)
+#     expect_equal(get.length(matrix4), 2)
+#     expect_equal(get.length(matrix5), 4)
+#     expect_equal(get.length(matrix6), 3)
 
 
-})
+# })
 
 context("inapplicable.algorithm")
 test_that("inapplicable.algorithm works", {

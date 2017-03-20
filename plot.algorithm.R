@@ -428,12 +428,10 @@ second.downpass <- function(states_matrix, tree) {
         curr_node <- states_matrix$Up1[[node]]
         ## Select the descendants and ancestors
         desc_anc <- desc.anc(node, tree)
-        right <- states_matrix$Up1[desc_anc[1]][[1]] # The node's right descendant
-        left <- states_matrix$Up1[desc_anc[2]][[1]] # The node's left descendant
+        right <- states_matrix$Up1[desc_anc[1]][[1]]
+        left <- states_matrix$Up1[desc_anc[2]][[1]]
 
-        ## If any state on the node is applicable
         if(any(curr_node != -1)) {
-            
             ## Get the states in common between the descendants
             common_desc <- get.common(left, right)
 
@@ -450,24 +448,21 @@ second.downpass <- function(states_matrix, tree) {
                 union_desc <- get.union.incl(left, right)
                 states_matrix$Dp2[[node]] <- union_desc[which(union_desc != -1)]
 
-                ## Morphy style counting
+                ## Counting
                 if(any(left != -1) && any(right != -1)) {
-
-                    # if(!is.null(get.common(states_matrix$Dp2[[node]], actives))) {
-                    if(!is.null(actives) && all(states_matrix$Dp2[[node]] %in% get.common(states_matrix$Dp2[[node]], actives))) {
+                    
+                    if(!is.null(actives) && all(states_matrix$Dp2[[node]] %in% get.common(states_matrix$Dp2[[node]], actives))) { #TG: Counting problem here?
+                        ## Increment the count
                         states_matrix$length <- states_matrix$length+1
-                        # cat(paste("node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
+                        # cat(paste("pass 3 - node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
                     } else {
+                        ## Activate the states
                         actives <- unique(c(states_matrix$Dp2[[node]], actives))
                         ## Remove inapplicables
-                        actives <- actives[which(actives != -1)]
-                        # cat(paste("node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
+                        actives <- sort(actives[which(actives != -1)])
+                        # cat(paste("pass 3 - node ", node, ": activated states c1 (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
                     }
                 }
-                
-                ## Adding activation
-                # states_matrix$tracker$Dp2[[node]] <- states_matrix$Dp2[[node]]
-
             }
         } else {
             ## Else, leave the state as it was after the first uppass
@@ -476,13 +471,11 @@ second.downpass <- function(states_matrix, tree) {
             if(is.null(get.common(left, right))) {
                 ## Adding activation
                 union_desc <- get.union.incl(left, right)
-                # states_matrix$tracker$Dp2[[node]] <- union_desc[which(union_desc != -1)]
-                
-                ## Morphy counting
+                ## Activate the states
                 actives <- unique(c(union_desc, actives))
                 ## Remove inapplicables
-                actives <- actives[which(actives != -1)]
-                # cat(paste("node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
+                actives <- sort(actives[which(actives != -1)])
+                # cat(paste("pass 3 - node ", node, ": activated states c2 (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
             }
         }
     }
@@ -508,149 +501,101 @@ second.uppass <- function(states_matrix, tree) {
     states_matrix$Up2 <- states_matrix$Char
 
     ## Root state is inherited from the second downpass
-    states_matrix$Up2[[ape::Ntip(tree)+1]] <- states_matrix$Dp2[[ape::Ntip(tree)+1]]
+    # states_matrix$Up2[[ape::Ntip(tree)+1]] <- states_matrix$Dp2[[ape::Ntip(tree)+1]]
 
     ## For each node from the root
-    for(node in (ape::Ntip(tree)+2:ape::Nnode(tree))) { ## Start past the root (+2)
-        ## Current node
-        curr_node <- states_matrix$Dp2[[node]] # The current node
+    for(node in (ape::Ntip(tree)+1:ape::Nnode(tree))) {
+
+        curr_node <- states_matrix$Dp2[[node]]
         ## Select the descendants and ancestors
         desc_anc <- desc.anc(node, tree)
-        right <- states_matrix$Dp2[desc_anc[1]][[1]] # The node's right descendant
-        left <- states_matrix$Dp2[desc_anc[2]][[1]] # The node's left descendant
-        ancestor <- states_matrix$Up2[desc_anc[3]][[1]] # The node's ancestor
+        right <- states_matrix$Dp2[desc_anc[1]][[1]]
+        left <- states_matrix$Dp2[desc_anc[2]][[1]]
+        ancestor <- states_matrix$Up2[desc_anc[3]][[1]]
 
-        if(any(curr_node != -1)) { # If any state in the previous pass is not inapplicable
-            if(any(ancestor != -1)) { # If any state in the ancestor is not inapplicable
+        if(any(curr_node != -1)) {
+            if(any(ancestor != -1)) {
+
                 common_anc_node <- get.common(ancestor, curr_node)
-                if(!is.null(common_anc_node) && length(common_anc_node) == length(ancestor) && all(common_anc_node == ancestor) ){ # If there is a common state between the ancestor and the previous node state and that this commonality is equal to any of the ancestor state.
+                
+                if(!is.null(common_anc_node) && length(common_anc_node) == length(ancestor) && all(common_anc_node == ancestor) ){
+
                     states_matrix$Up2[[node]] <- common_anc_node
-                } else { # If the common state between the ancestor and the final is not the ancestor
+                } else {
+                    ## If the common state between the ancestor and the final is not the ancestor
                     common_left_right <- get.common(left, right)
-                    if(!is.null(common_left_right)) { # If there is a state in common between left and right
+                    if(!is.null(common_left_right)) {
+                        ## If there is a state in common between left and right
                         long_union <- get.union.incl(common_anc_node, get.common(ancestor, get.union.incl(left, right)))
+                        
                         if(!is.null(long_union)) {
                             states_matrix$Up2[[node]] <- long_union
                         } else {
                             states_matrix$Up2[[node]] <- common_left_right
                         }
-                    } else { # If there is no state in common between left and right
+
+                    } else {
+                        ## If there is no state in common between left and right
                         union_desc <- get.union.incl(left, right)
-                        if(any(union_desc == -1)) { # If the union of left and right has the inapplicable character
-                            if(!is.null(get.common(union_desc, ancestor))) { # If the union of left and right has a state in common with the ancestor
+                        
+                        if(any(union_desc == -1)) {
+
+                            if(!is.null(get.common(union_desc, ancestor))) {
                                 states_matrix$Up2[[node]] <- get.union.incl(get.common(ancestor, union_desc), ancestor)
-                            } else { # If the union of left and right has no state in common with the ancestor
+                            } else { 
+                                ## If the union of left and right has no state in common with the ancestor
                                 union_all <- get.union.incl(union_desc, ancestor)
                                 states_matrix$Up2[[node]] <- union_all[which(union_all != -1)]
                             }
-                        } else { # If the union of left and right has no inapplicable character
+                        } else {
+                            ## If the union of left and right has no inapplicable character
                             union_node_anc <- get.union.incl(curr_node, ancestor)
                             states_matrix$Up2[[node]] <- union_node_anc
-                            options(warn = -1) ## Silence warnings for the following comparisons
-                            if(all(union_node_anc == ancestor)) { # If the state in common between the node and the ancestor is the ancestor
+                            
+                            options(warn = -1)
+                            if(all(union_node_anc == ancestor)) {
+                                ## If the state in common between the node and the ancestor is the ancestor
                                 states_matrix$Up2[[node]] <- get.common(ancestor, states_matrix$Up2[[node]])
                             }
-                            options(warn = 0) ## Re-enable warnings
+                            options(warn = 0)
                         }
                     }
                 }
-            } else { # If the ancestor has no applicable state
+            } else {
+                ## If the ancestor has no applicable state
                 common_desc <- get.common(left, right)
-                if(!is.null(common_desc)) { # If there is a state in common between left and right 
+                
+                if(!is.null(common_desc)) {
                     states_matrix$Up2[[node]] <- common_desc
-                } else { # If there is no state in common between left and right
+                } else {
                     states_matrix$Up2[[node]] <- curr_node
                 }
             }
-        } else { # If there is no applicable state in the previous pass
+        } else {
+            ## If there is no applicable state in the previous pass
             states_matrix$Up2[[node]] <- curr_node
 
-            ## Morphy counting
             if(is.null(get.common(left, right))) {
                 if(!is.null(get.common(get.union.incl(left, right), actives))) {
+                    ## Increment the counting
                     states_matrix$length <- states_matrix$length+1
-                    # cat(paste("node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
+                    # cat(paste("pass 4 - node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
                 }
             }
-            ## Adding activation
-            #union_desc <- get.union.incl(left, right)
-            #states_matrix$tracker$Up2[[node]] <- union_desc[which(union_desc != -1)]
         }
 
         if(is.null(get.common(left, right))) {
             ## Adding activation
             union_desc <- get.union.incl(left, right)
-            #states_matrix$tracker$Up2[[node]] <- union_desc[which(union_desc != -1)]
-
-            ## Morphy counting
+            ## Activation
             actives <- unique(c(union_desc, actives))
             ## Remove inapplicables
-            actives <- actives[which(actives != -1)]
-            # cat(paste("node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
+            actives <- sort(actives[which(actives != -1)])
+            # cat(paste("pass 4 - node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
         }
     }
     return(states_matrix)
 }
-
-
-#' @title Get tree length
-#'
-#' @description Counts the length of a tree
-#'
-#' @param states_matrix A \code{list} contains all the states and the activations
-#' @param tree A \code{phylo} tree
-#' 
-#' @author Thomas Guillerme
-
-get.actives <- function(states_matrix, tree, method = "Inapplicable") {
-
-    if(method == "Inapplicable") {
-
-        actives <- NULL
-        ## Solving the second downpass
-        for(node in (ape::Ntip(tree)+2:ape::Nnode(tree))) {
-
-            if(!is.null(states_matrix$tracker$Dp2[[node]])) {
-                ## If the node state is not null, activate it
-                actives <- states_matrix$tracker$Dp2[[node]]
-            } else {
-                ## 
-                new_actives <- get.union.excl(states_matrix$Dp2[[node]], actives)
-            }
-
-
-        }
-
-    }
-    states_matrix$tracker$Dp2
-
-    return(states_matrix)
-}
-
-
-#' @title Get tree length
-#'
-#' @description Counts the length of a tree
-#'
-#' @param states_matrix A \code{list} contains all the states and the activations
-#' 
-#' @author Thomas Guillerme
-
-get.length <- function(states_matrix) {
-    ## Length for one pass
-    get.length.pass <- function(one_pass) {
-        ## Get the activations
-        counts <- unlist(one_pass)
-        ## Count the activations
-        activations <- table(counts[which(counts != -1)])
-        ## Count the length (states activated only once don't add to length)
-        return(sum(activations - 1))
-    }
-
-    ## Full length
-    return(sum(unlist(lapply(states_matrix$tracker, get.length.pass))))
-}
-
 
 
 #' @title Inapplicable algorithm

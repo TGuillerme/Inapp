@@ -492,51 +492,59 @@ test_that("second.uppass works", {
 
 
 context("correct step counting")
-test_that("get.length works", {
-    ## Errors
-    expect_error(get.length(1))
-
-    ## Creating a dummy matrix
-    states_matrix <- make.states.matrix(rtree(8), "12345678")
-    states_matrix$tracker[[1]][[2]] <- c(0,1)
-    states_matrix$tracker[[1]][[3]] <- c(-1) 
-    states_matrix$tracker[[1]][[4]] <- c(-1) 
-    states_matrix$tracker[[2]][[1]] <- c(1) 
-    states_matrix$tracker[[2]][[3]] <- c(3) 
-    states_matrix$tracker[[4]][[5]] <- c(0,2) 
-
-    expect_is(get.length(states_matrix), "numeric")
-    expect_equal(get.length(states_matrix), 0)
-})
-
 test_that("right counting", {
     ## Tree
     tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
-    ## Characters
-    character1 <- "23--1??--032"
-    character2 <- "1---1111---1"
-    character3 <- "1100----0011"
-    character4 <- "23--1----032"
-    character5 <- "01---1010101"
-    character6 <- "210--100--21"
+    characters <- c("23--1??--032" # 1
+                    ,"1---1111---1" # 2
+                    ,"1100----1100" # 3
+                    ,"11-------100" # 4
+                    ,"----1111---1" # 5
+                    ,"01----010101" # 6 
+                    ,"01---1010101" # 7
+                    ,"1??--??--100" # 8
+                    ,"21--3??--032" # 9 #TG: directional counting problem! If uppass is right/left, counts 1, else counts 2 (correct answer)
+                    ,"11--1??--111" # 10
+                    ,"11--1000001-" # 11
+                    ,"01------0101" # 12
+                    ,"110--?---100" # 13
+                    ,"11--1??--111" # 14
+                    ,"210--100--21" # 15
+                    ,"????----1???" # 16
+                    ,"23--1----032" # 17
+                    ,"1----1----1-" # 18
+                    ,"-1-1-1--1-1-" # 19
+                    ,"23--1??--032" # 20
+                    ,"--------0101" # 21
+                    ,"10101-----01" # 22
+                    ,"011--?--0011" # 23
+                    ,"110--??--100" # 24
+                    ,"11--1000001-" # 25
+                    ,"21--1----012" # 26
+                    ,"11----111111" # 27
+                    ,"10101-----01" # 28
+                    ,"210210------" # 29
+                    ,"----1111----" # 30
+                    ,"230--??1--32" # 31
+                    ,"023--??1--32" # 32
+                    ,"023-???1--32" # 33
+                    ,"23--1?1--023" # 34
+                    ,"----1010----" # 35
+                    ,"------11---1" # 36
+                    ,"10----11---1" # 37
+                    ,"1---------01") # 38
+    ## Results
+    expected_results <- c(2, 2, 2, 1, 1, 4, 4, 1, 2, 2, 1, 3, 2, 2, 3, 0, 2, 2, 4, 2, 1, 3, 2, 2, 1, 3, 1, 3, 2, 0, 2, 2, 1, 2, 1, 1, 2, 1)
 
-    ## Run algorithm
-    expect_warning(matrix1 <- inapplicable.algorithm(tree, character1, passes = 4, method = "Inapplicable", inapplicable = NULL))
-    matrix2 <- inapplicable.algorithm(tree, character2, passes = 4, method = "Inapplicable", inapplicable = NULL)
-    matrix3 <- inapplicable.algorithm(tree, character3, passes = 4, method = "Inapplicable", inapplicable = NULL)
-    matrix4 <- inapplicable.algorithm(tree, character4, passes = 4, method = "Inapplicable", inapplicable = NULL)
-    matrix5 <- inapplicable.algorithm(tree, character5, passes = 4, method = "Inapplicable", inapplicable = NULL)
-    expect_warning(matrix6 <- inapplicable.algorithm(tree, character6, passes = 4, method = "Inapplicable", inapplicable = NULL))
-
-    ## Test the output
-    expect_equal(matrix1$length, 2)
-    expect_equal(matrix2$length, 2)
-    expect_equal(matrix3$length, 2)
-    expect_equal(matrix4$length, 2)
-    expect_equal(matrix5$length, 4)
-    expect_equal(matrix6$length, 3)
-
-
+    ## Run the tests
+    for(test in 1:length(characters)) { #9 and 33 are still bugged!
+        suppressWarnings(matrix <- inapplicable.algorithm(tree, characters[test], passes = 4, method = "Inapplicable", inapplicable = NULL))
+        # if(matrix$length != expected_results[test]) {
+        #     print(paste("test", test, "failed"))
+        #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
+        # }
+        expect_equal(matrix$length, expected_results[test])
+    }
 })
 
 context("inapplicable.algorithm")

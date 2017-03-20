@@ -212,8 +212,8 @@ fitch.downpass <- function(states_matrix, tree) {
             ## Else set it to be the union of the descendants
             states_matrix$Dp1[[node]] <- get.union.incl(left, right)
            
-            ## Activate the states
-            states_matrix$tracker$Dp1[[node]] <- get.union.incl(left, right)
+            ## Increment the tree length
+            states_matrix$length <- states_matrix$length + 1
 
         }
     }
@@ -734,9 +734,9 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
     # cex <- ifelse(ape::Ntip(tree) > 100, 0.1, cex)
 
     ## Plotting the tree
-    plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, ...)
+    plot(ape::ladderize(tree, right = FALSE), show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5) ; warning("DEBUG plot")
-    legend("topleft", paste("Tree length is", states_matrix$length),  bty = "n")
+    legend("topleft", paste("Tree length is", states_matrix$length),  bty = "n", cex = 1.2)
 
     ## Add the tip states
     if(class(character) == "character" && length(character) == 1) {

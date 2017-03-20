@@ -124,7 +124,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL) {
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
 
     ## Set a length buffer
-    states_matrix$length <- NULL
+    states_matrix$length <- 0
 
     return(states_matrix)
 }
@@ -452,14 +452,19 @@ second.downpass <- function(states_matrix, tree) {
 
                 ## Morphy style counting
                 if(any(left != -1) && any(right != -1)) {
-                    if(!is.null(get.common(states_matrix$Dp2[[node]], actives))) {
+
+                    # if(!is.null(get.common(states_matrix$Dp2[[node]], actives))) {
+                    if(!is.null(actives) && all(states_matrix$Dp2[[node]] %in% get.common(states_matrix$Dp2[[node]], actives))) {
                         states_matrix$length <- states_matrix$length+1
+                        # cat(paste("node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
                     } else {
                         actives <- unique(c(states_matrix$Dp2[[node]], actives))
+                        ## Remove inapplicables
                         actives <- actives[which(actives != -1)]
+                        # cat(paste("node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
                     }
                 }
-
+                
                 ## Adding activation
                 # states_matrix$tracker$Dp2[[node]] <- states_matrix$Dp2[[node]]
 
@@ -475,7 +480,9 @@ second.downpass <- function(states_matrix, tree) {
                 
                 ## Morphy counting
                 actives <- unique(c(union_desc, actives))
+                ## Remove inapplicables
                 actives <- actives[which(actives != -1)]
+                # cat(paste("node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
             }
         }
     }
@@ -553,30 +560,33 @@ second.uppass <- function(states_matrix, tree) {
                     states_matrix$Up2[[node]] <- common_desc
                 } else { # If there is no state in common between left and right
                     states_matrix$Up2[[node]] <- curr_node
-    
-                    ## Morphy counting
-                    if(!is.null(get.common(get.union.incl(left, right), actives))) {
-                        states_matrix$length <- states_matrix$length+1
-                    }
-
-
-                    ## Adding activation
-                    #union_desc <- get.union.incl(left, right)
-                    #states_matrix$tracker$Up2[[node]] <- union_desc[which(union_desc != -1)]
                 }
             }
         } else { # If there is no applicable state in the previous pass
             states_matrix$Up2[[node]] <- curr_node
 
+            ## Morphy counting
             if(is.null(get.common(left, right))) {
-                ## Adding activation
-                union_desc <- get.union.incl(left, right)
-                #states_matrix$tracker$Up2[[node]] <- union_desc[which(union_desc != -1)]
-
-                ## Morphy counting
-                actives <- unique(c(union_desc, actives))
-                actives <- actives[which(actives != -1)]
+                if(!is.null(get.common(get.union.incl(left, right), actives))) {
+                    states_matrix$length <- states_matrix$length+1
+                    # cat(paste("node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
+                }
             }
+            ## Adding activation
+            #union_desc <- get.union.incl(left, right)
+            #states_matrix$tracker$Up2[[node]] <- union_desc[which(union_desc != -1)]
+        }
+
+        if(is.null(get.common(left, right))) {
+            ## Adding activation
+            union_desc <- get.union.incl(left, right)
+            #states_matrix$tracker$Up2[[node]] <- union_desc[which(union_desc != -1)]
+
+            ## Morphy counting
+            actives <- unique(c(union_desc, actives))
+            ## Remove inapplicables
+            actives <- actives[which(actives != -1)]
+            # cat(paste("node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
         }
     }
     return(states_matrix)
@@ -781,7 +791,7 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
     ## Plotting the tree
     plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5) ; warning("DEBUG plot")
-    # legend("topleft", paste("Tree length is", states_matrix$length), border = "white")
+    legend("topleft", paste("Tree length is", states_matrix$length),  bty = "n")
 
     ## Add the tip states
     if(class(character) == "character" && length(character) == 1) {

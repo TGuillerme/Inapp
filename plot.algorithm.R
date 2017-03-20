@@ -423,13 +423,13 @@ second.downpass <- function(states_matrix, tree) {
     states_matrix$Dp2 <- states_matrix$Char
 
     ## Loop through the nodes
-    for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) {
+    for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) { # flip_clade <- c(18,17,16,15,14,23,22,21,20,19,13)
 
         curr_node <- states_matrix$Up1[[node]]
         ## Select the descendants and ancestors
         desc_anc <- desc.anc(node, tree)
-        right <- states_matrix$Up1[desc_anc[1]][[1]]
-        left <- states_matrix$Up1[desc_anc[2]][[1]]
+        right <- states_matrix$Dp2[desc_anc[1]][[1]]
+        left <- states_matrix$Dp2[desc_anc[2]][[1]]
 
         if(any(curr_node != -1)) {
             ## Get the states in common between the descendants
@@ -745,6 +745,8 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
         tips_labels <- plot.convert.state(states_matrix[[1]][1:ape::Ntip(tree)], missing = TRUE)
         ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
     }
+
+    ## ADD THE NODE LABELS
 
     if(length(passes) > 0) {
         node_labels <- plot.convert.state(states_matrix[[passes[1]+1]][-c(1:ape::Ntip(tree))])

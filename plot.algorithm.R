@@ -214,6 +214,7 @@ fitch.downpass <- function(states_matrix, tree) {
            
             ## Increment the tree length
             states_matrix$length <- states_matrix$length + 1
+            states_matrix$tracker$Dp1[[node]] <- c(0, states_matrix$tracker$Dp1[[node]])
 
         }
     }
@@ -455,12 +456,14 @@ second.downpass <- function(states_matrix, tree) {
                         ## Increment the count
                         states_matrix$length <- states_matrix$length+1
                         # cat(paste("pass 3 - node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
+                        states_matrix$tracker$Dp2[[node]] <- c(1, states_matrix$tracker$Dp2[[node]])
                     } else {
                         ## Activate the states
                         actives <- unique(c(states_matrix$Dp2[[node]], actives))
                         ## Remove inapplicables
                         actives <- sort(actives[which(actives != -1)])
                         # cat(paste("pass 3 - node ", node, ": activated states c1 (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
+                        states_matrix$tracker$Dp2[[node]] <- c(0, states_matrix$tracker$Dp2[[node]])
                     }
                 }
             }
@@ -476,6 +479,7 @@ second.downpass <- function(states_matrix, tree) {
                 ## Remove inapplicables
                 actives <- sort(actives[which(actives != -1)])
                 # cat(paste("pass 3 - node ", node, ": activated states c2 (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
+                states_matrix$tracker$Dp2[[node]] <- c(0, states_matrix$tracker$Dp2[[node]])
             }
         }
     }
@@ -580,6 +584,7 @@ second.uppass <- function(states_matrix, tree) {
                     ## Increment the counting
                     states_matrix$length <- states_matrix$length+1
                     # cat(paste("pass 4 - node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
+                    states_matrix$tracker$Up2[[node]] <- c(1, states_matrix$tracker$Up2[[node]])
                 }
             }
         }
@@ -592,6 +597,7 @@ second.uppass <- function(states_matrix, tree) {
             ## Remove inapplicables
             actives <- sort(actives[which(actives != -1)])
             # cat(paste("pass 4 - node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
+            states_matrix$tracker$Up2[[node]] <- c(0, states_matrix$tracker$Up2[[node]])
         }
     }
     return(states_matrix)

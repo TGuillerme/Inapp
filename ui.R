@@ -6,7 +6,7 @@ shinyUI(fluidPage(
     hr(),
     fluidRow(
         ## Tree input
-        column(3,
+        column(4,
           radioButtons("tree", label = h3("Tree input method"), choices = list("Random" = 1, "User" = 2, "Nexus input" = 3), selected = 1),
           ## Random tree
           conditionalPanel(
@@ -44,29 +44,58 @@ shinyUI(fluidPage(
             condition = "input.character == 3",
               fileInput("nexus_matrix", label = h5("Select a newick format matrix")),
               numericInput("character_num", label = h5("Selected character:"), value = 1)
+          ),
+
+          ##
+          hr(),
+          h3("Export results"),
+          actionButton("export_newick", label = "Newick"),
+          actionButton("export_pdf", label = "pdf"),
+          actionButton("export_xml", label = "xml"),
+          hr(),
+          selectInput("cite_type", label = "Cite us", choices = list("format", "plain", "BibTeX"), selected = "format"),
+          conditionalPanel(
+            condition = "input.cite_type == \"plain\"",
+              helpText("Bob, Bib and Bub (2001) Something shiny here!.")
+          ),
+          conditionalPanel(
+            condition = "input.cite_type == \"BibTeX\"",
+              helpText("@article{ShinyApp,
+                author={Bob, and Bib, and Bab},\n\ttitle={Something shiny},\n\tjournal={Combinatorics},\n\tvolume={1},\n\tnumber={1},\n\tpages={1:2},\nyear={2001}}")
           )
         ),
 
         ## Display
-        column(5,
+        column(4,
           ## Reconstruction
-          radioButtons("method", label = h3("Reconstruction method"), choices = list("Inapplicable Fitch" = 1, "Normal Fitch" = 2), selected = 1),
+          radioButtons("method", label = h3("Reconstruction method"), choices = list("Inapplicable Fitch" = 1, "Normal Fitch" = 2), selected = 1, inline = TRUE),
+
+          ## Inapplicable algorithm
           conditionalPanel(
-            ## Inapplicable
+            ## Which passes to show?
             condition = "input.method == 1",
               checkboxGroupInput("showPassInapp", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2, "2nd Downpass" = 3, "2nd Uppass" = 4), selected = c(1,2,3,4))
-              # helpText("Tick the passes to be displayed on the nodes")
           ),
+
+          ## Fitch algorithm
           conditionalPanel(
-            ## Fitch
+            ## Which passes to show?
             condition = "input.method == 2",
-              radioButtons("fitch_inapp", label = h5("Inapplicable tokens are:"), choices = list("Missing data (?)" = 1, "An extra state" = 2), selected = 1),
+              radioButtons("fitch_inapp", label = h5("Inapplicable tokens are:"), choices = list("Missing data (?)" = 1, "An extra state" = 2), selected = 1, inline = TRUE),
               helpText("When treated as ?, - is equal to all states; when treated as an extra state, - is equal to a new character state."),
-              checkboxGroupInput("showPassFitch", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2), selected = c(1,2)),
-              helpText("Tick the passes to be displayed on the nodes") 
+              checkboxGroupInput("showPassFitch", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2), selected = c(1,2))
           ),
+
           ## Show activations/counts
           checkboxGroupInput("counts", label = h5("Show counts"),  choices = list("Activations" = 1, "Homoplasies" = 2), selected = 3),
+          
+          ## Fitch inapplicable states
+          # conditionalPanel(
+          #   condition = "input.method == 2",
+          #     radioButtons("fitch_inapp", label = h5("Inapplicable tokens are:"), choices = list("Missing data (?)" = 1, "An extra state" = 2), selected = 1),
+          #     helpText("When treated as ?, - is equal to all states; when treated as an extra state, - is equal to a new character state.")
+          # ),
+
           # conditionalPanel(
           #   condition = "any(input.counts == 1)",
           #     helpText("States activations are denoted with an asterisk.")
@@ -77,43 +106,9 @@ shinyUI(fluidPage(
           # ),
           hr(),
           actionButton("refresh", label = "Refresh")
-        )
+          #actionButton("refresh", label = "Refresh"),
 
-        # column(6,
-        #   ## Reconstruction
-        #   radioButtons("method", label = h3("Reconstruction method"), choices = list("Inapplicable Fitch" = 1, "Normal Fitch" = 2), selected = 1),
-        #   conditionalPanel(
-        #     ## Inapplicable
-        #     condition = "input.method == 1",
-        #       checkboxGroupInput("showPassInapp", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2, "2nd Downpass" = 3, "2nd Uppass" = 4), selected = c(1,2,3,4))
-        #       # helpText("Tick the passes to be displayed on the nodes")
-        #   ),
-        #   conditionalPanel(
-        #     ## Fitch
-        #     condition = "input.method == 2",
-        #       radioButtons("fitch_inapp", label = h5("Inapplicable tokens are:"), choices = list("Missing data (?)" = 1, "An extra state" = 2), selected = 1),
-        #       helpText("When treated as ?, - is equal to all states; when treated as an extra state, - is equal to a new character state."),
-        #       checkboxGroupInput("showPassFitch", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2), selected = c(1,2)),
-        #       helpText("Tick the passes to be displayed on the nodes")
-        #   ),
-        #   ## Show activations/counts
-        #   checkboxGroupInput("counts", label = h5("Show counts"),  choices = list("Activations" = 1, "Homoplasies" = 2), selected = 3),
-        #   # conditionalPanel(
-        #   #   condition = "any(input.counts == 1)",
-        #   #     helpText("States activations are denoted with an asterisk.")
-        #   # ),
-        #   # conditionalPanel(
-        #   #   condition = "any(input.counts == 2)",
-        #   #     helpText("Homoplasies will be displayed somehow.")
-        #   # ),
-        #   hr(),
-        #   actionButton("refresh", label = "Refresh")
-        # )
-       ## Output
-       ## export newick 
-       ## export png
-       ## export phylo xml
-       ## Citation!
+        )
     )
   ),
   

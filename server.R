@@ -183,14 +183,21 @@ shinyServer(
             ## Plotting the results
             ## ~~~~~~~~~~
 
-            # Inapplicable algorithm
+            ## Graphical options
+            if(is.null(input$showlabels)) {
+                showlabels <- NULL
+            } else {
+                showlabels <- as.numeric(input$showlabels)
+            }
+
+            ## Inapplicable algorithm
             if(as.numeric(input$method) == 1) {
-                plot.inapplicable.algorithm(tree, character, passes = as.vector(as.numeric(input$showPassInapp)), method = "Inapplicable", inapplicable = NULL, show.tip.label = input$showtiplabels)
+                plot.inapplicable.algorithm(tree, character, passes = as.vector(as.numeric(input$showPassInapp)), method = "Inapplicable", inapplicable = NULL, show.labels = showlabels)
             }
 
             ## Fitch algorithm
             if(as.numeric(input$method) == 2) {
-                plot.inapplicable.algorithm(tree, character, passes = as.vector(as.numeric(input$showPassFitch)), method = "Fitch", inapplicable = as.numeric(input$fitch_inapp), show.tip.label = input$showtiplabels)
+                plot.inapplicable.algorithm(tree, character, passes = as.vector(as.numeric(input$showPassFitch)), method = "Fitch", inapplicable = as.numeric(input$fitch_inapp), show.labels = showlabels)
             }
 
         })#, height = 1200, width = 600)

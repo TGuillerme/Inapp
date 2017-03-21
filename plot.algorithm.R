@@ -672,7 +672,7 @@ plot.convert.state <- function(character, missing = FALSE) {
 #' @param tree \code{phylo}, a tree
 #' @param character \code{character}, a vector of character states
 #' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
-#' @param show.tip.label \code{logical}, whether to display tip labels (default = \code{FALSE}).
+#' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of one or two colors to be used for displaying respectively the tips and the nodes.
 #' @param method \code{"Inapplicable"} for the new algorithm or \code{"Fitch"} for classic Fitch
 #' @param inapplicable optional, when \code{method = "Fitch"}, how to treat the inapplicable data (\code{1} = as missing data, \code{2} = as an extra state).
@@ -691,7 +691,7 @@ plot.convert.state <- function(character, missing = FALSE) {
 
 # plot.inapplicable.algorithm(tree, character)
 
-plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), show.tip.label = FALSE, col.tips.nodes = c("orange", "lightblue"), method = "Inapplicable", inapplicable = NULL, ...) {
+plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "lightblue"), method = "Inapplicable", inapplicable = NULL, ...) {
 
     ## SANITIZING
     ## tree character done in make.states.matrix
@@ -700,10 +700,19 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
     if(class(passes) != "numeric" | any(is.na(match(passes, c(1,2,3,4))))) {
         stop("passes argument must be any integer(s) between 1 and 4.")
     }
-    ## show.tip.label
-    if(class(show.tip.label) != "logical") {
-        stop("show.tip.label argument must be logical.")
+    ## show.labels
+    if(!is.null(show.labels)) {
+        if(class(show.labels) != "numeric") {
+            stop("show.labels argument must be either 1 for tips, 2 for nodes or c(1,2) for both")
+        }
+        ## Setting up the labels options
+        show.tip.label <- ifelse(any(1 %in% show.labels) ,TRUE, FALSE)
+        show.node.label <- ifelse(any(2 %in% show.labels) ,TRUE, FALSE)
+    } else {
+        show.tip.label <- show.tip.label <- FALSE
     }
+
+
     ## col.tips.nodes
     if(length(col.tips.nodes) == 1) {
         col.tips.nodes <- rep(col.tips.nodes, 2)
@@ -725,6 +734,7 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
         inapplicable <- 1
     }
 
+
     ## RUN THE STATE RECONSTRUCTION (4 passes)
     if(method == "Inapplicable") {
         states_matrix <- inapplicable.algorithm(tree, character, passes = 4, method = method, inapplicable = inapplicable)
@@ -744,6 +754,7 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5) ; warning("DEBUG plot")
     legend("topleft", paste("Tree length is", states_matrix$length),  bty = "n", cex = 1.2)
 
+
     ## Add the tip states
     if(class(character) == "character" && length(character) == 1) {
         ape::tiplabels(as.character(strsplit(as.character(character), "")[[1]]), cex = cex, bg = col.tips.nodes[1], adj = 1)
@@ -755,8 +766,15 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
     ## ADD THE NODE LABELS
 
     if(length(passes) > 0) {
+
         node_labels <- plot.convert.state(states_matrix[[passes[1]+1]][-c(1:ape::Ntip(tree))])
         node_labels <- paste(paste(passes[1], ":", sep = ""), node_labels)
+
+        ## Adding node numbers (optional)
+        if(show.node.label) {
+            node_labels <- paste(paste("n",(ape::Ntip(tree)+1):(ape::Ntip(tree) + ape::Nnode(tree)), "\n", sep = ""), node_labels, sep = "")
+        }
+        
         for(pass in passes[-1]) {
             node_labels <- paste(node_labels, paste(pass, ": ", plot.convert.state(states_matrix[[pass + 1]][-c(1:ape::Ntip(tree))]), sep = ""), sep = "\n")
         }

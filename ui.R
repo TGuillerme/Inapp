@@ -8,32 +8,38 @@ shinyUI(fluidPage(
         ## Tree input
         column(3,
           radioButtons("tree", label = h3("Tree input method"), choices = list("Random" = 1, "User" = 2, "Nexus input" = 3), selected = 1),
+          ## Random tree
           conditionalPanel(
             condition = "input.tree == 1",
               selectInput("tree_type", label = "Tree topology type", choices = list("Random", "Balanced", "Left", "Right", "Left-Right"), selected = "Random"),
               sliderInput("n_taxa", label = "Number of taxa:", min = 3, max = 100, value = 12),
-              helpText("If the tree type 'Balanced', the number of taxa must be a power of 2 (2,4,8, ...); if the tree type is 'Left-Right' the number of taxa must be even. In both cases, if the number of taxa does not match, a random tree is used instead."),
-              checkboxInput("showtiplabels", label = "Show tip labels", value = FALSE)
+              helpText("If the tree type 'Balanced', the number of taxa must be a power of 2 (2,4,8, ...); if the tree type is 'Left-Right' the number of taxa must be even. In both cases, if the number of taxa does not match, a random tree is used instead.")
           ),
+          ## Newick tree
           conditionalPanel(
             condition = "input.tree == 2",
               textInput("newick_tree", label = h5("Enter a newick tree:"), value = "((a,b),(c,d));"),
               helpText("Make sure the number of opening and closing brackets match and that no commas (',') or the semi-colon (';') was omitted.")
           ),
+          ## Nexus tree
           conditionalPanel(
             condition = "input.tree == 3",
               fileInput("nexus_tree", label = h5("Select a newick format tree"))
-          )
+          ),
+          ## Tips and nodes
+          checkboxGroupInput("showlabels", label = "Show labels", choices = list("Tips" = 1, "Nodes" = 2), selected = NULL)
         ),
         
         ## Character input
         column(4,
           radioButtons("character", label = h3("Character input method"), choices = list("Random" = 1, "User" = 2, "Nexus input" = 3), selected = 1),
+          ## Input character
           conditionalPanel(
             condition = "input.character == 2",
               textInput("character_string", label = h5("Enter a character string:"), value = "1?2-"),
               helpText("The number of characters must match the size of the tree! Accepted states are any values from 0 to 9, - for the inapplicable token and ? for all states (missing data).")
           ),
+          ## Nexus character
           conditionalPanel(
             condition = "input.character == 3",
               fileInput("nexus_matrix", label = h5("Select a newick format matrix")),
@@ -43,31 +49,71 @@ shinyUI(fluidPage(
 
         ## Display
         column(5,
+          ## Reconstruction
           radioButtons("method", label = h3("Reconstruction method"), choices = list("Inapplicable Fitch" = 1, "Normal Fitch" = 2), selected = 1),
           conditionalPanel(
+            ## Inapplicable
             condition = "input.method == 1",
-              checkboxGroupInput("showPassInapp", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2, "2nd Downpass" = 3, "2nd Uppass" = 4), selected = c(1,2,3,4)),
-              helpText("Tick the passes to be displayed on the nodes")
+              checkboxGroupInput("showPassInapp", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2, "2nd Downpass" = 3, "2nd Uppass" = 4), selected = c(1,2,3,4))
+              # helpText("Tick the passes to be displayed on the nodes")
           ),
           conditionalPanel(
+            ## Fitch
             condition = "input.method == 2",
               radioButtons("fitch_inapp", label = h5("Inapplicable tokens are:"), choices = list("Missing data (?)" = 1, "An extra state" = 2), selected = 1),
               helpText("When treated as ?, - is equal to all states; when treated as an extra state, - is equal to a new character state."),
               checkboxGroupInput("showPassFitch", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2), selected = c(1,2)),
-              helpText("Tick the passes to be displayed on the nodes")
+              helpText("Tick the passes to be displayed on the nodes") 
           ),
-
-          ## Add a count step interface - always count homoplasies + option where are the homoplasies and/or where are the activations
-          ## Add an ACCTRAN DELTRAN button for showing the transformations
-
+          ## Show activations/counts
+          checkboxGroupInput("counts", label = h5("Show counts"),  choices = list("Activations" = 1, "Homoplasies" = 2), selected = 3),
+          # conditionalPanel(
+          #   condition = "any(input.counts == 1)",
+          #     helpText("States activations are denoted with an asterisk.")
+          # ),
+          # conditionalPanel(
+          #   condition = "any(input.counts == 2)",
+          #     helpText("Homoplasies will be displayed somehow.")
+          # ),
           hr(),
           actionButton("refresh", label = "Refresh")
         )
 
-
+        # column(6,
+        #   ## Reconstruction
+        #   radioButtons("method", label = h3("Reconstruction method"), choices = list("Inapplicable Fitch" = 1, "Normal Fitch" = 2), selected = 1),
+        #   conditionalPanel(
+        #     ## Inapplicable
+        #     condition = "input.method == 1",
+        #       checkboxGroupInput("showPassInapp", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2, "2nd Downpass" = 3, "2nd Uppass" = 4), selected = c(1,2,3,4))
+        #       # helpText("Tick the passes to be displayed on the nodes")
+        #   ),
+        #   conditionalPanel(
+        #     ## Fitch
+        #     condition = "input.method == 2",
+        #       radioButtons("fitch_inapp", label = h5("Inapplicable tokens are:"), choices = list("Missing data (?)" = 1, "An extra state" = 2), selected = 1),
+        #       helpText("When treated as ?, - is equal to all states; when treated as an extra state, - is equal to a new character state."),
+        #       checkboxGroupInput("showPassFitch", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2), selected = c(1,2)),
+        #       helpText("Tick the passes to be displayed on the nodes")
+        #   ),
+        #   ## Show activations/counts
+        #   checkboxGroupInput("counts", label = h5("Show counts"),  choices = list("Activations" = 1, "Homoplasies" = 2), selected = 3),
+        #   # conditionalPanel(
+        #   #   condition = "any(input.counts == 1)",
+        #   #     helpText("States activations are denoted with an asterisk.")
+        #   # ),
+        #   # conditionalPanel(
+        #   #   condition = "any(input.counts == 2)",
+        #   #     helpText("Homoplasies will be displayed somehow.")
+        #   # ),
+        #   hr(),
+        #   actionButton("refresh", label = "Refresh")
+        # )
        ## Output
-       ## export matrix? 
-       ## export tree? 
+       ## export newick 
+       ## export png
+       ## export phylo xml
+       ## Citation!
     )
   ),
   

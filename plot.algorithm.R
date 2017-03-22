@@ -709,7 +709,7 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
         show.tip.label <- ifelse(any(1 %in% show.labels) ,TRUE, FALSE)
         show.node.label <- ifelse(any(2 %in% show.labels) ,TRUE, FALSE)
     } else {
-        show.tip.label <- show.tip.label <- FALSE
+        show.tip.label <- show.node.label <- FALSE
     }
 
 

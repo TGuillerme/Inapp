@@ -664,12 +664,13 @@ NA.algorithm <- function(tree, character, passes = 4, method, inapplicable) {
 #' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of one or two colors to be used for displaying respectively the tips and the nodes.
+#' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
 #' @param ... any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #' 
 #' @author Thomas Guillerme
 
 
-plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "lightblue"), ...) {
+plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "lightblue"), counts = 0, ...) {
 
 
     ## Internal plot utility: converts characters (-1,0,n,c(-1,0,n)) into character ("-0n?")
@@ -701,6 +702,23 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
         return(unlist(lapply(character, function(X) paste(as.character(X), collapse = ""))))
     }
 
+    ## Selecting node labels with activity/counts
+    select.nodes <- function(states_matrix, tree, pass, what) {
+        ## Lapply function
+        get.nodes <- function(node, what) {
+            return(any(node == what))
+        }
+        ## Select the nodes with activation
+        return(unlist(lapply(states_matrix$tracker[[pass]][-c(1:ape::Ntip(tree))], get.nodes, what = what)))
+    }
+
+    ## Actives and counts additions (to node labels)
+    add.actives <- function(node_labels, states_matrix, tree, passes, pass) {
+        return(paste(node_labels, ifelse(select.nodes(states_matrix, tree, pass = passes[pass], what = 0), "*", ""), sep = ""))
+    }
+    add.counts <- function(node_labels, states_matrix, tree, passes, pass) {
+        return(paste(node_labels, ifelse(select.nodes(states_matrix, tree, pass = passes[pass], what = 0), "+", ""), sep = ""))
+    }
 
     ## SANITIZING
     ## tree character done in make.states.matrix
@@ -731,6 +749,14 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
         }
     }
 
+    ## col.tips.nodes
+    if(any(counts != 0) && !(counts %in% c(1,2))) {
+        stop("counts argument must be either 1 for displaying activations and/or 2 for homoplasies.")
+    } else {
+        plot_activations <- ifelse(any(counts == 1), TRUE, FALSE)
+        plot_homoplasies <- ifelse(any(counts == 2), TRUE, FALSE)
+    }
+
 
     ## Get the text plotting size
     cex <- 1
@@ -738,8 +764,23 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
     ## Plotting the tree
     plot(ape::ladderize(tree, right = FALSE), show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5) ; warning("DEBUG plot")
-    legend("topleft", paste("Tree length is", states_matrix$length),  bty = "n", cex = 1.2)
 
+    ## Adding the legend
+    if(all(counts == 0)) {
+        legend("topleft", paste("Tree length is", states_matrix$length),  bty = "n", cex = 1.2)
+    } else {
+        if(all(counts == 1)) {
+            legend("topleft", c(paste("Tree length is", states_matrix$length), "* = states activation"),  bty = "n", cex = 1.2)
+        } else {
+            if(all(counts == 2)) {
+                legend("topleft", c(paste("Tree length is", states_matrix$length), "+ = length increment"),  bty = "n", cex = 1.2)
+            } else {
+                if(all(counts %in% c(1,2))) {
+                    legend("topleft", c(paste("Tree length is", states_matrix$length), "* = states activation", "+ = length increment"),  bty = "n", cex = 1.2)
+                }
+            }
+        }
+    }
 
     ## Add the tip states
     if(class(character) == "character" && length(character) == 1) {
@@ -753,17 +794,30 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
 
     if(length(passes) > 0) {
 
+        ## Get the first set of node labels
         node_labels <- plot.convert.state(states_matrix[[passes[1]+1]][-c(1:ape::Ntip(tree))])
         node_labels <- paste(paste(passes[1], ":", sep = ""), node_labels)
+
+        ## Adding the activations (if necessary)
+        if(any(counts == 1)) node_labels <- add.actives(node_labels, states_matrix, tree, passes, 1)
+        ## Adding the counts (if necessary)
+        if(any(counts == 2)) node_labels <- add.counts(node_labels, states_matrix, tree, passes, 1)
 
         ## Adding node numbers (optional)
         if(show.node.label) {
             node_labels <- paste(paste("n",(ape::Ntip(tree)+1):(ape::Ntip(tree) + ape::Nnode(tree)), "\n", sep = ""), node_labels, sep = "")
         }
         
+        ## Add the extra node labels
         for(pass in passes[-1]) {
             node_labels <- paste(node_labels, paste(pass, ": ", plot.convert.state(states_matrix[[pass + 1]][-c(1:ape::Ntip(tree))]), sep = ""), sep = "\n")
+            ## Adding the activations (if necessary)
+            if(any(counts == 1)) node_labels <- add.actives(node_labels, states_matrix, tree, passes, pass)
+            ## Adding the counts (if necessary)
+            if(any(counts == 2)) node_labels <- add.counts(node_labels, states_matrix, tree, passes, pass)
         }
+
+        ## Plot the node labels
         ape::nodelabels(node_labels, cex = cex-(1-cex)*(length(passes)*0.85), bg = col.tips.nodes[2])
     }
 

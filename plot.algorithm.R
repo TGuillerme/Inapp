@@ -603,7 +603,6 @@ second.uppass <- function(states_matrix, tree) {
     return(states_matrix)
 }
 
-
 #' @title Inapplicable algorithm
 #'
 #' @description Runs a full inapplicable algorithm
@@ -611,17 +610,37 @@ second.uppass <- function(states_matrix, tree) {
 #' @param tree \code{phylo}, a tree
 #' @param character \code{character}, a vector of character states
 #' @param passes \code{numeric}, the number of passes in the tree; from \code{1} to \code{4} (default)
-#' @param inapplicable \code{NULL}, \code{1}, \code{2} for respectively treat inapplicable as -, ? or n
+#' @param method either \code{"Fitch"} or \code{"NA"}
+#' @param inapplicable When method is \code{"Fitch"}, how do deal with inapplicable data: \code{1}, \code{2} for respectively treating them as ? or an extra state.
 #' 
 #' @author Thomas Guillerme
 
-inapplicable.algorithm <- function(tree, character, passes = 4, method, inapplicable) {
+NA.algorithm <- function(tree, character, passes = 4, method, inapplicable) {
+
+    ## Method
+    if(!(method %in% c("NA","Fitch"))) {
+        stop("method should be 'Fitch' or 'NA'")
+    }
+
+    ## Set up the Inapplicable interpretation
+    if(method == "NA") {
+        inapplicable = NULL
+    } else {
+        if(missing(inapplicable)) {
+            ## Treating as missing by default
+            inapplicable = 1
+        } else {
+            if(!(inapplicable %in% c(1,2))) {
+                stop("Inapplicable argument should be 1 (treated as ?) or 2 (treated as an extra state).")
+            }
+        }
+    }
 
     ## Setting up the output state matrix
     states_matrix <- make.states.matrix(tree, character, inapplicable)
 
     ## Setting the list of passes
-    if(method == "Inapplicable") {
+    if(method == "NA") {
         n_passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
     } else {
         n_passes <- list(fitch.downpass, fitch.uppass)
@@ -635,63 +654,53 @@ inapplicable.algorithm <- function(tree, character, passes = 4, method, inapplic
     return(states_matrix)
 }
 
-## Internal plot utility: converts characters (-1,0,n,c(-1,0,n)) into character ("-0n?")
-plot.convert.state <- function(character, missing = FALSE) {
-
-    plot.convert.inappli <- function(X) {
-        return(ifelse(X == -1, "-", X))
-    }
-
-    plot.convert.missing <- function(X, all_states) {
-        if(length(X) == length(all_states) && all(X == all_states)) {
-            return("?")
-        } else {
-            return(X)
-        }
-    }
-
-    if(missing) {
-        ## Getting all states
-        all_states <- unique(unlist(character))
-        ## Convert the missing states
-        character <- lapply(character, plot.convert.missing, all_states)
-    }
-
-    ## Convert the inapplicables
-    character <- lapply(character, plot.convert.inappli)
-
-    ## Convert into character
-    return(unlist(lapply(character, function(X) paste(as.character(X), collapse = ""))))
-}
-
 
 #' @title Plot inapplicable algorithm
 #'
 #' @description Plots the results of the inapplicable algorithm
 #'
-#' @param tree \code{phylo}, a tree
-#' @param character \code{character}, a vector of character states
+#' @param states_matrix \code{list}, a list of state changes from \code{inapplicable.algorithm}
+#' @param tree \code{phylo}, the tree used in the analysis
 #' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of one or two colors to be used for displaying respectively the tips and the nodes.
-#' @param method \code{"Inapplicable"} for the new algorithm or \code{"Fitch"} for classic Fitch
-#' @param inapplicable optional, when \code{method = "Fitch"}, how to treat the inapplicable data (\code{1} = as missing data, \code{2} = as an extra state).
-##' @param col.character \code{logical} or \code{character}, whether to display the characters states as colors.
 #' @param ... any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #' 
 #' @author Thomas Guillerme
 
-# ## DEBUG
-# warning("DEBUG")
-# tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
-# character <- "01---1010101"
-# tree <- read.tree(text = "(((1,2),(3,4)),5);")
-# character <- "0-2-0"
+
+plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "lightblue"), ...) {
 
 
-# plot.inapplicable.algorithm(tree, character)
+    ## Internal plot utility: converts characters (-1,0,n,c(-1,0,n)) into character ("-0n?")
+    plot.convert.state <- function(character, missing = FALSE) {
 
-plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "lightblue"), method = "Inapplicable", inapplicable = NULL, ...) {
+        plot.convert.inappli <- function(X) {
+            return(ifelse(X == -1, "-", X))
+        }
+
+        plot.convert.missing <- function(X, all_states) {
+            if(length(X) == length(all_states) && all(X == all_states)) {
+                return("?")
+            } else {
+                return(X)
+            }
+        }
+
+        if(missing) {
+            ## Getting all states
+            all_states <- unique(unlist(character))
+            ## Convert the missing states
+            character <- lapply(character, plot.convert.missing, all_states)
+        }
+
+        ## Convert the inapplicables
+        character <- lapply(character, plot.convert.inappli)
+
+        ## Convert into character
+        return(unlist(lapply(character, function(X) paste(as.character(X), collapse = ""))))
+    }
+
 
     ## SANITIZING
     ## tree character done in make.states.matrix
@@ -712,7 +721,6 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
         show.tip.label <- show.node.label <- FALSE
     }
 
-
     ## col.tips.nodes
     if(length(col.tips.nodes) == 1) {
         col.tips.nodes <- rep(col.tips.nodes, 2)
@@ -722,32 +730,10 @@ plot.inapplicable.algorithm <- function(tree, character, passes = c(1,2,3,4), sh
             warning("Only the two first colors from col.tips.nodes are used.")
         }
     }
-    ## method
-    if(method != "Inapplicable" && method != "Fitch") {
-        stop("method should be 'Fitch' or 'Inapplicable'")
-    }
-    ## If Fitch, only use two passes
-    if(method == "Fitch" && !all(is.na(match(passes, c(3,4)))) ) {
-        passes <- c(1,2)
-    }
-    if(method == "Fitch" && is.null(inapplicable)) {
-        inapplicable <- 1
-    }
 
-
-    ## RUN THE STATE RECONSTRUCTION (4 passes)
-    if(method == "Inapplicable") {
-        states_matrix <- inapplicable.algorithm(tree, character, passes = 4, method = method, inapplicable = inapplicable)
-    } else {
-        states_matrix <- inapplicable.algorithm(tree, character, passes = 2, method = method, inapplicable = inapplicable)
-    }
 
     ## Get the text plotting size
-    # cex <- 1 - (ape::Ntip(tree)/100)
     cex <- 1
-    ## Correct if ape::Ntip < 10 or ape::Ntip > 100
-    # cex <- ifelse(ape::Ntip(tree) < 10, 1, cex)
-    # cex <- ifelse(ape::Ntip(tree) > 100, 0.1, cex)
 
     ## Plotting the tree
     plot(ape::ladderize(tree, right = FALSE), show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, ...)

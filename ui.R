@@ -1,137 +1,173 @@
 shinyUI(fluidPage(
 
-  # Create a row for additional information
+  ## ~~~~~~~~~~~~~~~~
+  ## User's interface
+  ## ~~~~~~~~~~~~~~~~
+
   wellPanel(
+  
     titlePanel("Inapplicable data reconstruction"),
+    p("This will be supplementary material from", a(href="", "an awesome paper"), "."),
     hr(),
+  
     fluidRow(
-        ## Tree input
-        column(4,
+
+        ## ---------------
+        ## Tree parameters
+        ## ---------------
+        column(width = 4,
+          ## Tree input - input$tree
           radioButtons("tree", label = h3("Tree input method"), choices = list("Random" = 1, "User" = 2, "Nexus input" = 3), selected = 1),
-          ## Random tree
-          conditionalPanel(
-            condition = "input.tree == 1",
-              selectInput("tree_type", label = "Tree topology type", choices = list("Random", "Balanced", "Left", "Right", "Left-Right"), selected = "Random"),
-              sliderInput("n_taxa", label = "Number of taxa:", min = 3, max = 100, value = 12),
-              helpText("If the tree type 'Balanced', the number of taxa must be a power of 2 (2,4,8, ...); if the tree type is 'Left-Right' the number of taxa must be even. In both cases, if the number of taxa does not match, a random tree is used instead.")
+
+          ## Random trees
+          conditionalPanel(condition = "input.tree == 1",
+            ## Type of tree - input$tree_type
+            selectInput("tree_type", label = "Tree topology type", choices = list("Random", "Balanced", "Left", "Right", "Left-Right"), selected = "Random"),
+            ## Number of taxa - input$n_taxa
+            sliderInput("n_taxa", label = "Number of taxa:", min = 3, max = 100, value = 12),
+            ## Messages for tree type :
+            ## Help text for balanced trees
+            conditionalPanel(condition = "input.tree_type == \"Balanced\"", helpText("For a balanced tree, the number of taxa must be a power of 2 otherwise a random tree is used instead.")),
+            ## Help text for balanced trees
+            conditionalPanel(condition = "input.tree_type == \"Left-Right\"", helpText("For a 'Left-Right' tree, the number of taxa must be even otherwise a random tree is used instead."))
           ),
-          ## Newick tree
-          conditionalPanel(
-            condition = "input.tree == 2",
-              textInput("newick_tree", label = h5("Enter a newick tree:"), value = "((a,b),(c,d));"),
-              helpText("Make sure the number of opening and closing brackets match and that no commas (',') or the semi-colon (';') was omitted.")
+
+          ## Newick trees
+          conditionalPanel(condition = "input.tree == 2",
+            ## Enter some newick string - input$newick_tree
+            textInput("newick_tree", label = h5("Enter a newick tree:"), value = "((a,b),(c,d));"),
+            ## Help text for the newick trees
+            helpText("Make sure the number of opening and closing brackets match and that no commas (',') or the semi-colon (';') was omitted.")
           ),
-          ## Nexus tree
-          conditionalPanel(
-            condition = "input.tree == 3",
-              fileInput("nexus_tree", label = h5("Select a newick format tree"))
+
+          ## Nexus trees
+          conditionalPanel(condition = "input.tree == 3",
+            ## Upload some nexus tree
+            fileInput("nexus_tree", label = h5("Select a newick format tree"))
           ),
-          ## Tips and nodes
+
+          ## Tips and nodes options
           checkboxGroupInput("showlabels", label = "Show labels", choices = list("Tips" = 1, "Nodes" = 2), selected = NULL)
         ),
         
-        ## Character input
-        column(4,
+        ## --------------------
+        ## Character parameters
+        ## --------------------
+        column(width = 4,
+          ## Character input - input$character
           radioButtons("character", label = h3("Character input method"), choices = list("Random" = 1, "User" = 2, "Nexus input" = 3), selected = 1),
-          ## Input character
-          conditionalPanel(
-            condition = "input.character == 2",
-              textInput("character_string", label = h5("Enter a character string:"), value = "1?2-"),
-              helpText("The number of characters must match the size of the tree! Accepted states are any values from 0 to 9, - for the inapplicable token and ? for all states (missing data).")
-          ),
-          ## Nexus character
-          conditionalPanel(
-            condition = "input.character == 3",
-              fileInput("nexus_matrix", label = h5("Select a newick format matrix")),
-              numericInput("character_num", label = h5("Selected character:"), value = 1)
+          
+          ## Manual character input
+          conditionalPanel(condition = "input.character == 2",
+            ## Character string - input$character_string
+            textInput("character_string", label = h5("Enter a character string:"), value = "1?2-"),
+            ## Help text for the character string
+            helpText("Accepted character states are any values from 0 to 9 as well as - for the inapplicable token and ? for all states (missing data).")
           ),
 
-          ##
+          ## Nexus character
+          conditionalPanel(condition = "input.character == 3",
+            ## Nexus matrix input - input$nexus_matrix
+            fileInput("nexus_matrix", label = h5("Select a newick format matrix")),
+            ## Character number input - input$character_num
+            numericInput("character_num", label = h5("Selected character:"), value = 1)
+          ),
+
+          ## --------------------
+          ## Exports (in column "character")
+          ## --------------------
           hr(),
           h3("Export results"),
-          actionButton("export_newick", label = "Newick"),
-          actionButton("export_pdf", label = "pdf"),
-          actionButton("export_xml", label = "xml"),
+          ## Export format - input$export_type
+          selectInput("export_type", "Export format:", choices = c("newick", "pdf", "xml")),
+          downloadButton('export_data', 'Download'),
+          
           hr(),
+          ## Citation! - input$cite_type
           selectInput("cite_type", label = "Cite us", choices = list("format", "plain", "BibTeX"), selected = "format"),
-          conditionalPanel(
-            condition = "input.cite_type == \"plain\"",
-              helpText("Bob, Bib and Bub (2001) Something shiny here!.")
+          ## Plain text format
+          conditionalPanel(condition = "input.cite_type == \"plain\"",
+            helpText("Bob, Bib and Bub (2001) Something shiny here!.")
           ),
-          conditionalPanel(
-            condition = "input.cite_type == \"BibTeX\"",
-              helpText("@article{ShinyApp,
-                author={Bob, and Bib, and Bab},\n\ttitle={Something shiny},\n\tjournal={Combinatorics},\n\tvolume={1},\n\tnumber={1},\n\tpages={1:2},\nyear={2001}}")
+          ## BibTeX format
+          conditionalPanel(condition = "input.cite_type == \"BibTeX\"",
+            #p("This will be supplementary material from", a(href="", "an awesome paper"), ".")
+              helpText("@article{ShinyApp","    author={Bob, and Bib, and Bab},","    title={Something shiny},","    journal={Combinatorics},","    volume={1},","    number={1},","    pages={1:2},","    year={2001}}")
           )
         ),
 
+        ## -------
         ## Display
-        column(4,
-          ## Reconstruction
+        ## -------
+        column(width = 4,
+          ## Reconstruction - input$method
           radioButtons("method", label = h3("Reconstruction method"), choices = list("Inapplicable Fitch" = 1, "Normal Fitch" = 2), selected = 1, inline = TRUE),
 
           ## Inapplicable algorithm
-          conditionalPanel(
-            ## Which passes to show?
-            condition = "input.method == 1",
-              checkboxGroupInput("showPassInapp", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2, "2nd Downpass" = 3, "2nd Uppass" = 4), selected = c(1,2,3,4))
+          conditionalPanel(condition = "input.method == 1",
+            ## Which passes to print
+            checkboxGroupInput("showPassInapp", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2, "2nd Downpass" = 3, "2nd Uppass" = 4), selected = c(1,2,3,4))
           ),
 
           ## Fitch algorithm
-          conditionalPanel(
+          conditionalPanel(condition = "input.method == 2",
+            ## How to treat missing data
+            radioButtons("fitch_inapp", label = h5("Inapplicable tokens are:"), choices = list("Missing data (?)" = 1, "An extra state" = 2), selected = 1, inline = TRUE),
+            helpText("When treated as ?, - is equal to all states; when treated as an extra state, - is equal to a new character state."),
             ## Which passes to show?
-            condition = "input.method == 2",
-              radioButtons("fitch_inapp", label = h5("Inapplicable tokens are:"), choices = list("Missing data (?)" = 1, "An extra state" = 2), selected = 1, inline = TRUE),
-              helpText("When treated as ?, - is equal to all states; when treated as an extra state, - is equal to a new character state."),
-              checkboxGroupInput("showPassFitch", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2), selected = c(1,2))
+            checkboxGroupInput("showPassFitch", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2), selected = c(1,2))
           ),
 
-          ## Show activations/counts
+          ## Show activations/counts - input$counts
           checkboxGroupInput("counts", label = h5("Show counts"),  choices = list("Activations" = 1, "Homoplasies" = 2), selected = 3),
-          
-          ## Fitch inapplicable states
-          # conditionalPanel(
-          #   condition = "input.method == 2",
-          #     radioButtons("fitch_inapp", label = h5("Inapplicable tokens are:"), choices = list("Missing data (?)" = 1, "An extra state" = 2), selected = 1),
-          #     helpText("When treated as ?, - is equal to all states; when treated as an extra state, - is equal to a new character state.")
-          # ),
-
-          # conditionalPanel(
-          #   condition = "any(input.counts == 1)",
-          #     helpText("States activations are denoted with an asterisk.")
-          # ),
-          # conditionalPanel(
-          #   condition = "any(input.counts == 2)",
-          #     helpText("Homoplasies will be displayed somehow.")
-          # ),
+        
           hr(),
+          ## Refresh button - input$refresh
           actionButton("refresh", label = "Refresh")
-          #actionButton("refresh", label = "Refresh"),
 
         )
     )
   ),
   
-
-
+  ## Displaying the results
   fluidRow(
     ## Plots the algorithm results
-    # size <- uiOutput("plot_size"),
-    # textOutput("plot_size"),
     uiOutput("plot.ui")
-    # plotOutput("plot_out")  ## Dynamically change the value here!
   )
 
 ))
 
-    # ## DEBUG
-    # mainPanel(
-    #   plotOutput("plot_out", width = "100%"),
-    #   textOutput("tree"),
-    #   textOutput("character"),
-    #   textOutput("character_string"),
-    #   textOutput("tree_type"),
-    #   textOutput("n_taxa"),
-    #   textOutput("newick_tree"),
-    #   textOutput("showPass")
-    # )
+
+
+# # Define UI for application that plots random distributions
+# fluidPage(
+
+#   ## Page header
+#   h2("Dealing with inapplicable data in phylogenetics"),
+#   p("This will be supplementary material from", a(href="", "an awesome paper"), "."),
+#   hr(),
+
+#   ## Users parameters
+#   fluidRow(
+#     column(6, h3("Scenario A"))
+#   ),
+#   fluidRow(
+#     column(6, renderInputs("a"))
+#   ),
+
+#   ## Plotting output
+#   fluidRow(
+#     column(6,
+#       plotOutput("a_distPlot", height = "600px")
+#     )
+#   )
+
+
+#   fluidRow(
+#     ## Plotting the output
+#     uiOutput("plot.ui")
+#   )
+# )
+
+
+

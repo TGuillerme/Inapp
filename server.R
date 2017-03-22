@@ -8,37 +8,7 @@ shinyServer(
         ## Load the functions
         source("helpers.R")
 
-        # ## Get the plot size out
-        # output$plot_size <- renderUI({ 
-        #     if(input$tree == 1) {
-        #         ## Random tree
-        #         tree <- ape::rtree(input$n_taxa)
-        #     }
-
-        #     ## Newick tree
-        #     if(input$tree == 2) {
-        #         tree <- ape::read.tree(text = input$newick_tree)
-        #     }
-
-        #     ## Nexus tree
-        #     if(input$tree == 3) {
-        #         nexus_tree <- input$nexus_tree
-        #         if(!is.null(nexus_tree)) {
-        #             tree <- ape::read.nexus(nexus_tree$datapath)
-        #             ## Check if the tree is multiPhylo
-        #             if(class(tree) == "multiPhylo") {
-        #                 tree <- tree[[1]]
-        #             }
-        #         }
-        #     }
-        #     if(ape::Ntip(tree) > 10) {
-        #         print(paste(round(ape::Ntip(tree)*0.4), "00px", sep = ""))
-        #     } else {
-        #         print(paste(4, "00px", sep = ""))
-        #     }
-        # })
-
-        output$plot.ui <- renderUI({            
+        output$plot.ui <- renderUI({
             ## Get the tree
             if(input$tree == 1) {
                 ## Random tree
@@ -69,9 +39,13 @@ shinyServer(
                 plotOutput("plot_out", width ="100%", height = "400px")
             }
         })
+
+
+
     
         ## Generate the seeds for plotting
         seeds <- sample(1:200)*sample(1:10)
+
 
         output$plot_out <- renderPlot({ 
             ## Reset the seed when hitting the refresh button
@@ -179,6 +153,14 @@ shinyServer(
                 }
             }
 
+
+            ## Run the algorithm
+            if(as.numeric(input$method) == 1) {
+                states_matrix <- NA.algorithm(tree, character, passes = 4, method = "NA", inapplicable = NULL)
+            } else {
+                states_matrix <- NA.algorithm(tree, character, passes = 2, method = "Fitch", inapplicable = as.numeric(input$fitch_inapp))
+            } 
+
             ## ~~~~~~~~~~
             ## Plotting the results
             ## ~~~~~~~~~~
@@ -190,52 +172,23 @@ shinyServer(
                 showlabels <- as.numeric(input$showlabels)
             }
 
-            ## Inapplicable algorithm
+            ## Passes
             if(as.numeric(input$method) == 1) {
-                plot.inapplicable.algorithm(tree, character, passes = as.vector(as.numeric(input$showPassInapp)), method = "Inapplicable", inapplicable = NULL, show.labels = showlabels)
+                show_passes <- as.vector(as.numeric(input$showPassInapp))
+            } else {
+                show_passes <- as.vector(as.numeric(input$showPassFitch))
             }
 
-            ## Fitch algorithm
-            if(as.numeric(input$method) == 2) {
-                plot.inapplicable.algorithm(tree, character, passes = as.vector(as.numeric(input$showPassFitch)), method = "Fitch", inapplicable = as.numeric(input$fitch_inapp), show.labels = showlabels)
-            }
+            plot.NA.algorithm(states_matrix, tree, passes = show_passes, show.labels = showlabels)
 
-        })#, height = 1200, width = 600)
+        })
 
-        # # DEBUG:
-        # output$tree <- renderText({ 
-        #     if(input$tree == 1) {
-        #         ## The input tree is random
-        #         paste("Tree type:", input$tree_type, "with", input$n_taxa, "taxa")
-        #     } else {
-        #         ## The input tree is user based
-        #         paste("Tree:", input$newick_tree, "with", Ntip(ape::read.tree(text = input$newick_tree)), "taxa")
-        #     }
-        # })
-
-        # output$character <- renderText({ 
-        #     if(input$character == 1) {
-        #         paste("Character input: Random")
-        #     } else {
-        #         paste("Character input: ", input$character_string)
-        #     }
-        # })
-
-        # output$character_string <- renderText({ 
-        #     paste("character_string:", input$character_string)
-        # })
-
-        # output$tree_type <- renderText({ 
-        #     paste("tree_type:", input$tree_type)
-        # })
-
-        # output$n_taxa <- renderText({ 
-        #     paste("n_taxa:", input$n_taxa)
-        # })
-
-        # output$newick_tree <- renderText({ 
-        #     paste("newick_tree:", input$newick_tree)
-        # })
+        # output$downloadData <- downloadHandler(
+        #     ## Setting up the filename
+        #     filename = function() { paste("inappliacble", input$export_type, sep='') },
+        #     content = function(file) {
+        #       write.csv(datasetInput(), file)
+        # }
 
     }
 )

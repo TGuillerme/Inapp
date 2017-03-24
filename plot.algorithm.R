@@ -69,12 +69,13 @@ convert.char <- function(character) {
 #'
 #' @param tree \code{phylo}, a tree
 #' @param character Either vector of character states (\code{"numeric"} or \code{"character"}) or a list of the same length of than the tips in the tree (see details)
+#' @param match.tip.char \code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)
 #'
 #' @details
 #' If \code{character} argument is a list, each element of the list must be a \code{"numeric"} vector with \code{"?"} being all states and \code{"-"} being \code{-1}.
 #' @author Thomas Guillerme
 
-make.states.matrix <- function(tree, character, inapplicable = NULL) {
+make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.char = FALSE) {
 
     ## Check if the tree is a tree!
     if(class(tree) != "phylo") {
@@ -117,8 +118,39 @@ make.states.matrix <- function(tree, character, inapplicable = NULL) {
         }
     }
 
+    ## Sorting the character to match the tip.labels entry
+    if(match.tip.char == TRUE) {
+        options(warn = -1)
+        ## Check if tips are alphanumeric
+        if(any(is.na(as.numeric(tree$tip.label)))) {
+            ## Check if tips contain numeric
+            if(all(grepl("\\d", tree$tip.label))) {
+                ## Getting the numeric part of the tips in alphabetical order
+                alpha_char <- unique(unlist(strsplit(tree$tip.label, split = "\\d")))
+                ## Remove blanks
+                alpha_char <- alpha_char[which(alpha_char != "")]
+                ## Get the tips ordering
+                tips_numbers <- unlist(strsplit(tree$tip.label, split = alpha_char))
+                ## Remove blanks
+                tips_numbers <- tips_numbers[which(tips_numbers != "")]
+                ## Getting the tips order
+                ordering <- match(tips_numbers, sort(tips_numbers))
+            } else {
+                ## Getting the tips in alphabetical order
+                ordering <- match(tree$tip.label, sort(tree$tip.label))
+            }
+        } else {
+            ## Getting the tips in numeric order
+            ordering <- match(tree$tip.label, sort(tree$tip.label))
+        }
+        options(warn = 0)
+    } else {
+        ordering <- seq(1:ape::Ntip(tree))
+    }
+
+
     ## Add the character into the list
-    states_matrix$Char[1:ape::Ntip(tree)] <- character
+    states_matrix$Char[1:ape::Ntip(tree)] <- character[ordering]
 
     ## Set up the active states tracker
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
@@ -612,10 +644,11 @@ second.uppass <- function(states_matrix, tree) {
 #' @param passes \code{numeric}, the number of passes in the tree; from \code{1} to \code{4} (default)
 #' @param method either \code{"Fitch"} or \code{"NA"}
 #' @param inapplicable When method is \code{"Fitch"}, how do deal with inapplicable data: \code{1}, \code{2} for respectively treating them as ? or an extra state.
+#' @param match.tip.char \code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)
 #' 
 #' @author Thomas Guillerme
 
-NA.algorithm <- function(tree, character, passes = 4, method, inapplicable) {
+NA.algorithm <- function(tree, character, passes = 4, method, inapplicable, match.tip.char = FALSE) {
 
     ## Method
     if(!(method %in% c("NA","Fitch"))) {
@@ -637,7 +670,7 @@ NA.algorithm <- function(tree, character, passes = 4, method, inapplicable) {
     }
 
     ## Setting up the output state matrix
-    states_matrix <- make.states.matrix(tree, character, inapplicable)
+    states_matrix <- make.states.matrix(tree, character, inapplicable, match.tip.char)
 
     ## Setting the list of passes
     if(method == "NA") {
@@ -670,7 +703,7 @@ NA.algorithm <- function(tree, character, passes = 4, method, inapplicable) {
 #' @author Thomas Guillerme
 
 
-plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "lightblue"), counts = 0, ...) {
+plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "bisque2"), counts = 0, ...) {
 
 
     ## Internal plot utility: converts characters (-1,0,n,c(-1,0,n)) into character ("-0n?")
@@ -763,7 +796,7 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
 
     ## Plotting the tree
     plot(ape::ladderize(tree, right = FALSE), show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, ...)
-    # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5) ; warning("DEBUG plot")
+    # plot(ape::ladderize(tree, right = FALSE), show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5) ; warning("DEBUG plot")
 
     ## Adding the legend
     if(all(counts == 0)) {
@@ -819,8 +852,8 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
 
         ## Plot the node labels
         ape::nodelabels(node_labels, cex = cex-(1-cex)*(length(passes)*0.85), bg = col.tips.nodes[2])
+        # ape::nodelabels(node_labels, cex = cex-(1-cex)*(length(passes)*0.85), bg = ifelse(select.nodes(states_matrix, tree, pass = 4, what = 0), "lightblue", col.tips.nodes[2]))
     }
-
 
     return(invisible())
 }

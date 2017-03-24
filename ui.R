@@ -1,9 +1,5 @@
 shinyUI(fluidPage(
 
-  ## ~~~~~~~~~~~~~~~~
-  ## User's interface
-  ## ~~~~~~~~~~~~~~~~
-
   wellPanel(
   
     titlePanel("Inapplicable data reconstruction"),
@@ -62,7 +58,10 @@ shinyUI(fluidPage(
             ## Character string - input$character_string
             textInput("character_string", label = h5("Enter a character string:"), value = "1?2-"),
             ## Help text for the character string
-            helpText("Accepted character states are any values from 0 to 9 as well as - for the inapplicable token and ? for all states (missing data).")
+            helpText("Accepted character states are any values from 0 to 9 as well as - for the inapplicable token and ? for all states (missing data)."),
+            ## Match character
+            checkboxInput("matchtipchar", label = "Match character to tips", value = FALSE),
+            helpText("Tick to match each character state to the tip name (first character matches the first tip alphabetically).")
           ),
 
           ## Nexus character
@@ -136,38 +135,6 @@ shinyUI(fluidPage(
   )
 
 ))
-
-
-
-# # Define UI for application that plots random distributions
-# fluidPage(
-
-#   ## Page header
-#   h2("Dealing with inapplicable data in phylogenetics"),
-#   p("This will be supplementary material from", a(href="", "an awesome paper"), "."),
-#   hr(),
-
-#   ## Users parameters
-#   fluidRow(
-#     column(6, h3("Scenario A"))
-#   ),
-#   fluidRow(
-#     column(6, renderInputs("a"))
-#   ),
-
-#   ## Plotting output
-#   fluidRow(
-#     column(6,
-#       plotOutput("a_distPlot", height = "600px")
-#     )
-#   )
-
-
-#   fluidRow(
-#     ## Plotting the output
-#     uiOutput("plot.ui")
-#   )
-# )
 
 
 

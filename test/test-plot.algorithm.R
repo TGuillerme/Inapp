@@ -30,7 +30,8 @@ test_that("convert.char works", {
 
 context("make.states.matrix")
 test_that("make.states.matrix works", {
-    tree <- rtree(4)
+    set.seed(1)
+    tree <- rtree(4, br = NULL)
     character <- "01-?"
 
     ## Not working (error)
@@ -46,9 +47,9 @@ test_that("make.states.matrix works", {
     expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "length"))
 
     ## Right output values
-    expect_warning(expect_equal(unlist(make.states.matrix(tree, character)[[1]]), c(0,1,-1,-1,0,1)))  # Warning is some weird NA management by testthat
+    expect_warning(expect_equal(unlist(make.states.matrix(tree, character, match.tip.char = TRUE)[[1]]), c(-1, -1, 0, 1, 0, 1)))  # Warning is some weird NA management by testthat
     expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1)))  # Warning is some weird NA management by testthat
-    expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2)[[1]]), c(0,1,2,0,1,2)))  # Warning is some weird NA management by testthat
+    expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2, match.tip.char = TRUE)[[1]]), c(2,0,1,2,0,1)))  # Warning is some weird NA management by testthat
 })
 
 context("desc.anc")
@@ -137,16 +138,16 @@ character3_6 <- "210--100--21"
 #########
 
 ## Making the matrix
-matrix1_1 <- make.states.matrix(tree1, character1, inapplicable = 1)
-matrix2_1 <- make.states.matrix(tree2, character2, inapplicable = 1)
+matrix1_1 <- make.states.matrix(tree1, character1, inapplicable = 1, match.tip.char = TRUE)
+matrix2_1 <- make.states.matrix(tree2, character2, inapplicable = 1, match.tip.char = TRUE)
 matrix3_1_1 <- make.states.matrix(tree3, character3_1, inapplicable = 1)
 matrix3_2_1 <- make.states.matrix(tree3, character3_2, inapplicable = 1)
 matrix3_3_1 <- make.states.matrix(tree3, character3_3, inapplicable = 1)
 matrix3_4_1 <- make.states.matrix(tree3, character3_4, inapplicable = 1)
 matrix3_5_1 <- make.states.matrix(tree3, character3_5, inapplicable = 1)
 matrix3_6_1 <- make.states.matrix(tree3, character3_6, inapplicable = 1)
-matrix1_2 <- make.states.matrix(tree1, character1, inapplicable = 2)
-matrix2_2 <- make.states.matrix(tree2, character2, inapplicable = 2)
+matrix1_2 <- make.states.matrix(tree1, character1, inapplicable = 2, match.tip.char = TRUE)
+matrix2_2 <- make.states.matrix(tree2, character2, inapplicable = 2, match.tip.char = TRUE)
 matrix3_1_2 <- make.states.matrix(tree3, character3_1, inapplicable = 2)
 matrix3_2_2 <- make.states.matrix(tree3, character3_2, inapplicable = 2)
 matrix3_3_2 <- make.states.matrix(tree3, character3_3, inapplicable = 2)
@@ -177,14 +178,17 @@ context("fitch.downpass")
 test_that("fitch.downpass works", {
     results1_fitch1_1 <- list(c(1),c(1,2),c(1,2),c(1),c(2),c(2,5),c(2))
     results2_fitch1_1 <- list(c(0,1),c(1),c(0,1),c(1),c(0,1),c(0,1),c(0,1),c(0,1))
+    
     results3_1_fitch1_1 <- list(c(2,3),c(1,2,3),c(1,2,3),c(2,3),c(2,3),c(2,3),c(0,2,3),c(0,2,3),c(0,2,3),c(0,2,3),c(2,3))
     results3_2_fitch1_1 <- list(c(1),c(1),c(1),c(1),c(1),c(1),c(1),c(1),c(1),c(1),c(1))
     results3_3_fitch1_1 <- list(c(0),c(0),c(0),c(0),c(0,1),c(1),c(0),c(0),c(0),c(0,1),c(1))
     results3_4_fitch1_1 <- list(c(2,3),c(1,2,3),c(1,2,3),c(2,3),c(2,3),c(2,3),c(0,2,3),c(0,2,3),c(0,2,3),c(0,2,3),c(2,3))
     results3_5_fitch1_1 <- list(c(1),c(1),c(0,1),c(0,1),c(0,1),c(0,1),c(0,1),c(1),c(0,1),c(1),c(0,1))
     results3_6_fitch1_1 <- list(c(0,1),c(1),c(0,1,2),c(0,1,2),c(0,1,2),c(1,2),c(0),c(0,1,2),c(1,2),c(1,2),c(1,2))
+    
     results1_fitch1_2 <- list(c(1,6),c(6),c(1,2,6),c(1,6),c(2),c(2,5),c(2,6))
     results2_fitch1_2 <- list(c(0,1),c(1),c(0,1,2),c(1,2),c(2),c(2),c(0,1,2),c(0,1))
+    
     results3_1_fitch1_2 <- list(c(4),c(1,4),c(1,4),c(4),c(2,3,4),c(2,3),c(4),c(4),c(0,2,3,4),c(0,2,3),c(2,3))
     results3_2_fitch1_2 <- list(c(1),c(1),c(1,2),c(2),c(2),c(1,2),c(1),c(1,2),c(2),c(2),c(1,2))
     results3_3_fitch1_2 <- list(c(2),c(2),c(0,2),c(0),c(0,1),c(1),c(2),c(0,2),c(0),c(0,1),c(1))
@@ -538,7 +542,7 @@ test_that("right counting", {
 
     ## Run the tests
     for(test in 1:length(characters)) { #9 and 33 are still bugged!
-        suppressWarnings(matrix <- inapplicable.algorithm(tree, characters[test], passes = 4, method = "Inapplicable", inapplicable = NULL))
+        suppressWarnings(matrix <- NA.algorithm(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
         # if(matrix$length != expected_results[test]) {
         #     print(paste("test", test, "failed"))
         #     print(paste("Is", matrix$length, "instead of", expected_results[test]))

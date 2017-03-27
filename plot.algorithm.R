@@ -141,7 +141,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
             }
         } else {
             ## Getting the tips in numeric order
-            ordering <- match(tree$tip.label, sort(tree$tip.label))
+            ordering <- match(as.numeric(tree$tip.label), sort(as.numeric(tree$tip.label)))
         }
         options(warn = 0)
     } else {

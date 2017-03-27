@@ -47,9 +47,28 @@ test_that("make.states.matrix works", {
     expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "length"))
 
     ## Right output values
-    expect_warning(expect_equal(unlist(make.states.matrix(tree, character, match.tip.char = TRUE)[[1]]), c(-1, -1, 0, 1, 0, 1)))  # Warning is some weird NA management by testthat
     expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1)))  # Warning is some weird NA management by testthat
     expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2, match.tip.char = TRUE)[[1]]), c(2,0,1,2,0,1)))  # Warning is some weird NA management by testthat
+
+
+    ## Matching the character to the tips
+    tree1 <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+    tree2 <- read.tree(text = "((((((12,8),5),7),1),11),(2,(6,(3,(9,(4,10))))));")
+    character <- "123456789012"
+    expected1 <- c(1,2,3,4,5,6,7,8,9,0,1,2)
+    expected2 <- c(2,8,5,7,1,1,2,6,3,9,4,0)
+
+    ## Doesn't matter if tips are ordered
+    expect_true(all(unlist(make.states.matrix(tree1, character, match.tip.char = TRUE)[[1]]) == unlist(make.states.matrix(tree1, character, match.tip.char = FALSE)[[1]])))
+    expect_true(all(unlist(make.states.matrix(tree1, character, match.tip.char = TRUE)[[1]]) == expected1))
+    expect_true(all(unlist(make.states.matrix(tree1, character, match.tip.char = FALSE)[[1]]) == expected1))
+
+    ## Does matters otherwise
+    expect_false(all(unlist(make.states.matrix(tree2, character, match.tip.char = TRUE)[[1]]) == unlist(make.states.matrix(tree2, character, match.tip.char = FALSE)[[1]])))
+    ## The first one should match 1234... and the second one the tip order
+    expect_true(all(unlist(make.states.matrix(tree2, character, match.tip.char = FALSE)[[1]]) == expected1))
+    expect_true(all(unlist(make.states.matrix(tree2, character, match.tip.char = TRUE)[[1]]) == expected2))
+
 })
 
 context("desc.anc")

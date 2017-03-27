@@ -495,7 +495,9 @@ second.downpass <- function(states_matrix, tree) {
                         ## Remove inapplicables
                         actives <- sort(actives[which(actives != -1)])
                         # cat(paste("pass 3 - node ", node, ": activated states c1 (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
-                        states_matrix$tracker$Dp2[[node]] <- c(0, states_matrix$tracker$Dp2[[node]])
+                        if(length(states_matrix$Dp2[[node]][which(states_matrix$Dp2[[node]] != -1)]) != 0) {
+                            states_matrix$tracker$Dp2[[node]] <- c(0, states_matrix$tracker$Dp2[[node]])
+                        }
                     }
                 }
             }
@@ -511,7 +513,9 @@ second.downpass <- function(states_matrix, tree) {
                 ## Remove inapplicables
                 actives <- sort(actives[which(actives != -1)])
                 # cat(paste("pass 3 - node ", node, ": activated states c2 (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
-                states_matrix$tracker$Dp2[[node]] <- c(0, states_matrix$tracker$Dp2[[node]])
+                if(length(states_matrix$Dp2[[node]][which(states_matrix$Dp2[[node]] != -1)]) != 0) {
+                    states_matrix$tracker$Dp2[[node]] <- c(0, states_matrix$tracker$Dp2[[node]])
+                }
             }
         }
     }
@@ -629,7 +633,9 @@ second.uppass <- function(states_matrix, tree) {
             ## Remove inapplicables
             actives <- sort(actives[which(actives != -1)])
             # cat(paste("pass 4 - node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
-            states_matrix$tracker$Up2[[node]] <- c(0, states_matrix$tracker$Up2[[node]])
+            if(length(states_matrix$Up2[[node]][which(states_matrix$Up2[[node]] != -1)]) != 0) {
+                states_matrix$tracker$Up2[[node]] <- c(0, states_matrix$tracker$Up2[[node]])
+            }
         }
     }
     return(states_matrix)
@@ -774,10 +780,10 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
 
     ## col.tips.nodes
     if(length(col.tips.nodes) == 1) {
-        col.tips.nodes <- rep(col.tips.nodes, 2)
+        col.tips.nodes <- rep(col.tips.nodes, 3)
     } else {
-        if(length(col.tips.nodes) > 2) {
-            col.tips.nodes <- col.tips.nodes[1:2]
+        if(length(col.tips.nodes) > 3) {
+            col.tips.nodes <- col.tips.nodes[1:3]
             warning("Only the two first colors from col.tips.nodes are used.")
         }
     }
@@ -795,8 +801,8 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
     cex <- 1
 
     ## Plotting the tree
-    # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, ...)
-    plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5) ; warning("DEBUG plot")
+    plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, ...)
+    # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5) ; warning("DEBUG plot")
 
     ## Adding the legend
     if(all(counts == 0)) {
@@ -855,10 +861,10 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
             ## Select the which count type to show (activation or/and counts)
             counts_show <- c(0,1)[counts == c(1,2)]
             ## Select the counts / activations on the first pass to display
-            activations <- select.nodes(states_matrix, tree, pass = passes[1], what = c(0,1))
+            activations <- select.nodes(states_matrix, tree, pass = passes[1], what = counts_show)
             ## Select the counts / activations on the other passes to display
             for(pass in passes[-1]) {
-                activations <- activations | select.nodes(states_matrix, tree, pass = passes[pass], what = c(0,1))
+                activations <- activations | select.nodes(states_matrix, tree, pass = passes[pass], what = counts_show)
             }
             ## Set up the colors (color 3 is the counts one)
             bg_col <- ifelse(activations, col.tips.nodes[3], col.tips.nodes[2])
@@ -867,9 +873,8 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
         }
 
         ## Plot the node labels
-        #ape::nodelabels(node_labels, cex = cex-(1-cex)*(length(passes)*0.85), bg = col.tips.nodes[2])
-        ape::nodelabels(node_labels, cex = 0.5, bg = bg_col) ; warning("DEBUG")
-        # ape::nodelabels(node_labels, cex = cex-(1-cex)*(length(passes)*0.85), bg = ifelse(select.nodes(states_matrix, tree, pass = 4, what = 1), "lightblue", col.tips.nodes[2]))
+        ape::nodelabels(node_labels, cex = cex-(1-cex)*(length(passes)*0.85), bg = bg_col)
+        # ape::nodelabels(node_labels, cex = 0.5, bg = bg_col) ; warning("DEBUG")
     }
 
     return(invisible())

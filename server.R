@@ -5,120 +5,103 @@ library(ape)
 shinyServer(
     function(input, output, session) {
 
-        ## Load the functions
+        ## Load the R functions
         source("helpers.R")
 
-        output$plot.ui <- renderUI({
-            ## Get the tree
-            if(input$tree == 1) {
-                ## Random tree
-                tree <- ape::rtree(input$n_taxa)
-            }
+        ## Get the tree details
+        get.tree <- function(input, simple = FALSE) {
 
-            ## Newick tree
-            if(input$tree == 2) {
-                tree <- ape::read.tree(text = input$newick_tree)
-            }
+            if(!simple) {
+                ## Get the not "simple" tree (for operations)
+                if(input$tree == 1) {
+                    ## Balanced tree
+                    if(input$tree_type == "Balanced") {
+                        if(log2(input$n_taxa)%%1 == 0) {
+                            tree <- ape::stree(input$n_taxa, type = "balanced")
+                        } else {
+                            tree <- ape::rtree(input$n_taxa)
+                        }
+                    }
 
-            ## Nexus tree
-            if(input$tree == 3) {
-                nexus_tree <- input$nexus_tree
-                if(!is.null(nexus_tree)) {
-                    tree <- ape::read.nexus(nexus_tree$datapath)
-                    ## Check if the tree is multiPhylo
-                    if(class(tree) == "multiPhylo") {
-                        tree <- tree[[1]]
+                    ## Left-Right tree
+                    if(input$tree_type == "Left-Right") {
+                        if(input$n_taxa%%2 == 0) {
+                            left <- ape::stree(input$n_taxa/2+1, type = "left")
+                            right <- ape::stree(input$n_taxa/2, type = "right")
+                            tree <- ape::bind.tree(left, right, where = 1)
+                        } else {
+                            tree <- ape::rtree(input$n_taxa)
+                        }
+                    }
+
+                    ## Left tree
+                    if(input$tree_type == "Left") {
+                        tree <- ape::stree(input$n_taxa, type = "left")
+                    }
+
+                    ## Right tree
+                    if(input$tree_type == "Right") {
+                        tree <- ape::stree(input$n_taxa, type = "right")
+                    }
+
+                    ## Random tree
+                    if(input$tree_type == "Random") {
+                        tree <- ape::rtree(input$n_taxa)
                     }
                 }
-            }
 
-            ## Set the plot window
-            if(ape::Ntip(tree) > 10) {
-                plotOutput("plot_out", width ="100%", height = paste(round(ape::Ntip(tree)*0.4), "00px", sep = ""))
+                ## Newick tree
+                if(input$tree == 2) {
+                    tree <- ape::read.tree(text = input$newick_tree)
+                    if(is.null(tree)) {
+                      stop("Enter a tree in newick format.")
+                    }
+                }
+
+                ## Nexus tree
+                if(input$tree == 3) {
+                    nexus_tree <- input$nexus_tree
+                    if(!is.null(nexus_tree)) {
+                        tree <- ape::read.nexus(nexus_tree$datapath)
+                        ## Check if the tree is multiPhylo
+                        if(class(tree) == "multiPhylo") {
+                            tree <- tree[[1]]
+                        }
+                    } else {
+                        stop("Load a tree in nexus format.")
+                    }
+                }
             } else {
-                plotOutput("plot_out", width ="100%", height = "400px")
-            }
-        })
-
-
-
-    
-        ## Generate the seeds for plotting
-        seeds <- sample(1:200)*sample(1:10)
-
-
-        output$plot_out <- renderPlot({ 
-            ## Reset the seed when hitting the refresh button
-            set.seed(seeds[(input$refresh)+1])
-
-            ## ~~~~~~~~~~
-            ## Tree
-            ## ~~~~~~~~~~
-
-            ## Setting up the tree
-            if(input$tree == 1) {
-                ## Balanced tree
-                if(input$tree_type == "Balanced") {
-                    if(log2(input$n_taxa)%%1 == 0) {
-                        tree <- ape::stree(input$n_taxa, type = "balanced")
-                    } else {
-                        tree <- ape::rtree(input$n_taxa)
-                    }
-                }
-
-                ## Left-Right tree
-                if(input$tree_type == "Left-Right") {
-                    if(input$n_taxa%%2 == 0) {
-                        left <- ape::stree(input$n_taxa/2+1, type = "left")
-                        right <- ape::stree(input$n_taxa/2, type = "right")
-                        tree <- ape::bind.tree(left, right, where = 1)
-                    } else {
-                        tree <- ape::rtree(input$n_taxa)
-                    }
-                }
-
-                ## Left tree
-                if(input$tree_type == "Left") {
-                    tree <- ape::stree(input$n_taxa, type = "left")
-                }
-
-                ## Right tree
-                if(input$tree_type == "Right") {
-                    tree <- ape::stree(input$n_taxa, type = "right")
-                }
-
-                ## Random tree
-                if(input$tree_type == "Random") {
+                ## Get the simplest tree (for tip count)
+                if(input$tree == 1) {
+                    ## Random tree
                     tree <- ape::rtree(input$n_taxa)
                 }
-            }
 
-            ## Newick tree
-            if(input$tree == 2) {
-                tree <- ape::read.tree(text = input$newick_tree)
-                if(is.null(tree)) {
-                  stop("Enter a tree in newick format.")
+                ## Newick tree
+                if(input$tree == 2) {
+                    tree <- ape::read.tree(text = input$newick_tree)
                 }
-            }
 
-            ## Nexus tree
-            if(input$tree == 3) {
-                nexus_tree <- input$nexus_tree
-                if(!is.null(nexus_tree)) {
-                    tree <- ape::read.nexus(nexus_tree$datapath)
-                    ## Check if the tree is multiPhylo
-                    if(class(tree) == "multiPhylo") {
-                        tree <- tree[[1]]
+                ## Nexus tree
+                if(input$tree == 3) {
+                    nexus_tree <- input$nexus_tree
+                    if(!is.null(nexus_tree)) {
+                        tree <- ape::read.nexus(nexus_tree$datapath)
+                        ## Check if the tree is multiPhylo
+                        if(class(tree) == "multiPhylo") {
+                            tree <- tree[[1]]
+                        }
                     }
-                } else {
-                    stop("Load a tree in nexus format.")
                 }
+
             }
 
-            ## ~~~~~~~~~~
-            ## Character
-            ## ~~~~~~~~~~
+            return(tree)
+        }
 
+        ## Getting the character details
+        get.character <- function(input, tree) {
             ## Generate a random character
             if(input$character == 1) {
                 character <- paste(sample(c("0", "1", "2", "-", "?"), ape::Ntip(tree), prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
@@ -152,7 +135,20 @@ shinyServer(
                     stop("Load a matrix in nexus format.")
                 }
             }
+            return(character)
+        }
+    
+        ## Generate the seeds for plotting
+        seeds <- sample(1:200)*sample(1:10)
 
+        ## Plotting function
+        output$plot_out <- renderPlot({ 
+            ## Reset the seed when hitting the refresh button
+            set.seed(seeds[(input$refresh)+1])
+
+            ## Getting the parameters
+            tree <- get.tree(input)
+            character <- get.character(input, tree)
 
             ## Run the algorithm
             if(as.numeric(input$method) == 1) {
@@ -183,12 +179,17 @@ shinyServer(
 
         })
 
-        # output$downloadData <- downloadHandler(
-        #     ## Setting up the filename
-        #     filename = function() { paste("inappliacble", input$export_type, sep='') },
-        #     content = function(file) {
-        #       write.csv(datasetInput(), file)
-        # }
+        ## Output plot
+        output$plot.ui <- renderUI({
 
+            tree <- get.tree(input, simple = TRUE)
+            
+            ## Set the plot window
+            if(ape::Ntip(tree) > 10) {
+                plotOutput("plot_out", width ="100%", height = paste(round(ape::Ntip(tree)*0.4), "00px", sep = ""))
+            } else {
+                plotOutput("plot_out", width ="100%", height = "400px")
+            }
+        })
     }
 )

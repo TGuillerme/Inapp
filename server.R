@@ -1,146 +1,147 @@
 library(shiny)
 library(ape)
 
+## Load the R functions
+source("helpers.R")
+
+## Get the tree details
+get.tree <- function(input, simple = FALSE) {
+
+    if(!simple) {
+        ## Get the not "simple" tree (for operations)
+        if(input$tree == 1) {
+            ## Balanced tree
+            if(input$tree_type == "Balanced") {
+                if(log2(input$n_taxa)%%1 == 0) {
+                    tree <- ape::stree(input$n_taxa, type = "balanced")
+                } else {
+                    tree <- ape::rtree(input$n_taxa)
+                }
+            }
+
+            ## Left-Right tree
+            if(input$tree_type == "Left-Right") {
+                if(input$n_taxa%%2 == 0) {
+                    left <- ape::stree(input$n_taxa/2+1, type = "left")
+                    right <- ape::stree(input$n_taxa/2, type = "right")
+                    tree <- ape::bind.tree(left, right, where = 1)
+                } else {
+                    tree <- ape::rtree(input$n_taxa)
+                }
+            }
+
+            ## Left tree
+            if(input$tree_type == "Left") {
+                tree <- ape::stree(input$n_taxa, type = "left")
+            }
+
+            ## Right tree
+            if(input$tree_type == "Right") {
+                tree <- ape::stree(input$n_taxa, type = "right")
+            }
+
+            ## Random tree
+            if(input$tree_type == "Random") {
+                tree <- ape::rtree(input$n_taxa)
+            }
+        }
+
+        ## Newick tree
+        if(input$tree == 2) {
+            tree <- ape::read.tree(text = input$newick_tree)
+            if(is.null(tree)) {
+              stop("Enter a tree in newick format.")
+            }
+        }
+
+        ## Nexus tree
+        if(input$tree == 3) {
+            nexus_tree <- input$nexus_tree
+            if(!is.null(nexus_tree)) {
+                tree <- ape::read.nexus(nexus_tree$datapath)
+                ## Check if the tree is multiPhylo
+                if(class(tree) == "multiPhylo") {
+                    tree <- tree[[1]]
+                }
+            } else {
+                stop("Load a tree in nexus format.")
+            }
+        }
+    } else {
+        ## Get the simplest tree (for tip count)
+        if(input$tree == 1) {
+            ## Random tree
+            tree <- ape::rtree(input$n_taxa)
+        }
+
+        ## Newick tree
+        if(input$tree == 2) {
+            tree <- ape::read.tree(text = input$newick_tree)
+        }
+
+        ## Nexus tree
+        if(input$tree == 3) {
+            nexus_tree <- input$nexus_tree
+            if(!is.null(nexus_tree)) {
+                tree <- ape::read.nexus(nexus_tree$datapath)
+                ## Check if the tree is multiPhylo
+                if(class(tree) == "multiPhylo") {
+                    tree <- tree[[1]]
+                }
+            }
+        }
+
+    }
+
+    return(tree)
+}
+
+## Getting the character details
+get.character <- function(input, tree) {
+    ## Generate a random character
+    if(input$character == 1) {
+        character <- paste(sample(c("0", "1", "2", "-", "?"), ape::Ntip(tree), prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
+        ## Adding at least three inapplicable tokens (if there's at least 5 tips)
+        if(ape::Ntip(tree) >= 5) {
+            character[sample(1:length(character), 3)] <- "-"
+        }
+    }
+
+    ## Character input as a character string
+    if(input$character == 2) {
+        character <- as.character(input$character_string)
+        if(is.null(character)) {
+            stop("Enter a character as a string (e.g. 0123).")
+        }
+    }
+
+    ## Character input as a nexus
+    if(input$character == 3) {
+        nexus_matrix <- input$nexus_matrix
+        if(!is.null(nexus_matrix)) {
+            matrix <- ape::read.nexus.data(nexus_matrix$datapath)
+            matrix <- matrix(data = unlist(matrix), nrow = length(matrix[[1]]), byrow = FALSE)
+            ## Select the right character
+            if(input$character_num < 1 | input$character_num > nrow(matrix)) {
+                stop(paste("Select a character between 0 and ", nrow(matrix), ".", sep = ""))
+            } else {
+                character <- matrix[input$character_num, ]
+            }
+        } else {
+            stop("Load a matrix in nexus format.")
+        }
+    }
+    return(character)
+}
+
+## Generate the seeds for plotting
+seeds <- sample(1:200)*sample(1:10)
+
+
 # server.R
 shinyServer(
     function(input, output, session) {
-
-        ## Load the R functions
-        source("helpers.R")
-
-        ## Get the tree details
-        get.tree <- function(input, simple = FALSE) {
-
-            if(!simple) {
-                ## Get the not "simple" tree (for operations)
-                if(input$tree == 1) {
-                    ## Balanced tree
-                    if(input$tree_type == "Balanced") {
-                        if(log2(input$n_taxa)%%1 == 0) {
-                            tree <- ape::stree(input$n_taxa, type = "balanced")
-                        } else {
-                            tree <- ape::rtree(input$n_taxa)
-                        }
-                    }
-
-                    ## Left-Right tree
-                    if(input$tree_type == "Left-Right") {
-                        if(input$n_taxa%%2 == 0) {
-                            left <- ape::stree(input$n_taxa/2+1, type = "left")
-                            right <- ape::stree(input$n_taxa/2, type = "right")
-                            tree <- ape::bind.tree(left, right, where = 1)
-                        } else {
-                            tree <- ape::rtree(input$n_taxa)
-                        }
-                    }
-
-                    ## Left tree
-                    if(input$tree_type == "Left") {
-                        tree <- ape::stree(input$n_taxa, type = "left")
-                    }
-
-                    ## Right tree
-                    if(input$tree_type == "Right") {
-                        tree <- ape::stree(input$n_taxa, type = "right")
-                    }
-
-                    ## Random tree
-                    if(input$tree_type == "Random") {
-                        tree <- ape::rtree(input$n_taxa)
-                    }
-                }
-
-                ## Newick tree
-                if(input$tree == 2) {
-                    tree <- ape::read.tree(text = input$newick_tree)
-                    if(is.null(tree)) {
-                      stop("Enter a tree in newick format.")
-                    }
-                }
-
-                ## Nexus tree
-                if(input$tree == 3) {
-                    nexus_tree <- input$nexus_tree
-                    if(!is.null(nexus_tree)) {
-                        tree <- ape::read.nexus(nexus_tree$datapath)
-                        ## Check if the tree is multiPhylo
-                        if(class(tree) == "multiPhylo") {
-                            tree <- tree[[1]]
-                        }
-                    } else {
-                        stop("Load a tree in nexus format.")
-                    }
-                }
-            } else {
-                ## Get the simplest tree (for tip count)
-                if(input$tree == 1) {
-                    ## Random tree
-                    tree <- ape::rtree(input$n_taxa)
-                }
-
-                ## Newick tree
-                if(input$tree == 2) {
-                    tree <- ape::read.tree(text = input$newick_tree)
-                }
-
-                ## Nexus tree
-                if(input$tree == 3) {
-                    nexus_tree <- input$nexus_tree
-                    if(!is.null(nexus_tree)) {
-                        tree <- ape::read.nexus(nexus_tree$datapath)
-                        ## Check if the tree is multiPhylo
-                        if(class(tree) == "multiPhylo") {
-                            tree <- tree[[1]]
-                        }
-                    }
-                }
-
-            }
-
-            return(tree)
-        }
-
-        ## Getting the character details
-        get.character <- function(input, tree) {
-            ## Generate a random character
-            if(input$character == 1) {
-                character <- paste(sample(c("0", "1", "2", "-", "?"), ape::Ntip(tree), prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
-                ## Adding at least three inapplicable tokens (if there's at least 5 tips)
-                if(ape::Ntip(tree) >= 5) {
-                    character[sample(1:length(character), 3)] <- "-"
-                }
-            }
-
-            ## Character input as a character string
-            if(input$character == 2) {
-                character <- as.character(input$character_string)
-                if(is.null(character)) {
-                    stop("Enter a character as a string (e.g. 0123).")
-                }
-            }
-
-            ## Character input as a nexus
-            if(input$character == 3) {
-                nexus_matrix <- input$nexus_matrix
-                if(!is.null(nexus_matrix)) {
-                    matrix <- ape::read.nexus.data(nexus_matrix$datapath)
-                    matrix <- matrix(data = unlist(matrix), nrow = length(matrix[[1]]), byrow = FALSE)
-                    ## Select the right character
-                    if(input$character_num < 1 | input$character_num > nrow(matrix)) {
-                        stop(paste("Select a character between 0 and ", nrow(matrix), ".", sep = ""))
-                    } else {
-                        character <- matrix[input$character_num, ]
-                    }
-                } else {
-                    stop("Load a matrix in nexus format.")
-                }
-            }
-            return(character)
-        }
     
-        ## Generate the seeds for plotting
-        seeds <- sample(1:200)*sample(1:10)
-
         ## Plotting function
         output$plot_out <- renderPlot({ 
             ## Reset the seed when hitting the refresh button

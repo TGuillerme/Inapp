@@ -246,7 +246,7 @@ fitch.downpass <- function(states_matrix, tree) {
            
             ## Increment the tree length
             states_matrix$length <- states_matrix$length + 1
-            states_matrix$tracker$Dp1[[node]] <- c(0, states_matrix$tracker$Dp1[[node]])
+            states_matrix$tracker$Dp1[[node]] <- c(1, states_matrix$tracker$Dp1[[node]])
 
         }
     }

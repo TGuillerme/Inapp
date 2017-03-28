@@ -523,6 +523,8 @@ second.downpass <- function(states_matrix, tree) {
     return(states_matrix)
 }
 
+
+
 #' @title Second uppass
 #'
 #' @description Applies a second up pass to a node
@@ -763,7 +765,7 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
     ## tree character done in make.states.matrix
     
     ## Passes
-    if(class(passes) != "numeric" | any(is.na(match(passes, c(1,2,3,4))))) {
+    if(class(passes) != "numeric" || any(is.na(match(passes, c(1,2,3,4))))) {
         stop("passes argument must be any integer(s) between 1 and 4.")
     }
     ## show.labels
@@ -864,7 +866,10 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
             activations <- select.nodes(states_matrix, tree, pass = passes[1], what = counts_show)
             ## Select the counts / activations on the other passes to display
             for(pass in passes[-1]) {
-                activations <- activations | select.nodes(states_matrix, tree, pass = passes[pass], what = counts_show)
+                selected <- select.nodes(states_matrix, tree, pass = passes[pass], what = counts_show)
+                if(class(selected) == "logical") {
+                    activations <- activations | selected
+                }
             }
             ## Set up the colors (color 3 is the counts one)
             bg_col <- ifelse(activations, col.tips.nodes[3], col.tips.nodes[2])

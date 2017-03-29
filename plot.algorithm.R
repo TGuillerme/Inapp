@@ -481,7 +481,7 @@ second.downpass <- function(states_matrix, tree) {
                 union_desc <- get.union.incl(left, right)
                 states_matrix$Dp2[[node]] <- union_desc[which(union_desc != -1)]
 
-                ## Counting
+                # Counting
                 if(any(left != -1) && any(right != -1)) {
                     
                     if(!is.null(actives) && all(states_matrix$Dp2[[node]] %in% get.common(states_matrix$Dp2[[node]], actives))) { #TG: Counting problem here?
@@ -643,6 +643,69 @@ second.uppass <- function(states_matrix, tree) {
     return(states_matrix)
 }
 
+
+## Counting function (on the uppass)
+counting.uppass <- function(states_matrix, tree, pass) {
+    ## Active states
+    actives <- NULL
+    temp_actives <- NULL
+
+    ## All possible states
+    all_states <- sort(unique(unlist(states_matrix[[1]])))
+
+    for(node in (ape::Ntip(tree)+1:ape::Nnode(tree))) {
+
+        curr_node <- states_matrix[[pass+1]][[node]]
+        ## Select the descendants and ancestors
+        desc_anc <- desc.anc(node, tree)
+        right <- states_matrix[[pass+1]][desc_anc[1]][[1]]
+        left <- states_matrix[[pass+1]][desc_anc[2]][[1]]
+
+        ## Ignore missing data for now?
+        if(any(left != -1) & all(all_states %in% left)) {
+            left <- -1
+        }
+        if(any(right != -1) & all(all_states %in% right)) {
+            right <- -1
+        }
+
+        ## If any of the descendants are applicable
+        if(any(left != -1) | any(right != -1)) {
+            
+            ## Get the encountered states left and right (applicable)
+            states <- sort(unique(c(left,right)))
+            ## Set ALL the states into temporary actives
+            states <- states[which(states != -1)]
+
+            ## Check if states have been encountered before
+            encountered <- get.common(states, actives)
+
+            if(is.null(encountered)) {
+                ## If the states have never been encountered, simply add them to actives
+                actives <- unique(sort(c(actives, states)))
+                # print(paste("node ", node, " - added c(", paste(states, collapse = ", "), ") to actives c(", paste(actives, collapse = ", "), ")", sep = ""))
+            } else {
+                ## If the encountered states are NOT the same as previously
+                if(!all(encountered %in% tmp_actives)) {
+                    ## Increment the length
+                    states_matrix$length <- length(encountered)
+                    # print(paste("node ", node, " incremented + ", length(encountered), " (states: ", paste(encountered, collapse = ", "), ")", sep = ""))
+                    ## Increment the actives (if necessary)
+                    actives <- unique(sort(c(actives, get.union.excl(states, actives))))
+                    # print(paste("node ", node, " - added c(", paste(states, collapse = ", "), ") to actives c(", paste(actives, collapse = ", "), ")", sep = ""))
+                }
+            }
+            ## Set ALL the states into temporary actives
+            tmp_actives <- states
+        } else {
+            ## Reset temp actives (entering an NA region)
+            tmp_actives <- NULL
+        }
+    }
+    return(states_matrix)
+}
+
+
 #' @title Inapplicable algorithm
 #'
 #' @description Runs a full inapplicable algorithm
@@ -691,6 +754,9 @@ NA.algorithm <- function(tree, character, passes = 4, method, inapplicable, matc
     for (pass in 1:passes) {
         states_matrix <- n_passes[[pass]](states_matrix, tree)
     }
+
+    ## Getting the tree length
+    # states_matrix <- counting.uppass(states_matrix, tree, pass = length(n_passes))
 
     return(states_matrix)
 }

@@ -90,7 +90,6 @@ shinyUI(fluidPage(
           ),
           ## BibTeX format
           conditionalPanel(condition = "input.cite_type == \"BibTeX\"",
-            #p("This will be supplementary material from", a(href="", "an awesome paper"), ".")
               helpText("@article{ShinyApp","    author={Bob, and Bib, and Bab},","    title={Something shiny},","    journal={Combinatorics},","    volume={1},","    number={1},","    pages={1:2},","    year={2001}}")
           )
         ),

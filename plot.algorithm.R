@@ -722,7 +722,7 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
         }
 
         plot.convert.missing <- function(X, all_states) {
-            if(length(X) == length(all_states) && all(X == all_states)) {
+            if(length(X) == length(all_states) && all(sort(X) == sort(all_states))) {
                 return("?")
             } else {
                 return(X)

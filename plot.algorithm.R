@@ -645,21 +645,31 @@ second.uppass <- function(states_matrix, tree) {
 
 
 ## Counting function (on the uppass)
-counting.uppass <- function(states_matrix, tree, pass) {
-    ## Active states
+counting.uppass <- function(states_matrix, tree, pass, verbose = FALSE) {
+    ## Initialise the values
     actives <- NULL
     temp_actives <- NULL
+    is_cherry <- FALSE
+
+    ## List of visited nodes
+    visited <- vector("list", ape::Nnode(tree))
 
     ## All possible states
     all_states <- sort(unique(unlist(states_matrix[[1]])))
 
     for(node in (ape::Ntip(tree)+1:ape::Nnode(tree))) {
 
-        curr_node <- states_matrix[[pass+1]][[node]]
         ## Select the descendants and ancestors
         desc_anc <- desc.anc(node, tree)
         right <- states_matrix[[pass+1]][desc_anc[1]][[1]]
         left <- states_matrix[[pass+1]][desc_anc[2]][[1]]
+
+        ## Inherits the tmp_actives from the previous visted node
+        tmp_actives <- visited[[desc_anc[3]-(ape::Nnode(tree)+1)]]
+        if(verbose) print(paste("node ", node, " - inherits actives from ancestor ", desc_anc[3]," c(", paste(tmp_actives, collapse = ", "), ")", sep = ""))
+
+        ## Is the node a cherry?
+        is_cherry <- ifelse(all(desc_anc[1:2] < ape::Ntip(tree)+1), TRUE, FALSE)
 
         ## Ignore missing data for now?
         if(any(left != -1) & all(all_states %in% left)) {
@@ -667,7 +677,7 @@ counting.uppass <- function(states_matrix, tree, pass) {
         }
         if(any(right != -1) & all(all_states %in% right)) {
             right <- -1
-        }
+        } 
 
         ## If any of the descendants are applicable
         if(any(left != -1) | any(right != -1)) {
@@ -683,28 +693,38 @@ counting.uppass <- function(states_matrix, tree, pass) {
             if(is.null(encountered)) {
                 ## If the states have never been encountered, simply add them to actives
                 actives <- unique(sort(c(actives, states)))
-                # print(paste("node ", node, " - added c(", paste(states, collapse = ", "), ") to actives c(", paste(actives, collapse = ", "), ")", sep = ""))
+                if(verbose) print(paste("node ", node, " - added c(", paste(states, collapse = ", "), ") to actives c(", paste(actives, collapse = ", "), ")", sep = ""))
             } else {
                 ## If the encountered states are NOT the same as previously
                 if(!all(encountered %in% tmp_actives)) {
+                    ## Get the homoplasies
+                    homoplasies <- get.union.excl(encountered, tmp_actives)
                     ## Increment the length
-                    states_matrix$length <- length(encountered)
-                    # print(paste("node ", node, " incremented + ", length(encountered), " (states: ", paste(encountered, collapse = ", "), ")", sep = ""))
+                    states_matrix$length <- states_matrix$length + length(homoplasies) ## only add the union.excl(ecountered, actives)
                     ## Increment the actives (if necessary)
                     actives <- unique(sort(c(actives, get.union.excl(states, actives))))
-                    # print(paste("node ", node, " - added c(", paste(states, collapse = ", "), ") to actives c(", paste(actives, collapse = ", "), ")", sep = ""))
+                    if(verbose) print(paste("node ", node, " incremented + ", length(homoplasies), " (states: ", paste(homoplasies, collapse = ", "), ") and added c(", paste(states, collapse = ", "), ") to actives c(", paste(actives, collapse = ", "), ")", sep = ""))
                 }
             }
             ## Set ALL the states into temporary actives
-            tmp_actives <- states
+            if(!is_cherry) {
+                tmp_actives <- states
+                if(verbose) print(paste("node ", node, " - tmp actives set to c(", paste(tmp_actives, collapse = ", "), ")", sep = ""))
+            } else {
+                tmp_actives <- NULL
+                if(verbose) print(paste("node ", node, " is a cherry - tmp actives reset"))
+            }
         } else {
             ## Reset temp actives (entering an NA region)
             tmp_actives <- NULL
+            if(verbose) print(paste("node ", node, " - tmp actives reset", sep = ""))
         }
+
+        ## Save the tmp actives into the visited
+        visited[node-(ape::Nnode(tree)+1)] <- list(tmp_actives)
     }
     return(states_matrix)
 }
-
 
 #' @title Inapplicable algorithm
 #'
@@ -756,7 +776,8 @@ NA.algorithm <- function(tree, character, passes = 4, method, inapplicable, matc
     }
 
     ## Getting the tree length
-    # states_matrix <- counting.uppass(states_matrix, tree, pass = length(n_passes))
+    states_matrix$length <- 0
+    states_matrix <- counting.uppass(states_matrix, tree, pass = length(n_passes))
 
     return(states_matrix)
 }

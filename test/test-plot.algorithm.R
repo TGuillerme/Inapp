@@ -549,16 +549,16 @@ test_that("right counting", {
                     ,"210210------" # 29
                     ,"----1111----" # 30
                     ,"230--??1--32" # 31
-                    ,"023--??1--32" # 32 #5
-                    ,"023-???1--32" # 33 #4
-                    ,"23--1?1--023" # 34 #6
-                    ,"----1010----" # 35 #2
-                    ,"------11---1" # 36 #1
-                    ,"10----11---1" # 37 #1
-                    ,"1---------01" # 38 # 2 in new
-                    ,"320--??3--21") #39 #6 in new algo
+                    ,"023--??1--32" # 32
+                    ,"023-???1--32" # 33
+                    ,"23--1?1--023" # 34
+                    ,"----1010----" # 35
+                    ,"------11---1" # 36
+                    ,"10----11---1" # 37
+                    ,"1---------01" # 38
+                    ,"320--??3--21") #39
     ## Results
-    expected_results <- c(2, 2, 2, 1, 1, 4, 4, 1, 2, 2, 1, 3, 2, 2, 3, 0, 2, 2, 4, 2, 1, 3, 2, 2, 1, 3, 1, 3, 2, 0, 2, 2, 1, 2, 1, 1, 2, 1, 2)
+    expected_results <- c(5, 2, 3, 2, 1, 5, 5, 2, 5, 2, 2, 4, 3, 2, 5, 0, 5, 2, 4, 5, 2, 4, 3, 3, 2, 5, 1, 4, 4, 0, 5, 5, 4, 5, 2, 1, 3, 5)
 
     ## Run the tests
     for(test in 1:length(characters)) { #9 and 33 are still bugged!
@@ -569,6 +569,25 @@ test_that("right counting", {
         # }
         expect_equal(matrix$length, expected_results[test])
     }
+
+    ## Run the bigger tree tests
+    tree <- read.tree(text = "((1,2),((3,(4,5)),(6,(7,(8,(9,(10,((11,(12,(13,(14,15)))),(16,(17,(18,(19,20))))))))))));")
+    characters <- c("11111---111---11---1" # 1
+                    )
+    ## Results
+    expected_results <- c(3)
+
+    ## Run the tests
+    for(test in 1:length(characters)) { #9 and 33 are still bugged!
+        suppressWarnings(matrix <- NA.algorithm(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
+        # if(matrix$length != expected_results[test]) {
+        #     print(paste("test", test, "failed"))
+        #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
+        # }
+        expect_equal(matrix$length, expected_results[test])
+    }
+
+
 })
 
 context("inapplicable.algorithm")

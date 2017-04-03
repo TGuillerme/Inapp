@@ -152,7 +152,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Add the character into the list
     states_matrix$Char[1:ape::Ntip(tree)] <- character[ordering]
 
-    ## Set up the active states tracker
+    ## Set up the active region tracker
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
 
     ## Set a length buffer
@@ -246,8 +246,9 @@ fitch.downpass <- function(states_matrix, tree) {
            
             ## Increment the tree length
             states_matrix$length <- states_matrix$length + 1
-            states_matrix$tracker$Dp1[[node]] <- c(1, states_matrix$tracker$Dp1[[node]])
-
+        }
+        if(any(left != -1) || any(left != -1)) {
+            states_matrix$tracker$Dp1 <- TRUE
         }
     }
 
@@ -440,12 +441,12 @@ first.uppass <- function(states_matrix, tree) {
 # # character <- "01---1010101"
 # # character <- "210--100--21"
 
-# states_matrix <- make.states.matrix(tree, character, inapplicable = NULL)
-# n_passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
-# for (pass in 1:4) {
-#         states_matrix <- n_passes[[pass]](states_matrix, tree)
-#     }
-# get.length(states_matrix)
+states_matrix <- make.states.matrix(tree, character, inapplicable = NULL)
+n_passes <- list(first.downpass, first.uppass)
+for (pass in 1:2) {
+        states_matrix <- n_passes[[pass]](states_matrix, tree)
+    }
+
 
 second.downpass <- function(states_matrix, tree) {
     
@@ -464,6 +465,50 @@ second.downpass <- function(states_matrix, tree) {
         right <- states_matrix$Dp2[desc_anc[1]][[1]]
         left <- states_matrix$Dp2[desc_anc[2]][[1]]
 
+        ## Set up the right and left actives (special condition if tips)
+        if(desc_anc[1] < ape::Ntip(tree)+1) {
+            ## If right has any inapplicable
+            if(any(right == -1)) {
+                ## If right has only an applicable
+                if(length(right) == 1) {
+                    right_active <- NULL
+                } else {
+                    ## If the ancestor also has an inapplicable
+                    if(any(curr_node == -1)) {
+                        right_active <- NULL
+                    } else {
+                        right_active <- TRUE
+                    }
+                }
+            } else {
+                right_active <- TRUE
+            }
+        } else {
+            right_active <- states_matrix$tracker$Dp2[desc_anc[1]][[1]]
+        }
+
+
+        if(desc_anc[2] < ape::Ntip(tree)+1) {
+            ## If left has any inapplicable
+            if(any(left == -1)) {
+                ## If left has only an applicable
+                if(length(left) == 1) {
+                    left_active <- NULL
+                } else {
+                    ## If the ancestor also has an inapplicable
+                    if(any(curr_node == -1)) {
+                        left_active <- NULL
+                    } else {
+                        left_active <- TRUE
+                    }
+                }
+            } else {
+                left_active <- TRUE
+            }
+        } else {
+            left_active <- states_matrix$tracker$Dp2[desc_anc[1]][[1]]
+        }
+
         if(any(curr_node != -1)) {
             ## Get the states in common between the descendants
             common_desc <- get.common(left, right)
@@ -481,43 +526,21 @@ second.downpass <- function(states_matrix, tree) {
                 union_desc <- get.union.incl(left, right)
                 states_matrix$Dp2[[node]] <- union_desc[which(union_desc != -1)]
 
-                # Counting
+                ## Counting
                 if(any(left != -1) && any(right != -1)) {
-                    
-                    if(!is.null(actives) && all(states_matrix$Dp2[[node]] %in% get.common(states_matrix$Dp2[[node]], actives))) { #TG: Counting problem here?
-                        ## Increment the count
-                        states_matrix$length <- states_matrix$length+1
-                        # cat(paste("pass 3 - node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
-                        states_matrix$tracker$Dp2[[node]] <- c(1, states_matrix$tracker$Dp2[[node]])
-                    } else {
-                        ## Activate the states
-                        actives <- unique(c(states_matrix$Dp2[[node]], actives))
-                        ## Remove inapplicables
-                        actives <- sort(actives[which(actives != -1)])
-                        # cat(paste("pass 3 - node ", node, ": activated states c1 (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
-                        if(length(states_matrix$Dp2[[node]][which(states_matrix$Dp2[[node]] != -1)]) != 0) {
-                            states_matrix$tracker$Dp2[[node]] <- c(0, states_matrix$tracker$Dp2[[node]])
-                        }
+                    states_matrix$length <- states_matrix$length + 1
+                } else {
+                    if(!is.null(right_active) && !is.null(left_active)) {
+                        states_matrix$length <- states_matrix$length + 1
                     }
                 }
+
             }
         } else {
             ## Else, leave the state as it was after the first uppass
             states_matrix$Dp2[[node]] <- curr_node
-
-            if(is.null(get.common(left, right))) {
-                ## Adding activation
-                union_desc <- get.union.incl(left, right)
-                ## Activate the states
-                actives <- unique(c(union_desc, actives))
-                ## Remove inapplicables
-                actives <- sort(actives[which(actives != -1)])
-                # cat(paste("pass 3 - node ", node, ": activated states c2 (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
-                if(length(states_matrix$Dp2[[node]][which(states_matrix$Dp2[[node]] != -1)]) != 0) {
-                    states_matrix$tracker$Dp2[[node]] <- c(0, states_matrix$tracker$Dp2[[node]])
-                }
-            }
         }
+
     }
 
     return(states_matrix)
@@ -554,6 +577,9 @@ second.uppass <- function(states_matrix, tree) {
         right <- states_matrix$Dp2[desc_anc[1]][[1]]
         left <- states_matrix$Dp2[desc_anc[2]][[1]]
         ancestor <- states_matrix$Up2[desc_anc[3]][[1]]
+
+        right_active <- states_matrix$tracker$Dp2[desc_anc[1]][[1]]
+        left_active <- states_matrix$tracker$Dp2[desc_anc[2]][[1]]
 
         if(any(curr_node != -1)) {
             if(any(ancestor != -1)) {
@@ -617,26 +643,9 @@ second.uppass <- function(states_matrix, tree) {
             ## If there is no applicable state in the previous pass
             states_matrix$Up2[[node]] <- curr_node
 
-            if(is.null(get.common(left, right))) {
-                if(!is.null(get.common(get.union.incl(left, right), actives))) {
-                    ## Increment the counting
-                    states_matrix$length <- states_matrix$length+1
-                    # cat(paste("pass 4 - node ", node, ": added length +1 (is now ", states_matrix$length, ")\n", sep = ""))
-                    states_matrix$tracker$Up2[[node]] <- c(1, states_matrix$tracker$Up2[[node]])
-                }
-            }
-        }
-
-        if(is.null(get.common(left, right))) {
-            ## Adding activation
-            union_desc <- get.union.incl(left, right)
-            ## Activation
-            actives <- unique(c(union_desc, actives))
-            ## Remove inapplicables
-            actives <- sort(actives[which(actives != -1)])
-            # cat(paste("pass 4 - node ", node, ": activated states (actives are now: ", paste(actives, collapse = ", "), ")\n", sep = ""))
-            if(length(states_matrix$Up2[[node]][which(states_matrix$Up2[[node]] != -1)]) != 0) {
-                states_matrix$tracker$Up2[[node]] <- c(0, states_matrix$tracker$Up2[[node]])
+            ## Counting
+            if(!is.null(right_active) && !is.null(left_active)) {
+                states_matrix$length <- states_matrix$length + 1
             }
         }
     }
@@ -776,8 +785,8 @@ NA.algorithm <- function(tree, character, passes = 4, method, inapplicable, matc
     }
 
     ## Getting the tree length
-    states_matrix$length <- 0
-    states_matrix <- counting.uppass(states_matrix, tree, pass = length(n_passes))
+    # states_matrix$length <- 0
+    # states_matrix <- counting.uppass(states_matrix, tree, pass = length(n_passes))
 
     return(states_matrix)
 }
@@ -898,13 +907,13 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
         legend("topleft", paste("Tree length is", states_matrix$length),  bty = "n", cex = 1.2, bg = "white")
     } else {
         if(all(counts == 1)) {
-            legend("topleft", c(paste("Tree length is", states_matrix$length), "* = states activation"),  bty = "n", cex = 1.2, bg = "white")
+            legend("topleft", c(paste("Tree length is", states_matrix$length), "* = applicable region increment"),  bty = "n", cex = 1.2, bg = "white")
         } else {
             if(all(counts == 2)) {
-                legend("topleft", c(paste("Tree length is", states_matrix$length), "+ = length increment"),  bty = "n", cex = 1.2, bg = "white")
+                legend("topleft", c(paste("Tree length is", states_matrix$length), "+ = state change increment"),  bty = "n", cex = 1.2, bg = "white")
             } else {
                 if(all(counts %in% c(1,2))) {
-                    legend("topleft", c(paste("Tree length is", states_matrix$length), "* = states activation", "+ = length increment"),  bty = "n", cex = 1.2, bg = "white")
+                    legend("topleft", c(paste("Tree length is", states_matrix$length), "* = applicable region increment", "+ = state change increment"),  bty = "n", cex = 1.2, bg = "white")
                 }
             }
         }

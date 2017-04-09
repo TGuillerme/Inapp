@@ -431,25 +431,24 @@ get.side.applicable <- function(states_matrix, tree, node, side, pass) {
     desc_anc <- desc.anc(node, tree)
 
     curr_node <- states_matrix[[pass]][[node]]
-    node <- states_matrix[[pass+1]][desc_anc[side]][[1]]
 
-    if(any(node == -1)) {
-        ## The node has at least an inapplicable
-        if(length(node) == 1) {
-            ## The node is inapplicable
-            side_applicable <- FALSE
+    if(desc_anc[side] < ape::Ntip(tree)+1) {
+        ## Get the tip value
+        tip <- states_matrix[[pass+1]][desc_anc[side]][[1]]
+        if(length(tip) == 1) {
+            ## If the tip has only one state
+            side_applicable <- ifelse(any(tip == -1), FALSE, TRUE)
         } else {
-            if(desc_anc[side] < ape::Ntip(tree)+1) {
-                ## The "node" is a tip with question mark and should be solved from the ancestor (curr_node)
+            ## If the tip is ambiguous (question mark), solve using the current node
+            if(any(tip == -1)) {
                 side_applicable <- ifelse(any(curr_node == -1), FALSE, TRUE)  
             } else {
-                ## The node is ambiguous, there's an applicable up in the tree
                 side_applicable <- TRUE
             }
         }
     } else {
-        ## The side is applicable
-        side_applicable <- TRUE
+        ## Get the applicability from the node (saved in the tracker)
+        side_applicable <- states_matrix$tracker[[pass]][desc_anc[side]][[1]]
     }
 
     return(side_applicable)
@@ -468,8 +467,8 @@ get.side.applicable <- function(states_matrix, tree, node, side, pass) {
 # DEBUG
 # stop("DEBUG 3rd pass!")
 # tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
-# character <- "23--1??--032"
-# # character <- "1---1111---1" # Not activating anything on the uppass? Missing 1 count
+# # character <- "23--1??--032"
+# character <- "1---1111---1" # Not activating anything on the uppass? Missing 1 count
 # # character <- "1100----0011"
 # # character <- "23--1----032"
 # # character <- "01---1010101"
@@ -499,10 +498,12 @@ second.downpass <- function(states_matrix, tree) {
         ## Get the actives
         right_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "right", pass = 3)
         left_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "left", pass = 3)
+        # print(paste("Pass 3: node ", node, " - left is ", left_applicable, " and right is ", right_applicable, sep =""))
 
         ## Record the region tracker for displaying later
         states_matrix$tracker$Dp2[desc_anc[1]][[1]] <- right_applicable
         states_matrix$tracker$Dp2[desc_anc[2]][[1]] <- left_applicable
+        states_matrix$tracker$Dp2[node][[1]] <- left_applicable | right_applicable
 
         if(any(curr_node != -1)) {
             ## Get the states in common between the descendants
@@ -556,9 +557,6 @@ second.downpass <- function(states_matrix, tree) {
 
 second.uppass <- function(states_matrix, tree) {
 
-    ## Active states
-    actives <- NULL
-
     ## Transferring the characters in the right matrix column
     states_matrix$Up2 <- states_matrix$Char
 
@@ -576,12 +574,16 @@ second.uppass <- function(states_matrix, tree) {
         ancestor <- states_matrix$Up2[desc_anc[3]][[1]]
 
         ## Get the actives
-        right_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "right", pass = 4)
-        left_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "left", pass = 4)
+        # right_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "right", pass = 4)
+        # left_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "left", pass = 4)
+        right_applicable <- states_matrix$tracker$Dp2[desc_anc[1]][[1]]
+        left_applicable <- states_matrix$tracker$Dp2[desc_anc[2]][[1]]
+        # print(paste("Pass 4: node ", node, " - left is ", left_applicable, " and right is ", right_applicable, sep =""))
 
         ## Record the region tracker for displaying later
         states_matrix$tracker$Up2[desc_anc[1]][[1]] <- right_applicable
         states_matrix$tracker$Up2[desc_anc[2]][[1]] <- left_applicable
+        states_matrix$tracker$Up2[node][[1]] <- left_applicable | right_applicable
 
         if(any(curr_node != -1)) {
             if(any(ancestor != -1)) {

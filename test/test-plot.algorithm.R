@@ -42,9 +42,9 @@ test_that("make.states.matrix works", {
     expect_warning(matrix <- make.states.matrix(tree, character))  # Warning is some weird NA management by testthat
     expect_is(matrix, "list")
     expect_equal(unique(unlist(lapply(matrix, class))), c("list", "numeric"))
-    expect_equal(unique(unlist(lapply(matrix, length))), c(7,4,1))
-    expect_equal(length(matrix), 7)
-    expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "length"))
+    expect_equal(unique(unlist(lapply(matrix, length))), c(7,4,1,0))
+    expect_equal(length(matrix), 8)
+    expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "length", "changes"))
 
     ## Right output values
     expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1)))  # Warning is some weird NA management by testthat

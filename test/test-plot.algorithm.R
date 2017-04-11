@@ -44,7 +44,7 @@ test_that("make.states.matrix works", {
     expect_equal(unique(unlist(lapply(matrix, class))), c("list", "numeric"))
     expect_equal(unique(unlist(lapply(matrix, length))), c(7,4,1,0))
     expect_equal(length(matrix), 8)
-    expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "length", "changes"))
+    expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "regions", "changes"))
 
     ## Right output values
     expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1)))  # Warning is some weird NA management by testthat
@@ -69,6 +69,14 @@ test_that("make.states.matrix works", {
     expect_true(all(unlist(make.states.matrix(tree2, character, match.tip.char = FALSE)[[1]]) == expected1))
     expect_true(all(unlist(make.states.matrix(tree2, character, match.tip.char = TRUE)[[1]]) == expected2))
 
+    ## Matching the character to the tips (2)
+    tree1 <- read.tree(text = "((1,2),3);")
+    tree2 <- read.tree(text = "((3,1),2);")
+    character <- "123"
+    expect_true(all(unlist(make.states.matrix(tree1, character, match.tip.char = FALSE)$Char) == c(1,2,3)))
+    expect_true(all(unlist(make.states.matrix(tree1, character, match.tip.char = TRUE)$Char) == c(1,2,3)))
+    expect_true(all(unlist(make.states.matrix(tree2, character, match.tip.char = FALSE)$Char) == c(1,2,3)))
+    expect_true(all(unlist(make.states.matrix(tree2, character, match.tip.char = TRUE)$Char) == c(3,1,2)))
 })
 
 context("desc.anc")
@@ -525,7 +533,7 @@ test_that("right counting", {
                     "----1111---1", # 4
                     "01----010101", # 5
                     "01---1010101", # 6
-                    "1??--??--100", # 7                        
+                    "1??--??--100", # 7
                     "21--3??--032", # 8
                     "11--1??--111", # 9
                     "11--1000001-", # 10
@@ -566,7 +574,9 @@ test_that("right counting", {
         #     print(paste("test", test, "failed"))
         #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
         # }
-        expect_equal(matrix$length, expected_results[test])
+
+        length <- matrix$regions + ifelse(length(matrix$changes) > 0, length(matrix$changes), 0)
+        expect_equal(length, expected_results[test])
     }
 
     ## Run the bigger tree tests
@@ -583,7 +593,8 @@ test_that("right counting", {
         #     print(paste("test", test, "failed"))
         #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
         # }
-        expect_equal(matrix$length, expected_results[test])
+        length <- matrix$regions + ifelse(length(matrix$changes) > 0, length(matrix$changes), 0)
+        expect_equal(length, expected_results[test])
     }
 
 

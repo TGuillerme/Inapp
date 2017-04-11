@@ -155,8 +155,8 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Set up the active region tracker
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
 
-    ## Set a length buffer
-    states_matrix$length <- 0
+    ## Set a applicable regions counts
+    states_matrix$regions <- 0
 
     ## Save the node with changes
     states_matrix$changes <- numeric(0)
@@ -247,9 +247,6 @@ fitch.downpass <- function(states_matrix, tree) {
             ## Else set it to be the union of the descendants
             states_matrix$Dp1[[node]] <- get.union.incl(left, right)
            
-            ## Increment the tree length
-            states_matrix$length <- states_matrix$length + 1
-
             ## Store the node
             states_matrix$changes <- c(states_matrix$changes, node)
         }
@@ -526,12 +523,11 @@ second.downpass <- function(states_matrix, tree) {
 
                 ## Counting
                 if(any(left != -1) && any(right != -1)) {
-                    states_matrix$length <- states_matrix$length + 1
                     ## Store the node
                     states_matrix$changes <- c(states_matrix$changes, node)
                 } else {
                     if(right_applicable && left_applicable) {
-                        states_matrix$length <- states_matrix$length + 1
+                        states_matrix$regions <- states_matrix$regions + 1
                     }
                 }
 
@@ -651,7 +647,7 @@ second.uppass <- function(states_matrix, tree) {
 
             ## Counting
             if(right_applicable && left_applicable) {
-                states_matrix$length <- states_matrix$length + 1
+                states_matrix$regions <- states_matrix$regions + 1
             }
         }
     }
@@ -790,10 +786,6 @@ NA.algorithm <- function(tree, character, passes = 4, method, inapplicable, matc
         states_matrix <- n_passes[[pass]](states_matrix, tree)
     }
 
-    ## Getting the tree length
-    # states_matrix$length <- 0
-    # states_matrix <- counting.uppass(states_matrix, tree, pass = length(n_passes))
-
     return(states_matrix)
 }
 
@@ -845,6 +837,28 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
         return(unlist(lapply(character, function(X) paste(as.character(X), collapse = ""))))
     }
 
+    ## Internal plot utility: get the inapplicable regions
+    get.NA.edges <- function(states_matrix, tree, pass = 4) {
+
+        ## Checking if an edge is applicable (1) or not (0) - edge are inapplicable if both nodes (or tips) at each side are -1
+        check.applicable <- function(nodes, states_matrix, pass) {
+            node1 <- states_matrix[[pass+1]][nodes[1]][[1]]
+            node2 <- states_matrix[[pass+1]][nodes[2]][[1]]
+
+            ## Solving missing data
+            all_char <- sort(unique(unlist(states_matrix$Char)))
+            options(warn = -1)
+            node2 <- ifelse(all(node2 == all_char), node1, node2)
+            options(warn = 0)
+
+            ## Getting the branch applicability
+            return(ifelse(all(c(node1, node2) == -1), 0, 1))
+        }
+
+        ## Check applicability on all the edges
+        return(apply(tree$edge, 1, check.applicable, states_matrix, pass))
+    }
+
     ## SANITIZING
     ## tree character done in make.states.matrix
     
@@ -884,22 +898,19 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
     cex <- 1
 
     ## Set the edges' colors
-    # if(any(counts == 1)) {
-    #     ## Change the colors of the nodes if activations exist
-    #     if() {
-    #     } else {
-    #         edge_col <- "black"
-    #     }
-    # }
     edge_col <- "black"
+    if(any(counts == 1)) {
+        ## Change the colors of the nodes if activations exist (and if the algorithm is NA)
+        edge_col <- ifelse(get.NA.edges(states_matrix, tree, pass = 4) == 1, "black", "grey")
+    }
 
     ## Plotting the tree
-    plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col, ...)
-    # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col) ; warning("DEBUG plot")
+    plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col, edge.width = 2, ...)
+    # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
 
 
     ## Setting up the legend parameters
-    length_text <-  paste("Tree length is", states_matrix$length)
+    length_text <-  paste("Tree length is", states_matrix$regions + ifelse(length(states_matrix$changes) > 0, length(states_matrix$changes), 0))
     if(all(counts == 0)) {
         legend_text <- length_text
         par_cex = 0
@@ -909,7 +920,7 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
         par_col = "white"
     } else {
         if(all(counts == 1)) {
-            legend_text <- c(length_text, "applicable region")
+            legend_text <- c(length_text, paste("applicable region (1 + ", states_matrix$regions, ")", sep = ""))
             par_cex = c(0, 0)
             par_pch = c(0, 0)
             par_lty = c(0, 1)
@@ -917,7 +928,7 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
             par_col = "black"
         } else {
             if(all(counts == 2)) {
-                legend_text <- c(length_text, "state changes")
+                legend_text <- c(length_text, paste("state changes (", length(states_matrix$changes), ")", sep = ""))
                 par_cex = c(0, 2)
                 par_pch = c(0, 15)
                 par_lty = c(0, 0)
@@ -925,7 +936,7 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
                 par_col = col.tips.nodes[3]
             } else {
                 if(all(counts %in% c(1,2))) {
-                    legend_text <- c(length_text, "applicable region", "state changes")
+                    legend_text <- c(length_text, paste("applicable region (1 + ", states_matrix$regions, ")", sep = ""), paste("state changes (", length(states_matrix$changes), ")", sep = ""))
                     par_cex = c(0, 0, 2)
                     par_pch = c(0, 0, 15)
                     par_lty = c(0, 1, 0)
@@ -937,15 +948,12 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
     }
 
     ## Adding the legend
-    legend("topleft", legend = legend_text, bty = "n", cex = 1.2, pch = par_pch, lty = par_lty, lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5)
+    legend("topleft", legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty, lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5, box.lwd = 0,box.col = "white", bg = "white")
 
     ## Add the tip states
-    if(class(character) == "character" && length(character) == 1) {
-        ape::tiplabels(as.character(strsplit(as.character(character), "")[[1]]), cex = cex, bg = col.tips.nodes[1], adj = 1)
-    } else {
-        tips_labels <- plot.convert.state(states_matrix[[1]][1:ape::Ntip(tree)], missing = TRUE)
-        ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
-    }
+    tips_labels <- plot.convert.state(states_matrix[[1]][1:ape::Ntip(tree)], missing = TRUE)
+    ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
+
 
     ## ADD THE NODE LABELS
 
@@ -969,8 +977,8 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
         if(any(counts == 2)) {
             ## Change the colors of the nodes if activations exist
             if(length(states_matrix$changes) > 0) {
-                bg_col <- rep(col.tips.nodes[2], Nnode(tree))
-                bg_col[states_matrix$changes - Ntip(tree)] <- col.tips.nodes[3]
+                bg_col <- rep(col.tips.nodes[2], ape::Nnode(tree))
+                bg_col[states_matrix$changes - ape::Ntip(tree)] <- col.tips.nodes[3]
             } else {
                 bg_col <- col.tips.nodes[2]
             }
@@ -978,10 +986,8 @@ plot.NA.algorithm <- function(states_matrix, tree, passes = c(1,2,3,4), show.lab
             bg_col <- col.tips.nodes[2]
         }
 
-        #TG: add the applicable regions plotting.
-
         ## Plot the node labels
-        ape::nodelabels(node_labels, cex = cex-(1-cex)*(length(passes)*0.85), bg = bg_col)
+        ape::nodelabels(node_labels, cex = 0.90, bg = bg_col)
         # ape::nodelabels(node_labels, cex = 0.5, bg = bg_col) ; warning("DEBUG")
     }
 

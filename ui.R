@@ -61,7 +61,7 @@ shinyUI(fluidPage(
             helpText("Accepted character states are any values from 0 to 9 as well as - for the inapplicable token and ? for all states (missing data)."),
             ## Match character
             checkboxInput("matchtipchar", label = "Match character to tips", value = FALSE),
-            helpText("Tick to match each character state to the tip name (first character matches the first tip alphabetically).")
+            helpText("Tick to match left-right state input order state to the alphanumeric order of the tip labels.")
           ),
 
           ## Nexus character

@@ -1,0 +1,87 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\begin{document}
+
+\noindent{\Large \bf Inapplicable algorithm description}
+
+\section{First downpass} \label{1stDp}
+
+    % If, else, \textbf{then} -> bold
+    % \textit{set}, go, \textbf{\textit{increment}} -> italic
+
+\begin{enumerate}
+    \item Enter on any cherry (i.e. pair of tips) on the tree and move to its most recent common ancestor; \textbf{then}, \textit{go} to \ref{1stDp:enter}.
+    \item \label{1stDp:enter} \textbf{If} both node's descendants share at least one token in common, \textit{go} to \ref{1stDp:AND}; \textbf{else}, \textit{go} to \ref{1stDp:OR}.
+    \item \label{1stDp:AND} \textbf{If} the state in common is only the inapplicable token and that any of the descendants has an applicable token, \textit{set} the node's state to be the union between both descendants; \textbf{else}, \textit{set} the node's state to the state in common between both descendants. \textbf{Then} \textit{go} to \ref{1stDp:exit}.  
+    \item \label{1stDp:OR} \textbf{If} any of the descendants have an applicable token, \textit{set} the node's state to be the union of its descendants without any inapplicable token; \textbf{else}, \textit{set} the node state to be the inapplicable token only. \textbf{Then} \textit{go} to \ref{1stDp:exit}.
+    \item \label{1stDp:exit} \textbf{If} possible, move to the node's ancestor and \textit{go} to \ref{1stDp:enter}; \textbf{else} move to the next unvisited cherry's ancestor and \textit{go} to \ref{1stDp:enter}. Once all nodes have been visited, end the first downpass.
+\end{enumerate}
+
+\section{First uppass} \label{1stUp}
+
+\begin{enumerate}
+    \item Enter the tree on its root. \textbf{If} the root has any applicable token, \textit{set} it's state to be the applicable token(s) only. Move to one of the root's descendants and \textit{go} to \ref{1stUp:enter}.
+    \item \label{1stUp:enter} \textbf{If} the node has an inapplicable token, \textit{go} to \ref{1stUp:nodeNA1}; \textbf{else}, leave the node's state unchanged and \textit{go} to \ref{1stUp:exit}.
+    \item \label{1stUp:nodeNA1} \textbf{If} the node also has an applicable token, \textit{go} to \ref{1stUp:nodeNAandA}; \textbf{else}, \textit{go} to \ref{1stUp:nodeNA2}.
+    \item \label{1stUp:nodeNAandA} \textbf{If} the node's ancestor has an inapplicable token, \textit{set} the node's state to be the inapplicable token only; \textbf{else} \textit{set} the node's state to be the applicable token(s) only. \textbf{Then} \textit{go} to \ref{1stUp:exit}.
+    \item \label{1stUp:nodeNA2} \textbf{If} the node's ancestor has an inapplicable token, \textit{set} the node's state to be the inapplicable token only and \textit{go} to \ref{1stUp:exit}; \textbf{else} \textit{go} to \ref{1stUp:nodeNAOR}.
+    \item \label{1stUp:nodeNAOR} \textbf{If} any of the descendants have an applicable token, the the node's state to be its descendants union without an inapplicable token; \textbf{else} \textit{set} the node's state to be the inapplicable token only. \textbf{Then} \textit{go} to \ref{1stUp:exit}.
+    \item \label{1stUp:exit} \textbf{If} any of the node's descendant is not a tip, move to the next node and \textit{go} to \ref{1stUp:enter}. \textbf{If} both descendants are tips, move to the closest non-visited node and \textit{go} to \ref{1stUp:enter}. Once all nodes have been visited, end the first uppass.
+\end{enumerate}
+
+
+\section{Second downpass} \label{2ndDp}
+
+\begin{enumerate}
+    \item  Enter on any cherry on the tree and move to its most recent common ancestor; \textbf{then}, \textit{go} to \ref{2ndDp:enter}.
+
+        %TG: missing this activation business somwhere here:
+        % ## Get the actives
+        % right_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "right", pass = 3)
+        % left_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "left", pass = 3)
+
+        % ## Record the region tracker for displaying later
+        % states_matrix$tracker$Dp2[desc_anc[1]][[1]] <- right_applicable
+        % states_matrix$tracker$Dp2[desc_anc[2]][[1]] <- left_applicable
+        % states_matrix$tracker$Dp2[node][[1]] <- left_applicable | right_applicable
+
+    \item \label{2ndDp:enter} \textbf{If} there is any token in common between both descendants, \textit{go} to \ref{2ndDp:AND}; \textbf{else}, \textit{go} to \ref{2ndDp:OR}.
+    \item \label{2ndDp:AND} \textbf{If} any the token(s) in common are applicable, \textit{set} the node's state to be the common applicable token(s) only; \textbf{else} \textit{set} the node's state to be the inapplicable token only. \textbf{Then} \textit{go} to \ref{2ndDp:exit}. 
+    \item \label{2ndDp:OR} \textit{Set} the node's state to be the union of both descendants tokens without the inapplicable token and \textit{go} to \ref{2ndDp:Count}.
+    \item \label{2ndDp:Count}  \textbf{If} both descendants have an applicable token, \textbf{\textit{increment}} the tree length; \textbf{else} \textbf{if} both the descendants have are an active region, \textbf{\textit{increment}} the tree length. \textbf{Then} \textit{go} to \ref{2ndDp:exit}. %TG: need to define what's the applicable region logic here! 
+    \item \label{2ndDp:exit} \textbf{If} possible, move to the node's ancestor and \textit{go} to \ref{2ndDp:enter}; \textbf{else} move to the next unvisited cherry's ancestor and \textit{go} to \ref{2ndDp:enter}. Once all nodes have been visited, end the second downpass.
+\end{enumerate}
+
+\section{Second uppass} \label{2ndUp}
+
+\begin{enumerate}
+    \item Enter the tree on its root and move to one of the root's descendants. \textbf{Then} \textit{go} to \ref{2ndUp:enter}.
+
+        %TG: missing this activation business somwhere here:
+        % ## Get the active
+        % right_applicable <- states_matrix$tracker$Dp2[desc_anc[1]][[1]]
+        % left_applicable <- states_matrix$tracker$Dp2[desc_anc[2]][[1]]
+
+        % ## Record the region tracker for displaying later
+        % states_matrix$tracker$Up2[desc_anc[1]][[1]] <- right_applicable
+        % states_matrix$tracker$Up2[desc_anc[2]][[1]] <- left_applicable
+        % states_matrix$tracker$Up2[node][[1]] <- left_applicable | right_applicable
+
+    \item \label{2ndUp:enter} \textbf{If} the node has any applicable token(s), \textit{go} to \ref{2ndUp:nodeA}; \textbf{else}, \textit{go} to \ref{2ndUp:nodeNA}.
+    \item \label{2ndUp:nodeA} \textbf{If} the node's ancestor has any applicable token(s), \textit{go} to \ref{2ndUp:ancestorA1}; \textbf{else}, \textit{go} to \ref{2ndUp:ancestorNA}.
+    \item \label{2ndUp:ancestorA1} \textbf{If} the node's token(s) is the same as its ancestor, \textit{go} to \ref{2ndUp:exit}; \textbf{else}, \textit{go} to \ref{2ndUp:ancestorA1}.
+    \item \label{2ndUp:ancestorA2} \textbf{If} there is any token(s) in common between the node's descendants, \textit{go} to \ref{2ndUp:ANDdesc}; \textbf{else} \textit{go} to \ref{2ndUp:ORdesc}.
+    \item \label{2ndUp:ANDdesc} \textbf{If} there is any token(s) in common between the node, its ancestor and both its descendants, \textit{set} it (them) to be the node's token(s); \textbf{else} \textit{set} the node to be the token(s) in common between its descendants. The \textit{go} to \ref{2ndUp:exit}.
+    \item \label{2ndUp:ORdesc} \textbf{If} the union between the node's descendants have an inapplicable token, \textit{go} to \ref{2ndUp:ORdescNA}; \textbf{else} \textit{go} to \ref{2ndUp:ORdescA}.
+    \item \label{2ndUp:ORdescNA} \textbf{If} there is any token(s) in common between the node's descendants and ancestor, \textit{set} the node's token(s) to be its ancestor's; \textbf{else} \textit{set} the node to be the union of the tokens from its descendants and ancestor without any inapplicable token. \textbf{Then} \textit{go} to \ref{2ndUp:exit}.
+    \item \label{2ndUp:ORdescA} \textit{Set} the node to be the union its tokens and its ancestor ones. \textbf{Then} \textit{go} to \ref{2ndUp:exit}.
+    \item \label{2ndUp:ancestorNA} \textbf{If} there is any tokens in common between both descendants, \textit{set} the node's state to these tokens. \textit{Go} to \ref{2ndUp:exit}. %TG: No else
+    \item \label{2ndUp:nodeNA} \textbf{If} both the descendants have are an active region, \textbf{\textit{increment}} the tree length. \textit{Go} to \ref{2ndUp:exit}. %TG: No else
+    \item \label{2ndUp:exit} \textbf{If} any of the node's descendant is not a tip, move to the next node and \textit{go} to \ref{1stUp:enter}. \textbf{If} both descendants are tips, move to the closest non-visited node and \textit{go} to \ref{1stUp:enter}. Once all nodes have been visited, end the second uppass.
+\end{enumerate}
+
+The tree length is then equal to the number of states changes and the number of additional applicable regions.
+
+\end{document}

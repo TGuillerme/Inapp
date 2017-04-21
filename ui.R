@@ -7,7 +7,6 @@ shinyUI(fluidPage(
     hr(),
   
     fluidRow(
-
         ## ---------------
         ## Tree parameters
         ## ---------------

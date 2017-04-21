@@ -487,7 +487,7 @@ second.downpass <- function(states_matrix, tree) {
     states_matrix$Dp2 <- states_matrix$Char
 
     ## Loop through the nodes
-    for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) { # flip_clade <- c(18,17,16,15,14,23,22,21,20,19,13)
+    for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) {
 
         curr_node <- states_matrix$Up1[[node]]
         ## Select the descendants and ancestors
@@ -558,9 +558,6 @@ second.uppass <- function(states_matrix, tree) {
     ## Transferring the characters in the right matrix column
     states_matrix$Up2 <- states_matrix$Char
 
-    ## Root state is inherited from the second downpass
-    # states_matrix$Up2[[ape::Ntip(tree)+1]] <- states_matrix$Dp2[[ape::Ntip(tree)+1]]
-
     ## For each node from the root
     for(node in (ape::Ntip(tree)+1:ape::Nnode(tree))) {
 
@@ -572,11 +569,8 @@ second.uppass <- function(states_matrix, tree) {
         ancestor <- states_matrix$Up2[desc_anc[3]][[1]]
 
         ## Get the actives
-        # right_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "right", pass = 4)
-        # left_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "left", pass = 4)
         right_applicable <- states_matrix$tracker$Dp2[desc_anc[1]][[1]]
         left_applicable <- states_matrix$tracker$Dp2[desc_anc[2]][[1]]
-        # print(paste("Pass 4: node ", node, " - left is ", left_applicable, " and right is ", right_applicable, sep =""))
 
         ## Record the region tracker for displaying later
         states_matrix$tracker$Up2[desc_anc[1]][[1]] <- right_applicable
@@ -611,7 +605,8 @@ second.uppass <- function(states_matrix, tree) {
                         if(any(union_desc == -1)) {
 
                             if(!is.null(get.common(union_desc, ancestor))) {
-                                states_matrix$Up2[[node]] <- get.union.incl(get.common(ancestor, union_desc), ancestor)
+                                # states_matrix$Up2[[node]] <- get.union.incl(get.common(ancestor, union_desc), ancestor) 
+                                states_matrix$Up2[[node]] <- ancestor
                             } else { 
                                 ## If the union of left and right has no state in common with the ancestor
                                 union_all <- get.union.incl(union_desc, ancestor)
@@ -622,12 +617,12 @@ second.uppass <- function(states_matrix, tree) {
                             union_node_anc <- get.union.incl(curr_node, ancestor)
                             states_matrix$Up2[[node]] <- union_node_anc
                             
-                            options(warn = -1)
-                            if(all(union_node_anc == ancestor)) {
-                                ## If the state in common between the node and the ancestor is the ancestor
-                                states_matrix$Up2[[node]] <- get.common(ancestor, states_matrix$Up2[[node]])
-                            }
-                            options(warn = 0)
+                            # options(warn = -1)
+                            # if(all(union_node_anc == ancestor)) {
+                            #     ## If the state in common between the node and the ancestor is the ancestor
+                            #     states_matrix$Up2[[node]] <- get.common(ancestor, states_matrix$Up2[[node]])
+                            # }
+                            # options(warn = 0)
                         }
                     }
                 }

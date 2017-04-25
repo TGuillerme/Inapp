@@ -14,7 +14,7 @@
 \begin{enumerate}
     \item Enter on any cherry (i.e. pair of tips) on the tree and move to its most recent common ancestor; \textbf{then}, \textit{go} to \ref{1stDp:enter}.
     \item \label{1stDp:enter} \textbf{If} both node's descendants share at least one token in common, \textit{go} to \ref{1stDp:AND}; \textbf{else}, \textit{go} to \ref{1stDp:OR}.
-    \item \label{1stDp:AND} \textbf{If} the state in common is only the inapplicable token and that any of the descendants has an applicable token, \textit{set} the node's state to be the union between both descendants; \textbf{else}, \textit{set} the node's state to the state in common between both descendants. \textbf{Then} \textit{go} to \ref{1stDp:exit}.  
+    \item \label{1stDp:AND} \textbf{If} the state in common is only the inapplicable token and any of the descendants has an applicable token, \textit{set} the node's state to be the union between both descendants; \textbf{else}, \textit{set} the node's state to the state in common between both descendants. \textbf{Then} \textit{go} to \ref{1stDp:exit}.  
     \item \label{1stDp:OR} \textbf{If} any of the descendants have an applicable token, \textit{set} the node's state to be the union of its descendants without any inapplicable token; \textbf{else}, \textit{set} the node state to be the inapplicable token only. \textbf{Then} \textit{go} to \ref{1stDp:exit}.
     \item \label{1stDp:exit} \textbf{If} possible, move to the node's ancestor and \textit{go} to \ref{1stDp:enter}; \textbf{else} move to the next unvisited cherry's ancestor and \textit{go} to \ref{1stDp:enter}. Once all nodes have been visited, end the first downpass.
 \end{enumerate}

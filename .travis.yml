@@ -1,0 +1,21 @@
+language: r
+sudo: required
+warnings_are_errors: false
+
+# blacklist
+# branches:
+#   except:
+#     - master
+
+# whitelist
+branches:
+  only:
+    - master
+    # Change to release once released
+
+# Code coverage
+r_packages:
+  - covr
+
+after_success:
+- bash <(curl -s https://codecov.io/bash)

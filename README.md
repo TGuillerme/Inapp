@@ -21,7 +21,7 @@ runGitHub("Inapp", "TGuillerme")
 ```
 <!-- Upload the whole thing on shiny servers -->
 
-## Running Inapp in your `R` console
+## Running Inapp in your R console
 Not much more complicated! In `R`, copy/paste the following:
 ```r
 if(!require(devtools)) install.packages("devtools")

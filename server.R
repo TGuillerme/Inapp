@@ -1,5 +1,6 @@
 library(shiny)
 library(ape)
+library(Inapp)
 
 ## Load the R functions
 source("helpers.R")

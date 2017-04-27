@@ -4,17 +4,30 @@
 \alias{second.uppass}
 \title{Second uppass}
 \usage{
-second.uppass(states_matrix, tree)
+second.uppass(states_matrix)
 }
 \arguments{
 \item{states_matrix}{A \code{list} contains all the states and the activations}
-
-\item{tree}{A \code{phylo} tree}
 }
 \description{
 Applies a second up pass to a node
 }
+\examples{
+## Create a states matrix for reconstruction
+tree <- ape::read.tree(text = "((a,b),(c,d));")
+NA_matrix <- make.states.matrix(tree, "01?-")
+
+## Apply the second uppass
+(NA_matrix <- second.uppass(second.downpass(first.uppass(first.downpass(NA_matrix)))))
+
+## Access the states
+NA_matrix$Up2
+
+}
 \author{
 Thomas Guillerme
+}
+\seealso{
+\code{\link{apply.reconstruction}}
 }
 

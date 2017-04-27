@@ -4,10 +4,35 @@
 #'
 #' @param tree \code{phylo}, a tree
 #' @param character Either vector of character states (\code{"numeric"} or \code{"character"}) or a list of the same length of than the tips in the tree (see details)
+#' @param inapplicable When the intended reconstruction method is \code{"Fitch"}, how do deal with inapplicable data: \code{1}, \code{2} for respectively treating them as ? or an extra state (default = \code{NULL}).
 #' @param match.tip.char \code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)
 #'
 #' @details
 #' If \code{character} argument is a list, each element of the list must be a \code{"numeric"} vector with \code{"?"} being all states and \code{"-"} being \code{-1}.
+#' 
+#' @return
+#' A list of character states for each node and tip per pass:
+#' -\code{$Char}: a \code{list} of character states for the tips.
+#' -\code{$Dp1}: a \code{list} of the tips and noes states after the first downpass.
+#' -\code{$Up1}: a \code{list} of the tips and noes states after the first uppass.
+#' -\code{$Dp2}: a \code{list} of the tips and noes states after the second downpass.
+#' -\code{$Up2}: a \code{list} of the tips and noes states after the second uppass.
+#' -\code{$tracker}: a \code{list} tracking the applicable regions.
+#' -\code{$regions}: a single \code{numeric} value counting the number of applicable regions.
+#' -\code{$changes}: a \code{numeric} vector recording the node with state changes.
+#' 
+#' @examples
+#' ## A simple topology
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
+#' 
+#' ## A simple character
+#' character <- "01?-"
+#' 
+#' ## Create a states matrix for reconstruction
+#' make.states.matrix(tree, character)
+#' 
+#' @seealso \code{\link{apply.reconstruction}}.
+#' 
 #' @author Thomas Guillerme
 #' @export
 
@@ -97,17 +122,105 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Save the node with changes
     states_matrix$changes <- numeric(0)
 
+    ## Add the tree
+    states_matrix$tree <- tree
+
+    ## Set up the NA_matrix class
+    class(states_matrix) <- "states.matrix"
+
     return(states_matrix)
 }
 
-# ' @title Convert character
-# '
-# ' @description Convert a character if it is not numeric (transforming - into -1 and ? into all characters (but - ))
-# '
-# ' @param character any character vector
-# '
-# ' @author Thomas Guillerme
 
+#' @title Prints a \code{states.matrix} object.
+#'
+#' @description Summarises the content of a \code{states.matrix} object.
+#'
+#' @param x A \code{dispRity} object.
+#' @param ... further arguments to be passed to \code{print}.
+#' 
+#' @examples
+#' ## A simple topology
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
+#' 
+#' ## A simple character
+#' character <- "01?-"
+#' 
+#' ## Create a states matrix for reconstruction
+#' make.states.matrix(tree, character)
+#' 
+#'
+#' @seealso \code{\link{make.states.matrix}}.
+#'
+#' @author Thomas Guillerme
+#' 
+
+print.states.matrix <- function(x, ...) {
+
+    ## Record the call
+    match_call <- match.call()
+    x_name <- ifelse(class(match_call$x) == "name", as.character(as.name(match_call$x)), "states_matrix") 
+
+    ## Number of tips
+    num_tips <- ceiling(length(x$Char)/2)
+
+    ## States
+    all_states <- sort(as.character(unique(unlist(x$Char))))
+    all_states <- gsub("-1", "-", all_states)
+
+    ## Passes done
+    passes <- vector()
+    for(pass in 2:5) {
+        passes[pass-1] <- ifelse(is.null(unlist(x[[pass]])), FALSE, TRUE)
+    }
+    pass_names <- c("1st Downpass", "1st Uppass", "2nd Downpass", "2nd Uppass")
+    pass_ID <- c("$Dp1", "$Up1", "$Dp2", "$Up2")
+
+
+    ## Printing the object
+    cat(" ---- Tree ---- \n")
+    x$tree$edge.length <- NULL
+    cat(paste(ape::write.tree(x$tree), "\n"))
+
+    cat(" ---- States matrix---- \n")
+    ## Tips and states
+    cat(paste("Number of tips =", num_tips, "\n"))
+    cat(paste("Character states =", paste(all_states, collapse = ", "), "\n"))
+    if(any(passes)) {
+        ## Passes completed
+        for(pass in 1:4) {
+            cat(paste(pass_names[pass]))
+            if(passes[[pass]]) {
+                cat(paste(" completed. (See element ", pass_ID[pass], ").\n", sep = ""))
+            } else {
+                cat(": NULL\n")
+            }
+        }
+        ## Length
+        length <- x$regions + ifelse(length(x$changes) > 0, length(x$changes), 0)
+        cat(paste("Tree length is:", length, "\n"))
+        ## Details
+        if(length != 0) {
+            cat(paste(x$regions, "additional applicable regions.\n"))
+            if(length(x$changes) > 1) {
+                cat("State changes at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
+            } else {
+                if(length(x$changes) == 1) {
+                    cat("State changes at node: ", x$changes, ".\n", sep = "")
+                } else {
+                    cat("No state changes.\n")
+                }
+            }
+        } 
+    } else {
+        cat("No reconstructions calculated. See:\n ?apply.reconstruction\nto reconstruct ancestral states and count the tree length.\n")
+    }
+    return(invisible())
+}
+
+
+
+## Converts a character (inapplicable or missing)
 convert.char <- function(character) {
 
     convert.inappli <- function(X) {
@@ -162,15 +275,7 @@ convert.char <- function(character) {
     }
 }
 
-# ' @title Descendants and ancestors
-# '
-# ' @description Returns the right and left descendants and the ancestor of one node
-# '
-# ' @param node \code{numeric}, the number of a node
-# ' @param tree \code{phylo}, a tree
-# '
-# ' @author Thomas Guillerme
-
+## Selects descendant and ancestor
 desc.anc <- function(node, tree) {
     descendants <- tree$edge[which(tree$edge[,1] == node),2]
     ancestor <- tree$edge[which(tree$edge[,2] == node),1]
@@ -213,15 +318,15 @@ get.union.excl <- function(a, b) {
 }
 
 ## Set up the right and left actives (special condition if tips)
-get.side.applicable <- function(states_matrix, tree, node, side, pass) {
+get.side.applicable <- function(states_matrix, node, side, pass) {
 
     side <- ifelse(side == "right", 1, 2)
 
-    desc_anc <- desc.anc(node, tree)
+    desc_anc <- desc.anc(node, states_matrix$tree)
 
     curr_node <- states_matrix[[pass]][[node]]
 
-    if(desc_anc[side] < ape::Ntip(tree)+1) {
+    if(desc_anc[side] < ape::Ntip(states_matrix$tree)+1) {
         ## Get the tip value
         tip <- states_matrix[[pass+1]][desc_anc[side]][[1]]
         if(length(tip) == 1) {

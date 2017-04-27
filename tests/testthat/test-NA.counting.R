@@ -47,7 +47,7 @@ test_that("right counting", {
 
     ## Run the tests
     for(test in 1:length(characters)) {
-        suppressWarnings(matrix <- NA.algorithm(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
+        suppressWarnings(matrix <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
         # if(matrix$length != expected_results[test]) {
         #     print(paste("test", test, "failed"))
         #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
@@ -65,8 +65,8 @@ test_that("right counting", {
     expected_results <- c(3)
 
     ## Run the tests
-    for(test in 1:length(characters)) { #9 and 33 are still bugged!
-        suppressWarnings(matrix <- NA.algorithm(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
+    for(test in 1:length(characters)) { 
+        suppressWarnings(matrix <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
         # if(matrix$length != expected_results[test]) {
         #     print(paste("test", test, "failed"))
         #     print(paste("Is", matrix$length, "instead of", expected_results[test]))

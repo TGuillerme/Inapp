@@ -4,17 +4,30 @@
 \alias{first.downpass}
 \title{First downpass}
 \usage{
-first.downpass(states_matrix, tree)
+first.downpass(states_matrix)
 }
 \arguments{
 \item{states_matrix}{A \code{list} contains all the states and the activations}
-
-\item{tree}{A \code{phylo} tree}
 }
 \description{
 Applies a first down pass to a node
 }
+\examples{
+## Create a states matrix for reconstruction
+tree <- ape::read.tree(text = "((a,b),(c,d));")
+NA_matrix <- make.states.matrix(tree, "01?-")
+
+## Apply the first downpass
+(NA_matrix <- first.downpass(NA_matrix))
+
+## Access the states
+NA_matrix$Dp1
+
+}
 \author{
 Thomas Guillerme
+}
+\seealso{
+\code{\link{apply.reconstruction}}
 }
 

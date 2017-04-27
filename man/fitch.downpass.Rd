@@ -4,17 +4,30 @@
 \alias{fitch.downpass}
 \title{Fitch downpass}
 \usage{
-fitch.downpass(states_matrix, tree)
+fitch.downpass(states_matrix)
 }
 \arguments{
 \item{states_matrix}{A \code{list} contains all the states and the activations}
-
-\item{tree}{A \code{phylo} tree}
 }
 \description{
 Applies a Fitch down pass to a node
 }
+\examples{
+## Create a states matrix for reconstruction
+tree <- ape::read.tree(text = "((a,b),(c,d));")
+matrix <- make.states.matrix(tree, "01?-", inapplicable = 1)
+
+## Apply the fitch downpass
+(matrix <- fitch.downpass(matrix))
+
+## Access the states
+matrix$Dp1
+
+}
 \author{
 Thomas Guillerme
+}
+\seealso{
+\code{\link{apply.reconstruction}}
 }
 

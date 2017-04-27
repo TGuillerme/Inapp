@@ -3,12 +3,26 @@
 #' @description Applies a first down pass to a node
 #'
 #' @param states_matrix A \code{list} contains all the states and the activations
-#' @param tree A \code{phylo} tree
+#' 
+#' @examples
+#' ## Create a states matrix for reconstruction
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
+#' NA_matrix <- make.states.matrix(tree, "01?-")
+#' 
+#' ## Apply the first downpass
+#' (NA_matrix <- first.downpass(NA_matrix))
+#' 
+#' ## Access the states
+#' NA_matrix$Dp1
 #'
+#' @seealso \code{\link{apply.reconstruction}}
+#' 
 #' @author Thomas Guillerme
 #' @export
 
-first.downpass <- function(states_matrix, tree) {
+first.downpass <- function(states_matrix) {
+
+    tree <- states_matrix$tree
 
     ## Transferring the characters in the right matrix column
     states_matrix$Dp1 <- states_matrix$Char
@@ -53,12 +67,26 @@ first.downpass <- function(states_matrix, tree) {
 #' @description Applies a first uppass pass to a node
 #'
 #' @param states_matrix A \code{list} contains all the states and the activations
-#' @param tree A \code{phylo} tree
-#'
+#' 
+#' @examples
+#' ## Create a states matrix for reconstruction
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
+#' NA_matrix <- make.states.matrix(tree, "01?-")
+#' 
+#' ## Apply the first uppass
+#' (NA_matrix <- first.uppass(first.downpass(NA_matrix)))
+#' 
+#' ## Access the states
+#' NA_matrix$Up1
+#' 
+#' @seealso \code{\link{apply.reconstruction}}
+#' 
 #' @author Thomas Guillerme
 #' @export
 
-first.uppass <- function(states_matrix, tree) {
+first.uppass <- function(states_matrix) {
+
+    tree <- states_matrix$tree
 
     ## Transferring the characters in the right matrix column
     states_matrix$Up1 <- states_matrix$Char
@@ -84,7 +112,7 @@ first.uppass <- function(states_matrix, tree) {
             ## If any of the states is inapplicable...
             if(any(curr_node != -1)) {
                 ## If any of the states IS applicable
-                if(any(ancestor == -1)) {
+                if(any(ancestor == -1)) { #TG: change to to (ancestor == -1) (not any()) At this stage the ancestor is either - or A (not -A) #TG: fix, checked with Martin.
                     ## If the ancestor state has an inapplicable token
                     states_matrix$Up1[[node]] <- -1
                 } else {
@@ -93,7 +121,7 @@ first.uppass <- function(states_matrix, tree) {
                 }
             } else {
                 ## No state IS applicable
-                if(any(ancestor == -1)) {
+                if(any(ancestor == -1)) { #TG: change to to (ancestor == -1) (not any()) At this stage the ancestor is either - or A (not -A) #TG: fix, checked with Martin.
                     ## If the ancestor state has an inapplicable token
                     states_matrix$Up1[[node]] <- -1
                 } else {
@@ -124,12 +152,26 @@ first.uppass <- function(states_matrix, tree) {
 #' @description Applies a second down pass to a node
 #'
 #' @param states_matrix A \code{list} contains all the states and the activations
-#' @param tree A \code{phylo} tree
-#'
+#' 
+#' @examples
+#' ## Create a states matrix for reconstruction
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
+#' NA_matrix <- make.states.matrix(tree, "01?-")
+#' 
+#' ## Apply the second downpass
+#' (NA_matrix <- second.downpass(first.uppass(first.downpass(NA_matrix))))
+#' 
+#' ## Access the states
+#' NA_matrix$Dp2
+#' 
+#' @seealso \code{\link{apply.reconstruction}}
+#' 
 #' @author Thomas Guillerme
 #' @export
 
-second.downpass <- function(states_matrix, tree) {
+second.downpass <- function(states_matrix) {
+
+    tree <- states_matrix$tree
     
     ## Transferring the characters in the right matrix column
     states_matrix$Dp2 <- states_matrix$Char
@@ -144,8 +186,8 @@ second.downpass <- function(states_matrix, tree) {
         left <- states_matrix$Dp2[desc_anc[2]][[1]]
 
         ## Get the actives
-        right_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "right", pass = 3)
-        left_applicable <- get.side.applicable(states_matrix, tree, node = node, side = "left", pass = 3)
+        right_applicable <- get.side.applicable(states_matrix, node = node, side = "right", pass = 3)
+        left_applicable <- get.side.applicable(states_matrix, node = node, side = "left", pass = 3)
 
         ## Record the region tracker for displaying later
         states_matrix$tracker$Dp2[desc_anc[1]][[1]] <- right_applicable
@@ -161,7 +203,6 @@ second.downpass <- function(states_matrix, tree) {
                 if(any(common_desc != -1)) {
                     states_matrix$Dp2[[node]] <- common_desc[which(common_desc != -1)]
                 } else {
-                ## @@@ Changed: Else set the state to the inapplicable token
                     states_matrix$Dp2[[node]] <- -1
                 }   
             } else {
@@ -197,12 +238,26 @@ second.downpass <- function(states_matrix, tree) {
 #' @description Applies a second up pass to a node
 #'
 #' @param states_matrix A \code{list} contains all the states and the activations
-#' @param tree A \code{phylo} tree
-#'
+#' 
+#' @examples
+#' ## Create a states matrix for reconstruction
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
+#' NA_matrix <- make.states.matrix(tree, "01?-")
+#' 
+#' ## Apply the second uppass
+#' (NA_matrix <- second.uppass(second.downpass(first.uppass(first.downpass(NA_matrix)))))
+#' 
+#' ## Access the states
+#' NA_matrix$Up2
+#' 
+#' @seealso \code{\link{apply.reconstruction}}
+#' 
 #' @author Thomas Guillerme
 #' @export
 
-second.uppass <- function(states_matrix, tree) {
+second.uppass <- function(states_matrix) {
+
+    tree <- states_matrix$tree
 
     ## Transferring the characters in the right matrix column
     states_matrix$Up2 <- states_matrix$Char
@@ -233,19 +288,14 @@ second.uppass <- function(states_matrix, tree) {
                 
                 if(!is.null(common_anc_node) && length(common_anc_node) == length(ancestor) && all(common_anc_node == ancestor) ){
 
-                    states_matrix$Up2[[node]] <- common_anc_node
+                    states_matrix$Up2[[node]] <- common_anc_node #TG: simplify in english version
                 } else {
                     ## If the common state between the ancestor and the final is not the ancestor
                     common_left_right <- get.common(left, right)
                     if(!is.null(common_left_right)) {
                         ## If there is a state in common between left and right
-                        long_union <- get.union.incl(common_anc_node, get.common(ancestor, get.union.incl(left, right)))
-                        
-                        if(!is.null(long_union)) {
-                            states_matrix$Up2[[node]] <- long_union
-                        } else {
-                            states_matrix$Up2[[node]] <- common_left_right
-                        }
+                        states_matrix$Up2[[node]] <- get.union.incl(curr_node, get.common(ancestor, get.union.incl(left, right)))
+                        #TG: in english: add to current node what's common between ancestor and descendants
 
                     } else {
                         ## If there is no state in common between left and right
@@ -254,7 +304,6 @@ second.uppass <- function(states_matrix, tree) {
                         if(any(union_desc == -1)) {
 
                             if(!is.null(get.common(union_desc, ancestor))) {
-                                # states_matrix$Up2[[node]] <- get.union.incl(get.common(ancestor, union_desc), ancestor) 
                                 states_matrix$Up2[[node]] <- ancestor
                             } else { 
                                 ## If the union of left and right has no state in common with the ancestor
@@ -266,24 +315,17 @@ second.uppass <- function(states_matrix, tree) {
                             union_node_anc <- get.union.incl(curr_node, ancestor)
                             states_matrix$Up2[[node]] <- union_node_anc
                             
-                            # options(warn = -1)
-                            # if(all(union_node_anc == ancestor)) {
-                            #     ## If the state in common between the node and the ancestor is the ancestor
-                            #     states_matrix$Up2[[node]] <- get.common(ancestor, states_matrix$Up2[[node]])
-                            # }
-                            # options(warn = 0)
+                            options(warn = -1)
+                            if(all(union_node_anc == ancestor)) {
+                                ## If the state in common between the node and the ancestor is the ancestor
+                                states_matrix$Up2[[node]] <- get.common(ancestor, states_matrix$Up2[[node]])
+                            }
+                            options(warn = 0)
                         }
                     }
                 }
             } else {
-                ## If the ancestor has no applicable state
-                common_desc <- get.common(left, right)
-                
-                if(!is.null(common_desc)) {
-                    states_matrix$Up2[[node]] <- common_desc
-                } else {
-                    states_matrix$Up2[[node]] <- curr_node
-                }
+                states_matrix$Up2[[node]] <- curr_node
             }
         } else {
             ## If there is no applicable state in the previous pass

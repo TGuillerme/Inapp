@@ -1,75 +1,45 @@
-#' @title Inapplicable algorithm
+#' @title Plot tree and ancestral states
 #'
-#' @description Runs a full inapplicable algorithm
+#' @description Plots an ancestral states reconstruction and tree length
 #'
-#' @param tree \code{phylo}, a tree
-#' @param character \code{character}, a vector of character states
-#' @param passes \code{numeric}, the number of passes in the tree; from \code{1} to \code{4} (default)
-#' @param method either \code{"Fitch"} or \code{"NA"}
-#' @param inapplicable When method is \code{"Fitch"}, how do deal with inapplicable data: \code{1}, \code{2} for respectively treating them as ? or an extra state.
-#' @param match.tip.char \code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)
-#' 
-#' @author Thomas Guillerme
-#' @export
-
-NA.algorithm <- function(tree, character, passes = 4, method, inapplicable, match.tip.char = FALSE) {
-
-    ## Method
-    if(!(method %in% c("NA","Fitch"))) {
-        stop("method should be 'Fitch' or 'NA'")
-    }
-
-    ## Set up the Inapplicable interpretation
-    if(method == "NA") {
-        inapplicable = NULL
-    } else {
-        if(missing(inapplicable)) {
-            ## Treating as missing by default
-            inapplicable = 1
-        } else {
-            if(!(inapplicable %in% c(1,2))) {
-                stop("Inapplicable argument should be 1 (treated as ?) or 2 (treated as an extra state).")
-            }
-        }
-    }
-
-    ## Setting up the output state matrix
-    states_matrix <- make.states.matrix(tree, character, inapplicable, match.tip.char)
-
-    ## Setting the list of passes
-    if(method == "NA") {
-        n_passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
-    } else {
-        n_passes <- list(fitch.downpass, fitch.uppass)
-    }
-
-    ## Applying the passes for each node
-    for (pass in 1:passes) {
-        states_matrix <- n_passes[[pass]](states_matrix, tree)
-    }
-
-    class(states_matrix) <- "NA.matrix"
-
-    return(states_matrix)
-}
-
-#' @title Plot inapplicable algorithm
-#'
-#' @description Plots the results of the inapplicable algorithm
-#'
-#' @param states_matrix \code{list}, a list of state changes from \code{inapplicable.algorithm}
-#' @param tree \code{phylo}, the tree used in the analysis
+#' @param states_matrix A \code{states.matrix} list from \code{\link{apply.reconstruction}}
 #' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of up to three colors to be used for displaying respectively the tips, the nodes and the activated/counted nodes (if \code{counts != 0}).
 #' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
 #' @param ... any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #' 
+#' @examples
+#' ## A balanced 12 taxa tree
+#' tree <- ape::read.tree(
+#'                  text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+#' ## A character with inapplicable data
+#' character <- "23--1??--032"
+#' 
+#' ## NA algorithm
+#' NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
+#' 
+#' ## Plotting the tree and the states
+#' plot(NA_matrix)
+#' 
+#' ## Plotting the tree and the states with the state changes and regions
+#' plot(NA_matrix, counts = c(1,2))
+#' 
+#' ## Plot the tree with tip/node labels, and only the 1st and 2nd downpass
+#' plot(NA_matrix, passes = c(1,3), show.labels = c(1,2))
+#' 
+#' ## Plot the tree only the 2nd uppass with the state changes in green
+#' plot(NA_matrix, show.labels = 2, col.tips.nodes = c("red", "pink", "green"),
+#'      counts = c(1,2), passes = c(3,4))
+#' 
+#' @seealso \code{\link{apply.reconstruction}}, \code{\link{runInapp}}
+#' 
 #' @author Thomas Guillerme
 #' @export
 
-plot.NA.matrix <- function(states_matrix, tree, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"), counts = 0, ...) {
+plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"), counts = 0, ...) {
 
+    tree <- states_matrix$tree
 
     ## Internal plot utility: converts characters (-1,0,n,c(-1,0,n)) into character ("-0n?")
     plot.convert.state <- function(character, missing = FALSE) {

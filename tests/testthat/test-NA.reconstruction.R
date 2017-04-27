@@ -30,14 +30,14 @@ matrix3_5 <- make.states.matrix(tree3, character3_5)
 matrix3_6 <- make.states.matrix(tree3, character3_6)
 
 ## Running the pass
-pass1_1 <- first.downpass(matrix1, tree1)
-pass1_2 <- first.downpass(matrix2, tree2)
-pass1_3_1 <- first.downpass(matrix3_1, tree3)
-pass1_3_2 <- first.downpass(matrix3_2, tree3)
-pass1_3_3 <- first.downpass(matrix3_3, tree3)
-pass1_3_4 <- first.downpass(matrix3_4, tree3)
-pass1_3_5 <- first.downpass(matrix3_5, tree3)
-pass1_3_6 <- first.downpass(matrix3_6, tree3)
+pass1_1 <- first.downpass(matrix1)
+pass1_2 <- first.downpass(matrix2)
+pass1_3_1 <- first.downpass(matrix3_1)
+pass1_3_2 <- first.downpass(matrix3_2)
+pass1_3_3 <- first.downpass(matrix3_3)
+pass1_3_4 <- first.downpass(matrix3_4)
+pass1_3_5 <- first.downpass(matrix3_5)
+pass1_3_6 <- first.downpass(matrix3_6)
 
 context("first.downpass")
 test_that("first.downpass works", {
@@ -75,14 +75,14 @@ test_that("first.downpass works", {
 })
 
 ## Running the pass
-pass2_1 <- first.uppass(pass1_1, tree1)
-pass2_2 <- first.uppass(pass1_2, tree2)
-pass2_3_1 <- first.uppass(pass1_3_1, tree3)
-pass2_3_2 <- first.uppass(pass1_3_2, tree3)
-pass2_3_3 <- first.uppass(pass1_3_3, tree3)
-pass2_3_4 <- first.uppass(pass1_3_4, tree3)
-pass2_3_5 <- first.uppass(pass1_3_5, tree3)
-pass2_3_6 <- first.uppass(pass1_3_6, tree3)
+pass2_1 <- first.uppass(pass1_1)
+pass2_2 <- first.uppass(pass1_2)
+pass2_3_1 <- first.uppass(pass1_3_1)
+pass2_3_2 <- first.uppass(pass1_3_2)
+pass2_3_3 <- first.uppass(pass1_3_3)
+pass2_3_4 <- first.uppass(pass1_3_4)
+pass2_3_5 <- first.uppass(pass1_3_5)
+pass2_3_6 <- first.uppass(pass1_3_6)
 
 context("first.uppass")
 test_that("first.uppass works", {
@@ -121,14 +121,14 @@ test_that("first.uppass works", {
 })
 
 ## Running the pass
-pass3_1 <- second.downpass(pass2_1, tree1)
-pass3_2 <- second.downpass(pass2_2, tree2)
-pass3_3_1 <- second.downpass(pass2_3_1, tree3)
-pass3_3_2 <- second.downpass(pass2_3_2, tree3)
-pass3_3_3 <- second.downpass(pass2_3_3, tree3)
-pass3_3_4 <- second.downpass(pass2_3_4, tree3)
-pass3_3_5 <- second.downpass(pass2_3_5, tree3)
-pass3_3_6 <- second.downpass(pass2_3_6, tree3)
+pass3_1 <- second.downpass(pass2_1)
+pass3_2 <- second.downpass(pass2_2)
+pass3_3_1 <- second.downpass(pass2_3_1)
+pass3_3_2 <- second.downpass(pass2_3_2)
+pass3_3_3 <- second.downpass(pass2_3_3)
+pass3_3_4 <- second.downpass(pass2_3_4)
+pass3_3_5 <- second.downpass(pass2_3_5)
+pass3_3_6 <- second.downpass(pass2_3_6)
 
 context("second.downpass")
 test_that("second.downpass works", {
@@ -167,14 +167,14 @@ test_that("second.downpass works", {
 })
 
 ## Running the pass
-pass4_1 <- second.uppass(pass3_1, tree1)
-pass4_2 <- second.uppass(pass3_2, tree2)
-pass4_3_1 <- second.uppass(pass3_3_1, tree3)
-pass4_3_2 <- second.uppass(pass3_3_2, tree3)
-pass4_3_3 <- second.uppass(pass3_3_3, tree3)
-pass4_3_4 <- second.uppass(pass3_3_4, tree3)
-pass4_3_5 <- second.uppass(pass3_3_5, tree3)
-pass4_3_6 <- second.uppass(pass3_3_6, tree3)
+pass4_1 <- second.uppass(pass3_1)
+pass4_2 <- second.uppass(pass3_2)
+pass4_3_1 <- second.uppass(pass3_3_1)
+pass4_3_2 <- second.uppass(pass3_3_2)
+pass4_3_3 <- second.uppass(pass3_3_3)
+pass4_3_4 <- second.uppass(pass3_3_4)
+pass4_3_5 <- second.uppass(pass3_3_5)
+pass4_3_6 <- second.uppass(pass3_3_6)
 
 context("second.uppass")
 test_that("second.uppass works", {

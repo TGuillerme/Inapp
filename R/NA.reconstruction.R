@@ -4,6 +4,17 @@
 #'
 #' @param states_matrix A \code{list} contains all the states and the activations
 #' @param tree A \code{phylo} tree
+#' 
+#' @examples
+#' ## Create a states matrix for reconstruction
+#' tree <- read.tree(text = "((a,b),(c,d));")
+#' NA_matrix <- make.states.matrix(tree, "01?-")
+#' 
+#' ## Apply the first downpass
+#' (first_downpass <- first.downpass(NA_matrix, tree))
+#' 
+#' ## Access the states
+#' first_downpass$Dp1
 #'
 #' @author Thomas Guillerme
 #' @export

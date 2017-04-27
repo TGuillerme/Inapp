@@ -16,6 +16,17 @@ make.states.matrix(tree, character, inapplicable = NULL,
 
 \item{match.tip.char}{\code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)}
 }
+\value{
+A list of character states for each node and tip per pass:
+-\code{$Char}: a \code{list} of character states for the tips.
+-\code{$Dp1}: a \code{list} of the tips and noes states after the first downpass.
+-\code{$Up1}: a \code{list} of the tips and noes states after the first uppass.
+-\code{$Dp2}: a \code{list} of the tips and noes states after the second downpass.
+-\code{$Up2}: a \code{list} of the tips and noes states after the second uppass.
+-\code{$tracker}: a \code{list} tracking the applicable regions.
+-\code{$regions}: a single \code{numeric} value counting the number of applicable regions.
+-\code{$changes}: a \code{numeric} vector recording the node with state changes.
+}
 \description{
 Creates a states matrix
 }
@@ -24,10 +35,13 @@ If \code{character} argument is a list, each element of the list must be a \code
 }
 \examples{
 ## A simple topology
-tree <- read.tree(text = "((a,b),c));")
+tree <- read.tree(text = "((a,b),(c,d));")
 
 ## A simple character
-character <- 
+character <- "01?-"
+
+## Create a states matrix for reconstruction
+make.states.matrix(tree, character)
 
 }
 \author{

@@ -14,6 +14,15 @@ first.downpass(states_matrix, tree)
 \description{
 Applies a first down pass to a node
 }
+\examples{
+## Create a states matrix for reconstruction
+tree <- read.tree(text = "((a,b),(c,d));")
+NA_matrix <- make.states.matrix(tree, "01?-")
+
+## Apply the first downpass
+first_downpass <- first.downpass(NA_matrix, tree)
+
+}
 \author{
 Thomas Guillerme
 }

@@ -176,7 +176,7 @@ shinyServer(
                 show_passes <- as.vector(as.numeric(input$showPassFitch))
             }
 
-            plot.NA.matrix(states_matrix, tree, passes = show_passes, show.labels = showlabels, counts = as.vector(as.numeric(input$counts)))
+            plot.states.matrix(states_matrix, tree, passes = show_passes, show.labels = showlabels, counts = as.vector(as.numeric(input$counts)))
 
         })
 

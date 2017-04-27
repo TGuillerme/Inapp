@@ -4,12 +4,10 @@
 \alias{fitch.downpass}
 \title{Fitch downpass}
 \usage{
-fitch.downpass(states_matrix, tree)
+fitch.downpass(states_matrix)
 }
 \arguments{
 \item{states_matrix}{A \code{list} contains all the states and the activations}
-
-\item{tree}{A \code{phylo} tree}
 }
 \description{
 Applies a Fitch down pass to a node

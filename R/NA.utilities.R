@@ -122,6 +122,9 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Save the node with changes
     states_matrix$changes <- numeric(0)
 
+    ## Add the tree
+    states_matrix$tree <- tree
+
     ## Set up the NA_matrix class
     class(states_matrix) <- "states.matrix"
 
@@ -173,7 +176,12 @@ print.states.matrix <- function(x, ...) {
     pass_names <- c("1st Downpass", "1st Uppass", "2nd Downpass", "2nd Uppass")
     pass_ID <- c("$Dp1", "$Up1", "$Dp2", "$Up2")
 
+
     ## Printing the object
+    cat(" ---- Tree ---- \n")
+    x$tree$edge.length <- NULL
+    cat(paste(ape::write.tree(x$tree), "\n"))
+
     cat(" ---- States matrix---- \n")
     ## Tips and states
     cat(paste("Number of tips =", num_tips, "\n"))
@@ -195,13 +203,13 @@ print.states.matrix <- function(x, ...) {
         if(length != 0) {
             cat(paste(x$regions, "additional applicable regions.\n"))
             if(length(x$changes) > 0) {
-                cat("State changes at nodes: ", paste(x$change, collapse = ", "), ".\n", sep = ".")
+                cat("State changes at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
             } else {
-                cat("No state changes.")
+                cat("No state changes.\n")
             }
         } 
     } else {
-        cat("No reconstructions calculated. See:\n ?apply.reconstruction\nto reconstruct ancestral states and count the tree length.")
+        cat("No reconstructions calculated. See:\n ?apply.reconstruction\nto reconstruct ancestral states and count the tree length.\n")
     }
     return(invisible())
 }
@@ -306,15 +314,15 @@ get.union.excl <- function(a, b) {
 }
 
 ## Set up the right and left actives (special condition if tips)
-get.side.applicable <- function(states_matrix, tree, node, side, pass) {
+get.side.applicable <- function(states_matrix, node, side, pass) {
 
     side <- ifelse(side == "right", 1, 2)
 
-    desc_anc <- desc.anc(node, tree)
+    desc_anc <- desc.anc(node, states_matrix$tree)
 
     curr_node <- states_matrix[[pass]][[node]]
 
-    if(desc_anc[side] < ape::Ntip(tree)+1) {
+    if(desc_anc[side] < ape::Ntip(states_matrix$tree)+1) {
         ## Get the tip value
         tip <- states_matrix[[pass+1]][desc_anc[side]][[1]]
         if(length(tip) == 1) {

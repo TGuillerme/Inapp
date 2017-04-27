@@ -4,15 +4,25 @@
 \alias{first.uppass}
 \title{First uppass}
 \usage{
-first.uppass(states_matrix, tree)
+first.uppass(states_matrix)
 }
 \arguments{
 \item{states_matrix}{A \code{list} contains all the states and the activations}
-
-\item{tree}{A \code{phylo} tree}
 }
 \description{
 Applies a first uppass pass to a node
+}
+\examples{
+## Create a states matrix for reconstruction
+tree <- read.tree(text = "((a,b),(c,d));")
+NA_matrix <- make.states.matrix(tree, "01?-")
+
+## Apply the first uppass
+(NA_matrix <- first.uppass(first.downpass(NA_matrix)))
+
+## Access the states
+NA_matrix$Up1
+
 }
 \author{
 Thomas Guillerme

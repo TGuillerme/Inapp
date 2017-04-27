@@ -2,8 +2,7 @@
 #'
 #' @description Plots an ancestral states reconstruction and tree length
 #'
-#' @param states_matrix \code{list}, a list of state changes from \code{inapplicable.algorithm}
-#' @param tree \code{phylo}, the tree used in the analysis
+#' @param states_matrix A \code{states.matrix} list from \code{\link{apply.reconstruction}}
 #' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of up to three colors to be used for displaying respectively the tips, the nodes and the activated/counted nodes (if \code{counts != 0}).
@@ -13,8 +12,9 @@
 #' @author Thomas Guillerme
 #' @export
 
-plot.states.matrix <- function(states_matrix, tree, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"), counts = 0, ...) {
+plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"), counts = 0, ...) {
 
+    tree <- states_matrix$tree
 
     ## Internal plot utility: converts characters (-1,0,n,c(-1,0,n)) into character ("-0n?")
     plot.convert.state <- function(character, missing = FALSE) {

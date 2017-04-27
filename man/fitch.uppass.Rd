@@ -4,12 +4,10 @@
 \alias{fitch.uppass}
 \title{Fitch uppass}
 \usage{
-fitch.uppass(states_matrix, tree)
+fitch.uppass(states_matrix)
 }
 \arguments{
 \item{states_matrix}{A \code{list} contains all the states and the activations}
-
-\item{tree}{A \code{phylo} tree}
 }
 \description{
 Applies a Fitch up pass to a node

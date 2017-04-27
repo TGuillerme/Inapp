@@ -4,14 +4,12 @@
 \alias{plot.states.matrix}
 \title{Plot reconstruction}
 \usage{
-\method{plot}{states.matrix}(states_matrix, tree, passes = c(1, 2, 3, 4),
+\method{plot}{states.matrix}(states_matrix, passes = c(1, 2, 3, 4),
   show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"),
   counts = 0, ...)
 }
 \arguments{
-\item{states_matrix}{\code{list}, a list of state changes from \code{inapplicable.algorithm}}
-
-\item{tree}{\code{phylo}, the tree used in the analysis}
+\item{states_matrix}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}}
 
 \item{passes}{\code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})}
 

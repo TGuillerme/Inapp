@@ -45,10 +45,8 @@ apply.reconstruction <- function(tree, character, passes = 4, method, inapplicab
 
     ## Applying the passes for each node
     for (pass in 1:passes) {
-        states_matrix <- n_passes[[pass]](states_matrix, tree)
+        states_matrix <- n_passes[[pass]](states_matrix)
     }
-
-    class(states_matrix) <- "NA.matrix"
 
     return(states_matrix)
 }

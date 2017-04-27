@@ -35,7 +35,7 @@ If \code{character} argument is a list, each element of the list must be a \code
 }
 \examples{
 ## A simple topology
-tree <- read.tree(text = "((a,b),(c,d));")
+tree <- ape::read.tree(text = "((a,b),(c,d));")
 
 ## A simple character
 character <- "01?-"

@@ -14,7 +14,7 @@ Applies a second down pass to a node
 }
 \examples{
 ## Create a states matrix for reconstruction
-tree <- read.tree(text = "((a,b),(c,d));")
+tree <- ape::read.tree(text = "((a,b),(c,d));")
 NA_matrix <- make.states.matrix(tree, "01?-")
 
 ## Apply the second downpass
@@ -26,5 +26,8 @@ NA_matrix$Dp2
 }
 \author{
 Thomas Guillerme
+}
+\seealso{
+\code{\link{apply.reconstruction}}
 }
 

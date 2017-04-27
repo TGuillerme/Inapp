@@ -1,4 +1,4 @@
-#' @title Plot reconstruction
+#' @title Plot tree and ancestral states
 #'
 #' @description Plots an ancestral states reconstruction and tree length
 #'
@@ -8,6 +8,31 @@
 #' @param col.tips.nodes \code{character}, a vector of up to three colors to be used for displaying respectively the tips, the nodes and the activated/counted nodes (if \code{counts != 0}).
 #' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
 #' @param ... any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
+#' 
+#' @examples
+#' ## A balanced 12 taxa tree
+#' tree <- ape::read.tree(
+#'                  text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+#' ## A character with inapplicable data
+#' character <- "23--1??--032"
+#' 
+#' ## NA algorithm
+#' NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
+#' 
+#' ## Plotting the tree and the states
+#' plot(NA_matrix)
+#' 
+#' ## Plotting the tree and the states with the state changes and regions
+#' plot(NA_matrix, counts = c(1,2))
+#' 
+#' ## Plot the tree with tip/node labels, and only the 1st and 2nd downpass
+#' plot(NA_matrix, passes = c(1,3), show.labels = c(1,2))
+#' 
+#' ## Plot the tree only the 2nd uppass with the state changes in green
+#' plot(NA_matrix, show.labels = 2, col.tips.nodes = c("red", "pink", "green"),
+#'      counts = c(1,2), passes = c(3,4))
+#' 
+#' @seealso \code{\link{apply.reconstruction}}, \code{\link{runInapp}}
 #' 
 #' @author Thomas Guillerme
 #' @export

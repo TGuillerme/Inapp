@@ -9,6 +9,28 @@
 #' @param inapplicable When method is \code{"Fitch"}, how do deal with inapplicable data: \code{1}, \code{2} for respectively treating them as ? or an extra state.
 #' @param match.tip.char \code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)
 #' 
+#' @examples
+#' set.seed(1)
+#' ## Random tree with 12 taxa
+#' tree <- ape::rtree(12, br = NULL)
+#' ## A character with inapplicable data
+#' character <- "23--1??--032"
+#' 
+#' ## Normal Fitch algorithm (NA states are missing data)
+#' apply.reconstruction(tree, character, passes = 2, method = "Fitch",
+#'                      inapplicable = 1)
+#' ## Same but NA states are an extra state and character now match the tips
+#' apply.reconstruction(tree, character, passes = 2, method = "Fitch",
+#'                      inapplicable = 2, match.tip.char = TRUE)
+#' 
+#' ## NA algorithm
+#' apply.reconstruction(tree, character, passes = 4, method = "NA")
+#' 
+#' ## 1st pass of the NA algorithm
+#' apply.reconstruction(tree, character, passes = 1, method = "NA")
+#' 
+#' @seealso \code{\link{plot.states.matrix}}, \code{\link{runInapp}}
+#' 
 #' @author Thomas Guillerme
 #' @export
 

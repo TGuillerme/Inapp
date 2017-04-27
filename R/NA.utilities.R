@@ -23,7 +23,7 @@
 #' 
 #' @examples
 #' ## A simple topology
-#' tree <- read.tree(text = "((a,b),(c,d));")
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
 #' 
 #' ## A simple character
 #' character <- "01?-"
@@ -141,7 +141,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
 #' 
 #' @examples
 #' ## A simple topology
-#' tree <- read.tree(text = "((a,b),(c,d));")
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
 #' 
 #' ## A simple character
 #' character <- "01?-"
@@ -165,7 +165,7 @@ print.states.matrix <- function(x, ...) {
     num_tips <- ceiling(length(x$Char)/2)
 
     ## States
-    all_states <- as.character(unique(unlist(x$Char)))
+    all_states <- sort(as.character(unique(unlist(x$Char))))
     all_states <- gsub("-1", "-", all_states)
 
     ## Passes done
@@ -191,7 +191,7 @@ print.states.matrix <- function(x, ...) {
         for(pass in 1:4) {
             cat(paste(pass_names[pass]))
             if(passes[[pass]]) {
-                cat(paste(" completed. See the element ", pass_ID[pass], " for the list of states.\n", sep = ""))
+                cat(paste(" completed. (See element ", pass_ID[pass], ").\n", sep = ""))
             } else {
                 cat(": NULL\n")
             }
@@ -202,10 +202,14 @@ print.states.matrix <- function(x, ...) {
         ## Details
         if(length != 0) {
             cat(paste(x$regions, "additional applicable regions.\n"))
-            if(length(x$changes) > 0) {
+            if(length(x$changes) > 1) {
                 cat("State changes at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
             } else {
-                cat("No state changes.\n")
+                if(length(x$changes) == 1) {
+                    cat("State changes at node: ", x$changes, ".\n", sep = "")
+                } else {
+                    cat("No state changes.\n")
+                }
             }
         } 
     } else {

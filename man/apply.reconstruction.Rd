@@ -23,7 +23,31 @@ apply.reconstruction(tree, character, passes = 4, method, inapplicable,
 \description{
 Apply a series of passes for an ancestral states reconstruction
 }
+\examples{
+set.seed(1)
+## Random tree with 12 taxa
+tree <- ape::rtree(12, br = NULL)
+## A character with inapplicable data
+character <- "23--1??--032"
+
+## Normal Fitch algorithm (NA states are missing data)
+apply.reconstruction(tree, character, passes = 2, method = "Fitch",
+                     inapplicable = 1)
+## Same but NA states are an extra state and character now match the tips
+apply.reconstruction(tree, character, passes = 2, method = "Fitch",
+                     inapplicable = 2, match.tip.char = TRUE)
+
+## NA algorithm
+apply.reconstruction(tree, character, passes = 4, method = "NA")
+
+## 1st pass of the NA algorithm
+apply.reconstruction(tree, character, passes = 1, method = "NA")
+
+}
 \author{
 Thomas Guillerme
+}
+\seealso{
+\code{\link{plot.states.matrix}}, \code{\link{runInapp}}
 }
 

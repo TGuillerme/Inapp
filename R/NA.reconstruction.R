@@ -6,7 +6,7 @@
 #' 
 #' @examples
 #' ## Create a states matrix for reconstruction
-#' tree <- read.tree(text = "((a,b),(c,d));")
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
 #' NA_matrix <- make.states.matrix(tree, "01?-")
 #' 
 #' ## Apply the first downpass
@@ -15,6 +15,8 @@
 #' ## Access the states
 #' NA_matrix$Dp1
 #'
+#' @seealso \code{\link{apply.reconstruction}}
+#' 
 #' @author Thomas Guillerme
 #' @export
 
@@ -68,7 +70,7 @@ first.downpass <- function(states_matrix) {
 #' 
 #' @examples
 #' ## Create a states matrix for reconstruction
-#' tree <- read.tree(text = "((a,b),(c,d));")
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
 #' NA_matrix <- make.states.matrix(tree, "01?-")
 #' 
 #' ## Apply the first uppass
@@ -76,6 +78,8 @@ first.downpass <- function(states_matrix) {
 #' 
 #' ## Access the states
 #' NA_matrix$Up1
+#' 
+#' @seealso \code{\link{apply.reconstruction}}
 #' 
 #' @author Thomas Guillerme
 #' @export
@@ -151,7 +155,7 @@ first.uppass <- function(states_matrix) {
 #' 
 #' @examples
 #' ## Create a states matrix for reconstruction
-#' tree <- read.tree(text = "((a,b),(c,d));")
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
 #' NA_matrix <- make.states.matrix(tree, "01?-")
 #' 
 #' ## Apply the second downpass
@@ -159,6 +163,8 @@ first.uppass <- function(states_matrix) {
 #' 
 #' ## Access the states
 #' NA_matrix$Dp2
+#' 
+#' @seealso \code{\link{apply.reconstruction}}
 #' 
 #' @author Thomas Guillerme
 #' @export
@@ -235,7 +241,7 @@ second.downpass <- function(states_matrix) {
 #' 
 #' @examples
 #' ## Create a states matrix for reconstruction
-#' tree <- read.tree(text = "((a,b),(c,d));")
+#' tree <- ape::read.tree(text = "((a,b),(c,d));")
 #' NA_matrix <- make.states.matrix(tree, "01?-")
 #' 
 #' ## Apply the second uppass
@@ -243,6 +249,8 @@ second.downpass <- function(states_matrix) {
 #' 
 #' ## Access the states
 #' NA_matrix$Up2
+#' 
+#' @seealso \code{\link{apply.reconstruction}}
 #' 
 #' @author Thomas Guillerme
 #' @export

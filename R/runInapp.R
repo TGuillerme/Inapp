@@ -5,6 +5,12 @@
 #' @param ... Any optional option to be passed to shiny::runApp
 #' 
 #' @examples
+#' \dontrun{
+#' ## Running the GUI on your web browser
+#' runInapp()
+#' }
+#' 
+#' @seealso \code{\link{apply.reconstruction}}, \code{\link{plot.states.matrix}}
 #' 
 #' @author Thomas Guillerme
 #' @export
@@ -12,14 +18,5 @@
 
 ## Inspire from squid::squidApp
 runInapp <- function(...) {
-    
-    ## Get the directory
-    path <- system.file("", package = "Inapp")
-        
-    ## Check path
-    if(path == "") {
-        stop("Inapp shiny application not found. Try re-installing `Inapp` package.")
-    }
-    
-    shiny::runApp(appDir = path, ...)
+    shiny::runGitHub("Inapp", "TGuillerme", ...)
 }

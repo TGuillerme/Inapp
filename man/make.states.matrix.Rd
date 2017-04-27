@@ -12,6 +12,8 @@ make.states.matrix(tree, character, inapplicable = NULL,
 
 \item{character}{Either vector of character states (\code{"numeric"} or \code{"character"}) or a list of the same length of than the tips in the tree (see details)}
 
+\item{inapplicable}{When the intended reconstruction method is \code{"Fitch"}, how do deal with inapplicable data: \code{1}, \code{2} for respectively treating them as ? or an extra state (default = \code{NULL}).}
+
 \item{match.tip.char}{\code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)}
 }
 \description{
@@ -20,7 +22,18 @@ Creates a states matrix
 \details{
 If \code{character} argument is a list, each element of the list must be a \code{"numeric"} vector with \code{"?"} being all states and \code{"-"} being \code{-1}.
 }
+\examples{
+## A simple topology
+tree <- read.tree(text = "((a,b),c));")
+
+## A simple character
+character <- 
+
+}
 \author{
 Thomas Guillerme
+}
+\seealso{
+\code{\link{apply.reconstruction}}.
 }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.algorithm.R
 \name{plot.NA.matrix}
 \alias{plot.NA.matrix}
-\title{Plot inapplicable algorithm}
+\title{Plot reconstruction}
 \usage{
 \method{plot}{NA.matrix}(states_matrix, tree, passes = c(1, 2, 3, 4),
   show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"),
@@ -24,7 +24,7 @@
 \item{...}{any optional arguments to be passed to \code{\link[ape]{plot.phylo}}}
 }
 \description{
-Plots the results of the inapplicable algorithm
+Plots an ancestral states reconstruction and tree length
 }
 \author{
 Thomas Guillerme

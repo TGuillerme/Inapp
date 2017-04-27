@@ -153,9 +153,9 @@ shinyServer(
 
             ## Run the algorithm
             if(as.numeric(input$method) == 1) {
-                states_matrix <- NA.algorithm(tree, character, passes = 4, method = "NA", inapplicable = NULL, match.tip.char = as.logical(input$matchtipchar))
+                states_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA", inapplicable = NULL, match.tip.char = as.logical(input$matchtipchar))
             } else {
-                states_matrix <- NA.algorithm(tree, character, passes = 2, method = "Fitch", inapplicable = as.numeric(input$fitch_inapp), match.tip.char = as.logical(input$matchtipchar))
+                states_matrix <- apply.reconstruction(tree, character, passes = 2, method = "Fitch", inapplicable = as.numeric(input$fitch_inapp), match.tip.char = as.logical(input$matchtipchar))
             } 
 
             ## ~~~~~~~~~~

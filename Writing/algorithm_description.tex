@@ -14,7 +14,7 @@
 \begin{enumerate}
     \item Enter on any cherry (i.e. pair of tips) on the tree and move to its most recent common ancestor; \textbf{then}, \textit{go} to \ref{1stDp:enter}.
     \item \label{1stDp:enter} \textbf{If} both node's descendants share at least one token in common, \textit{go} to \ref{1stDp:AND}; \textbf{else}, \textit{go} to \ref{1stDp:OR}.
-    \item \label{1stDp:AND} \textbf{If} the state in common is only the inapplicable token and any of the descendants has an applicable token, \textit{set} the node's state to be the union between both descendants; \textbf{else}, \textit{set} the node's state to the state in common between both descendants. \textbf{Then} \textit{go} to \ref{1stDp:exit}.  
+    \item \label{1stDp:AND} \textbf{If} the state in common is only the inapplicable token and any of the descendants has an applicable token, \textit{set} the node's state to be the union between both descendants; \textbf{else}, \textit{set} the node's state to the state(s) in common between both descendants. \textbf{Then} \textit{go} to \ref{1stDp:exit}.  
     \item \label{1stDp:OR} \textbf{If} any of the descendants have an applicable token, \textit{set} the node's state to be the union of its descendants without any inapplicable token; \textbf{else}, \textit{set} the node state to be the inapplicable token only. \textbf{Then} \textit{go} to \ref{1stDp:exit}.
     \item \label{1stDp:exit} \textbf{If} possible, move to the node's ancestor and \textit{go} to \ref{1stDp:enter}; \textbf{else} move to the next unvisited cherry's ancestor and \textit{go} to \ref{1stDp:enter}. Once all nodes have been visited, end the first downpass.
 \end{enumerate}
@@ -71,9 +71,9 @@
 
     \item \label{2ndUp:enter} \textbf{If} the node has any applicable token(s), \textit{go} to \ref{2ndUp:nodeA}; \textbf{else}, \textit{go} to \ref{2ndUp:nodeNA}.
     \item \label{2ndUp:nodeA} \textbf{If} the node's ancestor has any applicable token(s), \textit{go} to \ref{2ndUp:ancestorA1}; \textbf{else}, \textit{go} to \ref{2ndUp:ancestorNA}.
-    \item \label{2ndUp:ancestorA1} \textbf{If} the node's token(s) is the same as its ancestor, \textit{go} to \ref{2ndUp:exit}; \textbf{else}, \textit{go} to \ref{2ndUp:ancestorA1}.
+    \item \label{2ndUp:ancestorA1} \textbf{If} the node's token(s) is the same as its ancestor, \textit{go} to \ref{2ndUp:exit}; \textbf{else}, \textit{go} to \ref{2ndUp:ancestorA2}.
     \item \label{2ndUp:ancestorA2} \textbf{If} there is any token(s) in common between the node's descendants, \textit{go} to \ref{2ndUp:ANDdesc}; \textbf{else} \textit{go} to \ref{2ndUp:ORdesc}.
-    \item \label{2ndUp:ANDdesc} \textbf{If} there is any token(s) in common between the node, its ancestor and both its descendants, \textit{set} it (them) to be the node's token(s); \textbf{else} \textit{set} the node to be the token(s) in common between its descendants. The \textit{go} to \ref{2ndUp:exit}.
+    \item \label{2ndUp:ANDdesc} \textbf{If} there is any token(s) in common between the node, its ancestor and both its descendants, \textit{set} it (them) to be the node's token(s); \textbf{else} \textit{set} the node to be the token(s) in common between its descendants. Then \textit{go} to \ref{2ndUp:exit}.
     \item \label{2ndUp:ORdesc} \textbf{If} the union between the node's descendants contains an inapplicable token, \textit{go} to \ref{2ndUp:ORdescNA}; \textbf{else} \textit{go} to \ref{2ndUp:ORdescA}.
     \item \label{2ndUp:ORdescNA} \textbf{If} there is any token(s) in common between the node's descendants and ancestor, \textit{set} the node's token(s) to be its ancestor's; \textbf{else} \textit{set} the node to be the union of the tokens from its descendants and ancestor without any inapplicable token. \textbf{Then} \textit{go} to \ref{2ndUp:exit}.
     \item \label{2ndUp:ORdescA} \textit{Set} the node's tokens to be the union of its tokens and its ancestor's tokens. \textbf{Then} \textit{go} to \ref{2ndUp:exit}.

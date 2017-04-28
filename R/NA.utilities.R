@@ -26,10 +26,13 @@
 #' tree <- ape::read.tree(text = "((a,b),(c,d));")
 #' 
 #' ## A simple character
-#' character <- "01?-"
+#' character <- "0101"
 #' 
 #' ## Create a states matrix for reconstruction
 #' make.states.matrix(tree, character)
+#' 
+#' ## A complex character
+#' character <- "0{01}-?"
 #' 
 #' @seealso \code{\link{apply.reconstruction}}.
 #' 
@@ -228,7 +231,7 @@ convert.char <- function(character) {
     }
 
     convert.missing <- function(X, all_states) {
-        if(X == "?") {
+        if(X[1] == "?") {
             return(all_states)
         } else {
             return(X)
@@ -251,19 +254,51 @@ convert.char <- function(character) {
     
     ## Character is not numeric
     if(class(character) == "character") {
+        
         if(length(character) == 1) {
             #Split the character chain
             character <- as.character(strsplit(as.character(character), "")[[1]])
-        } 
+            ## Check for polymorphic characters
+            polymorphic_start <- which(character == "{")
+            polymorphic_end <- which(character == "}")
+            if(length(polymorphic_start) != length(polymorphic_end)) {
+                stop("Some brackets are missing for polymorphic characters")
+            }
+
+            ## Dealing with the polymorphic positions
+            if(length(polymorphic_start) > 0) {
+                poly_states <- list()
+                for(one_char in 1:length(polymorphic_start)) {
+                    ## Getting the character states
+                    poly_states[[one_char]] <- character[(polymorphic_start[one_char]+1):(polymorphic_end[one_char]-1)]
+                    ## Removing the polymorphy
+                    character[(polymorphic_start[one_char]+1):polymorphic_end[one_char]] <- NA
+                }
+                ## Remove NAs (the polymorphies)
+                character <- character[-which(is.na(character))]
+            }
+
+        } else {
+            polymorphic_start <- numeric()
+        }
+
         ## Convert into list
         character <- as.list(character)
+        if(length(polymorphic_start) > 0) {
+            ## add the polymorphic characters back in position
+            poly_position <- which(character == "{")
+            ## Replace the characters
+            for(one_char in 1:length(polymorphic_start)) {
+                character[[poly_position[one_char]]] <- poly_states[[one_char]]
+            }
+        }
 
         ## Convert inapplicable
         character <- lapply(character, convert.inappli)
         
         ## Get all states
         options(warn = -1)
-        all_states <- as.numeric(character)
+        all_states <- unlist(lapply(character, as.numeric))
         options(warn = 0)
         all_states <- unique(all_states[-c(which(is.na(all_states)))]) #, which(all_states == -1))]
 

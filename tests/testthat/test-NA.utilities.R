@@ -2,7 +2,7 @@
 context("convert.char")
 test_that("convert.char works", {
     character <- "01---?010101"
-    list_out <- list(0,1,-1,-1,-1,c(0,1),0,1,0,1,0,1)
+    list_out <- list(0,1,-1,-1,-1,c(-1,0,1),0,1,0,1,0,1)
 
     ## Not working (return NULL)
     expect_null(convert.char(NULL))
@@ -16,12 +16,24 @@ test_that("convert.char works", {
     expect_is(convert.char(list(1)), "list")
 
     ## Right conversion
-    expect_true(all(mapply(function(X,Y) {all(X == Y)}, convert.char(list_out), list_out)))
+    expect_warning(test <- convert.char(character))
+    for(elem in 1:length(list_out)) {
+        expect_true(all(test[[elem]] == list_out[[elem]]))
+    }
+
     expect_warning(test <- convert.char("01-?")) # Warning is some weird NA management by testthat
     expect_true(unlist(test[1]) == 0)
     expect_true(unlist(test[2]) == 1)
     expect_true(unlist(test[3]) == -1)
     expect_true(all(unlist(test[4]) == c(-1,0,1)))
+
+    ## Complex conversion
+    character <- "{01}{-0}?-01"
+    list_out <- list(c(0,1), c(-1,0), c(-1,0,1), -1, 0, 1)
+    expect_warning(test <- convert.char(character))
+    for(elem in 1:length(list_out)) {
+        expect_true(all(test[[elem]] == list_out[[elem]]))
+    }
 })
 
 context("make.states.matrix")

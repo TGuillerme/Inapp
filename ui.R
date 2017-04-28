@@ -57,7 +57,7 @@ shinyUI(fluidPage(
             ## Character string - input$character_string
             textInput("character_string", label = h5("Enter a character string:"), value = "1?2-"),
             ## Help text for the character string
-            helpText("Accepted character states are any values from 0 to 9 as well as - for the inapplicable token and ? for all states (missing data)."),
+            helpText("Accepted character states are any values from 0 to 9 as well as - for the inapplicable token and ? for all states (missing data). Polymorphic characters can be entered as {01}."),
             ## Match character
             checkboxInput("matchtipchar", label = "Match character to tips", value = FALSE),
             helpText("Tick to match left-right state input order state to the alphanumeric order of the tip labels.")
@@ -69,28 +69,28 @@ shinyUI(fluidPage(
             fileInput("nexus_matrix", label = h5("Select a newick format matrix")),
             ## Character number input - input$character_num
             numericInput("character_num", label = h5("Selected character:"), value = 1)
-          ),
+          )
 
           ## --------------------
           ## Exports (in column "character")
           ## --------------------
-          hr(),
-          h3("Export results"),
-          ## Export format - input$export_type
-          selectInput("export_type", "Export format:", choices = c("newick", "pdf", "xml")),
-          downloadButton('export_data', 'Download'),
+          # hr(),
+          # h3("Export results"),
+          # ## Export format - input$export_type
+          # selectInput("export_type", "Export format:", choices = c("newick", "pdf", "xml")),
+          # downloadButton('export_data', 'Download'),
           
-          hr(),
-          ## Citation! - input$cite_type
-          selectInput("cite_type", label = "Cite us", choices = list("format", "plain", "BibTeX"), selected = "format"),
-          ## Plain text format
-          conditionalPanel(condition = "input.cite_type == \"plain\"",
-            helpText("Bob, Bib and Bub (2001) Something shiny here!.")
-          ),
-          ## BibTeX format
-          conditionalPanel(condition = "input.cite_type == \"BibTeX\"",
-              helpText("@article{ShinyApp","    author={Bob, and Bib, and Bab},","    title={Something shiny},","    journal={Combinatorics},","    volume={1},","    number={1},","    pages={1:2},","    year={2001}}")
-          )
+          # hr(),
+          # ## Citation! - input$cite_type
+          # selectInput("cite_type", label = "Cite us", choices = list("format", "plain", "BibTeX"), selected = "format"),
+          # ## Plain text format
+          # conditionalPanel(condition = "input.cite_type == \"plain\"",
+          #   helpText("Bob, Bib and Bub (2001) Something shiny here!.")
+          # ),
+          # ## BibTeX format
+          # conditionalPanel(condition = "input.cite_type == \"BibTeX\"",
+          #     helpText("@article{ShinyApp","    author={Bob, and Bib, and Bab},","    title={Something shiny},","    journal={Combinatorics},","    volume={1},","    number={1},","    pages={1:2},","    year={2001}}")
+          # )
         ),
 
         ## -------

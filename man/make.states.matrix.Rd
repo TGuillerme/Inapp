@@ -38,10 +38,13 @@ If \code{character} argument is a list, each element of the list must be a \code
 tree <- ape::read.tree(text = "((a,b),(c,d));")
 
 ## A simple character
-character <- "01?-"
+character <- "0101"
 
 ## Create a states matrix for reconstruction
 make.states.matrix(tree, character)
+
+## A complex character
+character <- "0{01}-?"
 
 }
 \author{

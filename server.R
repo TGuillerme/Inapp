@@ -178,6 +178,42 @@ shinyServer(
 
             plot.states.matrix(states_matrix, passes = show_passes, show.labels = showlabels, counts = as.vector(as.numeric(input$counts)))
 
+
+            ## Exporting data
+            output$downloadData <- downloadHandler(
+
+                ## Filename management
+                filename = function() {
+                    ## Managing the output suffix
+                    suffix <- input$output_type
+                    suffix <- ifelse(suffix == "newick", "tre", suffix)
+                    suffix <- ifelse(suffix == "nexus", "nex", suffix)
+                    ## Getting the output name
+                    paste(paste("Inapp", format(Sys.time(), "%Y-%m-%d-%H%M%S"), sep = "_"), sep = ".", suffix)  #TG: or date format as "format(Sys.time(), "%Y-%m-%d-%X")"
+                },
+
+                ## Export management
+                content = function(file) {
+                    ## Save as a csv
+                    if(input$output_type == "csv") {
+                        write.csv(make.output.data.frame(states_matrix), file)
+                    }
+                    ## Save as a pdf
+                    if(input$output_type == "pdf") {
+                        pdf(file)
+                        plot.states.matrix(states_matrix, passes = show_passes, show.labels = showlabels, counts = as.vector(as.numeric(input$counts)))
+                        dev.off()
+                    }
+                    ## Save as a newick
+                    if(input$output_type == "newick") {
+                        write.csv(make.output.data.frame(states_matrix), file)
+                    }
+                    ## Save as a nexus
+                    if(input$output_type == "nexus") {
+                        write.csv(make.output.data.frame(states_matrix), file)
+                    }
+                }
+            )
         })
 
         ## Output plot

@@ -4,15 +4,15 @@
 \alias{output.states.matrix}
 \title{Outputs results}
 \usage{
-output.states.matrix(states_matrix, output = NULL,
-  filename = "states_matrix", path = ".", ...)
+output.states.matrix(states_matrix, output = NULL, file = "states_matrix",
+  path = ".", ...)
 }
 \arguments{
 \item{states_matrix}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}.}
 
 \item{output}{The type of output, can be either \code{NULL} (default) or \code{"newick"}, \code{"nexus"}, \code{"csv"} or \code{"pdf"} (see details).}
 
-\item{filename}{The name of the output file(code{"character"}).}
+\item{file}{The name of the output file(code{"character"}).}
 
 \item{path}{The path where to save the output file (code{"character"}).}
 

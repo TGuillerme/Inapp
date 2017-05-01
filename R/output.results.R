@@ -4,7 +4,7 @@
 #'
 #' @param states_matrix A \code{states.matrix} list from \code{\link{apply.reconstruction}}.
 #' @param output The type of output, can be either \code{NULL} (default) or \code{"newick"}, \code{"nexus"}, \code{"csv"} or \code{"pdf"} (see details).
-#' @param filename The name of the output file(code{"character"}). 
+#' @param file The name of the output file(code{"character"}). 
 #' @param path The path where to save the output file (code{"character"}).
 #' @param ... If \code{output = "pdf"}, additional arguments to be passed to \code{plot.states.matrix}.
 #'
@@ -45,7 +45,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-output.states.matrix <- function(states_matrix, output = NULL, filename = "states_matrix", path = ".", ...) {
+output.states.matrix <- function(states_matrix, output = NULL, file = "states_matrix", path = ".", ...) {
 
     match_call <- match.call()
 
@@ -78,13 +78,13 @@ output.states.matrix <- function(states_matrix, output = NULL, filename = "state
     output <- ifelse(output == "nexus", "nex", output)
 
     ## Filename and path
-    if(class(filename) != "character" || length(filename) != 1) {
-        stop(paste(match_call$filename, "must be a single character string."))
+    if(class(file) != "character" || length(file) != 1) {
+        stop(paste(match_call$file, "must be a single character string."))
     } else {
         if(class(path) != "character" || length(path) != 1) {
             stop(paste(match_call$path, "must be a single character string."))
         } else {
-            full_path <- paste(path, paste(filename, output, sep = "."), sep = "/")
+            full_path <- paste(path, paste(file, output, sep = "."), sep = "/")
 
             ## Check if the path exists
             if(!dir.exists(path)) {
@@ -93,7 +93,7 @@ output.states.matrix <- function(states_matrix, output = NULL, filename = "state
 
             ## Check if file exists
             if(length(list.files(full_path)) != 0) {
-                read.key(paste("file \"", full_path, "\" already exists!\nPress [enter] to overwrite or [esc] to cancel.", sep = ""), paste(filename, "has been overwritten."))
+                read.key(paste("file \"", full_path, "\" already exists!\nPress [enter] to overwrite or [esc] to cancel.", sep = ""), paste(file, "has been overwritten."))
             }
         }
     }
@@ -110,7 +110,7 @@ output.states.matrix <- function(states_matrix, output = NULL, filename = "state
 
     if(output %in% "csv") {
         ## Output a nexus/newick file
-        utils::write.csv(make.output.data.frame(states_matrix), file = full_path)
+        utils::write.table(make.output.data.frame(states_matrix), file = full_path, sep = ",")
         return(invisible())
     }
 
@@ -149,7 +149,7 @@ output.states.matrix <- function(states_matrix, output = NULL, filename = "state
 # ' @author Thomas Guillerme
 # ' @export
 
-# read.states.matrix <- function(filename, path = ".") {
+# read.states.matrix <- function(file, path = ".") {
 #     ## Write nexus with node comments
 
 #     ## Node data stucture:

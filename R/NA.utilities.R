@@ -60,7 +60,6 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     filling <- vector("list", ape::Ntip(tree)+ape::Nnode(tree))
     states_matrix <- list("Char" = filling, "Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
 
-
     if(!is.null(inapplicable)) {
         ## How to treat inapplicables (for Fitch)
         find.inapplicable <- function(one_char, replace) {
@@ -115,6 +114,8 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
 
     ## Add the character into the list
     states_matrix$Char[1:ape::Ntip(tree)] <- character[ordering]
+
+    ## Add tip labels
 
     ## Set up the active region tracker
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)

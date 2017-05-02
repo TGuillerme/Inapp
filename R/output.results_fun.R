@@ -73,7 +73,7 @@ create.note <- function(node, states_dataframe) {
 ## In write.tree, replace .write.tree2 by .write.tree.annotated.
 
 
-write.tree.annotated <- function(phy, file = "", append = FALSE, digits = 10, tree.names = FALSE, comments)
+write.tree.commented <- function(phy, file = "", append = FALSE, digits = 10, tree.names = FALSE, comments)
 {
     if (!(inherits(phy, c("phylo", "multiPhylo"))))
         stop("object \"phy\" has no trees")
@@ -91,17 +91,13 @@ write.tree.annotated <- function(phy, file = "", append = FALSE, digits = 10, tr
     }
 
     for (i in 1:N)
-        res[i] <- write.tree2.annotated(phy[[i]], digits = digits, tree.prefix = tree.names[i], comments = comments)
+        res[i] <- write.tree2.commented(phy[[i]], digits = digits, tree.prefix = tree.names[i], comments = comments)
 
     if (file == "") return(res)
     else cat(res, file = file, append = append, sep = "\n")
 }
 
-comments <- as.list(paste("[", seq(1:19), "]", sep = ""))
-
-write.tree.annotated(tree, comments = comments)
-
-write.tree2.annotated <- function(phy, digits = 10, tree.prefix = "", comments)
+write.tree2.commented <- function(phy, digits = 10, tree.prefix = "", comments)
 {
     brl <- !is.null(phy$edge.length)
     nodelab <- !is.null(phy$node.label)
@@ -120,26 +116,27 @@ write.tree2.annotated <- function(phy, digits = 10, tree.prefix = "", comments)
         k.tip <<- k.tip + 1
     }
     cp.annotate.node <- function(comments){
-        STRING[k] <<- comments[[k.node]]
+        STRING[k] <<- comments
         k <<- k + 1
-        k.node <<- k.node - 1
     }
 
-    add.internal <- function(i) {
+    add.internal <- function(node) {
         cp("(")
-        desc <- kids[[i]]
-        for (j in desc) {
-            if (j > n) {add.internal(j) ; cp.annotate.node(comments)} ## add comment here
-            else {add.terminal(ind[j]) ; cp.annotate.tip(comments)} ## add comment here
-            if (j != desc[length(desc)]) cp(",")
+        desc <- kids[[node]]
+        for (one_kid in desc) {
+            if (one_kid > n) {add.internal(one_kid)}
+            else {add.terminal(ind[one_kid]) ; cp.annotate.tip(comments)} ## add comment here
+            if (one_kid != desc[length(desc)]) cp(",")
         }
-        cp(")")
-        if (nodelab && i > n) cp(phy$node.label[i - n]) # fixed by Naim Matasci (2010-12-07)
+        cp(")") ; cp.annotate.node(comments[[node]]) ## add comment here
+        if (nodelab && node > n) cp(phy$node.label[node - n]) # fixed by Naim Matasci (2010-12-07)
         if (brl) {
             cp(":")
             cp(sprintf(f.d, phy$edge.length[ind[i]]))
         }
     }
+
+
     add.terminal <- function(i) {
         cp(phy$tip.label[phy$edge[i, 2]])
         if (brl) {
@@ -174,23 +171,81 @@ write.tree2.annotated <- function(phy, digits = 10, tree.prefix = "", comments)
     root <- getRoot(phy) # replaced n+1 with root - root has not be n+1
     desc <- kids[[root]]
     for (j in desc) {
-        if (j > n) {add.internal(j) ; cp.annotate.node(comments)} ## add comment here
+        if (j > n) {add.internal(j)} ## add comment here
         else {add.terminal(ind[j]) ; cp.annotate.tip(comments)} ## add comment here
         if (j != desc[length(desc)]) cp(",")
 
     }
 
     if (is.null(phy$root.edge)) {
-        cp(")") ; cp.annotate.node(comments) ## add comment here
+        cp(")") ; cp.annotate.node(comments[[n+1]]) ## add comment here
         if (nodelab) cp(phy$node.label[1])
         cp(";")
     }
     else {
-        cp(")") ; cp.annotate.node(comments) ## add comment here
+        cp(")") ; cp.annotate.node(comments[[n+1]]) ## add comment here
         if (nodelab) cp(phy$node.label[1])
         cp(":")
         cp(sprintf(f.d, phy$root.edge))
         cp(";")
     }
     paste(STRING, collapse = "")
+}
+
+write.nexus.commented <- function (phy, file = "", translate = TRUE, comments = comments) {
+
+    obj <- phy
+    class(obj) <- "multiPhylo"
+
+    ntree <- length(obj)
+    cat("#NEXUS\n", file = file)
+    cat(paste("[R-package APE, ", date(), "]\n\n", sep = ""), 
+        file = file, append = TRUE)
+    N <- length(obj[[1]]$tip.label)
+    cat("BEGIN TAXA;\n", file = file, append = TRUE)
+    cat(paste("\tDIMENSIONS NTAX = ", N, ";\n", sep = ""), file = file, 
+        append = TRUE)
+    cat("\tTAXLABELS\n", file = file, append = TRUE)
+    cat(paste("\t\t", obj[[1]]$tip.label, sep = ""), sep = "\n", 
+        file = file, append = TRUE)
+    cat("\t;\n", file = file, append = TRUE)
+    cat("END;\n", file = file, append = TRUE)
+    cat("BEGIN TREES;\n", file = file, append = TRUE)
+    if (translate) {
+        cat("\tTRANSLATE\n", file = file, append = TRUE)
+        obj <- .compressTipLabel(obj)
+        X <- paste("\t\t", 1:N, "\t", attr(obj, "TipLabel"), 
+            ",", sep = "")
+        X[length(X)] <- gsub(",", "", X[length(X)])
+        cat(X, file = file, append = TRUE, sep = "\n")
+        cat("\t;\n", file = file, append = TRUE)
+        class(obj) <- NULL
+        for (i in 1:ntree) obj[[i]]$tip.label <- as.character(1:N)
+    }
+    else {
+        if (is.null(attr(obj, "TipLabel"))) {
+            for (i in 1:ntree) obj[[i]]$tip.label <- checkLabel(obj[[i]]$tip.label)
+        }
+        else {
+            attr(obj, "TipLabel") <- checkLabel(attr(obj, "TipLabel"))
+            obj <- .uncompressTipLabel(obj)
+        }
+    }
+    title <- names(obj)
+    if (is.null(title)) 
+        title <- rep("UNTITLED", ntree)
+    else {
+        if (any(s <- title == "")) 
+            title[s] <- "UNTITLED"
+    }
+    for (i in 1:ntree) {
+        if (class(obj[[i]]) != "phylo") 
+            next
+        root.tag <- if (is.rooted(obj[[i]])) 
+            "= [&R] "
+        else "= [&U] "
+        cat("\tTREE *", title[i], root.tag, file = file, append = TRUE)
+        cat(write.tree.commented(obj[[i]], file = "", comments = comments), "\n", sep = "", file = file, append = TRUE, )
+    }
+    cat("END;\n", file = file, append = TRUE)
 }

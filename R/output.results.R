@@ -101,10 +101,6 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "states_ma
 
     ## Generating the output
     if(output %in% c("newick", "nexus")) {
-        ## Output a nexus/newick file
-
-        # ' @importFrom phylotate write_annotated
-
 
         ## Create the data frame containing all nodes
         states_dataframe <- make.output.data.frame(states_matrix)
@@ -112,7 +108,15 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "states_ma
         ## Create the list of notes and ordering them to match 
         node_notes <- lapply(as.list(states_matrix$tree$edge[,2]), create.note, states_dataframe)
 
+        ## Write the newick tree
+        if(output == "newick") {
+            write.tree.commented(tree, file = full_path, comments = node_notes, append = FALSE, digits = 10, tree.names = FALSE)
+        }
 
+        ## Write the nexus tree
+        if(output == "nexus") {
+            write.nexus.commented(tree, file = full_path, comments = node_notes, translate = TRUE)
+        }
 
         return(invisible())
     }

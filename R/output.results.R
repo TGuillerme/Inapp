@@ -105,6 +105,15 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "states_ma
 
         # ' @importFrom phylotate write_annotated
 
+
+        ## Create the data frame containing all nodes
+        states_dataframe <- make.output.data.frame(states_matrix)
+
+        ## Create the list of notes and ordering them to match 
+        node_notes <- lapply(as.list(states_matrix$tree$edge[,2]), create.note, states_dataframe)
+
+
+
         return(invisible())
     }
 
@@ -117,8 +126,8 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "states_ma
     if(output %in% "pdf") {
         ## Outputs a pdf
         grDevices::pdf(file = full_path)
-        # plot.states.matrix(states_matrix, ...)
-        plot.states.matrix(states_matrix) ; warning("DEBUG output")
+        plot.states.matrix(states_matrix, ...)
+        # plot.states.matrix(states_matrix) ; warning("DEBUG output")
         dev.off()
         return(invisible())
     }    

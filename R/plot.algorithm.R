@@ -132,8 +132,8 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
 
     ## Set the edges' colors
     edge_col <- "black"
-    if(any(counts == 1)) {
-        ## Change the colors of the nodes if activations exist (and if the algorithm is NA)
+    if(any(counts == 1) && !is.null(unlist(states_matrix$Up2))) {
+        ## Change the colors of the edges' if activations exist (and if the algorithm is NA)
         edge_col <- ifelse(get.NA.edges(states_matrix, tree, pass = 4) == 1, "black", "grey")
     }
 

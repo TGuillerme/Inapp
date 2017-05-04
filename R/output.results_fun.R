@@ -67,12 +67,7 @@ create.note <- function(node, states_dataframe) {
 }
 
 
-## Write nexus function (ape)
-## In write.nexus, replace write.tree by write.tree.annotated.
-
-## In write.tree, replace .write.tree2 by .write.tree.annotated.
-
-
+## Modified version of ape::.write.tree
 write.tree.commented <- function(phy, file = "", append = FALSE, digits = 10, tree.names = FALSE, comments)
 {
     if (!(inherits(phy, c("phylo", "multiPhylo"))))
@@ -97,6 +92,7 @@ write.tree.commented <- function(phy, file = "", append = FALSE, digits = 10, tr
     else cat(res, file = file, append = append, sep = "\n")
 }
 
+## Modified version of ape::.write.tree2
 write.tree2.commented <- function(phy, digits = 10, tree.prefix = "", comments)
 {
     brl <- !is.null(phy$edge.length)
@@ -192,15 +188,17 @@ write.tree2.commented <- function(phy, digits = 10, tree.prefix = "", comments)
     paste(STRING, collapse = "")
 }
 
+## Modified version of ape::.write.nexus
 write.nexus.commented <- function (phy, file = "", translate = TRUE, comments = comments) {
 
-    obj <- phy
+    obj <- list(phy)
     class(obj) <- "multiPhylo"
 
     ntree <- length(obj)
     cat("#NEXUS\n", file = file)
-    cat(paste("[R-package APE, ", date(), "]\n\n", sep = ""), 
+    cat(paste("[Inapp ancestral states reconstructions, ", date(), "]\n", sep = ""), 
         file = file, append = TRUE)
+    cat("[More for at https://github.com/TGuillerme/Inapp/]\n\n", file = file, append = TRUE)
     N <- length(obj[[1]]$tip.label)
     cat("BEGIN TAXA;\n", file = file, append = TRUE)
     cat(paste("\tDIMENSIONS NTAX = ", N, ";\n", sep = ""), file = file, 
@@ -220,9 +218,8 @@ write.nexus.commented <- function (phy, file = "", translate = TRUE, comments = 
         cat(X, file = file, append = TRUE, sep = "\n")
         cat("\t;\n", file = file, append = TRUE)
         class(obj) <- NULL
-        for (i in 1:ntree) obj[[i]]$tip.label <- as.character(1:N)
-    }
-    else {
+        for (i in 1:ntree) {obj[[i]]$tip.label <- as.character(1:N)}
+    } else {
         if (is.null(attr(obj, "TipLabel"))) {
             for (i in 1:ntree) obj[[i]]$tip.label <- checkLabel(obj[[i]]$tip.label)
         }
@@ -232,20 +229,20 @@ write.nexus.commented <- function (phy, file = "", translate = TRUE, comments = 
         }
     }
     title <- names(obj)
-    if (is.null(title)) 
+    if (is.null(title)) {
         title <- rep("UNTITLED", ntree)
-    else {
-        if (any(s <- title == "")) 
+    } else {
+        if (any(s <- title == "")) {
             title[s] <- "UNTITLED"
+        }
     }
     for (i in 1:ntree) {
-        if (class(obj[[i]]) != "phylo") 
+        if (class(obj[[i]]) != "phylo") {
             next
-        root.tag <- if (is.rooted(obj[[i]])) 
-            "= [&R] "
-        else "= [&U] "
+        }
+        root.tag <- ifelse(is.rooted(obj[[i]]), "= [&R] ", "= [&U] ")
         cat("\tTREE *", title[i], root.tag, file = file, append = TRUE)
-        cat(write.tree.commented(obj[[i]], file = "", comments = comments), "\n", sep = "", file = file, append = TRUE, )
+        cat(write.tree.commented(obj[[i]], file = "", comments = comments), "\n", sep = "", file = file, append = TRUE)
     }
     cat("END;\n", file = file, append = TRUE)
 }

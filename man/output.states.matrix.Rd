@@ -4,8 +4,8 @@
 \alias{output.states.matrix}
 \title{Outputs results}
 \usage{
-output.states.matrix(states_matrix, output = NULL, file = "states_matrix",
-  path = ".", ...)
+output.states.matrix(states_matrix, output = NULL,
+  file = "Inapp_reconstruction", path = ".", ...)
 }
 \arguments{
 \item{states_matrix}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}.}
@@ -30,27 +30,27 @@ Specifically, per data output type:
 -\code{"pdf"} A pdf version of the states_matrix plotted with \code{plot.states.matrix}.
 }
 \examples{
-## A balanced 12 taxa tree
-tree <- ape::read.tree(
-                 text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+## A random 5 taxa tree
+set.seed(1)
+tree <- ape::rtree(5)
 ## A character with inapplicable data
-character <- "23--1??--032"
+character <- "01-?1"
 
 ## NA algorithm
 NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
 
 \dontrun{
 ## Exporting the results as an annotated newick tree
-output.states.matrix(states_matrix, output = "newick")
+output.states.matrix(NA_matrix, output = "newick")
 
 ## Exporting the results and notes in a nexus file
-output.states.matrix(states_matrix, output = "csv")
+output.states.matrix(NA_matrix, output = "nexus")
 
 ## Exporting the result in a csv
-output.states.matrix(states_matrix, output = "csv")
+output.states.matrix(NA_matrix, output = "csv")
 
 ## Exporting the plot as a pdf
-output.states.matrix(states_matrix, output = "pdf")
+output.states.matrix(NA_matrix, output = "pdf")
 }
 
 }

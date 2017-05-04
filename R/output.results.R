@@ -17,27 +17,27 @@
 #' -\code{"pdf"} A pdf version of the states_matrix plotted with \code{plot.states.matrix}.
 #' 
 #' @examples
-#' ## A balanced 12 taxa tree
-#' tree <- ape::read.tree(
-#'                  text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+#' ## A random 5 taxa tree
+#' set.seed(1)
+#' tree <- ape::rtree(5)
 #' ## A character with inapplicable data
-#' character <- "23--1??--032"
+#' character <- "01-?1"
 #' 
 #' ## NA algorithm
 #' NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
 #' 
 #' \dontrun{
 #' ## Exporting the results as an annotated newick tree
-#' output.states.matrix(states_matrix, output = "newick")
+#' output.states.matrix(NA_matrix, output = "newick")
 #'
 #' ## Exporting the results and notes in a nexus file
-#' output.states.matrix(states_matrix, output = "csv")
+#' output.states.matrix(NA_matrix, output = "nexus")
 #'
 #' ## Exporting the result in a csv
-#' output.states.matrix(states_matrix, output = "csv")
+#' output.states.matrix(NA_matrix, output = "csv")
 #'
 #' ## Exporting the plot as a pdf
-#' output.states.matrix(states_matrix, output = "pdf")
+#' output.states.matrix(NA_matrix, output = "pdf")
 #' }
 #' 
 #' @seealso \code{\link{apply.reconstruction}}, \code{\link{plot.states.matrix}}
@@ -45,7 +45,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-output.states.matrix <- function(states_matrix, output = NULL, file = "states_matrix", path = ".", ...) {
+output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_reconstruction", path = ".", ...) {
 
     match_call <- match.call()
 
@@ -92,7 +92,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "states_ma
             }
 
             ## Check if file exists
-            if(length(list.files(full_path)) != 0) {
+            if(length(list.files(path = path, pattern = paste(file, output, sep = "."))) != 0) {
                 read.key(paste("file \"", full_path, "\" already exists!\nPress [enter] to overwrite or [esc] to cancel.", sep = ""), paste(file, "has been overwritten."))
             }
         }
@@ -100,22 +100,23 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "states_ma
 
 
     ## Generating the output
-    if(output %in% c("newick", "nexus")) {
+    if(output %in% c("tre", "nex")) {
 
         ## Create the data frame containing all nodes
         states_dataframe <- make.output.data.frame(states_matrix)
 
         ## Create the list of notes and ordering them to match 
-        node_notes <- lapply(as.list(states_matrix$tree$edge[,2]), create.note, states_dataframe)
+        # node_notes <- lapply(as.list(states_matrix$tree$edge[,2]), create.note, states_dataframe)
+        node_notes <- lapply(as.list(1:(ape::Ntip(states_matrix$tree) + ape::Nnode(states_matrix$tree))), create.note, states_dataframe)
 
         ## Write the newick tree
-        if(output == "newick") {
-            write.tree.commented(tree, file = full_path, comments = node_notes, append = FALSE, digits = 10, tree.names = FALSE)
+        if(output == "tre") {
+            write.tree.commented(states_matrix$tree, file = full_path, comments = node_notes, append = FALSE, digits = 10, tree.names = FALSE)
         }
 
         ## Write the nexus tree
-        if(output == "nexus") {
-            write.nexus.commented(tree, file = full_path, comments = node_notes, translate = TRUE)
+        if(output == "nex") {
+            write.nexus.commented(states_matrix$tree, file = full_path, comments = node_notes, translate = TRUE)
         }
 
         return(invisible())
@@ -132,7 +133,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "states_ma
         grDevices::pdf(file = full_path)
         plot.states.matrix(states_matrix, ...)
         # plot.states.matrix(states_matrix) ; warning("DEBUG output")
-        dev.off()
+        grDevices::dev.off()
         return(invisible())
     }    
 }

@@ -22,6 +22,6 @@
 #' @import ape
 #' @importFrom graphics plot legend
 #' @importFrom shiny runGitHub
-#' @importFrom grDevices pdf
+#' @importFrom grDevices pdf dev.off
 #' @importFrom utils write.csv
 NULL

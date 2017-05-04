@@ -152,7 +152,7 @@ write.tree2.commented <- function(phy, digits = 10, tree.prefix = "", comments)
 
     ind <- match(1:max(phy$edge), phy$edge[, 2])
 
-    LS <- 4*n + 5 ; if (!missing(comments)) LS <- LS*2 ## add comment here
+    LS <- 4*n + 5 ; if (!missing(comments)) LS <- LS*2
     if (brl) LS <- LS + 4*n
     if (nodelab)  LS <- LS + n
     STRING <- character(LS)

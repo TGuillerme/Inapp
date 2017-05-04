@@ -206,11 +206,17 @@ shinyServer(
                     }
                     ## Save as a newick
                     if(input$output_type == "newick") {
-                        write.csv(make.output.data.frame(states_matrix), file)
+                        tree$edge.length <- NULL
+                        states_dataframe <- make.output.data.frame(states_matrix)
+                        node_notes <- lapply(as.list(1:(ape::Ntip(tree) + ape::Nnode(tree))), create.note, states_dataframe)
+                        write.tree.commented(tree, file, comments = node_notes, append = FALSE, digits = 10, tree.names = FALSE)
                     }
                     ## Save as a nexus
                     if(input$output_type == "nexus") {
-                        write.csv(make.output.data.frame(states_matrix), file)
+                        tree$edge.length <- NULL
+                        states_dataframe <- make.output.data.frame(states_matrix)
+                        node_notes <- lapply(as.list(1:(ape::Ntip(tree) + ape::Nnode(tree))), create.note, states_dataframe)
+                        write.nexus.commented(tree, file, comments = node_notes, translate = TRUE)
                     }
                 }
             )

@@ -21,6 +21,7 @@
 #' @exportPattern "^[[:alpha:]]+"
 #' @import ape
 #' @importFrom graphics plot legend
-#' @importFrom shiny runApp
-NULL
+#' @importFrom shiny runGitHub
+#' @importFrom grDevices pdf dev.off
+#' @importFrom utils write.csv
 NULL

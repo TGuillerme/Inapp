@@ -15,8 +15,6 @@
 #' @author Thomas Guillerme
 #' @export
 
-
-## Inspire from squid::squidApp
 runInapp <- function(...) {
     shiny::runGitHub("Inapp", "TGuillerme", ...)
 }

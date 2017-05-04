@@ -69,16 +69,16 @@ shinyUI(fluidPage(
             fileInput("nexus_matrix", label = h5("Select a newick format matrix")),
             ## Character number input - input$character_num
             numericInput("character_num", label = h5("Selected character:"), value = 1)
-          )
+          ),
 
           ## --------------------
           ## Exports (in column "character")
           ## --------------------
-          # hr(),
-          # h3("Export results"),
-          # ## Export format - input$export_type
-          # selectInput("export_type", "Export format:", choices = c("newick", "pdf", "xml")),
-          # downloadButton('export_data', 'Download'),
+          hr(),
+          h3("Export results"),
+          ## Export format - input$export_type
+          selectInput("output_type", "Export format:", choices = c("csv", "pdf", "newick", "nexus")),
+          downloadButton('downloadData', 'Download')
           
           # hr(),
           # ## Citation! - input$cite_type

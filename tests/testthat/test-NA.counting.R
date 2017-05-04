@@ -47,14 +47,14 @@ test_that("right counting", {
 
     ## Run the tests
     for(test in 1:length(characters)) {
-        suppressWarnings(matrix <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
+        suppressWarnings(output <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
         # if(matrix$length != expected_results[test]) {
         #     print(paste("test", test, "failed"))
         #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
         # }
 
-        length <- matrix$regions + ifelse(length(matrix$changes) > 0, length(matrix$changes), 0)
-        expect_equal(length, expected_results[test])
+        tree_length <- output$regions + ifelse(length(output$changes) > 0, length(output$changes), 0)
+        expect_equal(tree_length, expected_results[test])
     }
 
     ## Run the bigger tree tests
@@ -66,13 +66,13 @@ test_that("right counting", {
 
     ## Run the tests
     for(test in 1:length(characters)) { 
-        suppressWarnings(matrix <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
+        suppressWarnings(output <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
         # if(matrix$length != expected_results[test]) {
         #     print(paste("test", test, "failed"))
         #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
         # }
-        length <- matrix$regions + ifelse(length(matrix$changes) > 0, length(matrix$changes), 0)
-        expect_equal(length, expected_results[test])
+        tree_length <- output$regions + ifelse(length(output$changes) > 0, length(output$changes), 0)
+        expect_equal(tree_length, expected_results[test])
     }
 
 

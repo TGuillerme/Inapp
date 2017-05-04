@@ -85,7 +85,6 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
             stop(paste(match_call$path, "must be a single character string."))
         } else {
             full_path <- paste(path, paste(file, output, sep = "."), sep = "/")
-
             ## Check if the path exists
             if(!dir.exists(path)) {
                 stop(paste("path", path, "not found."))
@@ -118,13 +117,13 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         if(output == "nex") {
             write.nexus.commented(states_matrix$tree, file = full_path, comments = node_notes, translate = TRUE)
         }
-
         return(invisible())
     }
 
     if(output %in% "csv") {
         ## Output a nexus/newick file
         utils::write.table(make.output.data.frame(states_matrix), file = full_path, sep = ",")
+
         return(invisible())
     }
 
@@ -134,6 +133,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         plot.states.matrix(states_matrix, ...)
         # plot.states.matrix(states_matrix) ; warning("DEBUG output")
         grDevices::dev.off()
+
         return(invisible())
     }    
 }
@@ -163,7 +163,6 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 # ' @author Thomas Guillerme
 # ' @export
 
-# read.states.matrix <- function(file, path = ".") {
 #     ## Write nexus with node comments
 
 #     ## Node data stucture:

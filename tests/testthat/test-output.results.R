@@ -16,8 +16,8 @@ test_that("make.output.data.frame works", {
     ## Right output type
     expect_is(test_NA, "data.frame")
     expect_is(test_Fitch, "data.frame")
-    expect_equal(dim(test_NA), c(23, 6))
-    expect_equal(dim(test_Fitch), c(23, 3))
+    expect_equal(dim(test_NA), c(23, 7))
+    expect_equal(dim(test_Fitch), c(23, 4))
 
     ## Right output values
     expect_is(test_NA$Dp1, "character")

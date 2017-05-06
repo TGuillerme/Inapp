@@ -24,7 +24,7 @@
 \section{First uppass} \label{1stUp}
 
 \begin{enumerate}
-    \item Enter the tree on its root. \textbf{If} the root has any applicable token, \textit{set} its state to be the applicable token(s) only. Move to one of the root's descendants and \textit{go} to \ref{1stUp:enter}.
+    \item Enter the tree on its root. \textbf{If} the root has any applicable token, remove any eventual inapplicable token. \textbf{Then} move to one of the root's descendants and \textit{go} to \ref{1stUp:enter}.
     \item \label{1stUp:enter} \textbf{If} the node has an inapplicable token, \textit{go} to \ref{1stUp:nodeNA1}; \textbf{else}, leave the node's state unchanged and \textit{go} to \ref{1stUp:exit}.
     \item \label{1stUp:nodeNA1} \textbf{If} the node also has an applicable token, \textit{go} to \ref{1stUp:nodeNAandA}; \textbf{else}, \textit{go} to \ref{1stUp:nodeNA2}.
     \item \label{1stUp:nodeNAandA} \textbf{If} the node's ancestor has an inapplicable token, \textit{set} the node's state to be the inapplicable token only; \textbf{else} \textit{set} the node's state to be the applicable token(s) only. \textbf{Then} \textit{go} to \ref{1stUp:exit}.

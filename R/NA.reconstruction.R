@@ -54,7 +54,7 @@ first.downpass <- function(states_matrix) {
 
             ## If both descendants have applicable states, remove the inapplicable state from the node
             if(any(left != -1) && any(right != -1)) {
-                states_matrix$Dp1[[node]] <- states_matrix$Dp1[[node]][which(states_matrix$Dp1[[node]] != -1)]
+                states_matrix$Dp1[[node]] <- states_matrix$Dp1[[node]][states_matrix$Dp1[[node]] != -1]
             }
         }
     }
@@ -93,7 +93,7 @@ first.uppass <- function(states_matrix) {
         
     ## Pre-condition: if the root is inapplicable AND applicable, remove inapplicable (if there's more than 2 states and one -1)
     if(length(states_matrix$Dp1[[ape::Ntip(tree)+1]]) > 1 && any(states_matrix$Dp1[[ape::Ntip(tree)+1]] == -1)) {
-        states_matrix$Up1[[ape::Ntip(tree)+1]] <- states_matrix$Dp1[[ape::Ntip(tree)+1]][which(states_matrix$Dp1[[ape::Ntip(tree)+1]] != -1)]
+        states_matrix$Up1[[ape::Ntip(tree)+1]] <- states_matrix$Dp1[[ape::Ntip(tree)+1]][states_matrix$Dp1[[ape::Ntip(tree)+1]] != -1]
     } else {
         states_matrix$Up1[[ape::Ntip(tree)+1]] <- states_matrix$Dp1[[ape::Ntip(tree)+1]]
     }
@@ -117,7 +117,7 @@ first.uppass <- function(states_matrix) {
                     states_matrix$Up1[[node]] <- -1
                 } else {
                     ## Else remove the inapplicable
-                    states_matrix$Up1[[node]] <- curr_node[which(curr_node != -1)]
+                    states_matrix$Up1[[node]] <- curr_node[curr_node != -1]
                 }
             } else {
                 ## No state IS applicable
@@ -129,7 +129,7 @@ first.uppass <- function(states_matrix) {
                     union_desc <- get.union.incl(left, right)
                     if(any(union_desc != -1)) {
                         ## Set to the union of applicable states
-                        states_matrix$Up1[[node]] <- union_desc[which(union_desc != -1)]
+                        states_matrix$Up1[[node]] <- union_desc[union_desc != -1]
                     } else {
                         ## Set to inapplicable
                         states_matrix$Up1[[node]] <- -1
@@ -201,14 +201,14 @@ second.downpass <- function(states_matrix) {
             if(!is.null(common_desc)) {
                 ## If there is any applicable state in this common, set the node to be that state
                 if(any(common_desc != -1)) {
-                    states_matrix$Dp2[[node]] <- common_desc[which(common_desc != -1)]
+                    states_matrix$Dp2[[node]] <- common_desc[common_desc != -1]
                 } else {
                     states_matrix$Dp2[[node]] <- -1
                 }   
             } else {
                 ## Else set the node state to be the union of the descendants without the inapplicable tokens
                 union_desc <- get.union.incl(left, right)
-                states_matrix$Dp2[[node]] <- union_desc[which(union_desc != -1)]
+                states_matrix$Dp2[[node]] <- union_desc[union_desc != -1]
 
                 ## Counting
                 if(any(left != -1) && any(right != -1)) {
@@ -308,7 +308,7 @@ second.uppass <- function(states_matrix) {
                             } else { 
                                 ## If the union of left and right has no state in common with the ancestor
                                 union_all <- get.union.incl(union_desc, ancestor)
-                                states_matrix$Up2[[node]] <- union_all[which(union_all != -1)]
+                                states_matrix$Up2[[node]] <- union_all[union_all != -1]
                             }
                         } else {
                             ## If the union of left and right has no inapplicable character

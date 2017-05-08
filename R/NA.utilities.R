@@ -64,7 +64,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
         ## How to treat inapplicables (for Fitch)
         find.inapplicable <- function(one_char, replace) {
             if(any(one_char == -1)) {
-                one_char <- one_char[which(one_char != -1)]
+                one_char <- one_char[one_char != -1]
                 one_char <- c(one_char, replace)
                 one_char <- sort(unique(one_char))
             }
@@ -72,7 +72,8 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
         }
         if(inapplicable == 1) {
             ## Inapplicable are missing
-            replace <- unique(unlist(character))[which(unique(unlist(character)) != -1)]
+            unique_characters <- unique(unlist(character))
+            replace <- unique_characters[unique_characters != -1)]
             character <- lapply(character, find.inapplicable, replace)
         } else {
             ## Inapplicable is an extra state
@@ -91,11 +92,11 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
                 ## Getting the numeric part of the tips in alphabetical order
                 alpha_char <- unique(unlist(strsplit(tree$tip.label, split = "\\d")))
                 ## Remove blanks
-                alpha_char <- alpha_char[which(alpha_char != "")]
+                alpha_char <- alpha_char[alpha_char != ""]
                 ## Get the tips ordering
                 tips_numbers <- unlist(strsplit(tree$tip.label, split = alpha_char))
                 ## Remove blanks
-                tips_numbers <- tips_numbers[which(tips_numbers != "")]
+                tips_numbers <- tips_numbers[tips_numbers != ""]
                 ## Getting the tips order
                 ordering <- match(tips_numbers, sort(tips_numbers))
             } else {
@@ -276,7 +277,7 @@ convert.char <- function(character) {
                     character[(polymorphic_start[one_char]+1):polymorphic_end[one_char]] <- NA
                 }
                 ## Remove NAs (the polymorphies)
-                character <- character[-which(is.na(character))]
+                character <- character[!is.na(character)]
             }
 
         } else {
@@ -301,7 +302,7 @@ convert.char <- function(character) {
         options(warn = -1)
         all_states <- unlist(lapply(character, as.numeric))
         options(warn = 0)
-        all_states <- unique(all_states[-c(which(is.na(all_states)))]) #, which(all_states == -1))]
+        all_states <- unique(all_states[!is.na(all_states)]) # | (all_states != -1))]
 
         ## Convert missing
         character <- lapply(character, convert.missing, all_states)
@@ -312,9 +313,12 @@ convert.char <- function(character) {
 }
 
 ## Selects descendant and ancestor
-desc.anc <- function(node, tree) {
-    descendants <- tree$edge[which(tree$edge[,1] == node),2]
-    ancestor <- tree$edge[which(tree$edge[,2] == node),1]
+desc.anc <- function (node, tree) {
+    tree.edge <- tree$edge
+    parent <- tree.edge[, 1]
+    child  <- tree.edge[, 2]
+    descendants <- child[parent == node]
+    ancestor <- parent[child == node]
     return(c(descendants, ancestor))
 }
 

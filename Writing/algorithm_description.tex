@@ -1,6 +1,8 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{ulem}
+\usepackage{color}
 
 \begin{document}
 
@@ -15,12 +17,17 @@
 
 \begin{enumerate}
     \item Enter on any cherry (i.e. pair of tips) on the tree and move to its most recent common ancestor; \textbf{then}, \textit{go} to \ref{1stDp:enter}.
-    \item \label{1stDp:enter} \textbf{If} both node's descendants have at least one applicable state in common, \textit{set} it to be the node state and \textit{go} to \ref{1stDp:exit}. \textbf{Else}, \textit{go} to \ref{1stDp:AND-}.
+    \item \label{1stDp:enter} \sout{\textbf{If} both node's descendants have at least one applicable state in common, \textit{set} it to be the node state and \textit{go} to \ref{1stDp:exit}. \textbf{Else}, \textit{go} to \ref{1stDp:AND-}.}\textcolor{red}{[This isn't what happens in, for example, ((1,2),(3,4)); ... 0-0- , which reconstructs the ancestral node as -0 (not 0).]}
     \item \label{1stDp:AND-} \textbf{If} both descendants have only the inapplicable state, \textit{set} it to be the node state and \textit{go} to \ref{1stDp:exit}. \textbf{Else}, \textit{go} to \ref{1stDp:OR}.
-    \item \label{1stDp:OR} \textbf{If} any of the descendants have an applicable state, \textit{set} the node's state to be the union the applicable states of its descendants and \textit{go} to \ref{1stDp:exit}.
+    \item \label{1stDp:OR} \sout{\textbf{If} any of the descendants have an applicable state,}\textcolor{red}{[ALWAYS TRUE, or step \ref{1stDp:AND-} would have taken ELSE branch]}\sout{ \textit{set} the node's state to be the union the applicable states of its descendants and \textit{go} to \ref{1stDp:exit}.}\\
+    \textcolor{blue}{\textbf{If} both descendants have an applicable state, \textit{set} the node's state to be the union of the descendants' states and \textit{go} to \ref{1stDp:exit}. \textbf{Else}, \textit{go} to \ref{1stDp:XOR}.
+    \item \label{1stDp:XOR} \textbf{If} both descendants include an inapplicable state, \textit{set} the node's state to be the inapplicable state and \textit{go} to \ref{1stDp:exit}. \textbf{Else}, \textit{set} the node's state to be the union of the descendants' states and \textit{go} to \ref{1stDp:exit}.
+    }
     \item \label{1stDp:exit} \textbf{If} possible, move to the node's ancestor and \textit{go} to \ref{1stDp:enter}; \textbf{else} move to the next unvisited cherry's ancestor and \textit{go} to \ref{1stDp:enter}. Once all nodes have been visited, end the first downpass.
 \end{enumerate}
-
+% Useful testing tree:
+% (((((1,2),(3,4)),5),6),(7,(8,(9,(10,(11,12))))));
+% 1-0-2-0-{01}-1-
 \section{First uppass} \label{1stUp}
 
 \begin{enumerate}

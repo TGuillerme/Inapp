@@ -70,5 +70,8 @@ apply.reconstruction <- function(tree, character, passes = 4, method, inapplicab
         states_matrix <- n_passes[[pass]](states_matrix)
     }
 
+    ## Get the total length of the tree
+    states_matrix$length <- states_matrix$changes + states_matrix$regions
+
     return(states_matrix)
 }

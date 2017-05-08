@@ -127,6 +127,9 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Save the node with changes
     states_matrix$changes <- numeric(0)
 
+    ## Total length
+    states_matrix$length <- numeric(0)
+
     ## Add the tree
     states_matrix$tree <- tree
 

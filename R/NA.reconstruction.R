@@ -288,7 +288,7 @@ second.uppass <- function(states_matrix) {
                 
                 if(!is.null(common_anc_node) && length(common_anc_node) == length(ancestor) && all(common_anc_node == ancestor) ){
 
-                    states_matrix$Up2[[node]] <- common_anc_node #TG: simplify in english version
+                    states_matrix$Up2[[node]] <- common_anc_node 
                 } else {
                     ## If the common state between the ancestor and the final is not the ancestor
                     common_left_right <- get.common(left, right)

@@ -73,7 +73,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
         if(inapplicable == 1) {
             ## Inapplicable are missing
             unique_characters <- unique(unlist(character))
-            replace <- unique_characters[unique_characters != -1)]
+            replace <- unique_characters[unique_characters != -1]
             character <- lapply(character, find.inapplicable, replace)
         } else {
             ## Inapplicable is an extra state

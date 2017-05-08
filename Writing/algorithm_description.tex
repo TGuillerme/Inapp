@@ -37,7 +37,7 @@
     \item \label{1stUp:nodeNAandA} \textbf{If} the node's ancestor has an inapplicable state, \textit{set} the node's state to be the inapplicable state only; \textbf{else} \textit{set} the node's state to be the applicable states only. \textbf{Then} \textit{go} to \ref{1stUp:exit}.
     \item \label{1stUp:nodeNA2} \textbf{If} the node's ancestor has the inapplicable state, \textit{set} the node's state to be the inapplicable state only and \textit{go} to \ref{1stUp:exit}; \textbf{else} \textit{go} to \ref{1stUp:nodeNAOR}.
     \item \label{1stUp:nodeNAOR} \textbf{If} any of the descendants have an applicable state, then \textit{set} the node's state to be the union the applicable states of its descendants; \textbf{else} \textit{set} the node's state to be the inapplicable state only. \textbf{Then} \textit{go} to \ref{1stUp:exit}.
-    \item \label{1stUp:exit} \textbf{If} any of the node's descendant is not a tip, move to the next node and \textit{go} to \ref{1stUp:enter}. \textbf{If} both descendants are tips, move to the closest non-visited node and \textit{go} to \ref{1stUp:enter}. Once all nodes have been visited, end the first uppass.
+    \item \label{1stUp:exit} \textbf{If} any of the node's descendants are not tips, move to the next node and \textit{go} to \ref{1stUp:enter}. \textbf{If} both descendants are tips, move to the closest non-visited node and \textit{go} to \ref{1stUp:enter}. Once all nodes have been visited, end the first uppass.
 \end{enumerate}
 
 
@@ -59,7 +59,7 @@
     \item Enter the tree on its root and move to one of the root's descendants. \textbf{Then} \textit{go} to \ref{2ndUp:enter}.
     \item \label{2ndUp:enter} \textbf{If} the node has any applicable state, \textit{go} to \ref{2ndUp:nodeA}; \textbf{else}, \textit{go} to \ref{2ndUp:CountRegion}.
     \item \label{2ndUp:nodeA} \textbf{If} the node's ancestor has any applicable state, \textit{go} to \ref{2ndUp:ancestorA1}; \textbf{else}, \textit{go} to \ref{2ndUp:ancestorNA}.
-    \item \label{2ndUp:ancestorA1} \textbf{If} the node states are the same as its ancestor, \textit{go} to \ref{2ndUp:exit}; \textbf{else}, \textit{go} to \ref{2ndUp:ancestorA2}.
+    \item \label{2ndUp:ancestorA1} \textbf{If} the node's states are the same as its ancestor's, \textit{go} to \ref{2ndUp:exit}; \textbf{else}, \textit{go} to \ref{2ndUp:ancestorA2}.
     \item \label{2ndUp:ancestorA2} \textbf{If} there is any state in common between the node's descendants, \textit{go} to \ref{2ndUp:ANDdesc}; \textbf{else} \textit{go} to \ref{2ndUp:ORdesc}.
     \item \label{2ndUp:ANDdesc} \textit{Add} to the current node any state in common between its ancestor and its descendants. Then \textit{go} to \ref{2ndUp:exit}.
     \item \label{2ndUp:ORdesc} \textbf{If} the union between the node's descendants contains the inapplicable state, \textit{go} to \ref{2ndUp:ORdescNA}; \textbf{else} \textit{go} to \ref{2ndUp:ORdescA}.

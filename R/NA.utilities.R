@@ -312,9 +312,12 @@ convert.char <- function(character) {
 }
 
 ## Selects descendant and ancestor
-desc.anc <- function(node, tree) {
-    descendants <- tree$edge[which(tree$edge[,1] == node),2]
-    ancestor <- tree$edge[which(tree$edge[,2] == node),1]
+desc.anc <- function (node, tree) {
+    tree.edge <- tree$edge
+    parent <- tree.edge[, 1]
+    child  <- tree.edge[, 2]
+    descendants <- child[parent == node]
+    ancestor <- parent[child == node]
     return(c(descendants, ancestor))
 }
 

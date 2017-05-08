@@ -371,11 +371,11 @@ get.side.applicable <- function(states_matrix, node, side, pass) {
         tip <- states_matrix[[pass+1]][desc_anc[side]][[1]]
         if(length(tip) == 1) {
             ## If the tip has only one state
-            side_applicable <- ifelse(any(tip == -1), FALSE, TRUE)
+            side_applicable <- !any(tip == -1)
         } else {
             ## If the tip is ambiguous (question mark), solve using the current node
             if(any(tip == -1)) {
-                side_applicable <- ifelse(any(curr_node == -1), FALSE, TRUE)  
+                side_applicable <- !any(curr_node == -1)
             } else {
                 side_applicable <- TRUE
             }

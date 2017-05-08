@@ -265,6 +265,7 @@ convert.char <- function(character) {
         ambiguous    <- chars == '?'
         character <- unlist(lapply(chars, strsplit, split=''), recursive=FALSE)
         character[inapplicable] <- -1
+        character[polymorphic] <- lapply(character[polymorphic], function (x) {x[x=='-'] <- -1; x})
         all_states  <- unique(as.numeric(unlist(character[!ambiguous])))
         character[ambiguous] <- list(all_states)
         

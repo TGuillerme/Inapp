@@ -21,7 +21,6 @@ test_that("convert.char works", {
         expect_true(all(test[[elem]] == list_out[[elem]]))
     }
 
-    expect_warning(test <- convert.char("01-?")) # Warning is some weird NA management by testthat
     expect_true(unlist(test[1]) == 0)
     expect_true(unlist(test[2]) == 1)
     expect_true(unlist(test[3]) == -1)
@@ -30,7 +29,6 @@ test_that("convert.char works", {
     ## Complex conversion
     character <- "{01}{-0}?-01"
     list_out <- list(c(0,1), c(-1,0), c(-1,0,1), -1, 0, 1)
-    expect_warning(test <- convert.char(character))
     for(elem in 1:length(list_out)) {
         expect_true(all(test[[elem]] == list_out[[elem]]))
     }

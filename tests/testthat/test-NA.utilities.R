@@ -16,7 +16,7 @@ test_that("convert.char works", {
     expect_is(convert.char(list(1)), "list")
 
     ## Right conversion
-    test <- convert.char(character)
+    expect_warning(test <- convert.char(character))
     for(elem in 1:length(list_out)) {
         expect_true(all(test[[elem]] == list_out[[elem]]))
     }
@@ -29,7 +29,7 @@ test_that("convert.char works", {
     ## Complex conversion
     character <- "{01}{-0}?-01"
     list_out <- list(c(0,1), c(-1,0), c(-1,0,1), -1, 0, 1)
-    test <- convert.char(character)
+    expect_warning(test <- convert.char(character))
     for(elem in 1:length(list_out)) {
         expect_true(all(test[[elem]] == list_out[[elem]]))
     }

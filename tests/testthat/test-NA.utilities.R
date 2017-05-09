@@ -32,65 +32,7 @@ test_that("convert.char works", {
     test <- convert.char(character)
     for(elem in 1:length(list_out)) {
         expect_true(all(test[[elem]] == list_out[[elem]]))
-    }Fee Calculator
-Payment fees 
-Visa Debit
-Baggage fees 
-Checked bags (0)
-Stops
- non-stop
-£686
- 2+ stops
-Times show all
-Take-off Newcastle upon Tyne (NCL)
-Wed 06:00 - 21:00
-Take-off Xi'an (XIY)
-Mon 11:03 - 12:55
-Show landing times
-Airlines
-
-Carrier
-
-Alliance
- Air France
- British Airways
- Cathay Pacific
- China Eastern
-£686
- China Southern
- Japan Airlines
- KLM
- Multiple Airlines
-
-Show operators
-More filters
-
-
-
-
-
-
-
-
-
-
-
-
-
-NCL XIY
-3 of 432 flights
-  30 Aug
-Wednesday
- — 11 Sep
-Monday
-  Economy
-cabin
-  1
-traveller
- 
-Change
-Sort by: Price  Recommended  Duration More 
-
+    }
 })
 
 context("make.states.matrix")

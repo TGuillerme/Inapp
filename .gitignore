@@ -6,4 +6,6 @@
 *.score
 *.nex
 
-
+# LaTeX
+*.fls
+*.pdf

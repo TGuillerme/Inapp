@@ -194,27 +194,27 @@ second.downpass <- function(states_matrix) {
         states_matrix$tracker$Dp2[desc_anc[2]][[1]] <- left_applicable
         states_matrix$tracker$Dp2[node][[1]] <- left_applicable | right_applicable
 
-        if(any(curr_node != -1)) {
+        if(any(curr_node != -1)) { #TG: \ref Node apply
             ## Get the states in common between the descendants
-            common_desc <- get.common(left, right)
+            common_desc <- get.common(left, right) 
 
-            if(!is.null(common_desc)) {
+            if(!is.null(common_desc)) { #TG: \ref enter
                 ## If there is any applicable state in this common, set the node to be that state
-                if(any(common_desc != -1)) {
+                if(any(common_desc != -1)) { #TG: \ref AND
                     states_matrix$Dp2[[node]] <- common_desc[common_desc != -1]
                 } else {
                     states_matrix$Dp2[[node]] <- -1
                 }   
-            } else {
+            } else { #TG: \ref OR
                 ## Else set the node state to be the union of the descendants without the inapplicable tokens
                 union_desc <- get.union.incl(left, right)
                 states_matrix$Dp2[[node]] <- union_desc[union_desc != -1]
 
                 ## Counting
-                if(any(left != -1) && any(right != -1)) {
+                if(any(left != -1) && any(right != -1)) { #TG:\ref countcchange
                     ## Store the node
                     states_matrix$changes <- c(states_matrix$changes, node)
-                } else {
+                } else { #TG:\ref count regions
                     if(right_applicable && left_applicable) {
                         states_matrix$regions <- states_matrix$regions + 1
                     }
@@ -281,27 +281,27 @@ second.uppass <- function(states_matrix) {
         states_matrix$tracker$Up2[desc_anc[2]][[1]] <- left_applicable
         states_matrix$tracker$Up2[node][[1]] <- left_applicable | right_applicable
 
-        if(any(curr_node != -1)) {
-            if(any(ancestor != -1)) {
+        if(any(curr_node != -1)) { #TG: \ref enter
+            if(any(ancestor != -1)) { #TG: \ref nodeA
 
                 common_anc_node <- get.common(ancestor, curr_node)
                 
-                if(!is.null(common_anc_node) && length(common_anc_node) == length(ancestor) && all(common_anc_node == ancestor) ){
+                if(!is.null(common_anc_node) && length(common_anc_node) == length(ancestor) && all(common_anc_node == ancestor) ){ #TG: \ref ancestorA1
 
                     states_matrix$Up2[[node]] <- common_anc_node 
-                } else {
+                } else { #TG: \ref ancestorA2
                     ## If the common state between the ancestor and the final is not the ancestor
                     common_left_right <- get.common(left, right)
-                    if(!is.null(common_left_right)) {
+                    if(!is.null(common_left_right)) { #TG: \ref ANDdesc
                         ## If there is a state in common between left and right
                         states_matrix$Up2[[node]] <- get.union.incl(curr_node, get.common(ancestor, get.union.incl(left, right)))
                         #TG: in english: add to current node what's common between ancestor and descendants
 
-                    } else {
+                    } else {  #TG: \ref ORdesc
                         ## If there is no state in common between left and right
                         union_desc <- get.union.incl(left, right)
                         
-                        if(any(union_desc == -1)) {
+                        if(any(union_desc == -1)) { #TG: \ref ORdescNA
 
                             if(!is.null(get.common(union_desc, ancestor))) {
                                 states_matrix$Up2[[node]] <- ancestor
@@ -310,24 +310,18 @@ second.uppass <- function(states_matrix) {
                                 union_all <- get.union.incl(union_desc, ancestor)
                                 states_matrix$Up2[[node]] <- union_all[union_all != -1]
                             }
-                        } else {
+                        } else { #TG: \ref ORdescA
                             ## If the union of left and right has no inapplicable character
                             union_node_anc <- get.union.incl(curr_node, ancestor)
                             states_matrix$Up2[[node]] <- union_node_anc
                             
-                            options(warn = -1)
-                            if(all(union_node_anc == ancestor)) {
-                                ## If the state in common between the node and the ancestor is the ancestor
-                                states_matrix$Up2[[node]] <- get.common(ancestor, states_matrix$Up2[[node]])
-                            }
-                            options(warn = 0)
                         }
                     }
                 }
-            } else {
+            } else { #TG: \ref ancestorNA
                 states_matrix$Up2[[node]] <- curr_node
             }
-        } else {
+        } else {  #TG: \ref Count Regions
             ## If there is no applicable state in the previous pass
             states_matrix$Up2[[node]] <- curr_node
 
@@ -339,3 +333,36 @@ second.uppass <- function(states_matrix) {
     }
     return(states_matrix)
 }
+
+
+
+## Set up the right and left actives (special condition if tips)
+get.side.applicable <- function(states_matrix, node, side, pass) {
+
+    side <- ifelse(side == "right", 1, 2)
+
+    desc_anc <- desc.anc(node, states_matrix$tree)
+
+    curr_node <- states_matrix[[pass]][[node]]
+
+    if(desc_anc[side] < ape::Ntip(states_matrix$tree)+1) {
+        ## Get the tip value
+        tip <- states_matrix[[pass+1]][desc_anc[side]][[1]]
+        if(length(tip) == 1) {
+            ## If the tip has only one state
+            side_applicable <- !any(tip == -1)
+        } else {
+            ## If the tip is ambiguous (question mark), solve using the current node
+            if(any(tip == -1)) {
+                side_applicable <- !any(curr_node == -1)
+            } else {
+                side_applicable <- TRUE
+            }
+        }
+    } else {
+        ## Get the applicability from the node (saved in the tracker)
+        side_applicable <- states_matrix$tracker[[pass]][desc_anc[side]][[1]]
+    }
+
+    return(side_applicable)
+}     

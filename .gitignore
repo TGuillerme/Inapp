@@ -1,2 +1,11 @@
+# R garbage
+.Rapp.history
 
-R/.Rapp.history
+# Data
+*.tre
+*.score
+*.nex
+
+# LaTeX
+*.fls
+*.pdf

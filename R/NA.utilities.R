@@ -230,6 +230,19 @@ print.states.matrix <- function(x, ...) {
 
 ## Converts a character (inapplicable or missing)
 convert.char <- function(character) {
+
+    convert.inappli <- function(X) {
+        return(ifelse(X == "-", -1, X))
+    }
+
+    convert.missing <- function(X, all_states) {
+        if(X[1] == "?") {
+            return(all_states)
+        } else {
+            return(X)
+        }
+    }
+
     ## Character is a list
     if(class(character) == "list") {
         if(unique(unlist(lapply(character, class))) != "numeric") {
@@ -247,32 +260,58 @@ convert.char <- function(character) {
     ## Character is not numeric
     if(class(character) == "character") {
     
-        if (length(character) > 1) {
-            character <- paste0(vapply(character, function (x) {
-              if (length(x) > 1) paste0(c('{', x, '}'), collapse='') else x
-            }, ""), collapse='')
+        if(length(character) == 1) {
+            #Split the character chain
+            character <- as.character(strsplit(as.character(character), "")[[1]])
+            ## Check for polymorphic characters
+            polymorphic_start <- which(character == "{")
+            polymorphic_end <- which(character == "}")
+            if(length(polymorphic_start) != length(polymorphic_end)) {
+                stop("Some brackets are missing for polymorphic characters")
+            }
+
+            ## Dealing with the polymorphic positions
+            if(length(polymorphic_start) > 0) {
+                poly_states <- list()
+                for(one_char in 1:length(polymorphic_start)) {
+                    ## Getting the character states
+                    poly_states[[one_char]] <- character[(polymorphic_start[one_char]+1):(polymorphic_end[one_char]-1)]
+                    ## Removing the polymorphy
+                    character[(polymorphic_start[one_char]+1):polymorphic_end[one_char]] <- NA
+                }
+                ## Remove NAs (the polymorphies)
+                character <- character[!is.na(character)]
+            }
+
+        } else {
+            polymorphic_start <- numeric()
         }
-        matches <- gregexpr("\\{[0-9\\?\\-]+?\\}|[0-9\\?\\-]", character, perl=TRUE)
-        chars <- unlist(regmatches(character, matches))
-        char.lengths <- nchar(chars)
-        ## Check character string fully parsed
-        if(sum(char.lengths) != nchar(character)) {
-            warning("Unexpected characters or unmatched brackets in character input")
+
+        ## Convert into list
+        character <- as.list(character)
+        if(length(polymorphic_start) > 0) {
+            ## add the polymorphic characters back in position
+            poly_position <- which(character == "{")
+            ## Replace the characters
+            for(one_char in 1:length(polymorphic_start)) {
+                character[[poly_position[one_char]]] <- poly_states[[one_char]]
+            }
         }
-        polymorphic <- char.lengths > 1
-        chars[polymorphic] <- substring(chars[polymorphic], 2, char.lengths[polymorphic] - 1)
-        inapplicable <- chars == '-'
-        ambiguous    <- chars == '?'
-        character <- unlist(lapply(chars, strsplit, split=''), recursive=FALSE)
-        character[inapplicable] <- -1
-        character[polymorphic] <- lapply(character[polymorphic], function (x) {x[x=='-'] <- -1; x})
-        all_states  <- unique(as.numeric(unlist(character[!ambiguous])))
-        character[ambiguous] <- list(all_states)
+
+        ## Convert inapplicable
+        character <- lapply(character, convert.inappli)
         
-        character <- lapply(character, as.numeric)
-        character[ambiguous | polymorphic] <- lapply(character[ambiguous | polymorphic], sort)
-        
-        return (character)
+        ## Get all states
+        options(warn = -1)
+        all_states <- unlist(lapply(character, as.numeric))
+        options(warn = 0)
+        all_states <- unique(all_states[!is.na(all_states)]) # | (all_states != -1))]
+
+        ## Convert missing
+        character <- lapply(character, convert.missing, all_states)
+
+        ## Convert into numeric
+        return(lapply(character, function(X) sort(as.numeric(X))))
     }
 }
 
@@ -320,34 +359,3 @@ get.union.excl <- function(a, b) {
         return(sort(unique(out)))
     }
 }
-
-## Set up the right and left actives (special condition if tips)
-get.side.applicable <- function(states_matrix, node, side, pass) {
-
-    side <- ifelse(side == "right", 1, 2)
-
-    desc_anc <- desc.anc(node, states_matrix$tree)
-
-    curr_node <- states_matrix[[pass]][[node]]
-
-    if(desc_anc[side] < ape::Ntip(states_matrix$tree)+1) {
-        ## Get the tip value
-        tip <- states_matrix[[pass+1]][desc_anc[side]][[1]]
-        if(length(tip) == 1) {
-            ## If the tip has only one state
-            side_applicable <- !any(tip == -1)
-        } else {
-            ## If the tip is ambiguous (question mark), solve using the current node
-            if(any(tip == -1)) {
-                side_applicable <- !any(curr_node == -1)
-            } else {
-                side_applicable <- TRUE
-            }
-        }
-    } else {
-        ## Get the applicability from the node (saved in the tracker)
-        side_applicable <- states_matrix$tracker[[pass]][desc_anc[side]][[1]]
-    }
-
-    return(side_applicable)
-}     

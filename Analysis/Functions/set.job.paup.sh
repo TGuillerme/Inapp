@@ -60,6 +60,9 @@ then
     cat $PAUP_OPTIONS >> ${CHAIN}.infer.nex
 fi
 
+echo "set maxtrees=500 increase=auto autoInc=500;"  >> ${CHAIN}.infer.nex
+
+
 ## Add the PAUP search options
 if [ "$SEARCH_OPTIONS" != "" ]
 then
@@ -69,7 +72,6 @@ else
 fi
 
 ## Save the tree and close
-echo "set maxtrees=500 increase=auto autoInc=500;"  >> ${CHAIN}.infer.nex
 echo "savetrees /file=${CHAIN}.tre replace;"  >> ${CHAIN}.infer.nex
 echo "q;"  >> ${CHAIN}.infer.nex
 echo "\nEND;" >> ${CHAIN}.infer.nex

@@ -68,7 +68,7 @@ if [ "$SEARCH_OPTIONS" != "" ]
 then
     cat $SEARCH_OPTIONS >> ${CHAIN}.infer.nex
 else
-    echo "hsearch addseq=random nreps=1000;" >> ${CHAIN}.infer.nex
+    echo "hsearch addseq=random nreps=1000 rearrlimit=5000000000;" >> ${CHAIN}.infer.nex
 fi
 
 ## Save the tree and close

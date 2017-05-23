@@ -9,3 +9,6 @@
 # LaTeX
 *.fls
 *.pdf
+
+# Paup jobs
+*.paupjob.sh

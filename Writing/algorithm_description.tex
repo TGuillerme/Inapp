@@ -47,7 +47,7 @@
 
 \begin{enumerate}
 
-    \item \label{2ndDp:entry} Enter on any cherry on the tree and move to its most recent common ancestor. \textbf{If} the trackers of either descendants is ``on'', \textit{set} this node's tracker to ``on''. \textbf{Else} \textit{set} it to ``off''. \textbf{Then}, \textit{go} to \ref{2ndDp:enter}
+    \item \label{2ndDp:entry} Enter on any cherry on the tree and move to its most recent common ancestor. \textbf{If} the trackers of either descendants is ``on'', \textit{set} this node's tracker to ``on''. \textbf{Else} \textit{set} it to ``off''. \textbf{Then}, \textit{go} to \ref{2ndDp:nodeAppli}
     \item \label{2ndDp:nodeAppli} \textbf{If} the node had an applicable state in the previous pass (first up), \textit{go} to \ref{2ndDp:enter}; \textbf{else} leave the node state unchanged and \textit{go} to \ref{2ndDp:exit}.
     \item \label{2ndDp:enter} \textbf{If} there is any state in common between both descendants, \textit{go} to \ref{2ndDp:AND}; \textbf{else}, \textit{go} to \ref{2ndDp:OR}.
     \item \label{2ndDp:AND} \textbf{If} the states in common are applicable, \textit{set} the node's state to be these states in common without the eventual inapplicable token; \textbf{else} \textit{set} the node's state to be the inapplicable state. \textbf{Then} \textit{go} to \ref{2ndDp:exit}. 

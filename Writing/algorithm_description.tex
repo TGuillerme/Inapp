@@ -40,7 +40,7 @@
     \item \label{2ndDp:tracker} Start at any tip and \textit{go} to \ref{2ndDp:tracker1}.
     \item \label{2ndDp:tracker1} \textbf{If} the tip only contains an inapplicable state, \textit{set} its tracker to ``off'' \textbf{then} move to the next tip and \textit{go} to \ref{2ndDp:tracker1}; \textbf{else} \textit{go} to \ref{2ndDp:tracker1b}.
     \item \label{2ndDp:tracker1b} \textbf{If} the tip does not contain the inapplicable state, \textit{set} its tracker to ``on'' \textbf{then} move to the next tip and \textit{go} to \ref{2ndDp:tracker1}. \textbf{Else} \textit{go} to \ref{2ndDp:tracker2}.
-    \item \label{2ndDp:tracker2} \textbf{If} the tip's ancestor contains an inapplicable state, \textit{set} the tip's tracker to ``off'' \textbf{else}, \textit{set} the tip's tracker to ` `on''. \textbf{Then} \textit{go} to the next tip and \textit{go} to \ref{2ndDp:tracker1}.
+    \item \label{2ndDp:tracker2} \textbf{If} the tip's ancestor contains an inapplicable state, \textit{set} the tip's tracker to ``off'' \textbf{else}, \textit{set} the tip's tracker to ``on''. \textbf{Then} \textit{go} to the next tip and \textit{go} to \ref{2ndDp:tracker1}.
 \end{enumerate}
 
 \section{Second downpass} \label{2ndDp}

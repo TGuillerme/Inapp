@@ -1,0 +1,310 @@
+#NEXUS
+[!This data set was downloaded from TreeBASE, a relational database of phylogenetic knowledge. TreeBASE has been supported by the NSF, Harvard University, Yale University, SDSC and UC Davis. Please do not remove this acknowledgment from the Nexus file.
+
+
+Generated on September 16, 2013; 15:20 GMT
+
+TreeBASE (cc) 1994-2008
+
+Study reference:
+Smith V. 2001. Avian Louse Phylogeny (Phthiraptera: Ischnocera): A cladistic study
+based on morphology. Zoological Journal of the Linnean Society, 132(1): 81-144.
+
+TreeBASE Study URI:  http://purl.org/phylo/treebase/phylows/study/TB2:S695]
+
+BEGIN TAXA;
+        TITLE  Morphological;
+        DIMENSIONS NTAX=61;
+        TAXLABELS
+            Acidoproctus_hilli
+            Acidoproctus_rostratus
+            Alcedoecus_delphax
+            Anaticola_crassicornis
+            Aquanirmus_australis
+            Archolipeurus_nandu
+            Ardeicola_smithersi
+            Austrogoniodes_waterstoni
+            Bovicola_limbatus
+            Brueelia_semiannulata
+            Campanulotes_compar
+            Chelopistes_guttatus
+            Coloceras_damicorne
+            Columbicola_columbae
+            Craspedonirmus_colymbinus
+            Craspedorrhynchus_platystomus
+            Cuclotogaster_madagascariensis
+            Damalinia_crenelata
+            Degeeriella_rufa
+            Discocorpus_c._cephalosus
+            Docophoroides_brevis
+            Falcolipeurus_affulgeus
+            Felicola_viverriculae
+            Geomydoecus_heaneyi
+            Goniocotes_gallinae
+            Goniodes_keleri
+            Goniodes_pavonis
+            Haffneria_grandis
+            Halipeurus_pelagicus
+            Harrisoniella_hopkinsi
+            Ibidoecus_plataleae
+            Lagopoecus_affinis
+            Lipeurus_caponis
+            Naubates_fuliginosus
+            Neopsittaconirmus_borgiolii
+            Osculotes_curtus
+            Osculotes_macropoda
+            Oxylipeurus_dentatus
+            Paraclisis_diomedea
+            Paragoniocotes_rotundus
+            Pectinopygus_bassani
+            Pectinopygus_sulae
+            Pelmatocerandra_setosa
+            Perineus_nigrolimbatus
+            Philoceanus_garrodiae
+            Philopterus_ornatus
+            Podargoecus_strigoides
+            Pseudonirmus_gurlti
+            Quadraceps_coenocoryphae
+            Rallicola_lugens
+            Saemundssonia_desolata
+            Saemundssonia_haematopi
+            Splendoroffula_ruwenzorornis
+            Strigiphilus_vapidus
+            Strongylocotes_angulocapitis
+            Sturnidoecus_sturni
+            Syrrhaptoecus_falcatus
+            Trabeculus_schillingi
+            Trichodectes_melis
+            Upupicola_upupae
+            Vernoniella_guimaraesi
+            ;
+END;
+
+BEGIN CHARACTERS;
+[! TreeBASE Matrix URI: http://purl.org/phylo/treebase/phylows/matrix/TB2:M3932]
+
+	TITLE ;
+	LINK TAXA = Morphological;
+	DIMENSIONS NCHAR=138;
+	FORMAT DATATYPE=Standard SYMBOLS= "012345678X" MISSING=? GAP= -;
+	CHARSTATELABELS
+		1  Adult_hyaline_margin / 'absent or greatly reduced, forming a thin margin running anteriorly around the marginal carina' 'confined to a medial indent in the marginal carina, not evident laterally' confined_medially_between_or_around_the_premarginal_carina_and_usually_continuous_with_the_dorsal_preantennal_suture 'expanded and enlarged, enclosing the premarginal carina and filling the premarginal region anteriorly',
+		2  Adult_marginal_carina / forms_a_complete_thickened_band_running_anteriorly_around_the_preantennal_region_of_the_head 'forms a band which is interrupted laterally (partially or completely), medially (dorsally and or ventrally) or both',
+		3  'Adult marginal carina (if interrupted)' / 'ventrally interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region ventrally but complete dorsally' 'dorsally interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region dorsally but complete ventrally*' 'completely interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region' 'interrupted laterally (either partially or completely) but not interrupted medially*' 'interrupted laterally (either partially or completely) and completely interrupted medially',
+		4  Adult_premarginal_carina / seamlessly_continuous_with_the_postmarginal_carina greatly_reduced_or_absent '*' 'present and partially attached (not seamlessly continuous) to the postmarginal carina' present_and_completely_separate_from_the_postmarginal_carina,
+		5  N_III_marginal_carina / forms_a_complete_thickened_band_running_anteriorly_around_the_preantennal_region_of_the_head 'forms a band which is interrupted laterally (partially or completely), medially (dorsally and or ventrally) or both',
+		6  'N III marginal carina (if interrupted)' / 'ventrally interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region ventrally but complete dorsally' 'dorsally interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region dorsally but complete ventrally' 'completely interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region' 'interrupted laterally (either partially or completely) but not interrupted medially*' 'interrupted laterally (either partially or completely) and completely interrupted medially',
+		7  N_III_premarginal_carina / seamlessly_continuous_with_the_postmarginal_carina greatly_reduced_or_absent '*' 'present both dorsally and ventrally, although not seamlessly continuous with the postmarginal carina' present_and_completely_separate_from_the_postmarginal_carina,
+		8  N_II_marginal_carina / forms_a_complete_thickened_band_running_anteriorly_around_the_preantennal_region_of_the_head 'forms a band which is interrupted laterally (partially or completely), medially (dorsally and or ventrally) or both',
+		9  'N II marginal carina (if interrupted)' / 'ventrally interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region ventrally but complete dorsally' 'dorsally interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region dorsally but complete ventrally' 'completely interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region' 'interrupted laterally (either partially or completely) but not interrupted medially' 'interrupted laterally (either partially or completely) and completely interrupted medially',
+		10  N_II_premarginal_carina / seamlessly_continuous_with_the_postmarginal_carina greatly_reduced_or_absent '*' 'present both dorsally and ventrally, although not seamlessly continuous with the postmarginal carina' present_and_completely_separate_from_the_postmarginal_carina,
+		11  N_I_marginal_carina / forms_a_complete_thickened_band_running_anteriorly_around_the_preantennal_region_of_the_head 'forms a band which is interrupted laterally (partially or completely), medially (dorsally and or ventrally) or both',
+		12  'N I marginal carina (if interrupted)' / 'ventrally interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region ventrally but complete dorsally' 'dorsally interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region dorsally but complete ventrally' 'completely interrupted medially, so that the marginal carina is restricted to both sides of the preantennal region' 'interrupted laterally (either partially or completely) but not interrupted medially' 'interrupted laterally (either partially or completely) and completely interrupted medially',
+		13  N_I_premarginal_carina / seamlessly_continuous_with_the_postmarginal_carina greatly_reduced_or_absent '*' 'present both dorsally and ventrally, although not seamlessly continuous with the postmarginal carina' present_and_completely_separate_from_the_postmarginal_carina '*',
+		14  'Adult male anterior portion of the ante-clypeus' / 'unsculptured, smooth' covered_by_numerous_horizontal_striations covered_by_numerous_cresentric_markings '*',
+		15  Adult_dorsal_anterior_plate / absent 'present, always delineated anteriorly and laterally but not necessarily posteriorly',
+		16  'Adult dorsal anterior plate (if present)' / undivided partially_divided_medially '*' completely_separated_medially '*',
+		17  'Adult posterior margin of the dorsal anterior plate (if dorsal anterior plate is' / 'not delimited, merges into dorsal sclerotization of the head capsule' 'clearly delimited, separated from surrounding cuticle by the dorsal preantennal suture',
+		18  'Adult male posterior prolongation of the dorsal anterior plate (if both the dors' / 'absent, with the posterior margin rounded or slightly pointed but not significantly developed posteriorly' strongly_developed_forming_a_distinct_posterior_prolongation,
+		19  N_III_dorsal_anterior_plate / absent 'present but poorly developed, having the appearance of an isolated (either partially or completely) portion of the marginal carina' 'present and well developed (extended posteriorly), always delineated anteriorly and laterally but not necessarily posteriorly',
+		20  N_II_dorsal_anterior_plate / absent 'present but poorly developed, having the appearance of an isolated (either partially or completely) portion of the marginal carina' 'present and well developed (extended posteriorly), always delineated anteriorly and laterally but not necessarily posteriorly',
+		21  N_I_dorsal_anterior_plate / absent 'present but poorly developed, having the appearance of an isolated (either partially or completely) portion of the marginal carina' 'present and well developed (extended posteriorly), always delineated anteriorly and laterally but not necessarily posteriorly',
+		22  'N I posterior prolongation of the dorsal anterior plate (if the dorsal anterior' / absent._Posterior_margin_rounded_but_not_developed_posteriorly posterior_margin_strongly_pointed_but_not_significantly_developed_posteriorly '*' strongly_developed_forming_a_distinct_posterior_prolongation '*',
+		23  Adult_male_ventral_anterior_plate / absent 'present and well developed, forming a distinct plate which is extended posteriorly',
+		24  N_III_ventral_anterior_plate / absent 'present and well developed, forming a distinct plate which is extended posteriorly',
+		25  N_II_ventral_anterior_plate / absent 'present and well developed, forming a distinct plate which is extended posteriorly',
+		26  N_I_ventral_anterior_plate / absent 'present and well developed, forming a distinct plate which is extended posteriorly',
+		27  Adult_dorsal_preantennal_suture / 'absent, or forms a discrete suture isolated from the marginal carina' 'present, arising from the ends of the premarginal carina and divides the dorsal preantennal carina medially*' 'developed and enlarged behind the posterior margin of the dorsal anterior plate or marginal carina, but not evident laterally and not arising from the post marginal carina' usually_arises_from_the_ends_of_the_postmarginal_carina_and_surrounds_the_dorsal_anterior_plate_at_least_laterally._Anteriorly_it_is_continuous_with_the_hyaline_margin,
+		28  Adult_dorsal_carina / 'absent or forms a continuous or medially broken anterior band, dorsally supporting the pre- and postmarginal carina' expanded_premarginally_filling_the_anterior_region_of_the_head._Either_not_evident_postmarginally_or_forms_a_thin_carina_above_but_laterally_continuous_with_the_postmarginal_carina 'predominantly developed postmarginally, either absent or weakly developed premarginally',
+		29  'Adult dorsal carina form (if predominantly restricted to the postmarginal region' / 'restricted to the lateral margins of the head in the region of the post marginal carina, not expanded across the head*' continuous_across_the_head 'broken medially and variably project inward posteriorly forming two parallel bars, although the posterior projection may be weakly sclerotized' 'developed medially but not forming a continuous band across the head, present although less well developed premarginally*' 'developed each side from the post marginal carina, often weakly sclerotized and not forming a definitive carina. May be continuous with the posterior margin of the dorsal anterior plate',
+		30  Adult_ventral_carina / 'entire, usually well marked semicircular band around the oral cavity' interrupted_medially_forming_a_broken_arch._Usually_extends_close_to_but_never_fuses_with_the_marginal_carina_and_lacks_a_flattened_distal_extension 'interrupted medially, each side possess a flattened anterior extension which approaches but does not fuse with the marginal carina' 'interrupted medially, each side possess a flattened anterior extension which fuses with a marginal carina that is always interrupted, either completely or only ventrally' joined_to_the_ends_of_the_premarginal_carina_but_appear_as_bands_only_anteriorly 'poorly developed, apparently fused with the postmarginal carina*',
+		31  N_III_ventral_carina / 'entire, usually well marked semicircular band around the oral cavity' interrupted_medially_forming_a_broken_arch._Usually_extends_close_to_but_never_fuses_with_the_marginal_carina 'interrupted medially, each side possess a flattened anterior extension which approaches but does not fuse with the marginal carina' 'interrupted medially, each side possess a flattened anterior extension which fuses with a marginal carina that is always interrupted, either completely or only ventrally' joined_to_the_ends_of_the_premarginal_carina_but_appear_as_bands_only_anteriorly,
+		32  N_II_ventral_carina / 'entire, usually well marked semicircular band around the oral cavity' interrupted_medially_forming_a_broken_arch._Usually_extends_close_to_but_never_fuses_with_the_marginal_carina 'interrupted medially, each side possess a flattened anterior extension which approaches but does not fuse with the marginal carina' 'interrupted medially, each side possess a flattened anterior extension which fuses with a marginal carina that is always interrupted, either completely or only ventrally' joined_to_the_ends_of_the_premarginal_carina_but_appear_as_bands_only_anteriorly '*',
+		33  N_I_ventral_carina / 'entire, usually well marked semicircular band around the oral cavity' interrupted_medially_forming_a_broken_arch._Usually_extends_close_to_but_never_fuses_with_the_marginal_carina 'interrupted medially, each side possess a flattened anterior extension which approaches but does not fuse with the marginal carina' 'interrupted medially, each side possess a flattened anterior extension which fuses with a marginal carina that is always interrupted, either completely or only ventrally' joined_to_the_ends_of_the_premarginal_carina_but_appear_as_bands_only_anteriorly '*',
+		34  Adult_pulvinus / single_lobe_attached_to_the_ventral_carina divided_into_two_lateral_lobes,
+		35  Adult_male_coni / 'undeveloped, marked only by a slight bump before the anterior margin of the antennal socket' 'developed, forming a significant blunt or pointed process extending laterally from the margin of the head. May be hyaline, sclerotized or both',
+		36  Adult_female_conus / 'undeveloped, marked only by a slight bump before the anterior margin of the antennal socket' 'developed, forming a significant blunt or pointed process extending laterally from the margin of the head. May be hyaline, sclerotized or both',
+		37  'Adult female coni morphology (if coni are developed)' / shorter_or_as_long_as_the_scape longer_than_the_scape,
+		38  Adult_trabecula / absent present '*',
+		39  Adult_transverse_carina / absent 'present, either complete or broken medially',
+		40  Adult_marginal_pulvinal_band / absent present_as_a_distinct_band_separate_from_the_torma fused_at_either_end_to_the_ventral_carina,
+		41  Adult_torma / absent present_and_distinctly_separate_from_the_marginal_pulvinal_band,
+		42  Adult_pulvinus_size / 'small, unmodified' greatly_expanded_filling_the_ventral_preantennal_region,
+		43  N_III_marginal_pulvinal_band / absent present_as_a_distinct_band_separate_from_the_torma fused_at_either_end_to_the_ventral_carina,
+		44  N_III_torma / absent present_and_distinctly_separate_from_the_marginal_pulvinal_band,
+		45  Male_antennal_segments / not_significantly_heteromorphic significantly_heteromorphic,
+		46  Male_scape_shape_based_on_elliptic_Fourier_analysis / 'partition 0, short and rounded' 'partition 1, elongated with lateral process' 'partition 2, elongated without lateral process',
+		47  'Process on anterior lateral margin of the male scape (if antennal segments are s' / absent present,
+		48  '5-6 microsetae in a row across the length of the male scape' / absent present,
+		49  Male_and_female_pedicel_and_flagellum_flagellomeres / not_covered_in_numerous_fine_microsetae covered_in_numerous_fine_microseta,
+		50  Male_flagellomeres / unfused fused,
+		51  'First flagellomere shape (if antennal segments are significantly heteromorphic a' / unmodified 'derived, not forming a simple flagellomere',
+		52  'Subterminal attachment of flagellomeres II and III (if antennal segments are sig' / absent present,
+		53  'Apical compression of flagellomeres II and III (if antennal segments are signifi' / absent present,
+		54  Gular_plate / absent 'present forming a distinct sclerotized region on the ventral surface of the head, although not necessarily clearly delimited',
+		55  'Gular plate form (if present)' / 'not delimited, only evident as a distinct sclerotized region on the ventral surface of the head' clearly_distinct_anteriorly_but_laterally_and_posteriorly_more_or_less_continuous_with_the_ventral_sclerotization_of_the_head clearly_delimited_anteriorly_and_laterally_but_not_necessarily_posteriorly,
+		56  'Anterior margin of the gular plate (if present and delimited)' / smoothly_rounded pointed,
+		57  'Pointed anterior margin of the gular plate (if present, delimited and has a poin' / completely_tapered_to_a_distinct_point pointed_medially_on_an_otherwise_flat_anterior_margin pointed_medially_on_an_otherwise_rounded_anterior_margin,
+		58  Marginal_temporal_carina / 'thin, forming a more or less evenly thick band around the temples' 'thickened and enlarged, forming a band of uneven thickness around the temporal margin',
+		59  Postocular_nodus / 'absent or weakly developed, identifiable as a slight expansion of the marginal temporal carina' well_developed_and_enlarged,
+		60  Female_ocular_setal_condition / 'thorn-like or normal microseta' 'normal or macroseta (not thorn-like)' 'thorn-like macroseta*',
+		61  Female_postocular_setal_condition / 'thorn-like or normal microseta' 'normal or macroseta (not thorn-like)*' 'thorn-like macroseta',
+		62  Female_postocular_setal_position / on_the_lens_of_the_eye not_on_the_lens_of_the_eye,
+		63  Female_marginal_temporal_setal_number / three '*' four five six_or_more '*',
+		64  'Female dominant marginal temporal setae (for taxa with 5 MTS)' / all_subordinate_microsetae MTS_1_and_3_dominant MTS_2_and_3_dominant 'MTS 1, 2 and 3 dominant' 'MTS 1, 2, 3 and 5 dominant*' MTS_3_dominant MTS_2_and_5_dominant '*' MTS_3_and_4_dominant '*',
+		65  'Female MTS patterns (where MTS 1 and 3 are dominant)' / 'MTS 1 and 3 dominant microsetae, MTS 2, 4, and 5 microsetae' 'MTS 1 and 3 dominant normal or macrosetae, MTS 2, 4, and 5 microsetae',
+		66  'Female MTS patterns (where MTS 1, 2 and 3 are dominant)' / 'MTS 1, 2, and 3 dominant normal or macroseta, MTS 4 and 5 microsetae' 'MTS 1 thorn-like macroseta, MTS 2 and 3 dominant normal or macroseta, MTS 4 and 5 microsetae*' 'MTS 1 developed microseta, MTS 2 thorn-like macroseta, MTS 3 dominant macroseta, MTS 4 and 5 thorn-like microseta*',
+		67  'Female MTS patterns (where MTS 3 is dominant)' / 'MTS 3 dominant microseta; MTS 1, 2, 4 and 5 subordinate microsetae' 'MTS 3 dominant normal or macroseta; MTS 1, 2, 4 and 5 subordinate microsetae',
+		68  'Female MTS patterns (where MTS 1 - 5 are dominant)' / 'MTS 1 dominant microseta, MTS 3 normal or macrosetae; MTS 2, 4 and 5 thorn-like macrosetae' 'MTS 3 normal or macrosetae, MTS 1, 2, 4, and 5 thorn-like macrosetae*' 'MTS 1 - 4 normal or macroseta, MTS 5 thorn-like macroseta*',
+		69  Anterior_prothoracic_setal_distribution / absent_or_confined_to_the_anterior_margin_of_the_prothorax_without_a_disjunct_distribution 'not confined to the extreme anterior margin, distribution disjunct',
+		70  Rhombic_sclerite_shape / 'small discrete oblong, rhombic or rounded sclerite, may be weakly developed or only delimited anteriorly' 'medium to large sclerite, may not be strongly delimited',
+		71  Mesothoracic_spiracle_position / ventral_sublateral_without_an_enlarged_atrium 'more or less pleural, not sublateral, without extension on a slight lateral protuberance or with an enlarged atrium' more_or_less_plural_with_an_enlarged_atrium_and_thickening_of_the_atrial_walls extended_out_on_a_slight_lateral_protuberance_of_the_prothorax_without_an_enlarged_atrium,
+		72  Female_lateral_and_or_posterior_prothoracic_setal_arrangement / '0+0*' '1+1, may be lateral or sublateral' '2+2' '4+4 or 5+5*' 'numerous setae along the lateral and posterolateral margin becoming sub-posterior medially',
+		73  'Female lateral and or posterior prothoracic setal position (if a 1+1 arrangement' / 'single setal pair on the lateral or posterior margin, not sublateral' single_sublateral_setal_pair_slightly_anterior_to_the_posterior_margin_of_the_prothorax,
+		74  Proepimeron_proximal_development / 'more or less blunt ended (usually rounded)' 'expanded (occasionally may be fused across the middle to form a single medial plate)',
+		75  'Direction of proximal development of the proepimeron (if expanded)' / more_or_less_equally_expanded_anteriorly_and_posteriorly 'predominantly anteriorly (towards into the prothorax)' 'predominantly posteriorly (towards the abdomen)' 'predominantly posteriorly (towards the abdomen) but partially fused anteriorly' completely_fused_medially '*',
+		76  Small_medial_sclerite_between_or_beneath_the_proximal_ends_of_the_proepimeron / absent present,
+		77  'Meso-metasternal plate' / absent present,
+		78  Second_sternal_plate / absent present,
+		79  'Cuticular bridge between the meso-metasternal plate and the 2nd sternal plate (i' / absent present,
+		80  'Ventral pterothoracic setae in the region of the meso- to metasternal plate' / absent present,
+		81  'Female ventral pterothoracic setal arrangement in the region of the meso- to met' / 'single setal pair (may be meso- or metasternal)' 'mesosternal setae absent, row of four or five metasternal setae present*' pair_of_mesosternal_and_a_pair_of_metasternal_setae_present 'single pair (rarely 3) mesosternal setae and at least 3 (usually 4 although sometimes 5, 6 or 8) metasternal setae',
+		82  Attachment_of_the_2nd_and_3rd_pairs_of_legs / 'sternocoxal, approximately 95% of the coxal surface present beneath the thorax and abdomen' 'sterno- pleurocoxal, approximately 30-70% of the coxal surface present beneath the thorax and abdomen' 'pleurocoxal, approximately 5-15% of the coxal surface present beneath the thorax and abdomen (coxa attached at the corners of the pterothorax)',
+		83  Pteronotum / undivided divided_medially,
+		84  Pterothoracic_lateral_margins / more_or_less_parallel divergent,
+		85  'Pterothoracic lateral margins (if parallel)' / without_setae with_setae_on_the_lateral_margins,
+		86  Pterothoracic_posterior_margin / more_or_less_flat curved_or_distinctly_v_shaped,
+		87  Female_medial_pair_of_microseta_on_the_first_third_of_the_pterothorax / absent present,
+		88  Female_medial_pair_of_setae_on_the_last_third_of_the_pterothorax / absent present,
+		89  Female_pterothoracic_trichoid_seta / absent 'present, must be a typical trichoid seta emanating from a distinct ventral or lateral pit',
+		90  'Female pterothoracic thorn-like seta, associated with, although not dependent up' / absent present,
+		91  'Female setal pattern on the lateral and posterior margin of the pterothorax, exc' / 'rarely three, four or more commonly at least five well spaced setae forming a complete or broken row along the margin both sides' 'mainly clustered, not forming a complete or broken row along the margin' clustered_single_outer_pair_and_three_or_four_inner_setae_in_a_row_both_sides,
+		92  'Female setal pattern on the posterior margin of the pterothorax, excluding the t' / 'complete, setae in some cases may be well spaced' 'discontinuous, setae absent within the submedian and median region of the pterothorax',
+		93  'Female setal patterns on the lateral and posterior margin of the pterothorax, ex' / 'loosely grouped on the posterolateral margin in various arrangements, not closely associated' '2,2+2,2 arrangement (rarely 2,2,1+1,2,2)' '3+3 arrangement' '2,3+3,2, 3,2+2,3 or 3,3+3,3' '4+4 arrangement (rarely 4,1+1,4)' '5+5 arrangement*' '7+7 arrangement*',
+		94  'Female setal patterns on the lateral and posterior margin of the pterothorax, ex' / '2,2+2,2' '2,2,1+1,2,2',
+		95  Adult_male_tergum_I / absent_or_fused_to_tergum_II 'present, identified by a small isolated and weakly sclerotised tergite',
+		96  Adult_female_submedian_to_median_dorsal_setae_on_abdominal_segment_II / absent single_pair_or_row 'two pairs or rows, one behind the other' 'three or more pairs or rows, each more or less behind each other',
+		97  Adult_female_abdominal_segment_II / not_deeply_embedded_within_abdominal_segment_III deeply_embedded_within_abdominal_segment_III,
+		98  Adult_female_lateral_and_or_sublateral_setae_on_abdominal_segment_II / absent 'present, may be lateral, dorsal and or ventral',
+		99  Adult_female_lateral_and_or_sublateral_setal_type_and_arrangement_on_abdominal_s / 'micro, normal or macroseta or setal pair, present each side on the posterolateral or sublateral margin' numerous_microsetae_covering_the_lateral_margins_of_the_pleurites_or_tergopleurites 'three or four clustered thorn-like setae*' 'two or more short blade-like setae, may be present as part of a continuous setal row' three_or_four_short_normal_or_microsetae_present_both_sides_on_the_lateral_and_dorsal_sublateral_margin_of_the_pleurites '*',
+		100  Abdominal_spiracle_number / six_pairs less_than_six_pairs,
+		101  Atria_of_abdominal_spiracles / small greatly_enlarged,
+		102  Abdominal_male_lateral_flecks / absent present,
+		103  Cell_shaped_cuticular_sculpturing_on_the_dorsal_and_or_ventral_abdominal_surface / absent_in_all_stadia_examined 'present, either dorsally and or ventrally in any stadium',
+		104  Adult_female_pleural_and_tergal_abdominal_plate_sclerotisation._Segment_IV_to_VI / 'absent (completely unsclerotised) or greatly reduced, limited to dorsal tergites' restricted_to_pleurites_that_extend_no_more_than_sublaterally_over_the_dorsal_surface '*' restricted_to_separate_pleurites_and_tergites restricted_to_tergopleurites_that_are_unfused_medially restricted_to_tergopleurites_that_are_fused_medially,
+		105  Adult_female_pleural_abdominal_ribs._Segment_IV_to_VII_ONLY / absent_or_restricted_to_thin_folds_over_the_lateral_side_of_the_abdomen enlarged_although_not_greatly_expanded greatly_expanded_with_an_enlarged_pleural_knot greatly_expanded_with_an_anterior_and_posterior_process,
+		106  Adult_female_sternal_abdominal_plates._Segment_IV_to_VII_ONLY / absent 'present, may be medially fused forming a single sternite or broken forming paired sternites on each segment',
+		107  'Adult female sternal plate morphology (if present). Segment IV to VII ONLY' / 'sclerotised and complete, fused medially across the abdomen' 'unsclerotised and complete, fused medially across the abdomen' 'separate, present both sides of the abdomen' separate_in_the_anterior_segments_but_complete_in_the_posterior_segments,
+		108  Adult_male_pleural_and_tergal_abdominal_plate_sclerotisation._Segment_IV_to_VII / 'absent (completely unsclerotised) or greatly reduced, limited to dorsal tergites' restricted_to_separate_pleurites_and_tergites restricted_to_tergopleurites_that_are_unfused_medially restricted_to_tergopleurites_that_are_unfused_medially_in_segments_IV_and_possibly_V_but_medially_fused_in_the_remaining_segments '*' restricted_to_tergopleurites_that_are_fused_medially restricted_to_tergopleurites_that_are_unfused_medially_and_accompanied_by_a_separate_isolated_medial_tergite_on_the_posterior_region_of_each_segment restricted_to_tergopleurites_that_are_fused_medially_and_accompanied_by_a_separate_isolated_medial_tergite_on_the_posterior_margin_of_the_fused_tergopleurite '*',
+		109  Adult_male_sternal_abdominal_plates._Segment_IV_to_VII_ONLY / absent 'present, may be medially fused forming a single sternite or broken forming paired sternites on each segment',
+		110  'Adult male sternal plate morphology (if present). Segment IV to VII ONLY' / 'complete, fused medially across the abdomen' 'unsclerotised and complete, fused medially across the abdomen' 'separate, present both sides of the abdomen' separate_in_the_anterior_segments_but_complete_in_the_posterior_segments,
+		111  Adult_female_dorsal_abdominal_setal_rows._Segment_III_to_VI_ONLY / absent 'present, may be discontinuous and with at least four or more setal pairs present per segment',
+		112  'Adult female dorsal abdominal setal row arrangement (if present). Segment III to' / 'present laterally to intermedially, usually as microsetae or short small normal setae. May also be present more medially and possibly continuous across the abdomen' continuous_sublateral_to_intermediate_microsetal_or_short_normal_setal_rows continuous_sublateral_to_intermediate_normal_or_macrosetal_rows 'discontinuous, single sublateral or intermediate normal or macroseta and a submedian normal or macrosetal row' 'discontinuous, two or three sublateral or intermediate normal or macroseta and a submedian normal or macrosetal row' continuous_submedian_normal_setal_row '*',
+		113  'Adult female dorsal abdominal setal type (if present in rows, laterally to inter' / short_small_microsetae normal_setae '*',
+		114  'Adult female dorsal abdominal setae (if not in rows). Segment III to VI ONLY' / median_normal_or_macrosetal_pairs_only median_microsetal_pairs_only median_and_submedian_or_intermediate_microsetal_pairs 'intermediate setal pairs regardless of type on the posterior margin of each segment, no median setae' 'median and intermediate setal pairs, may be normal or macrosetae' submedian_and_median_pairs_only '*' 'median blade-like and intermediate normal setal pairs with submedian pairs on segments VII and VIII*' sublateral_pairs_only '*',
+		115  Adult_female_ventral_abdominal_setal_rows._Segment_III_to_VI_ONLY / absent 'present, not necessarily complete but with at least 4 setal pairs per segment',
+		116  'Adult female ventral abdominal setal type (if present in rows). Segment III to V' / 'microsetae, may be discontinuous sublateral or intermedially' 'not microsetae, either normal setae or macrosetae. May be discontinuous sublateral or intermedially',
+		117  Adult_female_trichoid_seta_on_the_posterolateral_margin_of_abdominal_segment_VII / 'absent, not identifiable from the other setae on the posterolateral margin of this segment' present_and_identifiable_although_not_emanating_from_a_distinctive_pit present_with_a_distinct_trichoid_seta_emanating_from_a_distinct_and_well_developed_pit,
+		118  Adult_female_dorsal_abdominal_plates_of_the_terminal_abdominal_segments / 'fused, giving the appearance that the segment forms a single unit' 'terminal division absent, no evidence of a terminal XI tergite although divisions are present between the lateral portions of the fused IX and X tergite' 'terminal division present separating the segment into its anterior (tergite IX and X) and posterior (tergite XI) regions, additional divisions within these regions may also be present',
+		119  'Adult female fused IX and X tergites, not necessarily delimited from tergite XI' / divided_into_separate_pleurites_and_a_single_medial_tergite '*' fused_medially_forming_a_single_tergopleural_plate 'divided into tergopleurites, no medial tergite',
+		120  'Adult female XI tergite (if present and delimited from tergite IX and X)' / medially_fused_forming_a_single_terminal_tergal_plate medially_divided_into_two_terminal_tergites,
+		121  N_III_dorsal_abdominal_plates_of_abdominal_segment_II / 'absent, unsclerotised' pleurites_only pleurites_and_isolated_tergites tergopleurites,
+		122  N_III_dorsal_abdominal_plate_sclerotisation._Segments_III_to_VIII_ONLY / 'absent (completely unsclerotised) although a few pleurites may be weakly delimited' 'restricted to pleurites in abdominal segment III, all other segments not bearing sclerotised plates*' 'restricted to pleurites in abdominal segments III and IV only, all other segments not bearing sclerotised plates' 'restricted to pleurites in abdominal segments III to VII only, segment VIII not bearing sclerotised plates*' 'restricted to pleurites in abdominal segments III to VIII only, no evidence of any separate tergites' pleurites_and_tergites_separate_and_sclerotised_although_tergites_absent_from_one_or_more_posterior_segments pleurites_and_tergites_separate_and_sclerotised tergopleural_plates_that_are_only_connected_to_each_other_along_their_posterior_margins_except_in_segment_VIII_which_possesses_separate_tergites_and_pleurites tergopleurites_unfused_medially,
+		123  'N III abdominal pleurite shape (if abdominal sclerotisation is restricted to ple' / thin_similar_sized_elongated_plates_bordering_the_edges_of_each_segment rounded_plates_on_the_lateral_margin_within_each_segment_which_get_significantly_smaller_in_each_proceeding_segment,
+		124  N_III_terminal_abdominal_segments / undifferentiated_by_sclerotised_abdominal_plates differentiated_either_partially_or_completely_by_sclerotised_abdominal_plates,
+		125  'N III terminal abdominal segments (if undifferentiated by sclerotised abdominal' / 'completely undivided, no evidence to intersegmental division in the integument of the terminal segment' 'divided, with evidence of an intersegmental division via folds in the integument of the terminal segments',
+		126  'N III terminal abdominal segments (if differentiated by sclerotised abdominal pl' / delimited_by_an_isolated_pair_of_tergal_and_or_sternal_plates_only 'delimited by a single tergopleural plate (a pair of sternites may also be evident)*' differentiated_into_two_or_three_rows_of_plates,
+		127  'N III terminal abdominal segments (if differentiated into two or three rows of s' / two_rows_present three_rows_present,
+		128  'N III segment X (if terminal segments IX, X and XI are differentiated into three' / medially_separated_into_two_isolated_tergites_or_tergopleurites medially_fused_forming_a_single_tergite_or_tergopleurite_across_the_segment,
+		129  N_II_abdominal_plate_sclerotisation._Segments_III_to_VIII_ONLY / 'absent (completely unsclerotised) although a few pleurites may be weakly delimited' 'restricted to pleurites in abdominal segment III, all other segments not bearing sclerotised plates*' 'restricted to pleurites in segments III and IV only, all other segments not bearing sclerotised plates*' 'restricted to pleurites in segments III - V, absent in segments VI - VIII' 'restricted to pleurites in segments III - VI, absent in segments VII and VIII*' 'restricted to pleurites in segments III - VIII, no evidence of any separate tergites' pleurites_and_tergites_separate_and_sclerotised tergopleural_plates_that_are_only_connected_to_each_other_along_their_posterior_margins_except_in_segment_VIII_which_possesses_separate_tergites_and_pleurites tergopleurites_unfused_medially,
+		130  Testes / weakly_bilobed strongly_bilobed,
+		131  Distal_termination_of_the_testes / blunt_without_a_short_process_or_flagellate_extension '*' blunt_with_a_short_process_which_may_or_may_not_carry_a_short_flagellate_extension flagellate_but_not_carried_by_a_short_process,
+		132  Vesicula_seminalis / forms_a_more_or_less_single_structure_which_appears_internally_divided_medially separated_distally_but_apparently_fused_proximally_with_the_vas_deferens_entering_the_separated_organ_before_it_becomes_fused forms_two_distinct_separate_structures '*',
+		133  Subdivisions_within_each_vesicula / absent 'present, each vesicula must be clearly lobed internally',
+		134  Lateral_lobe_on_each_vesicula / absent present,
+		135  'Lateral lobe size on each vesicula (if present)' / small 'large, lying along more than half the length of each vesicula.',
+		136  'Ductus ejaculatorius, joining each vesicula at the base' / forms_a_short_simple_tube_only_slightly_longer_than_the_length_of_the_basal_apodeme 'greatly swollen, at least 112x length of the basal apodeme' long_and_coiled,
+		137  Unpaired_diverticulum_at_the_junction_of_the_vesicula_seminalis_and_ductus_ejacu / absent present '*',
+		138  Genital_chamber_calyx / 'unsclerotised, extremely hyaline or not visible' 'sclerotized and striated, clearly visible in cleared slide mounted specimens',
+		;
+
+MATRIX
+[                                          10        20        30        40        50        60        70        80        X0        100       110       120       130       140       150   ]
+[                                           .         .         .         .         .         .         .         .         .         .         .         .         .         .         .   ]
+Acidoproctus_hilli                 0120120??????00---0???00??00-44??100-00?10?1120000100121001001210---0011012000-13011-110011-3-02010000131125120--10-021138-1-211???0010000
+Acidoproctus_rostratus             012012012012000---000-000000-4444100-001101100-000---121011001210---0111012000-13011-110011-3-02010000131125120--10-021036-1-2116??0010000
+Alcedoecus_delphax                 31430-00-00-001011000-100032432221111001101100-000---121200001211---0111010000-12001-101112---0200-0001310-20-12--11101-00-00---0????????1
+Anaticola_crassicornis             21410-00-00-00100-000-000032411110110001111112000010012100000125--0-01311110111122100000011-3-0200-000131122120--10-112-36-1-20-6010010000
+Aquanirmus_australis               2143142???120010102?2011?132433?31110001111102-000---12100100125--0-0102-0-010-13111-0000101--0100-000131122100--00-002-36-1-20-???0110100
+Archolipeurus_nandu                01001001000-000---000-000000-33311110000100112000011012100012123-2--1131112000-12011-010111-2-030130001311241211--11221100-01---0????????0
+Ardeicola_smithersi                2120???120???21110?1??1?0?3243?3?100-00001??12000010012100000125--0-1132-110???112100010011-4-02010000130124120--60-101-????????6120010000
+Austrogoniodes_waterstoni          00-00-00-00-000---000-000000-000000100001101120000001110-0000126----1111012000-0-001-0000000--020120000320-20-13--11001-11-00---1??0?????0
+Bovicola_limbatus                  0100??010010000---000-000000-33320110002102100-011---10--0000120----0024-12000-1000010000000--1101101112110110100-10001-14001---312010-000
+Brueelia_semiannulata              11001001000-000---000-000000-22221110000100100-000---12120000125--1-0001012011012001-1001101--0100-000130102100--40-201-14100---001110-101
+Campanulotes_compar                00-00-0??????00---0???00??00-00??000-001101100-000---0---10021211---0001012000-0-001-101101-110000-0001321220-0--30-201-26-00---???100-{12}?0
+Chelopistes_guttatus               00-00-00-00-0?0---000-?00000-00000?100011011????0????0---1112123-0--1001012010-13001-100111-10?200-00?13212???0--40-222136-1-0--6??010-100
+Coloceras_damicorne                00-00-00-0???00---00??000?00-000?001000110111000001010---10021211---0001012000-100001101101-110000-000132122120--31{01}201-26-00---6??100-{12}?0
+Columbicola_columbae               0133???1330-200---?00-0?0011-0?000110011011110000010010--000010-----1002-0-0111122100011011-4-0300-000131102120--50-012-16-1-210???0010001
+Craspedonirmus_colymbinus          31431431001000100-000-000032433331111011111100-000---120-0100123-0--0031012011010001-1100101--02010000141104100--00-021100-01---0????????1
+Craspedorrhynchus_platystomus      3143120120120010112220111132432221111000100100-000---12120100123-0--0101012100-12011-100112---0100-0001320-21213--11201-10-00---0110111101
+Cuclotogaster_madagascariensis     00-00-00-0???00---00??000?00-000?0110001101112000011010--00101211---101110-010-121100000111-100200-0001310-6100--511202-36-1-210612010-010
+Damalinia_crenelata                010010010010000---000-000000-333301100021020100011---12100000120----0024-12000-1000010000000--1101101112110110100-10001-10-01---0????????0
+Degeeriella_rufa                   00-00-00-00-000---000-000000-11110110001111100-000---121001101211---000100-0110131000000111-100200-0001411241013--11201-25-00---5000110200
+Discocorpus_c._cephalosus          0120?????????00---????0???00-0???011000110??00-000---120-0100124----0001014000-120001?00111-0-0110-000041124120--30-201-???????????0?????0
+Docophoroides_brevis               21431221220-011011220-11103243333111101111111000001101212010003-----1113-0-000-13011-1100101--020120001311341315--0-000-36-1-2100????????0
+Falcolipeurus_affulgeus            00-00-00-0???00---00??000?00-222?100-00010011210001101210001011-----0032-0-000-101100010111-2-030130001{34}01{02}{24}1{02}11--1122{12}114001---512010-100
+Felicola_viverriculae              010010010010000---000-000000-333311100021021100101---120-0000120----0022-13000-0-001-0000101--11011111000110110--110001-00-00---0????????0
+Geomydoecus_heaneyi                010010010010000---000-000000-333311100021021100001---120-0000120----0022-13000-0-00010000100--110111110001101112--11001-00-00---0????????0
+Goniocotes_gallinae                00-00-00-00-000---000-000000-00000110001101100-000---0---11001211---0001012000-10001-101101-100200-000132122120--40-201-23-00---4??100-{12}?0
+Goniodes_keleri                    00-00-00-00-000---000-000000-0000001000110111000001000---11121211---0001012000-0-0001100101-1?0?00-0001321221214--1{01}211-36-1-0--6??100-200
+Goniodes_pavonis                   00-00-00-00-000---000-000000-0000011000110111010001100---11021211---0101012100-120001101111-100200-0001321221214--11211-36-1-0--6??100-200
+Haffneria_grandis                  21201101100-011010110-000022211110010000111111100011012110100125--1-1032-110111122100010011-4-02010000133104100--20-122138-1-2108????????0
+Halipeurus_pelagicus               214211011011011010000-0000322111101100001111120000110120-1100125--1-01311110111122100010011-2-01010000141104100--10-021038-1-2118????????0
+Harrisoniella_hopkinsi             2142110110???11010111-000?322111?100-00011011110001100---0100125--1-1032-110111122100010011-6-02010000133104100--20-122138-1-2108????????0
+Ibidoecus_plataleae                2142142142142012112220000032233331110000010000-000---120-002212X---20112-11010-13011-1001100--020140001311221212--11101-26-1-2106??010-100
+Lagopoecus_affinis                 00-00-00-00-000---000-000001-11110110001111100-000---121001101211---011110-0110121000000111-100200-0001311221213--0-101-35-01---5010111200
+Lipeurus_caponis                   00-00-00-00-000---000-000000-000001100011111121000100120-001001-----101110-0110121100000111-4-0200-000111102100--40-202-36-1-20-612010-100
+Naubates_fuliginosus               214311011011011010100-100032243310110000111112000011012100000123-1--1132-110111122100010011-4-01010000143104100--10-021038-1-2108????????0
+Neopsittaconirmus_borgiolii        01100-00-00-000---000-000000-2222110-001101110000000012100000125--0-001110-010-12101-001011-4-0200-000140124120--30-221136-1-0--6????????0
+Osculotes_curtus                   0120???100???00---?0??0?0?01-3?2??11000?10??00-000---1110000212X---00001012010-10001-100111-100100-000132122100--011201-???????????0?????0
+Osculotes_macropoda                0120100100???00---00??000?01-333??11000?10?100-000---1110000212X---00001012010-10001-100111-100100-000132122100--011201-36-1-0--6??0?????0
+Oxylipeurus_dentatus               00-00-00-00-000---000-000001-000001100011111120000100120-0100125--1-0002-0-010-131100011111-4-0200-000131102100--40-221136-1-2106010111100
+Paraclisis_diomedea                21421101100-011010100-10003221111001-001111112000011012110100125--1-1132-110111122100010011-4-02010000143104100--10-121038-1-20-8????????0
+Paragoniocotes_rotundus            00-00-00-0???00---00??000?00-111?0110001101100-000---1110000002X---100111??010-12001-0011101--0200-000130122120--411221136-?????0????????0
+Pectinopygus_bassani               214211011011011010111-1000322333311100001001100000100121001001211---0112-110110132000000101-5-0200-000131123100--50-121137-1-0--7??????100
+Pectinopygus_sulae                 2142???11011011010?11-1?003223?33111000010??120000100121001001211---01311111110132000000101-5-0200-000131123100--50-102-????????6??????100
+Pelmatocerandra_setosa             214211011013311010000-000032232220110000111112000011012120000127----1132-110111122100010011-3-02010000143104100--10-101-38-1-2118????????0
+Perineus_nigrolimbatus             20-20-00-00-010---000-00002221111000-000111112000011012110000125--1-1132-110111122100010011-4-02010000143104100--10-021138-1-2108????????0
+Philoceanus_garrodiae              2120110110???11010????000?323333?0010000111112000010012110000125--1-1132-110111122100110011-4-00010000141104100--70-021138-1-2118????????0
+Philopterus_ornatus                2143143143???0100-22??111?324333?1110101101100-000---12120011123-0--0101012100-12001-1001100--0200-0001311221212--11221112-00---0110010101
+Podargoecus_strigoides             31431200-00-001010100-100032432221111000101100-000---121000101211---010100-000-12011-1001100--0200-0001310-20-12--11201-00-00---0????????1
+Pseudonirmus_gurlti                21421101100-001010000-00003213333000-000111110000010012110000125--1-1132-110111122000010011-4-01010000143104100--10-021138-1-21-8????????0
+Quadraceps_coenocoryphae           21431201200-001011220-100032433331111011111100-000---121201100211---0131012000-12001-1110100--0200-0001411041013--0-021100-01---0110010100
+Rallicola_lugens                   21201101100-001010220-000000-33221110001111112100010012120100125--1-0101012010-12001-101111-1001010000140124100--011201-36-1-0--602000-101
+Saemundssonia_desolata             2143122122120010112222111132433331111011111100-000---12120110022----0111010100-10001-1010100--0100-0001311321313--0-021114101---3110010001
+Saemundssonia_haematopi            2143120??????010112???11??32433??1111011111100-000---12120110022----1111010100-10001-1010100--0100-0001310-21313--0-021114101---?110010001
+Splendoroffula_ruwenzorornis       00-0???0-00-000---?00-0?0001-0?00000-00111??1200001001111010011-----0002-0-011-121100011111-4-0200-000131102100--40-2211????????6????????0
+Strigiphilus_vapidus               21431201200-001011220-111032432221111000100100-000---121201101211---0101012000-13011-100112---0200-0001320-20-12--11201-12-00---2??0111101
+Strongylocotes_angulocapitis       00-0???0-00-000---?00-0?0000-0?00011000111??100000000110-1102128----1001012000-0-001-101111-0-0210-000031122120--30-201-????????6??0?????0
+Sturnidoecus_sturni                21421421421200100-221-111032433221111000100100-000---12110100125--1-0101012000-13001-1001100--0100-0001310-20-12--0-221112-00---011010-101
+Syrrhaptoecus_falcatus             00-00-00-0???00---00??000?00-011?0110001111100-000---121001101211---000110-000-1211000001001--0200-000131??21213--0-121036-1-0--?0?0010100
+Trabeculus_schillingi              21431431431420101022200000324533301110111111101000100120-0100128----1110-0-000-12001-1100101--02010000143104100--411001-38-1-1--8????????0
+Trichodectes_melis                 0100100100???00---00??000?00-333?10100021021100101---120-0012125--1-0022-13000-0-00010000100--1101101100011011101-10001-00-01---012????100
+Upupicola_upupae                   00-20-20-20-000---000-000001-11110110001111100-000---121000100211---000100-000-12111-1001100--0200-0001410-40-13--0-101-35-01---5????????0
+Vernoniella_guimaraesi             31201201201100101022200000221332201110001011120000100121200001211---0111012000-12011-1001101--0100-000131122120--40-222136-1-2106????????1
+;
+END;
+
+BEGIN SETS;
+	CHARSET allnymphs (CHARACTERS = ) =  5-13 19-22 24-26 31-33 43-44 121-129;
+	CHARSET antennal (CHARACTERS = ) =  45-53;
+	CHARSET preantennal (CHARACTERS = ) =  1-44;
+	CHARSET thoracic (CHARACTERS = ) =  69-94;
+	CHARSET internal_genitalia (CHARACTERS = ) =  130-138;
+	CHARSET abdominal (CHARACTERS = ) =  95-129;
+	CHARSET postantennal (CHARACTERS = ) =  54-68;
+	CHARSET NIII (CHARACTERS = ) =  5-7 19 24 31 43-44 121-128;
+	CHARSET NII (CHARACTERS = ) =  8-10 20 25 32 129;
+	CHARSET NI (CHARACTERS = ) =  11-13 21-22 26 33;
+	CHARSET adult (CHARACTERS = ) =  1-4 14-18 23 27-30 34-42 45-120 130-138;
+END;

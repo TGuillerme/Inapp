@@ -1,0 +1,554 @@
+#NEXUS
+[!This data set was downloaded from TreeBASE, a relational database of phylogenetic knowledge. TreeBASE has been supported by the NSF, Harvard University, Yale University, SDSC and UC Davis. Please do not remove this acknowledgment from the Nexus file.
+
+
+Generated on September 16, 2013; 15:24 GMT
+
+TreeBASE (cc) 1994-2008
+
+Study reference:
+Baker W.J., Savolainen V., Asmussen-lange C., Chase M., Dransfied J., Forest F.,
+Harley M., Uhl N., & Wilkinson M. 2009. Complete Generic Level Phylogenetic Analyses
+of Palms (Arecaceae) with Comparisons of Supertree and Supermatrix Approaches.
+Systematic Biology, 58(2): 240-256.
+
+TreeBASE Study URI:  http://purl.org/phylo/treebase/phylows/study/TB2:S10045]
+
+BEGIN TAXA;
+        TITLE  M4522;
+        DIMENSIONS NTAX=205;
+        TAXLABELS
+            Acanthophoenix_rubra
+            Acoelorraphe_wrightii
+            Acrocomia_aculeata
+            Actinokentia_divaricata
+            Actinorhytis_calapparia
+            Adonidia_merrillii
+            Aiphanes_aculeata
+            Allagoptera_arenaria
+            Alloschmidia_glabrata
+            Alsmithia_longipes
+            Ammandra_decasperma
+            Anigozanthos
+            Aphandra_natalia
+            Archontophoenix_purpurea
+            Areca_triandra
+            Arenga_hookeriana
+            Asterogyne_martiana
+            Astrocaryum_alatum
+            Attalea_allenii
+            Bactris_gasipaes
+            Balaka_seemannii
+            Barcella_odora
+            Basselinia_velutina
+            Beccariophoenix_madagascariensis
+            Bentinckia_nicobarica
+            Bismarckia_nobilis
+            Borassodendron_machadonis
+            Borassus_flabellifer
+            Brahea_berlandieri
+            Brassiophoenix_schumannii
+            Brongniartikentia_lanuginosa
+            Burretiokentia_hapala
+            Butia_eriospatha
+            Calamus_aruensis
+            Calectasia_intermedia
+            Calospatha_scortechinii
+            Calyptrocalyx_albertisiana
+            Calyptrogyne_ghiesbreghtiana
+            Calyptronoma_occidentalis
+            Campecarpus_fulcitus
+            Carpentaria_acuminata
+            Carpoxylon_macrospermum
+            Caryota_mitis
+            Catopsis_montana
+            Ceratolobus_pseudoconcolor
+            Ceroxylon_quindiuense
+            Chamaedorea_microspadix
+            Chamaerops_humilis
+            Chambeyronia_macrocarpa
+            Chelyocarpus_ulei
+            Chuniophoenix_nana
+            Clinosperma_bractealis
+            Clinostigma_savoryanum
+            Coccothrinax_argentata
+            Cocos_nucifera
+            Colpothrinax_wrightii
+            Copernicia_prunifera
+            Corypha_umbraculifera
+            Costus_barbatus
+            Cryosophila_warscewiczii
+            Cyphokentia_macrostachya
+            Cyphophoenix_nucele
+            Cyphosperma_balansae
+            Cyrtostachys_renda
+            Daemonorops_acamptostachys
+            Dasypogon_bromelifolius
+            Deckenia_nobilis
+            Desmoncus_orthacanthos
+            Dictyocaryum_lamarckianum
+            Dictyosperma_album
+            Dransfieldia_micrantha
+            Drymophloeus_beguinii
+            Dypsis_lutescens
+            Elaeis_guineensis
+            Eleiodoxa_conferta
+            Eremospatha_wendlandiana
+            Eugeissona_tristis
+            Euterpe_oleracea
+            Fargesia_sp_557_ny
+            Gastrococos_crispa
+            Gaussia_maya
+            Geonoma_congesta
+            Guihaia_argyrata
+            Hanguana_malayana
+            Hedyscepe_canterburyana
+            Hemithrinax_compacta
+            Heterospathe_elata
+            Howea_belmoreana
+            Hydriastele_microspadix
+            Hyophorbe_lagenicaulis
+            Hyospathe_macrorhachis
+            Hyphaene_thebaica
+            Iguanura_wallichiana
+            Iriartea_deltoidea
+            Iriartella_stenocarpa
+            Itaya_amicorum
+            Johannesteijsmannia_altifrons
+            Juania_australis
+            Jubaea_chilensis
+            Jubaeopsis_caffra
+            Kentiopsis_oliviformis
+            Kerriodoxa_elegans
+            Kingia_australis
+            Korthalsia_cheb
+            Laccospadix_australasica
+            Laccosperma_acutiflorum
+            Latania_verschaffeltii
+            Lavoixia_macrocarpa
+            Lemurophoenix_halleuxii
+            Leopoldinia_pulchra
+            Lepidocaryum_tenue
+            Lepidorrhachis_mooreana
+            Leucothrinax_morrisii
+            Licuala_kunstleri
+            Linospadix_monostachya
+            Livistona_chinensis
+            Lodoicea_maldivica
+            Loxococcus_rupicola
+            Lytocaryum_weddellianum
+            Manicaria_saccifera
+            Marojejya_insignis
+            Masoala_madagascariensis
+            Mauritia_flexuosa
+            Mauritiella_aculeata
+            Maxburretia_rupicola
+            Medemia_argun
+            Metroxylon_salomonense
+            Moratia_cerifera
+            Musa_rosea
+            Myrialepis_paradoxa
+            Nannorrhops_ritchiana
+            Nenga_pumila
+            Neonicholsonia_watsonii
+            Neoveitchia_storckii
+            Nephrosperma_vanhoutteanum
+            Normanbya_normanbyi
+            Nypa_fruticans
+            Oenocarpus_bataua
+            Oncocalamus_tuleyi
+            Oncosperma_tigillarium
+            Orania_lauterbachiana
+            Oraniopsis_appendiculata
+            Parajubaea_torallyi
+            Pelagodoxa_henryana
+            Phoenicophorium_borsigianum
+            Phoenix_reclinata
+            Pholidocarpus_macrocarpus
+            Pholidostachys_pulchra
+            Physokentia_rosea
+            Phytelephas_aequatorialis
+            Pigafetta_elata
+            Pinanga_simplicifrons
+            Pinanga_simplicifrons_b
+            Plectocomia_mulleri
+            Podococcus_barteri
+            Pogonotium_ursinum
+            Polyandrococos_caudescens
+            Ponapea_ledermanniana
+            Prestoea_pubens
+            Pritchardia_arecina
+            Pritchardiopsis_jeanneneyi
+            Pseudophoenix_vinifera
+            Ptychococcus_paradoxus
+            Ptychosperma_macarthurii
+            Raphia_farinifera
+            Ravenea_louvelii
+            Reinhardtia_simplex
+            Retispatha_dumetosa
+            Rhapidophyllum_hystrix
+            Rhapis_excelsa
+            Rhopaloblaste_augusta
+            Rhopalostylis_baueri
+            Roscheria_melanochaetes
+            Roystonea_oleracea
+            Sabal_bermudana
+            Salacca_ramosiana
+            Satakentia_liukiuensis
+            Satranala_decussilvae
+            Schippia_concolor
+            Sclerosperma_mannii
+            Serenoa_repens
+            Socratea_exorrhiza
+            Solfia_samoensis
+            Sommieria_leucophylla
+            Syagrus_smithii
+            Synechanthus_warscewiczianus
+            Tectiphiala_ferox
+            Thrinax_radiata
+            Trachycarpus_fortunei
+            Tradescantia_pallida
+            Trithrinax_campestris
+            Typha_angustifolia
+            Veillonia_alba
+            Veitchia_arecina
+            Verschaffeltia_splendida
+            Voanioala_gerardii
+            Vriesia_psittacina
+            Wallichia_disticha
+            Washingtonia_robusta
+            Welfia_regia
+            Wendlandiella_gracilis
+            Wettinia_hirsuta
+            Wodyetia_bifurcata
+            Zea_mays
+            Zombia_antillarum
+            ;
+END;
+
+BEGIN CHARACTERS;
+[! TreeBASE Matrix URI: http://purl.org/phylo/treebase/phylows/matrix/TB2:M4294]
+
+	TITLE Palms_Morphology;
+	LINK TAXA = M4522;
+	DIMENSIONS NCHAR=105;
+	FORMAT DATATYPE=Standard SYMBOLS= "012345ACGT" MISSING=? GAP= -;
+	CHARSTATELABELS
+		1  Dichotomous_branching / absent present,
+		2  Leaf_shape / palmate pinnate_incl_bipinnate,
+		3  Leaf_sheath / gradually_splitting_toward_the_base remaining_tubular_for_at_least_75%_length_until_leaf_abscission_or_marcescence,
+		4  Leaf_sheath / without_abscission_zone sheath_with_a_clearly_defined_vertical_abscission_zone,
+		5  Leaf_sheath / not_disintegrating_into_fibers disintegrating_into_fibers,
+		6  Leaf_sheath / fibres_not_spine_like spine_like,
+		7  Leaf_sheath_extension / absent present 'ligule-like' oppositipetiolar,
+		8  Stilt_roots / absent present,
+		9  Emergent_spines / absent present_on_foliar_organs_only on_foliar_organs_and_stems,
+		10  Root_spines / absent present,
+		11  Petiolar_teeth / absent present,
+		12  Petiole_split_at_base / absent present,
+		13  Adaxial_hastula / absent present,
+		14  Primary_leaf_splitting / adaxial adaxial_with_haut abaxial absent,
+		15  Secondary_splits / occurring_between_the_folds along_abaxial_folds,
+		16  Lamina_with_central_abaxial_fold_deeply_split / absent present,
+		17  Leaflets / entire leaflets_praemorse_with_respect_to_single_folds,
+		18  Phloem_strands_in_petiole / one two,
+		19  Lamina_anatomy / dorsiventral isolateral,
+		20  Silica_bodies / spherical hat_shaped,
+		21  Resin_gum_canals / absent present,
+		22  Guard_cells / outer_walls_not_thickened thickened,
+		23  Flowering / pleonanthic acropetal_hapaxanthic basipetal_hapaxanthic,
+		24  Prophyll / complete incomplete,
+		25  Prophyll / shorter_than_PD_bract more_or_less_the_same_length_or_longer,
+		26  Rachillae / all_of_the_same_order of_different_orders,
+		27  Prophyll_tip / beaked rounded U_shaped,
+		28  Prophyll_split_with_respect_to_main_axis / abaxially adaxially marginally apically,
+		29  Peduncular_bracts / five_to_seven four three two one absent,
+		30  Peduncle / much_longer_than_the_rachis about_the_same_length shorter_than_the_rachis,
+		31  Rachis_bracts / similar_to_PD_bract_and_prophyll much_smaller_than_PD_bract_and_prophyll,
+		32  Inflorescence_branching / spicate branched_to_one_order branched_to_two_or_more_orders,
+		33  Inflorescence_branches / arranged_more_or_less_distichously radially,
+		34  First_order_branches / basal_conspicuously_longer_than_the_rest same_length_throughout basal_ones_shorter,
+		35  Inflorescence_branches / lacking_flowers_basally with_flowers_to_their_insertions,
+		36  Rachillae / not_pendulous pendulous,
+		37  Rachillae / shorter_than_the_rachis longer_than_the_rachis,
+		38  Rachilla_bracts / not_tubular tubular,
+		39  Flowers / superficial sunken_in_pits,
+		40  Cincinnus / simple acervulus triad dyad 'absent (flowers solitary)',
+		41  Flowers_or_flower_clusters / spiral distichous decussate,
+		42  Flowers / closed_in_bud open_precociously,
+		43  Flower_sex / Bisexual_only Bisexual_and_Unisexual Unisexual_only,
+		44  Sexual_expression / monoecy_or_polygamomonoecy dioecy_or_polygamodioecy,
+		45  Staminate_and_pistillate_flowers / not_dimorphic dimorphic,
+		46  Perianth / trimerous greater_than_trimerous,
+		47  Perianth / tepals sepals_and_petals,
+		48  Perianth / not_a_cupule cupule,
+		49  Pedicelliform_corolla / absent present,
+		50  Hermaphrodite_flower_sepals / distinct connate,
+		51  Hermaphrodite_flower_sepals / imbricate valvate,
+		52  Hermaphrodite_flower_petals / distinct connate,
+		53  Hermaphrodite_flower_petals / imbricate valvate,
+		54  Staminate_flower_sepals / distinct connate,
+		55  Staminate_flower_sepals / imbricate valvate,
+		56  Staminate_flower_petals / distinct connate,
+		57  Staminate_flower_petals / imbricate valvate,
+		58  Pistillate_flower_sepals / distinct connate,
+		59  Pistillate_flower_sepals / imbricate valvate,
+		60  Pistillate_flower_petals / distinct connate,
+		61  Pistillate_flower_petals / imbricate valvate,
+		62  Stamens / three six more_than_six,
+		63  Stamen_filaments / straight inflexed,
+		64  Stamen_filaments / of_equal_length of_two_lengths,
+		65  Stamen_filaments / distinct connate_in_a_ring,
+		66  Stamens / free adnate_to_corolla,
+		67  Anthers / elongate rounded,
+		68  Connective / not_projecting projecting,
+		69  Pollen_aperture_number / none one two three,
+		70  Aperture_position / polar equatorial_or_subequatorial meridional,
+		71  Aperture_type / 'sulcate incl ext sulc, brevisulc et trichotomosulc' porate zonosulcate_incl_incomplete_zonosulcate,
+		72  Sulcate_grains / trichotomosulcate_grains_absent trichotomosulcate_grains_present_in_part trichotomosulcate_grains_exclusively_present,
+		73  Pollen_shape / spheroidal ellipsoidal oblate_spheroidal oblate_rounded_triangular,
+		74  Tectum / tectate_including_semi_tectate intectate,
+		75  Symmetry / at_least_one_plane_of_symmetry without_symmetry,
+		76  Supratectate_processes / absent present,
+		77  Intectate_processes / absent present,
+		78  Pistillode / gynoeciform trifid pyramidal capitate attenuate lageniform,
+		79  Staminodes / absent present,
+		80  Staminodes / distinct in_a_ring,
+		81  Staminodes / not_adnate_to_corolla adnate_to_corolla,
+		82  Staminodes / sterile_anthers_present sterile_anthers_absent,
+		83  Carpels / one three more_than_three,
+		84  Carpels / distinct connate_basally connate_throughout connate_by_styles_only,
+		85  Carpels / not_pseudomonomerous pseudomonomerous,
+		86  Ovule_attachment / basal lateral pendulous,
+		87  Ovules / anatropous hemianatropous campylotropous orthotropous,
+		88  Ovules / micropyles_not_towards_center with_micropyles_toward_center_of_gynoecium,
+		89  Pericarp / lacking_scales with_scales,
+		90  Pericarp / corky_warts_absent corky_warts_present,
+		91  Endocarp_externally / smooth sculptured,
+		92  Endocarp_internally / smooth sculptured,
+		93  Endocarp / continuous endocarp_discontinuous_i.e._with_pore_or_operculum,
+		94  Endocarp_pores / basal lateral apical,
+		95  Endocarp / lacking_basal_button with_basal_button,
+		96  Pyrenes / absent present,
+		97  Stigmatic_remains / apical_or_subapical lateral_and_basal,
+		98  Seed_attached / basally laterally,
+		99  'Seed coat penetration (postament)' / absent present,
+		100  Endosperm / homogeneous ruminate,
+		101  Embryo / basal_to_subbasal lateral apical_to_subapical,
+		102  Stamen_development / centripetal centrifugal,
+		103  Germination / adjacent_ligular remote_ligular remote_tubular,
+		104  Eophyll / entire bifid palmate pinnate,
+		105  Chromosome_number_n / 18. 17. 16. 15. 14. 13. 12.,
+		;
+
+MATRIX
+[                                            10        20        30        40        50        60        70        80        90        100        ]
+[                                             .         .         .         .         .         .         .         .         .         .        ]
+Acanthophoenix_rubra                 011100?0200002-10?????001103421210101002002010100----1011000021000001000100002100112122000000-00010000032
+Acoelorraphe_wrightii                00101010001010-00100??000123410211110000000--01000011--------1001100100010100-----13000000000-00001010200
+Acrocomia_aculeata                   01101000200002-10101??000003411111100002002010100----0001000011001001002300001110112013000001100000010013
+Actinokentia_divaricata              011100?0000002-10?????0011??421211100002002010100----0001000020000001000101004100112121000000-0001000001?
+Actinorhytis_calapparia              01110000000002-10100??00110?421210000002002010100----0001000021000001000101004100112111000000-0001010001?
+Adonidia_merrillii                   01110010000002-11100??00?1??121210000002002010100----00010000200000010001010051001121??000000-00010100012
+Aiphanes_aculeata                    01101000200002-11101??000000401111000002002010100----1-0100111001000100010100111111201300000110000001001?
+Allagoptera_arenaria                 11101010000002-1010???000-1340-0-----002002010100----1001000021010001000101002110112010000001000000000?02
+Alloschmidia_glabrata                01110010000002-10?????00111?421211100002002010100----0001000011000001000101003100112121000000-0001001001?
+Alsmithia_longipes                   01100000000002-1010???000103401221000002002010100----0001000011000001000101004100112121000100-00010000?1?
+Ammandra_decasperma                  011010?0000002-10?????000-1342-0-----004012111000----0---00002000010101-20000-100022001001000-1100000123?
+Anigozanthos                         ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Aphandra_natalia                     011010?0000002-10?????000-1342-0-----004012111000----0---00002000000100010100-100022001001000-11000001230
+Archontophoenix_purpurea             01110010000002-10?????001101421210110002002010100----000100002000000100010100410011211?000000-00000100014
+Areca_triandra                       01110010000002-1010???00-110511200000002102010100----001000000000000100010100-1?0112100000000-00000100012
+Arenga_hookeriana                    01101010000000-01001??200-1000-0---0-002002010100----001100112000001100011001-10??12011000000-00000010202
+Asterogyne_martiana                  01001000000003-1010???000001401111101012002010100----001-001120011001000101001111112021000000-0010000001?
+Astrocaryum_alatum                   01001030200002-10?????000010411111100002002010100----0-111-1-11001001000101001101112013000001200000020011
+Attalea_allenii                      01101000000002-10?????000013411110100002?02010100----?????????000000100010100211011200?000101000000100202
+Bactris_gasipaes                     01101000200002-10?????0000?3401111001002002010100----1-111?111000100100130100-11111201300000110000001001?
+Balaka_seemannii                     01110000000002-11?????0001??411210100002002010100----000100002000000100010100510011212?000000-00010000???
+Barcella_odora                       01101000000002-10?????0000??401111100002002010100----0001000011010001000101001110112013000001100000010?0?
+Basselinia_velutina                  01110010000002-10?????0101?-411210101002002010100----0001000011000001000101002100112121000000-0010000001?
+Beccariophoenix_madagascariensis     01101000000002-10?????000013401111001002102010100----000100002000000100010100-1101120??000001100000110000
+Bentinckia_nicobarica                01110000000002-10100??001100421210000002002010100----0001000011100101000101000100112121000000-001000000?2
+Bismarckia_nobilis                   00000000001110-00010??000000120210100110002110101----1-10101010010001000101001110012003000011201100020200
+Borassodendron_machadonis            00000000000110-00000??00100020021----010002110101----1-1000001000000101-20000-11001200300001120100002022?
+Borassus_flabellifer                 00000000001110-00010??00-000520211000110002110101----1-10000010000001000100102110112003000001201000020200
+Brahea_berlandieri                   00101010001010-00100??00?113520210000000000--01000011--------1001100100010100-----13000000000-0000101020?
+Brassiophoenix_schumannii            01110010000002-11?????000101401210001002002010100----000100002000000100010100511011212?000100-00010000012
+Brongniartikentia_lanuginosa         011??0?0000002-10?????0011?3421210100002002010100----000100001000010?????????3100112121000000-00100000???
+Burretiokentia_hapala                01110010000002-10?????01011-421210100002002010100----0001000011000001000101003100112121000100-0001000001?
+Butia_eriospatha                     01101000000002-1011???000013401111000002002010100----0001000010000001000101001110112011000001000000010002
+Calamus_aruensis                     01100000100002-10?????00-003520201100103102110100----1111111111001002200100001111012000110000-000000?001?
+Calectasia_intermedia                ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Calospatha_scortechinii              01100000100002-10100??00-000500211101103102110100----1111111110011002100100001111012000110000-0000000003?
+Calyptrocalyx_albertisiana           01101000000002-10?????000-0?40-0-----012002010100----0001000021000001000101002100112111000000-0001000001?
+Calyptrogyne_ghiesbreghtiana         01001000000002-10?????000-0340-0-----012002010100----0011001110010001000101001110112000000000-00100000014
+Calyptronoma_occidentalis            01001000000002-1010???000113401111100012002010100----0011001110010001000101001110112020000000-00100000014
+Campecarpus_fulcitus                 011100?1000002-10?????0101?-421210001002002010100----0001000011000001001101004100112121000000-00010000???
+Carpentaria_acuminata                01110010000002-11?????00?100421210000002002010100----000100002000000100010100510011211?000000-00010000012
+Carpoxylon_macrospermum              01110010000002-10?????0011?042121?000002002010100----000100001100000100110100?01011211?000000-000??0?001?
+Caryota_mitis                        01101010000000-01001??200000011111011002002010100----001100112000001100011001-10??12011000000-0000011021?
+Catopsis_montana                     ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Ceratolobus_pseudoconcolor           01100000100002-11?????00-003521211100103102110100----1111111110001002200100001111012000110000-00000100025
+Ceroxylon_quindiuense                01001000000002-10100??010120001210000004012100100----1-101-1020011001000101001100012021000000-0010001000?
+Chamaedorea_microspadix              01110000000002-10?????000023201111101004002110100----110111011000000100010100?1???12012000000-001000?001?
+Chamaerops_humilis                   00101010001010-00100??00-113521212100000011100100----1-101-101001000200110000-110010-01000000-00001110200
+Chambeyronia_macrocarpa              01110010000002-10?????001101421210000002002010100----000100002100000100010100-100112111000000-00010000012
+Chelyocarpus_ulei                    00101000000010-10?????001103310210100004010--01001000--------2000000100010100-----10-01001000-00000010210
+Chuniophoenix_nana                   00000000000000-0000???000023000111001104000--01011111--------1000100100010100-----11000000000-00000000200
+Clinosperma_bractealis               01110010000002-10?????0011?04?121?000002002010100----000100001000010100010100310011212?000000-00100000???
+Clinostigma_savoryanum               011?00??000002-10?????00110?421210001002002010100----00010000111000010001010011001121??000000-001000000?2
+Coccothrinax_argentata               00101010000010-00000??001103310211110004010--101-------------2001000100010100-----0--03000000-00001020200
+Cocos_nucifera                       01101000000002-10100??000003411110000002002010100----0001000011000001000101001110112010000001000000000002
+Colpothrinax_wrightii                00101010000010-0000???00?100020210100004000--01001111--------1001100100010100-----13000000000-0000001020?
+Copernicia_prunifera                 00101010001010-00110??000123520210100100000--01001111--------1001110100010100-----13000000000-00001100200
+Corypha_umbraculifera                00000010001110-00000??100113400210100000000--01001100--------1000100100010100-----11001000000-00100020200
+Costus_barbatus                      ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Cryosophila_warscewiczii             00101000010010-10?????000101010210100004010--01001100--------1001000100010100-----10-01000000-0000001000?
+Cyphokentia_macrostachya             01110010000002-10?????00111?421210110002002010100----00010000210000010001010041001121??000000-00100000???
+Cyphophoenix_nucele                  01110010000002-10?????0101?-4?121?00?002002010100----0001000011000001000101003100112121000000-0002000001?
+Cyphosperma_balansae                 011100?0000002-10?????01012-401211000002002010100----000100001100000100010100310011212?000100-0001000001?
+Cyrtostachys_renda                   01110010000002-10100??001101421210000012002010100----001100002101000100110100111011212?000000-00020010012
+Daemonorops_acamptostachys           01100000100002-10100??00-000500200000103102110100----111111111001100220010000-111012000110000-00000100034
+Dasypogon_bromelifolius              ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Deckenia_nobilis                     01110010200002-10100??001100411211011002012010100----1-11000020001101000110014100112111000000-0010000001?
+Desmoncus_orthacanthos               01100020200002-10?????000023401111000002002010100----?-???????????????????????101112013000001100000010013
+Dictyocaryum_lamarckianum            01110001000002-11?????000103021211010002002010100----1011001110000001000110012100112000000000-0010000001?
+Dictyosperma_album                   01110010000002-10100??001110421100011002002010100----0001000011000001000101104100112111000000-00010100012
+Dransfieldia_micrantha               01110000000002-10?????000103421210000002002010100----00010000210000010001010011001121???00000-00010100???
+Drymophloeus_beguinii                01110011000002-11?????000003401111001002002010100----00010000210000010001010041001121??000000-000200000??
+Dypsis_lutescens                     11110000000002-10100??001113421210000002002010100----000100001100000100110100410011211?000000-00100010012
+Elaeis_guineensis                    01101000000002-10100??000003411111000002002010100----0001000011010001002300001110112013000001200000020002
+Eleiodoxa_conferta                   01000000100002-10?????10-023520101000113002110100----111111111110100211-10000-101012000110000-0000100001?
+Eremospatha_wendlandiana             01100010100002-11?????0?-0--511101100003100--01001111--------1001110?????????-----12000110000-0000001001?
+Eugeissona_tristis                   11000010100002-10?????10-1235202100001030010-010011111111----20001011000100002----1200011001100000000013?
+Euterpe_oleracea                     01110010000002-10100??000010421110000002002010100----00010000110000010001010010---12111000000-00110100010
+Fargesia_sp_557_ny                   ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Gastrococos_crispa                   01101000200002-1010???000000411110000002002010100----1-111-1110000001002300001111112013000001100000010201
+Gaussia_maya                         01100001000002-10001??000103011212100001002010100----0001000110000001000101002100112012000000-00100010014
+Geonoma_congesta                     01101000000002-10?????000100411210001012002010100----001110111101100100010100111??12100000000-0010000001?
+Guihaia_argyrata                     00101100000012-0010???00-113520210100004001100100----101110111000110100010000-101010-0?000000-00011010200
+Hanguana_malayana                    ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Hedyscepe_canterburyana              011?00?0000002-10?????001101421210100002002010100----000100002100000100010100410011210?000000-0001000001?
+Hemithrinax_compacta                 00101010000110-00?????001103500211100004010--101-------------1001010100010100-----0--0?000000-00001020???
+Heterospathe_elata                   01001010000002-10100??000100411210010002002010100----0001000011000001000101002100112121000000-00010100012
+Howea_belmoreana                     01101010000002-10100??000-??42-0-----01200201010{01}----001100002001101100010100-110112112000000-00010000012
+Hydriastele_microspadix              01110010000002-11?????001110401211011002202010100----1-1100001000100100010000-10011211?000000-0001010001?
+Hyophorbe_lagenicaulis               01110000000002-10001??000121011210000001102010100----0011001110011001000101002110112011000000-00100010012
+Hyospathe_macrorhachis               01110010000002-10?????00101342111000000200201010?----1-011-001010000?????????010011211?000000-0010000001?
+Hyphaene_thebaica                    10000000001110-00010??000003320211100110002110101----1-101-0010010001000100?01110112003000001201100020200
+Iguanura_wallichiana                 01100010000002-11?????000113401210001012002010100----0001000011000001000101004100112111000000-0011010000?
+Iriartea_deltoidea                   01110011000002-11001??000000011211011002002010100----000100002000001100011001-10011200?000000-00000010002
+Iriartella_stenocarpa                01110001000002-11?????0000?3201111111002002010100----100100001000000200010000-1001120??000000-00100020???
+Itaya_amicorum                       00001000000110-10?????000100010210100004010--01001111--------2001000100010100-----0--01000000-00000000?00
+Johannesteijsmannia_altifrons        00101010001010-00100??001113001211100000000--01001111--------1001110100010100-----13000001000-00001010201
+Juania_australis                     01001000000002-10?????010100211210100004012100100----1-001-0010000001000101001100012021000000-0000001000?
+Jubaea_chilensis                     01101000000002-10100??000013411111000002002010100----1-01000021000001000101001110112011000001000000010002
+Jubaeopsis_caffra                    11101000000002-10?????00001340111?00?002002010100----000100002100000100010100111011201100000110000001020?
+Kentiopsis_oliviformis               01110010000002-10?????0011??421210001002002010100----000100002000000100110100410011212?000000-00010000012
+Kerriodoxa_elegans                   00000000000010-0000???000110120210100100012100101----1-1-1-1-1001100100010000-110011010000000-0010010010?
+Kingia_australis                     ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Korthalsia_cheb                      11100010100002-11?????10-003520200010114000--010011111111----1000101122-01001-----12000110000-00001110012
+Laccospadix_australasica             01101000000002-10?????000-??41-0-----012002010100----0001000020000001000101001100112112000000-00010100012
+Laccosperma_acutiflorum              11100010100002-10?????10-023520101100103100--01001111--------1000000100010000-----12000110000-0000101001?
+Latania_verschaffeltii               00000000000110-00010??000000220211000114002110101----1010000020010001000101005110012003000101201000020224
+Lavoixia_macrocarpa                  01110010000002-10?????000113421211100002002010100----0001000010010101001101003100112121000100-00100000???
+Lemurophoenix_halleuxii              01110000000002-10?????000110421210000002002010100----000100002000000100010100?1?0112101001000-101??1?001?
+Leopoldinia_pulchra                  01101010000002-10100??001110411210000002002010100----00010001110001010001010021001120??000000-0011000001?
+Lepidocaryum_tenue                   00000000100002-10100??001023020201000103102110100----1111111110001001000110012111012000110000-00000010013
+Lepidorrhachis_mooreana              011??0?0000002-10?????000100421210100002002010100----0001000011000001000101003100112121000000-00020000???
+Leucothrinax_morrisii                00101010000110-00?????001103220211110004010--101-------------1001000100010100-----0--02000000-00001020200
+Licuala_kunstleri                    00101010001010100?????00-123521211001000000--01001111--------1001110100010000-----13000000000-0000101020?
+Linospadix_monostachya               01101010000002-10?????000-1340-0-----012002010100----0001000010000001000101001110112111000000-0001000001?
+Livistona_chinensis                  00101010001010-00100??00-123520211100000000--01001011--------1001110100010000-----13000000000-00001010200
+Lodoicea_maldivica                   00000000000100-00000??00?0??4202--00-110002110101----1010000020000001000100001110112003000001201000020220
+Loxococcus_rupicola                  011100?0000002-11?????001101421210011002002010100----001100002000000100010100311011211?000000-00010100??2
+Lytocaryum_weddellianum              01101000000002-1010???000003421112100002002010100----1-0100001100000100010100111011201?000001000010110032
+Manicaria_saccifera                  01001000000002-10100??001113411211100002002010100----101100112000000100110100-100112000001000-1110000001?
+Marojejya_insignis                   01000010000002-1010???001000411111100002002010100----0011000011010001000101001100112122000000-00120010012
+Masoala_madagascariensis             01000010000002-10?????001100401210100002002010100----00010000110000010001010040001121??000000-000??0?0012
+Mauritia_flexuosa                    00000000100002-10100??0010????0201000103002110100----111111111000100101-01001-111012000110000-00000000013
+Mauritiella_aculeata                 00000010110002-10100??001023020201000104002110100----111111111000100100001001-111012000110000-00000000013
+Maxburretia_rupicola                 00101010000010-00?????001113410210000004000-00100----0010000010001001000100001101010-00000000-0000101020?
+Medemia_argun                        00000000001100-00?10??000003120211100110002110101----1-10000010000001000101001????1200300000120110012020?
+Metroxylon_salomonense               010000?0100002-10?????1000231202010101130010-010011111111----10011002200100001----12000110000-00001010012
+Moratia_cerifera                     01110010000002-10?????00111?421210100002002010100----0001000011000001000101004100112121000000-00100000?1?
+Musa_rosea                           ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Myrialepis_paradoxa                  01100000100002-10100??10-023520200000104102110100----1111111111011002200100001111012000110000-000000000??
+Nannorrhops_ritchiana                10000010000100-00110??100123420210100100000--01011111--------1100100100010100-----11000000000-00100000100
+Nenga_pumila                         01110010000002-1010???00-110511211111002002010100----1-1100001000000100010000-10011211?000000-0001010001?
+Neonicholsonia_watsonii              01000010000002-1010???000-1340-0-----002002010100----1-010000110100010001000010---1210?000000-00000100010
+Neoveitchia_storckii                 01101000000002-1010???000100421210000002002010100----{01}00100001100010100010100410011211?000000-00010000???
+Nephrosperma_vanhoutteanum           01101010200002-10100??000113401210000002002010100----000100002010010100010100011011211?000000-00100000012
+Normanbya_normanbyi                  01110000000002-11100??00?1??421210000002002010100----000100002000000100010100510011212?000000-0001010001?
+Nypa_fruticans                       11000000000002-10001??00110340021000000401201000-----0-000-0-0001000122-00010-0---10-00000001000000000011
+Oenocarpus_bataua                    01001010000002-10100??000013411100011002002010100----00010000210000110001010010---12100000000-00000100010
+Oncocalamus_tuleyi                   01100010100002-10?????001023120101010101102000100----1111111110010101000100100110012000110000-000010100??
+Oncosperma_tigillarium               01110000200002-10100??001110421211011002002010100----10110000100010010001001011001121??000000-0001010001?
+Orania_lauterbachiana                01001000000002-1100???000113421210000002002010100----1-011-011000000?????????-100112021000000-1110001021?
+Oraniopsis_appendiculata             01001000000002-10?????010110011210000004012100100----1-0-1-0-10011001000101000100012011000000-0010001000?
+Parajubaea_torallyi                  01101000000002-10?????0001?34?111?100002002010100----000100002100000100010100111011201?000101000010000???
+Pelagodoxa_henryana                  01100000000002-10100??000100411210100002002010100----0011001010110001000101001100112112001000-00100000012
+Phoenicophorium_borsigianum          01101000200002-10100??001113401210000002002010100----000100002000000100010010-110112112000000-00100100002
+Phoenix_reclinata                    01101010000001-00110??00-010501110000004002110100----1-001-0010001001000100001?00110-00000000-00001010200
+Pholidocarpus_macrocarpus            00101010001010-00100??00-113520211100000000--01001111--------1001010100010000-----13000001000-0001101020?
+Pholidostachys_pulchra               01001010000002-10100??000-?342-0-----012002010100----0011001110010011000101001111112010000000-0010000001?
+Physokentia_rosea                    01110001000002-10?????0101?-421210101002002010100----0001000011000001000101004100112111000100-00010?00?12
+Phytelephas_aequatorialis            01101000000002-1010???000-1342-0-----004012111000----0---00002000000100010100-100022001001000-11000001230
+Pigafetta_elata                      01000000100002-10?????001023020200010103002110100----1111111110011010---000101111112000110000-00000010014
+Pinanga_simplicifrons                01110010000002-10?????00-010501101111002102010100----1-1100002000000?????????-0---12100000000-0000010001?
+Pinanga_simplicifrons_b              01100010100002-10100??10-023420200000104102110100----1111111111011102200110011111012000110000-0000000001?
+Plectocomia_mulleri                  01100000100002-10?????10-023520200010103102110100----111111111001101220010000-101012000110000-0000000000?
+Podococcus_barteri                   01001011000002-11?????000-13{23}0-0-----012002010101----001100101010110100010100110011202?000000-0010001000?
+Pogonotium_ursinum                   01100010100002-10?????00-000521211100103102110100----111111111100100111-101001111012000110000-0000000003?
+Polyandrococos_caudescens            01101000000002-1010???000-0342-0-----002012010100----100100002101000100010100-110112010000001000000000002
+Ponapea_ledermanniana                011100?0000002-11?????000110421210001002002010100----000100002000000100010100210011211??00100-0001000001?
+Prestoea_pubens                      011?00?0000002-10?????000013401111001002002010100----000100001100000?????????110011210?000000-0011010001?
+Pritchardia_arecina                  00101010000010-00?????001123001210010004000--01001111--------1001100100110100-----13000000000-0000000020?
+Pritchardiopsis_jeanneneyi           00101000000010-00?????00?123500211000000000--01001111--------1001110100010100-----13000000000-0000102020?
+Pseudophoenix_vinifera               01000000000002-10100??000113301210000004000--01001111--------1001000100010100-----12012000000-00100000201
+Ptychococcus_paradoxus               01110010000002-11100??000101421210000002002010100----000100002000000100010100511011212?000100-0002010001?
+Ptychosperma_macarthurii             01110010000002-11100??000100421210001002002010100----0001000020000001000101005100112121000100-00010000012
+Raphia_farinifera                    01001010100002-1010???101023020201010104102010100----111111111001100100010000-111012000110000-00000110032
+Ravenea_louvelii                     01001000000002-1000???010010111211100004012100100----1-001-001001100101-000100101012021000000-0000000001?
+Reinhardtia_simplex                  01101010000003-11?????000020401110000002002010100----001100112001100100110100-11101200?000000-0000000000?
+Retispatha_dumetosa                  01100010100002-10?????00-003520200100104102110100----1111111110011002200100101111012000110000-0000000003?
+Rhapidophyllum_hystrix               00101110000010000100??001013{01}01111000000011100100----0000000010000001000100000100010-01000000-00011010?00
+Rhapis_excelsa                       00101010000010000100??00-110520210100004001100101----1-111-1110001101001101001101010-01000000-00011010200
+Rhopaloblaste_augusta                01110000000002-10100??001101421210001002002010100----0001000011000001000101003110112121000000-0001010003?
+Rhopalostylis_baueri                 01110000000002-10100??001100421210001002002010100----000100001101000100110100410011211?000000-0001000001?
+Roscheria_melanochaetes              01110011200002-11?????001113401210000002002010100----000100001001010100010100311011211?000000-00100100012
+Roystonea_oleracea                   01110010000002-10000??000103421210100002002010100----0001001120000001000101000111112111000000-00110000000
+Sabal_bermudana                      00001000000110-10110??000130220210000004000--01001110--------1001100100010100-----12000000000-0010101010?
+Salacca_ramosiana                    01000010100002-10?????000103320201000113002110100----111111111000100122-00010-101012000110000-00001000014
+Satakentia_liukiuensis               01110010000002-10?????000103401211000002002010100----0001000011000001000101003100112120000000-0001000001?
+Satranala_decussilvae                00000000001110-00?0???00?0??320211100110002110101----????????1??????100010100?????120??000100-0110012022?
+Schippia_concolor                    00101000000010-0000???0011202202101000040010-01001100--------1000000100010100-----0--01000000-00000020200
+Sclerosperma_mannii                  01001000000002-11101??000-1341-0-----002002010100----000110002000001311-30000-100112122000000-0001000021?
+Serenoa_repens                       00101010001010-00100??000123220210100000000--01001111--------1001100100010100-----13000000000-00001010200
+Socratea_exorrhiza                   01110001000002-11001??000003021111?11002012010100----1-00000020000011000110011100112003000000-00000020010
+Solfia_samoensis                     01110000000002-11?????001100421210100002002010100----000100002000000100010100510011211?000000-00010000???
+Sommieria_leucophylla                01101010000002-1010???001013401111001002002010100----00010000111101010011000021001121??001000-00100000011
+Syagrus_smithii                      01101000000002-1010???000013401110000002002010100----000100001110000100010100111011201000000100000010020?
+Synechanthus_warscewiczianus         01110000000002-10?????000110001110001001102010100----1-1110000100010100010100-11??12012000000-0010011001?
+Tectiphiala_ferox                    011100?0200002-10?????001010421111011002002010100----1-01000010000001000101001100112121000000-00010000?1?
+Thrinax_radiata                      00101010000110-00000??001100120211110004010--101-------------2001000100010100-----0--03000000-00001010200
+Trachycarpus_fortunei                00101010001010-00100??001113220210000000011100100----0000000010000001000101000100010-01000000-00011010200
+Tradescantia_pallida                 ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Trithrinax_campestris                00101100000010-00?????001100420210000004010--01001000--------1000000100010100-----10-01000000-00001010?0?
+Typha_angustifolia                   ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Veillonia_alba                       011100?0000002-10?????0101034?121011?002002010100----0001000011000001000101003100112121000100-0001000001?
+Veitchia_arecina                     01110000000002-11100??000100421210000002002010100----000100002001000100010100510011211?000000-0001000001?
+Verschaffeltia_splendida             011010?1200002-11100??001113401210000002002010100----0001000010000101000101003100112111000100-00100100010
+Voanioala_gerardii                   01101000000002-10?????00001340111111000200201010{01}----100100002000000100111001?1101120??0001110000??1?020?
+Vriesia_psittacina                   ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Wallichia_disticha                   01101010000000-01001??200000021111100002002010100----1-1100112001100100011001-10??12001000000-00000010202
+Washingtonia_robusta                 00101000001010-00100??001123420211110000000--01001011--------1000100100010100-----13000000000-0000100010?
+Welfia_regia                         01001000000002-10100??0000?0411111111012002010100----001100112000001100010100-111112011000000-0011000001?
+Wendlandiella_gracilis               01100000000002-10?????001013401211100001002110100----1-111-001000010100010100010011202?000000-00100010??4
+Wettinia_hirsuta                     011100?1000002-11?????000003{01}2-0-----002012010100----0-0-0-0-2000001100011001-100112?00000000-0010000000?
+Wodyetia_bifurcata                   01110010000002-11?????000100421210001002002010100----00010000200000010001010051-01121??000000-00010000012
+Zea_mays                             ?????????????????????????????????????????????????????????????????????????????????????????????????????????
+Zombia_antillarum                    00101110000010-00000??00-120520210010004010--101-------------2000000100010100-----0--03000000-00001020?00
+;
+END;
+

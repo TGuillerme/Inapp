@@ -1,0 +1,325 @@
+#NEXUS
+[!This data set was downloaded from TreeBASE, a relational database of phylogenetic knowledge. TreeBASE has been supported by the NSF, Harvard University, Yale University, SDSC and UC Davis. Please do not remove this acknowledgment from the Nexus file.
+
+
+Generated on September 16, 2013; 15:21 GMT
+
+TreeBASE (cc) 1994-2008
+
+Study reference:
+Wilson G., & Edgecombe G. 2003. The Triassic isopod Protamphisopus wianamattensis
+(Chilton) and comparison with extant taxa (Crustacea, phreatoicidea). Journal of
+Paleontology, 77(3): 454-470.
+
+TreeBASE Study URI:  http://purl.org/phylo/treebase/phylows/study/TB2:S920]
+
+BEGIN TAXA;
+        TITLE  Consensus_of_28_trees;
+        DIMENSIONS NTAX=61;
+        TAXLABELS
+            Amphisopus_annectans
+            Amphisopus_lintoni
+            Colubotelson_fontinalis
+            Colubotelson_joyneri
+            Colubotelson_searli
+            Colubotelson_sp._1
+            Colubotelson_sp._2
+            Crenisopus_acinifer
+            Crenoicus_buntiae
+            Crenoicus_harrisoni
+            Crenoicus_n.sp.
+            Eophreatoicus_sp._4
+            Eophreatoicus_sp._6
+            Eremisopus_beei
+            Gariwerdeus_beehivensis
+            Gariwerdeus_ingletonensis
+            Gariwerdeus_turretensis
+            Hyperoedesipus_plumosus
+            Hypsimetopus_intrusor
+            Kalliapseudes_obtusifrons
+            Mesacanthotelson_setosus
+            Mesacanthotelson_tasmaniae
+            Mesamphisopus_abbreviatus
+            Mesamphisopus_capensis
+            Mesamphisopus_n.sp.
+            Metaphreatoicus_affinis
+            Metaphreatoicus_australis
+            Metaphreatoicus_lacustris
+            Metaphreatoicus_magistri
+            Metaphreatoicus_sp.
+            Naiopegia_xiphagrostis
+            Neophreatoicus_assimilis
+            Nichollsia_kashiense
+            Notamphisopus_dunedinensis
+            Notamphisopus_flavius
+            Onchotelson_brevicaudatus
+            Onchotelson_spatulatus
+            Paramphisopus_palustris
+            Paraphreatoicus_relictus
+            Peludo_paraliotus
+            Phreatoicoides_gracilis
+            Phreatoicoides_sp._A
+            Phreatoicoides_sp._B
+            Phreatoicoides_sp._Zeehan
+            Phreatoicopsis_raffae
+            Phreatoicopsis_terricola
+            Phreatoicus_orarii
+            Phreatoicus_typicus
+            Phreatomerus_latipes
+            Pilbarophreatoicus_n.sp.
+            Pilbarophreatoicus_platyarthricus
+            Platypyga_subpetrae
+            Protamphisopus_wianamattensis
+            Qld._nsp.1
+            Qld._nsp.2
+            Spelaeogriphus_lepidops
+            Stenasellus_virei
+            Synamphisopus_ambiguus
+            Synamphisopus_doegi
+            Tainisopus_fontinalis
+            Uramphisopus_pearsoni
+            ;
+END;
+
+BEGIN CHARACTERS;
+[! TreeBASE Matrix URI: http://purl.org/phylo/treebase/phylows/matrix/TB2:M410]
+
+	TITLE Phreatoicidea;
+	LINK TAXA = Consensus_of_28_trees;
+	DIMENSIONS NCHAR=165;
+	FORMAT DATATYPE=Standard SYMBOLS= "123456" MISSING=? GAP= -;
+	CHARSTATELABELS
+		1  Cervical_groove / present absent,
+		2  'Mandibular (genal or cheek) groove' / 'smoothly indented, or with acute indentation' absent,
+		3  Mandibular_notch / present absent,
+		4  Clypeal_notch / present absent,
+		5  Antennal_notch / present absent,
+		6  'Pereonites 2-7 in dorsal view (relative lengths)' / longer_than_wide wider_than_long anteriorly_longer_than_wide_decreasing_posteriorly_to_wider_than_long,
+		7  'Coxal articulation of pereonites 2-4' / free nearly_fused_or_fused,
+		8  'Coxal articulation of pereonites 5-7' / free nearly_fused_or_fused,
+		9  Sternal_processes_on_sternites / present absent,
+		10  'Typhlosole (form in cross-section)' / 'well developed, ventral invagination forming double spiral in cross section' 'intermediate, ventral invagination forming Y shape in cross section' 'minimal, ventral invagination forming laminar projection or inverted u shape in cross section' 'absent, gut round in cross section',
+		11  'Pleonites in lateral view (depth of ventrolateral plates relative to pereonites)' / 'much deeper than pereonites, with large pleurae, basal region of pleopods not visible' 'having depth approximating depth of pereonites, with small pleurae, basal region of pleopods visible',
+		12  Pleonites_with_pleonite_1_pleura / 'distinctly shallower than pleurae of pleonites 2-5' 'near depth of pleurae of pleonites 2-5',
+		13  Pleonite_5_ventral_margin_shape / 'subparallel to dorsal margin along length, not sinuate posteriorly' sinuate,
+		14  Pleotelson_form / 'shallow (lateral fields sloping)' 'vaulted (lateral fields vertical)',
+		15  Pleotelson_dorsal_surface_shape_in_lateral_view / evenly_curving strongly_inflected_ventrally,
+		16  Pleotelson_dorsal_surface_setae / lacking_simple_setae sparsely_covered_with_fine_setae covered_with_abundant_curled_simple_setae covered_with_abundant_elongate_setae densely_covered_with_cuticular_hairs_and_setae with_abundant_robust_setae,
+		17  Pleotelson_dorsal_surface_median_ridge / absent present,
+		18  Pleotelson_dorsal_surface_lateral_ridges / continuous_with_posterior_apex absent,
+		19  Pleotelson_lateral_length_versus_depth / less_than_depth_or_subequal_to_depth greater_than_depth,
+		20  Pleotelson_ventral_surface_anterior_to_uropods / strongly_concave 'flattened, only slightly concave',
+		21  Pleotelson_ventral_margin_anterior_to_uropods_robust_setae / with_robust_setae with_distally_denticulate_setae_in_one_row with_distally_denticulate_robust_setae_in_two_rows with_fine_setae_only,
+		22  Pleotelson_ventral_margin_relative_lengths_of_robust_setae_anterior_to_uropods / posterior_seta_longer_than_anterior_adjacent_setae posterior_seta_length_subequal_to_anterior_adjacent_setae posterior_seta_shorter_than_anterior_adjacent_setae,
+		23  Pleotelson_postanal_ventral_surface / 'present (apical margin and anus separated by cuticular surface)' 'absent (anus adjacent to apical margin)',
+		24  Pleotelson_postanal_ventral_surface_ornamentation / 'unelaborated, or with fine setae on ridge' 'with robust setae (not on ridge)' with_robust_setae_on_ridge with_groove_forming_cleft_in_posterior_apex,
+		25  Pleotelson_lateral_uropodal_ridge / terminating_at_pleotelson_margin_above_uropods curving_strongly_and_extending_posteriorly_from_uropods absent,
+		26  Pleotelson_lateral_uropodal_ridge_setae / with_row_of_robust_setae with_1_robust_seta with_fine_simple_setae lacking_setae,
+		27  'Pleotelson posterolateral margin, differentiation from apex' / uninterrupted with_distinct_inflection_differentiating_apex,
+		28  Pleotelson_posterolateral_margin_shape / forming_rounded_process_with_dorsally_projecting_setae crenate forming_vertical_plate forming_rounded_lobe unelaborated,
+		29  'Pleotelson posterolateral margin (shape if lobe-like)' / curving_dorsally depressed_ventrally_and_posteriorly_angular,
+		30  'Pleotelson posterolateral margin robust setae (if plates or rounded lobes presen' / without_robust_setae with_one_position_with_robust_setae with_two_positions_with_robust_setae_with_intermediate_setae with_two_positions_with_robust_setae_without_intermediate_setae with_multiple_postions_with_robust_setae_with_intermediate_setae,
+		31  'Pleotelson posterolateral margin dorsal robust setae (if plates or lobes present' / with_one_robust_seta 'with multiple robust setae, ventrolateral seta' 'with multiple robust setae, ventrolateral setae subequal to dorsomedial setae',
+		32  'Pleotelson posterolateral margin submarginal seta near inflection point (if plat' / present absent,
+		33  'Pleotelson posterolateral margin dorsolateral surface robust setae (if lobe-like' / absent adjacent_to_margin set_anteriorly_from_margin,
+		34  'Pleotelson posterior apex shape in dorsal view (if postanal ventral surface pres' / projecting indented transverse,
+		35  'Pleotelson posterior apex (flattened or not)' / 'free (not flattened)' strongly_reflexed_and_flattened_against_dorsal_surface,
+		36  'Pleotelson posterior apex projections (if postanal ventral surface absent)' / with_small_rounded_tubercle without_projections,
+		37  'Pleotelson posterior apex length in lateral view(if projecting)' / 'very long (> 0.295 pleotelson length)' 'long (0.120-0.295 pleotelson length)' 'short (< 0.119 pleotelson length)',
+		38  'Pleotelson posterior apex shape in dorsal view (if protruding freely)' / elongate broadly_rounded quadrate,
+		39  Pleotelson_posterior_apex / visible_in_lateral_view obscured_by_posterolateral_margin_in_lateral_view,
+		40  Pleotelson_posterior_apex_robust_setae / absent with_1_pair_of_robust_setae with_2_pairs_of_robust_setae with_3_pairs_of_robust_setae with_4_pairs_of_robust_setae,
+		41  'Antennula articles (in male)' / more_than_6_articles 6_or_fewer_articles,
+		42  Antennula_article_3_rudimentary_second_flagellum / present absent,
+		43  'Antennula article 4 length (relative to article 3)' / shorter 'subequal (ratio 0.95-1.05)' longer,
+		44  'Antennula terminal article shape (taxa with more 6 articles in male)' / tubular globular 'distally oblique, with 2 or more groups of aesthetascs' conical 'tiny, vestigial',
+		45  'Antennula terminal article length relative to penultimate article (taxa more tha' / shorter subequal longer,
+		46  Antennula_penultimate_article_length / longer_than_any_other_article 'length approximately sub-equal to, or less than length of other articles',
+		47  'Antennula articles 5-6 shape (taxa with 6 or fewer articles in male)' / inflated_and_bulbous width_subequal_to_article_4 article_5_only_inflated_and_bulbous,
+		48  'Antennula article 5 length relative to  article 6 (taxa with 6 or fewer articles' / subequal_or_less greater article_6_not_expressed,
+		49  'Antennula penultimate and ante-penultimate articles shape in cross section' / flattened 'oval, or circular',
+		50  'Antenna flagellum proximal articles dense cover of cuticular hairs (in male)' / present absent,
+		51  'Antenna flagellum proximal articles dense cover of cuticular hairs (in female)' / present absent,
+		52  Antenna_propodal_article_3_scale / well_developed rudimentary_but_articulated absent,
+		53  Antenna_article_5_length_relative_to_article_4 / shorter_or_subequal longer,
+		54  Antenna_article_6_length_relative_to_articles_4_and_5_combined / shorter_or_subequal longer,
+		55  Mandible_palp_third_article_shape / 'crescent-like' relatively_linear,
+		56  'Mandible palp third article setae on medial-distal margins' / with_fewer_than_5_setae with_more_than_5_setae,
+		57  Mandible_palp_3rd_article_coarsely_spinulate_setae / absent coarsely_spinulate_setae_with_other_setae coarsely_spinulate_setae_present_only,
+		58  Mandible_palp_third_article_medial_surface / naked covered_in_dense_cuticular_hairs covered_in_cuticular_combs,
+		59  Mandible_incisor_processes_width_relative_to_thickness / broad thin,
+		60  Mandible_right_lacinia_mobilis_shape / 'large, distinctly separated' 'indistinct, spine-like' absent,
+		61  Mandible_right_lacinia_mobilis_dentate_plates / two_dentate_plates single_dentate_plate,
+		62  Mandible_spine_row_bifurcate_spines / present absent,
+		63  Mandible_spine_row_general_shape_between_incisor_and_molar / in_smooth_low_arc on_projecting on_linear_pedunculate_projection on_round_pedunculate_projection on_elongate_penicil,
+		64  Mandible_spine_rows_shape_of_spine_ridge_in_ventral_view / distal_margin_in_line_with_proximal_margin distal_margin_protruding_in_relative_to_proximal_margin 'forming strongly convex arc, protruding medially',
+		65  Mandible_spine_rows_shape_of_spine_ridge_in_medial_view / basal_insertions_in_line_between_incisor_and_molar_processes basal_insertions_crossing_dorsally_and_then_abruptly_angling_posteriorly,
+		66  Mandible_right_spine_row_first_spine_relative_to_remaining_spines / separated not_separated,
+		67  Maxillula_medial_lobe_width / less_than_or_subequal_to_lateral_lobe greater_than_lateral_lobe,
+		68  Maxillula_medial_lobe_pappose_setae / up_to_three_setae four_setae five_setae six_setae_or_more,
+		69  Maxillula_medial_lobe_accessory_setae / one_or_two more_than_two absent,
+		70  Maxillula_lateral_lobe_distal_margin_denticulate_robust_setae / with_one_or_more absent,
+		71  Maxillula_lateral_lobe_distal_margin_smooth_robust_setae / up_to_nineteen twenty_or_more,
+		72  Maxillula_lateral_lobe_ventral_face_setae_position / widely_spaced closely_spaced,
+		73  '(Maxillula) lateral lobe ventral face plumose seta' / present absent,
+		74  Maxilla_outer_lateral_lobe_distal_margin_setal_row / approximately_linear_and_transverse_to_lobe_axis curving_and_extending_proximally_along_medial_margin 'with two angles - transverse to lateral margin and oblique on medial margin',
+		75  'Pereopod I dactylus ventrodistal margin cuticular fringe (in male)' / with_multiple_rows_of_minute_sharp_spines with_row_of_sharp_spines 'with row of thin scale-like spines' 'with cuticular fringe (minute cuticular hairs)' cuticular_fringe_absent,
+		76  'Pereopod I dactylus ventrodistal margin cuticular fringe (in female)' / with_multiple_rows_of_minute_sharp_spines with_row_of_sharp_spines 'with row of thin scale-like spines' cuticular_fringe_absent,
+		77  Pereopod_I_dactylus_accessory_claws / several one_only absent,
+		78  Pereopod_I_dactylus_distal_accessory_spines / several one_only absent,
+		79  'Pereopod I propodus dorsal margin setae (in male)' / setae_present_in_several_groups_between_proximal_and_distal_margin setae_confined_to_single_group_at_distal_margin,
+		80  'Pereopod I propodus dorsal margin proximal region (in male)' / protruding_to_distodorsal_margin_of_ischium protruding_to_distodorsal_margin_of_carpus not_protruding,
+		81  'Pereopod I propodus dorsal margin proximal region (in female )' / protruding_to_distodorsal_margin_of_ischium protruding_to_distodorsal_margin_of_carpus not_protruding,
+		82  'Pereopod I propodal palm shape (in male)' / concave convex_to_straight,
+		83  'Pereopod I propodal palm proximal simple spine (in male)' / present absent,
+		84  'Pereopod I propodal palm median simple spine (in male)' / present absent,
+		85  'Pereopod I propodal palm distal simple spines (in male)' / one more_than_one absent,
+		86  'Pereopod I propodal palm medial rugose cuticular pad (in male)' / present absent,
+		87  'Pereopod I propodal palm stout denticulate setae (in male)' / serrate bifid absent,
+		88  'Pereopod I propodal palm  stout robust setae (in male)' / conical basally_inflated absent,
+		89  'Pereopod I propodal palm setal ridge (in male)' / absent present,
+		90  'Pereopod I propodal palm shape (in female)' / concave convex straight,
+		91  'Pereopod I propodal palm midpoint simple spine (in female)' / present absent,
+		92  'Pereopod I propodal palm stout denticulate setae (in female)' / serrate bifid absent,
+		93  'Pereopod I propodal palm stout robust simple setae (in female)' / conical basally_inflated absent,
+		94  'Pereopod I merus distodorsal margin in anterodorsal view (in male)' / 'shelf-like and U-shaped' 'spine-like and pointed',
+		95  'Pereopod I merus distodorsal margin projection in anterodorsal view (in female)' / 'shelf-like and U-shaped' 'spine-like and pointed',
+		96  'Pereopod I merus distodorsal margin setal form (in male)' / with_more_than_2_elongate_simple_setae 'with 1-2 robust simple setae' 'with 1-2 elongate simple setae',
+		97  'Pereopods II-III propodus articular plate' / present absent,
+		98  'Pereopod II basis dorsal margin proximal group of setae (in male)' / robust_setae elongate_fine_setae without_distinct_group_of_large_setae,
+		99  'Pereopod II basis dorsal margin proximal group of setae (in male)' / in_1_row 'in 2 rows (rarely more)',
+		100  'Pereopod II basis dorsal margin projection (in male)' / present absent,
+		101  'Pereopod II basis dorsal margin proximal group of setae (in female)' / robust_setae elongate fine setae proximally without_distinct_group_of_large_setae,
+		102  'Pereopod II basis dorsal margin proximal group of setae number of rows (in femal' / in_1_row 'in 2 rows (rarely more)',
+		103  'Pereopod II basis dorsal margin projection (in female)' / present absent,
+		104  'Pereopod IV prehensility (sexual dimorphism, adult male form)' / prehensile 'similar to female, not prehensile',
+		105  'Pereopod IV subchelate major hinges (in male if dimorphic)' / on_dactylus_and_propodus on_propodus_and_carpus,
+		106  'Pereopod IV dactylus length (in male)' / shorter_than_or_subequal_to_propodal_palm longer_than_propodal_palm,
+		107  Pereopod_IV_propodus_articular_plate / present absent,
+		108  'Pereopods V-VII propodus articular plate' / present absent,
+		109  'Pereopods V-VII basis dorsal ridge shape' / rounded_or_angular_on_all forming_distinct_plate_at_least_on_pereopod_VII,
+		110  'Pereopods V-VII basis dorsal margin' / with_robust_setae with_elongate_fine_setae without_large_setae,
+		111  'Pereopods V-VII basis lateral face central longitudinal ridge' / present absent,
+		112  'Pereopods V-VII basis lateral face ventral longitudinal ridge' / present absent,
+		113  'Pereopods V-VII basis lateral face ventral longitudinal ridge' / with_fine_setae setae_absent,
+		114  Pereopod_VII_ischium_dorsal_ridge_flange_width / greater_than_or_subequal_to_shaft_width less_than_shaft_width flange_absent,
+		115  Pereopod_VII_basis_dorsal_ridge_distal_margin_shape / indented rounded,
+		116  Penes_form / straight curved_posteriorly,
+		117  Penes_extent_medially / near_or_reaching_midline past_midline_and_onto_first_pleonite,
+		118  Penes_shaft_cuticle / smooth with_cuticular_hairs denticulate,
+		119  Penes_setae / on_shaft on_tip absent,
+		120  Penes_distal_tip_shape / rounded pointed flattened truncate,
+		121  'Pleopod exopods II-V proximal article distolateral lobes length relative to dist' / shorter_than_distal_article subequal_or_longer_than_distal_article,
+		122  'Pleopod exopods I-V lateral proximal lobes' / 'on I-V' 'on II-V' absent_on_II absent,
+		123  'Pleopod exopods I-V medial proximal lobes' / 'on I-V' 'on II-V' 'on III-V' absent,
+		124  'Pleopod endopods marginal setation (in male)' / 'endopods I-V without setae' endopod_I_only_with_setae 'endopods I-V with setae',
+		125  Pleopod_protopods_medial_margins / 'I-V with epipods or  small projections' 'II-V with epipods or small projections' 'III-V with epipods' 'I-V without epipods',
+		126  'Pleopod I-V protopods medial margin coupling hooks (in male)' / 'present (on at least some pleopods)' absent,
+		127  'Pleopod protopods medial margin setae (in male)' / with_plumose_setae with_minutely_serrate_or_simple_setae setae_absent,
+		128  'Pleopod protopods medial margin coupling hooks (in female)' / present absent,
+		129  'Pleopod protopods medial margin pleopod I coupling hook numbers (in female)' / one_only with_multiple_coupling_hooks,
+		130  Pleopod_protopod_I_lateral_epipod / 'lobe-like' linear absent,
+		131  Pleopod_protopod_II_lateral_epipod / 'lobe-like' linear absent,
+		132  'Pleopod protopods lateral epipods III-V' / 'lobe-like' absent,
+		133  Male_pleopod_I_exopod_lateral_margin_shape / rounded broadly_angular concave convoluted,
+		134  Male_pleopod_I_exopod_dorsal_surface / with_setae lacking_setae,
+		135  Male_pleopod_I_exopod_ventral_surface_shape / flat curving_anteriorly,
+		136  Male_pleopod_I_protopod_shape / longer_than_wide width_subequal_length significantly_wider_than_long,
+		137  'Male pleopod II endopod appendix masculina (stylet) proximal shape ventrallly' / broadly_concave 'rod-like, convex' 'rod-like, indented',
+		138  Male_pleopod_II_endopod_stylet_channel / tube_along_distal_length not_forming_tube,
+		139  Male_pleopod_II_endopod_stylet_tip_shape / truncateor_broadly_rounded acutely_rounded conical 'sharply pointed and spine-like',
+		140  Male_pleopod_II_endopod_stylet_tip_denticles / smooth_or_with_minute_rounded_denticles with_large_subterminal_denticles,
+		141  Male_pleopod_II_endopod_stylet_marginal_setation / multiple_setae 1_seta setae_absent,
+		142  Male_pleopod_II_endopod_stylet_length_relative_to_exopod / near_to_distal_margin not_extending_beyond_half_length,
+		143  Uropod_protopod_extension_posteriorly_in_lateral_view / beyond_or_subequal_to_pleotelson_apex not_reaching_pleotelson_apex,
+		144  Uropod_protopod_dorsomedial_ridge_shape / 'plate-like' 'spur-like' rounded_projection,
+		145  Uropod_protopod_dorsomedial_ridge_shape / parallel_to_ventral_margin laterally_concave_at_midpoint,
+		146  Uropod_protopod_dorsomedial_ridge_margin_setal_form / robust_spinose_distally robust_simple fine_simple absent,
+		147  Uropod_protopod_distoventral_margin_robust_setal_number / absent one two three four_or_more,
+		148  Uropod_protopod_distoventral_margin_robust_spinose_setae / absent present,
+		149  Uropod_rami_distal_tips_shape / pointed rounded,
+		150  'Uropod rami cross-sectional shape' / round flattened_dorsally_and_ventrally flattened_on_dorsal_surface_only 'exopod round, endopod flattened',
+		151  Uropod_endopod_length_relative_to_protopod / shorter subequal longer,
+		152  Uropod_endopod_length_relative_to_exopod / subequal_or_longer distinctly_shorter,
+		153  Uropod_endopod_shape / straight_or_curving_dorsally curving_medially,
+		154  Uropod_endopod_dorsal_margin_robust_setae_placement / all_along_length midlength proximally absent,
+		155  Uropod_endopod_spine_on_dorsal_margin / present absent,
+		156  Uropod_endopod_proximoventral_margin_shape_in_medial_view / sinuate convex,
+		157  'Uropod exopod robust setae on dorsal margin (in male)' / one_or_more absent,
+		158  'Uropod exopod robust setae on dorsal margin (in female)' / one_or_more absent,
+		159  Pereopod_II_basis_proximal_dorsal_ridge / absent present,
+		160  Pereopodal_exopods / present absent,
+		161  Short_carapace / present absent,
+		162  Heart_position / thoracic 'pleonal-thoracic',
+		163  Uropodal_articles / either_multiarticulate uniarticulate,
+		164  Telson / free fused_to_pleonite_6,
+		165  Antennular_second_flagellum / multiarticulate tiny_or_absent,
+		;
+
+MATRIX
+[                                             10        20        30        40        50        60        70        80        90        100       110       120       130       140       150       160       170       180       190      ]
+[                                              .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .      ]
+Amphisopus_annectans                  211112212411-212211112141123-521-31---12121312--2223212211111222221311121122231331---23311-3311113--2111221123112312223412212121-331422211311111124223311221111222222
+Amphisopus_lintoni                    211112212411-212211111141123-521-31---12121322--2223212211111121?21411121322331331---23311-3311113--2121221123112312213312212121-331422211313111124223311221111222222
+Colubotelson_fontinalis               111112212311-223121123111324122-211-2213121212--2223112221121131121211121153231332---21113-1311112123--111111?21231211{12}112212222-33112123-111113124211311222111222222
+Colubotelson_joyneri                  112112222211-222121121111324122-211-221312121{12}--122321222112?13112121212113323?332---21113-1311112122121111122212312111112212222-33111123-111113124214111422221222222
+Colubotelson_searli                   112212222411-22?12112111132412?--11-221312121{12}--1??321??2?12?13112121?1???3332?332---21113-111111212212111112222-312111112212222-33112123-1111?3124214111222111222222
+Colubotelson_sp._1                    111112212411-222121123111324122-211-2213121212--2223212221121131121211121133231332---21112-1311112122121111112212312211112212222-33111123-111113123211311222111222222
+Colubotelson_sp._2                    111112212411-221121122111324122-211-2213121212--12231122111211311212111211??23?332---21113-1311112122121111121212312211112212222-33111123-111113122211311422111222222
+Crenisopus_acinifer                   122222212411-212121112112425-----11-3311221---222223122111111122121111121?5423122212323311-3321323--3--1112211212311113112212222-331111212211113114223211222111222222
+Crenoicus_buntiae                     121112112311-22312111{23}111324121-311-3213121212--122311??1?121131111211122122211232---23121-311111212212111111222-312213112212222-33121122-412113122211211422111222222
+Crenoicus_harrisoni                   121112112311-22?12111{12}1?132412?--11-3?13121212--122311??1?12?131111211121?32221212---23123-3111112122121-1111222-312213112212222-33121122-4121?3122211211222111222222
+Crenoicus_n.sp.                       121112112311-22312111{23}111324121-311-3213121212--12231122111211311212111--154231222---23123-311111212212111111222--?2213112212222-33121122-412113122211211{24}22121222222
+Eophreatoicus_sp._4                   111112{12}12411-22222111{12}132423-412-11-222312?312--2223??2211111121221411121352231222---23112-1111311112211111123112122223{13}11112222-311121212111111124123311222112222222
+Eophreatoicus_sp._6                   111112{12}12411-222221111132423-412-11-2223121312--222321221311112221141112135423?222---23112-111131221221111112311212221{12}111112222-311121212111111124123311222112222222
+Eremisopus_beei                       111112212311-212211121112423-421-11-1212121312--2113212211111122221211122353{12}31232---23112-3111313--3--1111123112222113112232121-311121212111111123213311222111222222
+Gariwerdeus_beehivensis               111212212311-22412112211132421--111-331{23}221---11222311221112113112121112113323133{12}---23111-3111113--3--1111112211312213112212222-33111123-211113123211311422221222222
+Gariwerdeus_ingletonensis             111212212311-22412112211132421--111-3311221---232223112211121131121211121333231331---21311-13111122122111111122113122131122122{12}2-33112123-111113225211311422221222222
+Gariwerdeus_turretensis               111212212311-22412112311132421--111-3311221---112223{12}12211121131121211121154232232---23211-1111112122121111112211312213112212222-33112123-111113232211311422221222222
+Hyperoedesipus_plumosus               {12}2112222242212141222422-3-12-------2----121511--22232122111111211212111-2354231{12}31---23313-3311123--212111221322-3111134{12}14121211332121112211112111-23111422221222222
+Hypsimetopus_intrusor                 12112?????22121{23}122?1???1415------------1?1???-----?2122??1{23}?1{23}?111{34}?11????????3?1---?3?1??????????????2--??1????31?????21?2?????3311?11??{234}1?2{12}3?2??1?1112??1?1222222
+Kalliapseudes_obtusifrons             -----211--???11?122???113-?5-----1?-----1111?2-----12?????13-25?121??21????????-3?---?331?-33---1??????2--??1????3-----?-4-342?2-3321212----?--3--1-21?11?22??1111121
+Mesacanthotelson_setosus              111112212311-222121121111125-----11-1113121212--222311222112?131?21211121153232332---21312-1311112122121111112211312233412212222-33112123-111113123211{23}11222111222222
+Mesacanthotelson_tasmaniae            111112212?11-22{26}122123111125-----11-1113121212--2??3{12}1??2?1{23}?131121{23}111???5223?332---21113-131111111112111111322-3122{13}3112212222-33112123-1111?3123211311222111222222
+Mesamphisopus_abbreviatus             111112112?11-222121111112415-----11---12{12}2?512122??3????1?111123??12211????233?331---2??11-{12}3?111???21211?112?21231?????12232121-3311?12121?11?11?4123311{23}22111222222
+Mesamphisopus_capensis                111112112411-222121111112415-----11---12{12}11512122223{12}2??1?111123221211111332231332---22211-211111212212111112321231211{12}112232121-331111212111111124123311222111222222
+Mesamphisopus_n.sp.                   121112112411-222121111112415-----11---1?121512--2??311??1?111123221211?---3?23?332---22211-2?1111??????1111123112312111112232121-331121?12111111124122311222111222222
+Metaphreatoicus_affinis               111112212311-222121122111324122-211-22131?1212--2223212221121131121211121353231332---21112-1311113--3--1111112212312223112212222-33112123-111113124211311222111222222
+Metaphreatoicus_australis             111112212311-223121122111324122-211-221{34}121212--2223112211121131121211121153231232---2{13}113-1311112112111111122211312122112212222-33112123-111113123211311222111222222
+Metaphreatoicus_lacustris             111112212311-222121123111324122-211-2213121212--222311221112113?121?11121153231232---21113-1311112112111111122211312123112212222-33112123-111113123211311222111222222
+Metaphreatoicus_magistri              111112212311-223121123111324122-211-2213121212--2223111221121131121311121133231332---21312-13111121221211111{12}2211312122112212222-33111123-111113124211311{34}22111222222
+Metaphreatoicus_sp.                   111112212311-223121123111324122-211-2213121212--12?321??2?1{23}1131121211121?53231332---21113-131111212211111112?211312123412212222-33112123-1111?3123211311222111222222
+Naiopegia_xiphagrostis                111112212311-222121112111324121-111-2213221---222113112211121131121211121122231331---23111-3111113--3--1111112211312213112212222-33112123-111113224211311422221222222
+Neophreatoicus_assimilis              1?211311??11-21?1211??1?112??????11---1?121212-----322??1?221133??121??????????2?22132312????1??1??????1111?{12}????3122??112?14222-3311?113-11{12}21312311?111?22??1222222
+Nichollsia_kashiense                  112121221422?2121222122-3-12-------2----121122---22{13}2122111112232214111---2233?331---23111-3111323--3--2--221322-311113422412222-332121212211212141-{12}4122422221222222
+Notamphisopus_dunedinensis            121112212?11-2{12}212112{12}111{123}24122-211-221{34}121{12}1{12}--2??3{12}1????1{23}?13?1?12111-{12}??????232---13123-311111??????11111122113121???122{12}222??33112113-2111?3124211211422221222222
+Notamphisopus_flavius                 121112212311-223121121111324131-211-221212121{12}--1223212211121131121{23}111-1133231232---13123-3111113--3--111111221131211{12}412222222-33112113-111113124211{23}11{24}22221222222
+Onchotelson_brevicaudatus             111112212311-222121133111325-----11-1112121122--2113{12}12231121131121211121153232332---21313-1311113--3--111111222-312223412212222-33111113-111111122211311222221222222
+Onchotelson_spatulatus                111112212311-223121133111325-----11-1112121112--21??2122311211311?1211121153232332---21313-1311113--3--111111222-312213412212222-33111113-111111122211311222221222222
+Paramphisopus_palustris               212222222411-211121111121123-521-11-221{345}121312--2213212211111123221411121352231332---23113-3311111122112--1123212322123313212111-331111211313111122123211222111222222
+Paraphreatoicus_relictus              111112212311-222121122111324122-211-2213121212--1223112221121131121{23}11121133231332---21312-131111211211111111221231222{12}1122{23}2222-33111123-1111?3123211311222111222222
+Peludo_paraliotus                     111112211411-225121122111423-1-2-12---11121312--2113212212111122221211121333132331---23111-3111113--3--2--112312-2122233111222{12}2-231321312111111141-11311422221222222
+Phreatoicoides_gracilis               12112121242222121222122-3-15-------1----121512--2223212211111121121211122?54331331{12}2{13}23311-3311123-----2--221222-312113421412222-332121112311212111-14{12}22412221222222
+Phreatoicoides_sp._A                  12112221142222221222232-3-15-------1----121512--122321????111121121{12}11122353231331---23311-3311123--2122--221222-312213{34}22412222-332121112311213111-14322312221222222
+Phreatoicoides_sp._B                  12112321142212111222122-3-15-------1----121512--1223212211111121121311121353231331{12}2323311-3311223--2122--221222-312213{34}21412222-33212111231?213121-11311222111222222
+Phreatoicoides_sp._Zeehan             122122222422121?1222112-1315------------121412-----321??1?12?122?212111???5413?23112123311-3122323--2122--221222-3121114{12}1412222-3321211123131?2111-11112212221222222
+Phreatoicopsis_raffae                 211112211111-2121211132-2415-------2----111312--2223212112112141-214222122543312222132311313122323--3--2--2211112312213311111222-22112123-221121123113311222111222222
+Phreatoicopsis_terricola              211112211111-2121211132-2415-------2----111312--2223212112112141-21422212254331222213231131312232??????2--2213112312{12}13311111222-22112123-221121123113311222111222222
+Phreatoicus_orarii                    122213212?11-22212211?1?1425-----11-3213121212-----321??1?22?13112241???????23?232---23121-31111???????111??1?22-312213112312222-33111123-11{12}1?3122211111222111222222
+Phreatoicus_typicus                   122213212211-222122111113-25-----11-3213121212--122321??1?22?132122411122?22212232---23121-3111113--3--1-1111222-311213112212222-33112113-111113122114111222111222222
+Phreatomerus_latipes                  211112222411-212121112142{13}23-521-11-221{45}121312--222321221111112222141112131{13}232232---23313-3311113--2122--1123112222213212312111-331411211313111125113211222111222222
+Pilbarophreatoicus_n.sp.              21222121142212121222122-3-12-------2----121511---223212211111122?2141?1---332322211212331123311311121122--111322-3111134224142{12}2-33211111231{13}213121-23111422221222222
+Pilbarophreatoicus_platyarthricus     1?122?21?42212121222122-3-12-------2----121511---22321?????11122?21{12}?11???5423?2?11212331????1?313--???2--111322-31?113?22414222-3321211????3213121-2?211422221222222
+Platypyga_subpetrae                   211112212411-222121113111421-----22-----121322--2223212211111122221211122?32231232---23211-1311{13}121121111{12}11231123122131122121312331121212211113122123211222111222222
+Protamphisopus_wianamattensis         1???1?11??11-21?1211??1?1?15-----31---111?111?--2???212??????????????????????????1???????1?????????????2--??2?1??32???????????????????????????231???1?311?22??2?2?22?
+Qld._nsp.1                            111122212411-213121111112415-----21-----123512--22231112111121232211311-135123133111223311-3311123--3--112{12}123212322211{34}21213222-332121212211213125123311122111222222
+Qld._nsp.2                            121122212411-213121111112421-----21-----123512--22231222?1?1??????11111-135{23}23123211223321-33?1123--3--112222222-322211{23}21211222-331121212{12}11113125223311222111222222
+Spelaeogriphus_lepidops               -----211--???11?122???113-?5-----1?-----1111?2-----12?????11121?121??21????????33?---?331?-33-1-???????2--??1????3-1113?-4-341?1-3321212----?--3--1-22?21?22??1111111
+Stenasellus_virei                     ?????211?4???11?12????113-?5-----1?-----1211?2--2??121????13-211121???????2????332---?131?-13---1??????2--111????3---13?14-142?2-332--12----?--3--1-21311?22??1222222
+Synamphisopus_ambiguus                211112212111-222221112112421-----21-----111322--2223212213112141-212122123332322322{12}321312-1111321121121112121112312213312211222-3311212123211111{12}4223311222111222222
+Synamphisopus_doegi                   211112212111-222221112112421-----21-----111312--2223212213112141-21112212333231232---23212-1311323--21211121211123122123122112{12}2-331121212321111123223311222111222222
+Tainisopus_fontinalis                 ?2211211?4???11?12????113-?5-----1?-----1111?2--2??221????111211121???????4????332---?131?-13---1??????2--111????3---13?14-211?1-11112131221?1?3--1-22111?22??1222222
+Uramphisopus_pearsoni                 111112212411-222121121111325-----11-2114121212--222321222?121131121211121154232232---21312-131111222222111111222-312223412212222-33111123-111111123211311222111222222
+;
+END;
+

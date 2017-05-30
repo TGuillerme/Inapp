@@ -61,6 +61,7 @@ then
 fi
 
 echo "set maxtrees=500 increase=auto autoInc=500;"  >> ${CHAIN}.infer.nex
+echo "set outroot=monophyl;" >> ${CHAIN}.infer.nex
 
 
 ## Add the PAUP search options
@@ -68,7 +69,7 @@ if [ "$SEARCH_OPTIONS" != "" ]
 then
     cat $SEARCH_OPTIONS >> ${CHAIN}.infer.nex
 else
-    echo "hsearch addseq=random nreps=1000 rearrlimit=5000000000;" >> ${CHAIN}.infer.nex
+    echo "hsearch addseq=random nreps=100 rearrlimit=5000000 limitperrep=yes;" >> ${CHAIN}.infer.nex
 fi
 
 ## Save the tree and close

@@ -1,23 +1,22 @@
-sourceDir <- function(path, ...) {
-    for (name_file in list.files(path, pattern = "[.][RrSsQq]$")) {
-        source(file.path(path, name_file), ...)
-    }
-}
+source("Functions/read.tree.score.R")
+source("Functions/standardise.score.R")
+source("Functions/plot.scores.R")
 
-sourceDir("/Functions/")
-
+library(Inapp)
 
 ## Read the tree scores
-chain <- "Giles2015"
-path <- "/Data/Scores/"
-scores <- read.tree.score(chain, path)
+path <- "Data/Scores/"
+chains <- list.files(path, pattern = ".morphy")
+chains <- unlist(strsplit(chains, split = ".morphy.count"))
 
-## Get the score data
-scores_std <- standardise.score(scores, "base")
+## Get the scores
+scores <- sapply(chains, read.tree.score, path, simplify = FALSE)
 
-## Plot the normal score differences distributions
-boxplot(scores)
+## Standardise the scores
+scores_std <- lapply(scores, standardise.score, "base")
 
-plot(density(scores$NAextr), xlim = c(scores$NAmiss[1], max(scores$NAextr)), col = "blue", xlab = "Number of steps", main = "Effect of different NA treatment")
-abline(v = scores$NAmiss[1], col = "orange")
-legend("center", legend = c("NA = ?", "NA = 9"), col = c("orange", "blue"), lty = 1)
+## Plot the normal score differences for a single distributions
+plot.scores(scores_std[[3]])
+
+## Plot all the densities
+plot.scores.list(scores, relative.density = FALSE)

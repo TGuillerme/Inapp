@@ -18,7 +18,7 @@ read.tree.score <- function(chain, path = ".") {
     full_path <- paste(path, chain_list, sep = "")
     names <- strsplit(chain_list, split = paste(chain, ".", sep = ""))
     names <- unlist(lapply(names, `[[`, 2))
-    names <- strsplit(names, split = ".score")
+    names <- strsplit(names, split = ".count")
     names <- unlist(lapply(names, `[[`, 1))
 
 

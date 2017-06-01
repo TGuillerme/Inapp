@@ -46,6 +46,11 @@ fi
 
 cp ${CHAIN}.nex ${CHAIN}.infer.nex
 
+## Get the outgroup
+outgroup_pos=$(grep -n -i "TAXLABELS" ${CHAIN}.nex | sed 's/:.*//g')
+let "outgroup_pos += 1"
+outgroup=$(sed -n ''"${outgroup_pos}"'p' ${CHAIN}.nex | sed 's/[[:space:]]//g')
+
 ## ~~~~~~~~~~~~~~~~~~
 ## GETTING THE ISLAND
 ## ~~~~~~~~~~~~~~~~~~
@@ -57,8 +62,10 @@ then
     cat $PAUP_OPTIONS >> ${CHAIN}.infer.nex
 fi
 
+echo "set errorstop=no;" >> ${CHAIN}.infer.nex
 echo "set maxtrees=500 increase=auto autoInc=500;"  >> ${CHAIN}.infer.nex
 echo "set outroot=monophyl;" >> ${CHAIN}.infer.nex
+echo "outgroup ${outgroup};" >> ${CHAIN}.infer.nex
 
 
 ## Add the PAUP search options
@@ -70,6 +77,7 @@ else
 fi
 
 ## Save the tree and close
+echo "roottrees;"  >> ${CHAIN}.infer.nex
 echo "savetrees /file=${CHAIN}.tre replace;"  >> ${CHAIN}.infer.nex
 echo "q;"  >> ${CHAIN}.infer.nex
 echo "\nEND;" >> ${CHAIN}.infer.nex

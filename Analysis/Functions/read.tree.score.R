@@ -20,6 +20,8 @@ read.tree.score <- function(chain, path = ".") {
     names <- unlist(lapply(names, `[[`, 2))
     names <- strsplit(names, split = ".count")
     names <- unlist(lapply(names, `[[`, 1))
+    names <- strsplit(names, split = "morphy.")
+    names <- unlist(lapply(names, `[[`, 2))
 
 
     data <- list()

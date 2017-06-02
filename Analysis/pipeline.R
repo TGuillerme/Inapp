@@ -6,8 +6,8 @@ library(Inapp)
 
 ## Read the tree scores
 path <- "Data/Scores/"
-chains <- list.files(path, pattern = ".morphy")
-chains <- unlist(strsplit(chains, split = ".morphy.count"))
+chains <- list.files(path, pattern = ".morphy.inapplicable.count")
+chains <- unlist(strsplit(chains, split = ".morphy.inapplicable.count"))
 
 ## Get the scores
 scores <- sapply(chains, read.tree.score, path, simplify = FALSE)

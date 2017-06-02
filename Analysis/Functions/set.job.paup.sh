@@ -85,6 +85,8 @@ echo "\nEND;" >> ${CHAIN}.infer.nex
 ## Add the trees inference to the paupjob
 echo "## Infer the trees" > ${CHAIN}.paupjob.sh
 echo "paup ${CHAIN}.infer.nex" >> ${CHAIN}.paupjob.sh
+echo "mv ${CHAIN}.infer.nex Done/" >> ${CHAIN}.paupjob.sh
+echo "mv ${CHAIN}.paupjob.sh Done/"  >> ${CHAIN}.paupjob.sh
 echo "" >> ${CHAIN}.paupjob.sh
 
 #end;

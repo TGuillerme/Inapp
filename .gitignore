@@ -5,6 +5,8 @@
 *.tre
 *.score
 *.nex
+*.nex*
+tmp
 
 # LaTeX
 *.fls

@@ -33,3 +33,10 @@ read.tree.score <- function(chain, path = ".") {
 
     return(data)
 }
+
+read.matrices <- function(name, path = ".") {
+    ## Load the matrix
+    matrix <- Claddis::ReadMorphNexus(paste(path, paste(name, "nex", sep = "."), sep = "/"))
+    
+    return(matrix$matrix)
+}

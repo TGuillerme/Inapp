@@ -13,8 +13,12 @@ chains <- unlist(strsplit(chains, split = ".morphy.inapplicable.count"))
 ## Get the scores
 scores <- sapply(chains, read.tree.score, path, simplify = FALSE)
 
+## Get the matrices
+matrices <- lapply(chains, read.matrices, path = "Data/Matrices")
+
 ## Standardise the scores
-scores_std <- lapply(scores, standardise.score)
+scores_std <- mapply(standardise.score, scores, matrices, SIMPLIFY = FALSE)
+
 
 ## Plot the normal score differences for a single distributions
 plot.scores(scores_std[[10]])
@@ -23,7 +27,18 @@ plot.scores(scores_std[[10]])
 plot.scores.list(scores_std, relative.density = TRUE)
 
 ## Get the proportion of nas
-nas_prop <- lapply(as.list(names(scores)), get.inapp.proportion, path = "Data/Matrices")
+# nas_prop <- lapply(as.list(names(scores)), get.inapp.proportion, path = "Data/Matrices")
+
+
+scores_Inapp <- lapply(scores_std, `[[`, 1)
+scores_newstate <- lapply(scores_std, `[[`, 3)
+
+ylim <- c(min(c(unlist(scores_Inapp), unlist(scores_newstate))), max(c(unlist(scores_Inapp), unlist(scores_newstate))))
+
+boxplot(scores_Inapp, las = 2, ylab = "relative extra steps from using '-' as '?'", main = "Step differences between using new state or inapplicable", col = cols[1], outline = FALSE, border = cols[1], ylim = ylim)
+boxplot(scores_newstate, xlab = "", ylab = "", main = "", col = cols[2], outline = FALSE, border = cols[2], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
+legend("topleft", legend = c("inapplicable", "new state"), col = cols[1:2], pch = 15, cex = 1)
+
 
 
 ## Score differences

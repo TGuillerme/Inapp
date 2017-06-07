@@ -6,6 +6,7 @@
 #' @param name The name of the matrix
 #' @param path path to the original matrices
 #' @param difference either \code{"substract"} or \code{"divide"} to be applied to the scores
+#' @param matrix the character matrix
 #' 
 #' @examples
 #'
@@ -14,35 +15,42 @@
 #' @author Thomas Guillerme
 #' @export
 
-standardise.score <- function(data) {
-
-    ## Standardise the scores by dividing it by the base score
-    data_out <- list()
-    for(score in 1:length(data)) {
-        data_out[[score]] <- data[[score]]/data$missing[[1]]-1
+standardise.score <- function(data, matrix, std = c("MP", "ntax", "nchar", "nas")) {
+    
+    ## Standardise the scores by dividing it by the proportion of nas
+    if(any(std == "nas")) {
+        nnas <- length(which(is.na(as.vector(matrix))))/length(matrix)
+        for(score in 1:length(data)) {
+            data[[score]] <- data[[score]]*nnas
+        }
     }
-    names(data_out) <- names(data)
-    return(data_out)
-}
 
-na.standardise.score <- function(data, name, path = ".") {
+    ## Standardise the scores by dividing it by the number of taxa
+    if(any(std == "ntax")) {
+        ntax <- nrow(matrix)
+        for(score in 1:length(data)) {
+            data[[score]] <- data[[score]]/ntax
+        }
+    }    
 
-    ## Open the matrix
-    matrix <- Claddis::ReadMorphNexus(paste(path, paste(name, "nex", sep = "."), sep = "/"))
-    ## Get number of NA
-    n_nas <- length(apply(matrix$matrix, 2, function(X) any(is.na(X))))
-    ## Get the score corrector
-    ncol(matrix$matrix)-n_nas
-
-    ## Standardise the scores by dividing by the number of NAs
-    data_out <- list()
-    for(score in 1:length(data)) {
-        data_out[[score]] <- ( (data[[score]] - n_nas) / (data$missing[[1]] - n_nas) )-1
+    ## Standardise the scores by dividing it by the number of characters with NAs
+    if(any(std == "nchar")) {
+        nchar <- length(unlist(apply(matrix, 2, function(X) any(is.na(X)))))
+        for(score in 1:length(data)) {
+            data[[score]] <- data[[score]]/nchar
+        }
     }
-    names(data_out) <- names(data)
-    return(data_out)
-}
 
+    ## Standardise the scores by dividing it by the most parsimonious score
+    if(any(std == "MP")) {
+        MP <- data$missing[1]
+        for(score in 1:length(data)) {
+            data[[score]] <- data[[score]]/MP-1
+        }
+    }
+
+    return(data)
+}
 
 get.inapp.proportion <- function(name, path = ".") {
     ## Open the matrix

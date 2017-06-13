@@ -4,6 +4,7 @@ source("Functions/plot.scores.R")
 
 library(Inapp)
 library(Claddis)
+library(MASS)
 
 ## Read the tree scores
 path <- "Data/Scores/"
@@ -17,7 +18,7 @@ scores <- sapply(chains, read.tree.score, path, simplify = FALSE)
 matrices <- lapply(chains, read.matrices, path = "Data/Matrices")
 
 ## Standardise the scores
-scores_std <- mapply(standardise.score, scores, matrices, SIMPLIFY = FALSE)
+scores_std <- mapply(standardise.score, scores, matrices, std = "MP", SIMPLIFY = FALSE)
 
 
 ## Plot the normal score differences for a single distributions
@@ -29,90 +30,30 @@ plot.scores.list(scores_std, relative.density = TRUE)
 ## Get the proportion of nas
 # nas_prop <- lapply(as.list(names(scores)), get.inapp.proportion, path = "Data/Matrices")
 
+proportions <- lapply(scores, get.proportion)
+inapp_proportions <- unlist(lapply(proportions, `[[`, 1))
+extra_proportions <- unlist(lapply(proportions, `[[`, 3))
+proportions_combined <- data.frame(inapp_proportions, extra_proportions)
+colnames(proportions_combined) <- c("Inapplicable", "New state")
 
-scores_Inapp <- lapply(scores_std, `[[`, 1)
-scores_newstate <- lapply(scores_std, `[[`, 3)
-
-ylim <- c(min(c(unlist(scores_Inapp), unlist(scores_newstate))), max(c(unlist(scores_Inapp), unlist(scores_newstate))))
-
-boxplot(scores_Inapp, las = 2, ylab = "relative extra steps from using '-' as '?'", main = "Step differences between using new state or inapplicable", col = cols[1], outline = FALSE, border = cols[1], ylim = ylim)
-boxplot(scores_newstate, xlab = "", ylab = "", main = "", col = cols[2], outline = FALSE, border = cols[2], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
-legend("topleft", legend = c("inapplicable", "new state"), col = cols[1:2], pch = 15, cex = 1)
+boxplot(proportions_combined, ylab = "Proportion of rejected (longer) trees")
 
 
-
-## Score differences
-scores_NA_Inapp <- lapply(scores, get.score.div, difference = "Inapp/NA")
-scores_NA_NS <- lapply(scores, get.score.div, difference = "NS/NA")
-scores_NS_Inapp <- lapply(scores, get.score.div, difference = "NS/Inapp")
-
-## Plot the differences densities
-cols <- palette()[2:4]
-
-ylim <- c(min(c(unlist(scores_NA_Inapp), unlist(scores_NA_NS), unlist(scores_NS_Inapp))), max(c(unlist(scores_NA_Inapp), unlist(scores_NA_NS), unlist(scores_NS_Inapp))))
-
-boxplot(scores_NA_Inapp, las = 2, ylab = "relative extra steps", main = "Step differences between the three algorithms", col = cols[1], outline = FALSE, border = cols[1], ylim = ylim)
-boxplot(scores_NA_NS, xlab = "", ylab = "", main = "", col = cols[2], outline = FALSE, border = cols[2], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
-boxplot(scores_NS_Inapp, xlab = "", ylab = "", main = "", col = cols[3], outline = FALSE, border = cols[3], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
-legend("topleft", legend = c("inapplicable/missing", "new state/missing", "inapplicable/new state"), col = cols, pch = 15, cex = 1)
+max_scores <- lapply(scores_std, lapply, max)
+min_scores <- lapply(scores_std, lapply, min)
+inapp_max <- unlist(lapply(max_scores, `[[`, 1))
+extra_max <- unlist(lapply(max_scores, `[[`, 3))
+inapp_min <- unlist(lapply(min_scores, `[[`, 1))
+extra_min <- unlist(lapply(min_scores, `[[`, 3))
 
 
-
-## Score differences
-scores_NA_Inapp <- lapply(scores, get.score.div, difference = "NA/Inapp")
-scores_NA_NS <- lapply(scores, get.score.div, difference = "NA/NS")
-scores_NS_Inapp <- lapply(scores, get.score.div, difference = "NS/Inapp")
-
-## Plot the differences densities
-cols <- palette()[2:4]
-
-ylim <- c(min(c(unlist(scores_NA_Inapp), unlist(scores_NA_NS), unlist(scores_NS_Inapp))), max(c(unlist(scores_NA_Inapp), unlist(scores_NA_NS), unlist(scores_NS_Inapp))))
-
-boxplot(scores_NA_Inapp, las = 2, ylab = "relative extra steps", main = "Step differences between the three algorithms", col = cols[1], outline = FALSE, border = cols[1], ylim = ylim)
-boxplot(scores_NA_NS, xlab = "", ylab = "", main = "", col = cols[2], outline = FALSE, border = cols[2], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
-boxplot(scores_NS_Inapp, xlab = "", ylab = "", main = "", col = cols[3], outline = FALSE, border = cols[3], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
-legend("topleft", legend = c("missing/inapplicable", "missing/new state", "new state/inapplicable"), col = cols, pch = 15, cex = 1)
+proportions_combined <- data.frame(inapp_proportions, inapp_min, inapp_max, extra_proportions, extra_min, extra_max)
 
 
+vioboxplot <- function(proportions_combined) {
+
+    ## Plot window
+    plot(1,1, ylim = c(0,1), xlim = c(0,1))
 
 
-
-
-
-
-
-scores_NA_Inapp <- mapply(get.score.div.na, scores, nas_prop, difference = "Inapp/NA", SIMPLIFY = TRUE)
-scores_NA_NS <- mapply(get.score.div.na, scores, nas_prop, difference = "NS/NA", SIMPLIFY = TRUE)
-scores_NS_Inapp <- mapply(get.score.div.na, scores, nas_prop, difference = "NS/Inapp", SIMPLIFY = TRUE)
-
-## Plot the differences densities
-cols <- palette()[2:4]
-
-ylim <- c(min(c(unlist(scores_NA_Inapp), unlist(scores_NA_NS), unlist(scores_NS_Inapp))), max(c(unlist(scores_NA_Inapp), unlist(scores_NA_NS), unlist(scores_NS_Inapp))))
-
-boxplot(scores_NA_Inapp, las = 2, ylab = "relative extra steps * proportion of NAs", main = "Step differences between the three algorithms", col = cols[1], outline = FALSE, border = cols[1], ylim = ylim)
-boxplot(scores_NA_NS, xlab = "", ylab = "", main = "", col = cols[2], outline = FALSE, border = cols[2], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
-boxplot(scores_NS_Inapp, xlab = "", ylab = "", main = "", col = cols[3], outline = FALSE, border = cols[3], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
-legend("topleft", legend = c("inapplicable/missing", "new state/missing", "inapplicable/new state"), col = cols, pch = 15, cex = 1)
-
-
-
-## Score differences
-scores_NA_Inapp <- mapply(get.score.div.na, scores, nas_prop, difference = "NA/Inapp", SIMPLIFY = TRUE)
-scores_NA_NS <- mapply(get.score.div.na, scores, nas_prop, difference = "NA/NS", SIMPLIFY = TRUE)
-scores_NS_Inapp <- mapply(get.score.div.na, scores, nas_prop, difference = "NS/Inapp", SIMPLIFY = TRUE)
-
-## Plot the differences densities
-cols <- palette()[2:4]
-
-ylim <- c(min(c(unlist(scores_NA_Inapp), unlist(scores_NA_NS), unlist(scores_NS_Inapp))), max(c(unlist(scores_NA_Inapp), unlist(scores_NA_NS), unlist(scores_NS_Inapp))))
-
-boxplot(scores_NA_Inapp, las = 2, ylab = "relative extra steps * proportion of NAs", main = "Step differences between the three algorithms", col = cols[1], outline = FALSE, border = cols[1], ylim = ylim)
-boxplot(scores_NA_NS, xlab = "", ylab = "", main = "", col = cols[2], outline = FALSE, border = cols[2], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
-boxplot(scores_NS_Inapp, xlab = "", ylab = "", main = "", col = cols[3], outline = FALSE, border = cols[3], add = TRUE, xaxt = "n", yaxt = "n", ylim = ylim)
-legend("topleft", legend = c("missing/inapplicable", "missing/new state", "new state/inapplicable"), col = cols, pch = 15, cex = 1)
-
-
-
-
-
+}

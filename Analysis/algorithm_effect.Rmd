@@ -21,6 +21,7 @@ Getting the functions
 
 ```{r, eval = TRUE}
 library(dispRity)
+library(violplot)
 source("Functions/read.tree.score.R")
 source("Functions/standardise.score.R")
 source("Functions/plot.scores.R")
@@ -57,7 +58,39 @@ scores_std <- mapply(standardise.score, scores, matrices, std = "MP",
                      SIMPLIFY = FALSE)
 ```
 
-Analysis the differences
+
+```{r}
+## Getting the proportion of trees that are not the shorter
+proportions <- lapply(scores, get.proportion)
+inapp_proportions <- unlist(lapply(proportions, `[[`, 1))
+extra_proportions <- unlist(lapply(proportions, `[[`, 3))
+proportions_combined <- data.frame(inapp_proportions, extra_proportions)
+colnames(proportions_combined) <- c("Inapplicable", "New state")
+```
+
+```{r, fig.width=6, fig.height=6}
+boxplot(proportions_combined, ylab = "Proportion of rejected (longer) trees")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplementary (useless) analysis
 ===============
 
 Here we want to test whether using our algorithm actually affects the tree length compared to treating the inapplicable tokens as missing or as a new state.
@@ -117,4 +150,4 @@ Second, we can actually compare the means of the distribution similarly as above
 test.differences(scores_std, test = wilcox.test, correction = TRUE)
 ```
 
-There is a difference in using our algorithm (producing shorter trees than treating inapplicable data as new states).
+Apart from the couple ones that have low number of inapplicable data (see comment above), there is a difference in using our algorithm (producing shorter trees than treating inapplicable data as new states).

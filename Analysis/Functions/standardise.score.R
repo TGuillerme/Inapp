@@ -104,3 +104,17 @@ get.score.div.na <- function(data, nas, difference = "Inapp/NA") {
         return(data$inapplicable / data$newstate * nas)
     }
 }
+
+
+## Get the the proportion of none minimum tree
+get.proportion <- function(data) {
+    ## Getting the proportional score for one algorithm
+    get.prop.lapply <- function(one_score) {
+        min_val <- min(one_score)
+        score_l <- length(one_score)
+        return(length(which(one_score != min_val))/score_l)
+    }
+
+    ## Getting all the proportional scores
+    return(lapply(data, get.prop.lapply))
+}

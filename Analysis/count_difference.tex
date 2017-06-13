@@ -1,0 +1,62 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{enumerate}
+\usepackage[osf]{mathpazo}
+\usepackage{lastpage}
+\usepackage{url}
+\usepackage{hyperref}
+\pagenumbering{arabic}
+\linespread{1.66}
+
+\begin{document}
+
+\begin{flushright}
+Version dated: \today
+\end{flushright}
+\begin{center}
+
+%Title
+\noindent{\Large{\bf{Counting difference}}}\\
+\bigskip
+
+%Author
+Thomas Guillerme (\href{mailto:t.guillerme@imperial.ac.uk}{t.guillerme@imperial.ac.uk})
+
+\end{center}
+
+\section{Collecting the data}
+We collected 37 discrete morphological matrices containing inapplicable data.
+
+We selected these matrices to represent an heterogeneous sampling of matrices (@@@ taxonomic classes).
+
+
+\section{Inferring the topologies}
+We ran the matrices in PAUP* (v 4.0a151).
+
+We arbitrarily set the first taxa in the matrix as the outgroup and ran heursitic searches with random sequences addition replicated 100 times with a maximum of $5 \times 10^6$ rearrangements per replicates. \texttt{hsearch addseq=random nreps=100 rearrlimit=5000000 limitperrep=yes;}
+
+We then saved the tree island with the most parsimonious score treating inapplicable tokens as ambiguous (``?'' - default option in PAUP \texttt{pset gapmode=missing}).
+
+We then counted the tree length of the most parsimonious island treating inapplicable tokens as an extra state (\texttt{pset gapmode=newstate} option in PAUP) or using our new algorithm.
+
+We ran the tree counting using a portable executable using the \texttt{MorphyLib} and \texttt{TreeLib} C libraries (see supplementary).
+
+
+\section{Comparing the algorithms' effects}
+We corrected the tree length under each algorithm by using a relative score defined as:
+
+
+\begin{equation}
+    \text{relative score}=\frac{\text{New score}}{\text{Most parsimonious score}}-1
+\end{equation}
+
+Where the new score is the tree length under either treating inapplicable tokens as a new character (hereafter: the ``relative new-state score'') or treating inapplicable tokens under our new algorithm (hereafter the ``relative inapplicable score'').
+
+We compared the distribution of the relative scores of all the trees of the most parsimonious of both islands using the Bhattacharrya Coefficient (probability of overlap between both distributions) and a Wilcoxon ranked mean comparison.
+
+
+
+ 
+
+
+\end{document}

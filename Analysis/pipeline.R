@@ -36,6 +36,7 @@ extra_proportions <- unlist(lapply(proportions, `[[`, 3))
 proportions_combined <- data.frame(inapp_proportions, extra_proportions)
 colnames(proportions_combined) <- c("Inapplicable", "New state")
 
+
 boxplot(proportions_combined, ylab = "Proportion of rejected (longer) trees")
 
 
@@ -49,11 +50,4 @@ extra_min <- unlist(lapply(min_scores, `[[`, 3))
 
 proportions_combined <- data.frame(inapp_proportions, inapp_min, inapp_max, extra_proportions, extra_min, extra_max)
 
-
-vioboxplot <- function(proportions_combined) {
-
-    ## Plot window
-    plot(1,1, ylim = c(0,1), xlim = c(0,1))
-
-
-}
+sauronplot(proportions_combined)

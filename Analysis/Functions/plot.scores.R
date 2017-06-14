@@ -94,3 +94,48 @@ plot.scores.list <- function(scores_list, relative.density, ...) {
     ## Add the legend
     legend("topleft", legend = c("- = New state", "- = inapplicable"), col = c("blue", "orange"), lty = 1, cex = 0.5)
 }
+
+
+sauronplot <- function(proportions_combined, CI = c(95, 50)) {
+
+    CI.converter <- function(CI) {
+        sort(c(50-CI/2, 50+CI/2)/100)
+    }
+
+    ## Plotting one tie
+    one.plot <- function(position, data, CI) {
+        ## Polygon coordinates
+        ys <- c(data[,1], rev(data[,1]))
+        xs <- c((position-data[,2]), rev(position+data[,3]))
+
+        ## Plot the polygon
+        polygon(xs, ys, col = "grey")
+
+        ## Add the boxplot
+        for(q in 1:length(CI)) {
+            lines(x = rep(position, 2), y = quantile(data[,1], probs = CI.converter(CI[q])), lty = 1, lwd = q + (0.5 * q - 0.5) )
+        }
+        median <- median(data[,1])
+        points(x = position, y = median, pch = 19, cex = 2)
+    }
+
+    ## Plot window
+    plot(1,1, ylim = c(0,1), xlim = c(0,2), col = "white")
+
+    ## Inapp data
+    inapp_data <- proportions_combined[,1:3]
+    inapp_data <- inapp_data[order(inapp_data[,1]),]
+
+    ## New state data
+    extra_data <- proportions_combined[,4:6]
+    extra_data <- extra_data[order(extra_data[,1]),]
+    
+    ## Adding the ties
+    one.plot(0.5, inapp_data, CI)
+    one.plot(1.5, extra_data, CI)
+
+    ## Add the legend
+    lines(c(0,0.1), c(0.1, 0.1))
+    text(0.1, 0.05, "Proportional\nextra length", cex = 0.8)
+
+}

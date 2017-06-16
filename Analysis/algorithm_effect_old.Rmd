@@ -73,23 +73,6 @@ boxplot(proportions_combined, ylab = "Proportion of rejected (longer) trees")
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Supplementary (useless) analysis
 ===============
 

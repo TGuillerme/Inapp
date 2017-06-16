@@ -96,7 +96,25 @@ plot.scores.list <- function(scores_list, relative.density, ...) {
 }
 
 
-sauronplot <- function(proportions_combined, CI = c(95, 50)) {
+#' @title Sauron plots
+#'
+#' @description Plots the results with percentage of discarded trees on the y and range of extra length on the x
+#'
+#' @param proportions_combined the data with the proportion of rejected tree and the associated minimum and maximum extra length
+#' @param CI the confidence intervals to be plotted
+#' @param names the names of each plot
+#' @param plot.range the range of the plot (how many outliers should be kept laterally)
+#' @param ... graphical parameters to be passed to plot
+#' 
+#' @examples
+#'
+#' @seealso
+#' 
+#' @author Thomas Guillerme
+#' @export
+
+
+sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range = 0.9, ...) {
 
     CI.converter <- function(CI) {
         sort(c(50-CI/2, 50+CI/2)/100)
@@ -119,23 +137,52 @@ sauronplot <- function(proportions_combined, CI = c(95, 50)) {
         points(x = position, y = median, pch = 19, cex = 2)
     }
 
+    ## Detecting plot range
+    positions <- ncol(proportions_combined)/3
+    ranges <- list()
+    for(pos in 1:positions) {
+        ## Get the second lowest/highest value (to avoid outliers)
+        ranges[[pos]] <- range(c(
+            -quantile(proportions_combined[,(pos*3-1)], prob = c(plot.range)),
+            quantile(proportions_combined[,(pos*3)], prob = c(plot.range))))
+    }
+
+    ## Setting up the plot length
+    xmax <- sum(ceiling(unlist(lapply(ranges, abs))))
+
+    ## Setting up the positions
+    xpos <- numeric()
+    ## First position
+    xpos[1] <- ceiling(abs(ranges[[1]])[1])
+    for(pos in 2:positions) {
+        ## Other positions
+        xpos[pos] <- sum(ceiling(abs(ranges[[pos-1]])))+ceiling(abs(ranges[[pos]])[1])
+    } 
+
     ## Plot window
-    plot(1,1, ylim = c(0,1), xlim = c(0,2), col = "white")
+    plot(1,1, ylim = c(0,1.1), xlim = c(0,xmax), col = "white", xaxt = "n", ...)
+    # plot(1,1, ylim = c(0,1.1), xlim = c(0,xmax), col = "white", xaxt = "n") ; warning("DEBUG")
 
-    ## Inapp data
-    inapp_data <- proportions_combined[,1:3]
-    inapp_data <- inapp_data[order(inapp_data[,1]),]
-
-    ## New state data
-    extra_data <- proportions_combined[,4:6]
-    extra_data <- extra_data[order(extra_data[,1]),]
+    ## Separating the data
+    data_list <- list()
+    for(data in 1:positions) {
+        data_list[[data]] <- proportions_combined[,(data*3-2):(data*3)]
+        data_list[[data]] <- data_list[[data]][order(data_list[[data]][,1]), ]
+    }
     
-    ## Adding the ties
-    one.plot(0.5, inapp_data, CI)
-    one.plot(1.5, extra_data, CI)
+    ## Plotting the data
+    for(plot in 1:positions) {
+        one.plot(xpos[plot], data_list[[plot]], CI)
+    }
 
     ## Add the legend
-    lines(c(0,0.1), c(0.1, 0.1))
-    text(0.1, 0.05, "Proportional\nextra length", cex = 0.8)
+    for(name in 1:pos) {
+        text(xpos[name], y = 1.05, names[name], cex = 1)
+    }
+
+    ## Legend
+    for(pos in 1:positions) {
+        axis(1, c((xpos[pos]-0.5), xpos[pos], (xpos[pos]+0.5)), tick = TRUE, labels = c("0.5\nmin", "0\n", "0.5\nmax"), vadj = -0.5)
+    }
 
 }

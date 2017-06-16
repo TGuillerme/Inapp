@@ -141,8 +141,9 @@ sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range =
         polygon(xs, ys, col = "grey")
 
         ## Add the boxplot
-        for(q in 1:length(CI)) {
-            lines(x = rep(position, 2), y = quantile(data[,1], probs = CI.converter(CI[q])), lty = 1, lwd = q + (0.5 * q - 0.5) )
+        ltys <- c(2, rep(1, (length(CI)-1)))
+        for(quant in 1:length(CI)) {
+            lines(x = rep(position, 2), y = quantile(data[,1], probs = CI.converter(CI[quant])), lty = ltys[quant], lwd = quant + (0.5 * quant - 0.5) )
         }
 
         median <- median(data[,1])
@@ -192,11 +193,9 @@ sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range =
         text(xpos[name], y = 1.05, names[name], cex = 1)
     }
 
-    ## Legend
+    ## X axis
     for(pos in 1:positions) {
-
         scale_labels <- paste(scale.bar, c("min", "max"), sep = "\n")
-
         axis(1, c((xpos[pos]-scale.bar), xpos[pos], (xpos[pos]+scale.bar)), tick = TRUE, labels = c(scale_labels[1], "0\n", scale_labels[2]), padj = 0.3)
     }
 

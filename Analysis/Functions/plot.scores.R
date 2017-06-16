@@ -114,7 +114,7 @@ plot.scores.list <- function(scores_list, relative.density, ...) {
 #' @export
 
 
-sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range = 0.9, ...) {
+sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range = 0.9, scale.bar = 0.5, ...) {
 
     CI.converter <- function(CI) {
         sort(c(50-CI/2, 50+CI/2)/100)
@@ -122,9 +122,20 @@ sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range =
 
     ## Plotting one tie
     one.plot <- function(position, data, CI) {
+        match.xs <- function(y_point, x_data, y_data, type) {
+            ## Selecting the x values for y
+            return(type(x_data[y_data %in% y_point]))
+        }
         ## Polygon coordinates
-        ys <- c(data[,1], rev(data[,1]))
-        xs <- c((position-data[,2]), rev(position+data[,3]))
+        # ys <- c(data[,1], rev(data[,1]))
+        # xs <- c((position-data[,2]), rev(position+data[,3]))
+
+        y_points <- unique(data[,1])
+        ys <- c(y_points, rev(y_points))
+
+        x_points1 <- position-sapply(y_points, match.xs, data[,2], data[,1], min)
+        x_points2 <- position+sapply(y_points, match.xs, data[,3], data[,1], max)
+        xs <- c(x_points1, rev(x_points2))
 
         ## Plot the polygon
         polygon(xs, ys, col = "grey")
@@ -133,6 +144,7 @@ sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range =
         for(q in 1:length(CI)) {
             lines(x = rep(position, 2), y = quantile(data[,1], probs = CI.converter(CI[q])), lty = 1, lwd = q + (0.5 * q - 0.5) )
         }
+
         median <- median(data[,1])
         points(x = position, y = median, pch = 19, cex = 2)
     }
@@ -160,8 +172,8 @@ sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range =
     } 
 
     ## Plot window
-    plot(1,1, ylim = c(0,1.1), xlim = c(0,xmax), col = "white", xaxt = "n", ...)
-    # plot(1,1, ylim = c(0,1.1), xlim = c(0,xmax), col = "white", xaxt = "n") ; warning("DEBUG")
+    plot(1,1, ylim = c(0,1.05), xlim = c(0,xmax), col = "white", xaxt = "n", ...)
+    # plot(1,1, ylim = c(0,1.05), xlim = c(0,xmax), col = "white", xaxt = "n") ; warning("DEBUG")
 
     ## Separating the data
     data_list <- list()
@@ -182,7 +194,10 @@ sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range =
 
     ## Legend
     for(pos in 1:positions) {
-        axis(1, c((xpos[pos]-0.5), xpos[pos], (xpos[pos]+0.5)), tick = TRUE, labels = c("0.5\nmin", "0\n", "0.5\nmax"), vadj = -0.5)
+
+        scale_labels <- paste(scale.bar, c("min", "max"), sep = "\n")
+
+        axis(1, c((xpos[pos]-scale.bar), xpos[pos], (xpos[pos]+scale.bar)), tick = TRUE, labels = c(scale_labels[1], "0\n", scale_labels[2]), padj = 0.3)
     }
 
 }

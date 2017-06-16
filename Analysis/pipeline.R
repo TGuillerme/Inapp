@@ -50,4 +50,4 @@ extra_min <- unlist(lapply(min_scores, `[[`, 3))
 
 proportions_combined <- data.frame(inapp_proportions, inapp_min, inapp_max, extra_proportions, extra_min, extra_max)
 
-sauronplot(proportions_combined)
+sauronplot(proportions_combined, names = c("Inapplicable", "New state"), scale.bar = 0.5, plot.range = 0.9)

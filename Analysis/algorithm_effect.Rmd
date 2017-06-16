@@ -1,0 +1,123 @@
+---
+title: "Effect of the algorithm on tree length"
+author: "Thomas Guillerme"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    fig_width: 12
+    fig_height: 6
+---
+
+Effect of character correlation
+===============
+
+Before starting
+===============
+
+Loading the functions
+-----------------------------------
+
+Getting the functions
+
+```{r, eval = TRUE}
+source("Functions/read.tree.score.R")
+source("Functions/standardise.score.R")
+source("Functions/plot.scores.R")
+source("Functions/test.R")
+```
+
+Loading the data
+-----------------------------------
+
+The different tree scores are calculated by first running an heuristic search, treating inapplicable data as missing, and saving the island.
+The length of the trees on this island is then measured by treating inapplicable as an extra state (new state) or by using our inapplicable algorithm.
+This results in three list of tree length of _n_ elements (where _n_ is the number of trees on the most parsimonious island): the most parsimonious scores when treating inapplicable tokens as missing; the scores when treating inapplicable as a new state and the scores when treating inapplicable using our algorithm.
+
+```{r, message = FALSE}
+## Setting the path
+path <- "Data/Scores/"
+
+## Getting the chain names
+chains <- list.files(path, pattern = ".morphy.inapplicable.count")
+chains <- unlist(strsplit(chains, split = ".morphy.inapplicable.count"))
+
+## Loading the tree scores
+scores <- sapply(chains, read.tree.score, path, simplify = FALSE)
+
+## Loading the matrices
+matrices <- lapply(chains, read.matrices, path = "Data/Matrices")
+```
+
+The scores are then standardise to reflect the proportional length of the trees compared to the most parsimonious tree.
+
+```{r}
+## Normalising the score
+scores_std <- mapply(standardise.score, scores, std = "MP", SIMPLIFY = FALSE)
+```
+
+Getting the proportion of discarded trees under both algorithms treating inapplicable data as non missing
+===============
+
+Here we will look at how many trees are discarded when treating the inapplicable data as non-missing data; either using our new algorithm (hereafter "Inapplicable") or treating them as a new state (hereafter "New state").
+The proportion of discarded trees are the number of trees in the most parsimonious island (under inapplicable data treated as missing data) that are one step or more longer than the shortest tree under the "Inapplicable" or "New state" algorithm.
+
+```{r}
+## Getting the proportion of discarded trees
+proportions <- lapply(scores, get.proportion)
+## Only selecting these proportions for inapplicable or extra state
+inapp_proportions <- unlist(lapply(proportions, `[[`, 1))
+extra_proportions <- unlist(lapply(proportions, `[[`, 3))
+## Combining the data into a data frame
+proportions_combined <- data.frame(inapp_proportions, extra_proportions)
+colnames(proportions_combined) <- c("Inapplicable", "New state")
+```
+
+We can then visualise how many trees are discarded from the most parsimonious island (treating inapplicable data as missing data) in both algorithms:
+
+```{r, fig.width=8, fig.height=8}
+op <- par(bty = "n")
+boxplot(proportions_combined, ylab = "Proportion of discarded (longer) trees")
+par(op)
+```
+It is interesting to see that the median amount of rejected trees is similar in both algorithm but that the 50% confident interval is between 0.5 and 1 for the "new state" algorithm and between 0.2 and 1 for the "inapplicable" one (hence this one rejects less trees).
+
+How long are the trees?
+-----------------------------------
+
+The problem with such representation is that it is only unidimensional (proportion of discarded trees) and does not informs us on what is the size of the discarded trees.
+We can thus represent the same information but also adding for each individual matrix what is the shortest and the longest tree proportionally to the most parsimonious trees with inapplicable data treated as missing data.
+
+First let's extract these minimum and maximum proportional length and update our data frame:
+
+```{r}
+## Getting the relative minimum and maximum tree length from both distributions
+max_scores <- lapply(scores_std, lapply, max)
+min_scores <- lapply(scores_std, lapply, min)
+## Only selecting these proportions for inapplicable or extra state
+inapp_max <- unlist(lapply(max_scores, `[[`, 1))
+extra_max <- unlist(lapply(max_scores, `[[`, 3))
+inapp_min <- unlist(lapply(min_scores, `[[`, 1))
+extra_min <- unlist(lapply(min_scores, `[[`, 3))
+## Updating the data frame
+proportions_combined <- data.frame(inapp_proportions, inapp_min, inapp_max,
+    extra_proportions, extra_min, extra_max)
+```
+
+And here we go:
+
+```{r, fig.width=8, fig.height=8}
+op <- par(bty = "n")
+sauronplot(proportions_combined, names = c("Inapplicable", "New state"),
+    xlab = "Max/min proportional extra length to MP trees",
+    ylab = "Proportion of discarded trees")
+par(op)
+```
+
+The way to read this "sauron" plots is pretty simple: the vertical lines in the middle of both spiky blobs are effectively boxplots.
+The big dot are the medians, the thick lines the 50% CI and the thin ones the 95% CI.
+The relative additional tree length on the other hand is represented horizontally.
+Each deviation from the line represents the maximum (right) and minimum (left) relative extra tree length for the trees at the corresponding level of rejection (y-axis).
+For example, looking at the trees at the median level of rejection (i.e. the islands that have ~70% of their trees bigger than the smallest tree), the inapplicable algorithm generates trees less that 50% longer .
+At the same level of rejection when treating inapplicable tokens as an extra state, the trees are more than 50% longer.
+
+Basically, the "inapplicable" algorithm generates trees that are shorter than using the "new state" and are more consistent among their islands (i.e. the "new" islands are less broken).

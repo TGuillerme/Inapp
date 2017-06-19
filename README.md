@@ -17,7 +17,6 @@ That's easy! In `R`, simply copy/paste the following:
 ```r
 if(!require(devtools)) install.packages("devtools")
 if(!require(shiny)) install.packages("shiny")
-library(devtools); library(shiny)
 runGitHub("Inapp", "TGuillerme")
 ```
 <!-- Upload the whole thing on shiny servers -->
@@ -26,7 +25,6 @@ runGitHub("Inapp", "TGuillerme")
 Not much more complicated! In `R`, copy/paste the following:
 ```r
 if(!require(devtools)) install.packages("devtools")
-library(devtools)
 install_github("TGuillerme/Inapp")
 library(Inapp)
 ```

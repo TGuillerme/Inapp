@@ -10,7 +10,7 @@
 Check out the [presentation](https://figshare.com/articles/New_approaches_to_disparity-through-time_analysis/3437546) or the [video](https://www.youtube.com/watch?v=ZzipKw8W8KQ) of some of the package's novel features.
  -->
 
-This package allows to run the algorithm described in @@@.
+This package allows to run the algorithm described in @@@(TBC).
 You can either directly run the package on your web browser (Graphical User Interface mode!), or install it in `R` as a proper package (or both!).
 
 ## Running Inapp on your web browser
@@ -28,6 +28,9 @@ Not much more complicated! In `R`, copy/paste the following:
 if(!require(devtools)) install.packages("devtools")
 install_github("TGuillerme/Inapp")
 library(Inapp)
+
+## Running the App:
+runInapp()
 ```
 
 Authors

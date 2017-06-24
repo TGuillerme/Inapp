@@ -5,10 +5,10 @@
 
 **Inapp**: ancestral reconstruction and step counting for discrete characters with inapplicable data.
 
-<!-- 
-<a href="https://figshare.com/articles/New_approaches_to_disparity-through-time_analysis/3437546"><img src="http://tguillerme.github.io/images/logo-FS.png" height="15" widht="15"/></a> 
-Check out the [presentation](https://figshare.com/articles/New_approaches_to_disparity-through-time_analysis/3437546) or the [video](https://www.youtube.com/watch?v=ZzipKw8W8KQ) of some of the package's novel features.
- -->
+<a href="https://figshare.com/articles/Guillerme_Evolution2017_pdf/5140222"><img src="http://tguillerme.github.io/images/logo-FS.png" height="15" widht="15"/></a> 
+Check out the [presentation](https://figshare.com/articles/Guillerme_Evolution2017_pdf/5140222). 
+<!-- or the [video](https://www.youtube.com/watch?v=ZzipKw8W8KQ) of some of the package's novel features. -->
+
 
 This package allows to run the algorithm described in @@@(TBC).
 You can either directly run the package on your web browser (Graphical User Interface mode!), or install it in `R` as a proper package (or both!).

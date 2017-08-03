@@ -22,8 +22,8 @@ get.tree <- function(input, simple = FALSE) {
             ## Left-Right tree
             if(input$tree_type == "Left-Right") {
                 if(input$n_taxa%%2 == 0) {
-                    left <- ape::stree(input$n_taxa/2, type = "left")
-                    right <- ape::stree(input$n_taxa/2+1, type = "right")
+                    left <- ape::stree(input$n_taxa/2+1, type = "left")
+                    right <- ape::stree(input$n_taxa/2, type = "right")
                     tree <- ape::bind.tree(left, right, where = 1)
                 } else {
                     tree <- ape::rtree(input$n_taxa)

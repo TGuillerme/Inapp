@@ -24,10 +24,9 @@ NA_matrix <- make.states.matrix(tree, "01?-")
 NA_matrix$Dp1
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{apply.reconstruction}}
 }
-
+\author{
+Thomas Guillerme
+}

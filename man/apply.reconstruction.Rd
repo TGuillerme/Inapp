@@ -44,10 +44,9 @@ apply.reconstruction(tree, character, passes = 4, method = "NA")
 apply.reconstruction(tree, character, passes = 1, method = "NA")
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{plot.states.matrix}}, \code{\link{runInapp}}
 }
-
+\author{
+Thomas Guillerme
+}

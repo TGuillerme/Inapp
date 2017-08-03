@@ -24,7 +24,7 @@ get.tree <- function(input, simple = FALSE) {
                 if(input$n_taxa%%2 == 0) {
                     left <- ape::stree(input$n_taxa/2+1, type = "left")
                     right <- ape::stree(input$n_taxa/2, type = "right")
-                    tree <- ape::bind.tree(left, right, where = 1)
+                    tree <- ape::bind.tree(right, left, where = 1)
                 } else {
                     tree <- ape::rtree(input$n_taxa)
                 }

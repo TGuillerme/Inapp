@@ -48,10 +48,9 @@ plot(NA_matrix, show.labels = 2, col.tips.nodes = c("red", "pink", "green"),
      counts = c(1,2), passes = c(3,4))
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{apply.reconstruction}}, \code{\link{runInapp}}
 }
-
+\author{
+Thomas Guillerme
+}

@@ -2,8 +2,8 @@
 % Please edit documentation in R/Inapp-package.R
 \docType{package}
 \name{Inapp-package}
-\alias{Inapp}
 \alias{Inapp-package}
+\alias{Inapp}
 \title{Inapplicable Discrete Characters Reconstruction}
 \description{
 An algorithm allowing states reconstruction and tree length counting for inapplicable discrete characters
@@ -11,11 +11,11 @@ An algorithm allowing states reconstruction and tree length counting for inappli
 \examples{
 
 }
-\author{
-Thomas Guillerme <guillert@tcd.ie>
-}
 \references{
 Smith, M. R., Brazeau, M. D., and Guillerme, T., 20??. @@
+}
+\author{
+Thomas Guillerme <guillert@tcd.ie>
 }
 \keyword{characters,}
 \keyword{inapplicable}
@@ -25,4 +25,3 @@ Smith, M. R., Brazeau, M. D., and Guillerme, T., 20??. @@
 \keyword{reconstruction,}
 \keyword{states}
 \keyword{tree}
-

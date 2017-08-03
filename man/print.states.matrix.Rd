@@ -26,10 +26,9 @@ make.states.matrix(tree, character)
 
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{make.states.matrix}}.
 }
-
+\author{
+Thomas Guillerme
+}

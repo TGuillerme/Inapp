@@ -24,10 +24,9 @@ matrix <- make.states.matrix(tree, "01?-", inapplicable = 1)
 matrix$Up1
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{apply.reconstruction}}
 }
-
+\author{
+Thomas Guillerme
+}

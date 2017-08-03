@@ -19,10 +19,9 @@ runInapp()
 }
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{apply.reconstruction}}, \code{\link{plot.states.matrix}}
 }
-
+\author{
+Thomas Guillerme
+}

@@ -54,10 +54,9 @@ output.states.matrix(NA_matrix, output = "pdf")
 }
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{apply.reconstruction}}, \code{\link{plot.states.matrix}}
 }
-
+\author{
+Thomas Guillerme
+}

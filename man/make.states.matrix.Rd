@@ -47,10 +47,9 @@ make.states.matrix(tree, character)
 character <- "0{01}-?"
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{apply.reconstruction}}.
 }
-
+\author{
+Thomas Guillerme
+}

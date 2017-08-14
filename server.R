@@ -188,6 +188,7 @@ shinyServer(
                     suffix <- input$output_type
                     suffix <- ifelse(suffix == "newick", "tre", suffix)
                     suffix <- ifelse(suffix == "nexus", "nex", suffix)
+                    suffix <- ifelse(suffix == "C-test", "txt", suffix)
                     ## Getting the output name
                     paste(paste("Inapp", format(Sys.time(), "%Y-%m-%d-%H%M%S"), sep = "_"), sep = ".", suffix)  #TG: or date format as "format(Sys.time(), "%Y-%m-%d-%X")"
                 },
@@ -217,6 +218,34 @@ shinyServer(
                         states_dataframe <- make.output.data.frame(states_matrix)
                         node_notes <- lapply(as.list(1:(ape::Ntip(tree) + ape::Nnode(tree))), create.note, states_dataframe)
                         write.nexus.commented(tree, file, comments = node_notes, translate = TRUE)
+                    }
+                    ## Save as a C-test
+                    if(input$output_type == "C-test") {
+                        tree$edge.length <- NULL
+
+                        ## Setting the C variable name
+                        tree_var <- "std::string test_tree"
+                        char_var <- "int node_pass"
+                        node_var <- paste0(char_var, 1:4, "[", ape::Ntip(tree)+ape::Nnode(tree), "] = ")
+
+                        ## Get the newick tree
+                        newick_tree_out <- paste0(tree_var, " = \"", ape::write.tree(tree), "\";")
+
+                        ## Get the node array
+                        node_values <- lapply(lapply(states_matrix[2:5], convert.binary.value, states_matrix), unlist)
+
+                        ## Get the right traversal order here
+                        traversal_order <- seq(from = 1, to = ape::Ntip(tree)+ape::Nnode(tree))
+                        node_values <- lapply(node_values, function(x, traversal_order) x[traversal_order])
+
+                        ## Get the node values in C format
+                        C_node_values <- lapply(node_values, function(x) paste0("{", paste(x, collapse = ", "), "};"))
+                        C_node_values <- mapply(paste0, as.list(node_var), C_node_values)
+
+
+                        ## Combine both outputs
+                        txt_out <- c(newick_tree_out, unlist(C_node_values))
+                        writeLines(txt_out, file)
                     }
                 }
             )

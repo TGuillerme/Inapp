@@ -248,3 +248,23 @@ write.nexus.commented <- function (phy, file = "", translate = TRUE, comments = 
     }
     cat("END;\n", file = file, append = TRUE)
 }
+
+## Converts a digit into it's binary equivalent
+convert.binary.value <- function(vector, states_matrix) {
+    ## Get all the states to order them
+    all_states <- sort(unique(unlist(states_matrix$Char)))
+    new_states <- seq(from = 0, to = (length(all_states)-1))
+
+    ## Translating states
+    translate.states <- function(state, all_states, new_states) {
+        return(new_states[match(state, all_states)])
+    }
+
+    ## Translating the vector
+    translated_vector <- lapply(vector, translate.states, all_states, new_states)
+
+    ## Convert vector
+    converted_vector <- lapply(translated_vector, function(x) sum(2^x))
+
+    return(converted_vector)
+}

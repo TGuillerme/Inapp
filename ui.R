@@ -77,7 +77,7 @@ shinyUI(fluidPage(
           hr(),
           h3("Export results"),
           ## Export format - input$export_type
-          selectInput("output_type", "Export format:", choices = c("csv", "pdf", "newick", "nexus")),
+          selectInput("output_type", "Export format:", choices = c("csv", "pdf", "newick", "nexus", "C-test")),
           downloadButton('downloadData', 'Download')
           
           # hr(),

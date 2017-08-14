@@ -227,17 +227,19 @@ shinyServer(
                         tree_var <- "char *test_tree"
                         char_var <- "char *test_matrix"
                         node_var <- "int node_pass"
-                        node_var <- paste0(node_var, 1:4, "[", Ntip(tree)+Nnode(tree), "] = ")
+                        node_var <- paste0(node_var, 1:4, "[", ape::Ntip(tree) + ape::Nnode(tree), "] = ")
 
                         ## Translate the tip labels
                         if(!all(tree$tip.label == "numeric")) {
                             if(length(grep("t", tree$tip.label)) != 0) {
                                 tree$tip.label <- gsub("t", "", tree$tip.label)
+                            } else {
+                                tree$tip.label <- seq(1:ape::Ntip(tree))
                             }
                         }
 
                         ## Get the newick tree
-                        newick_tree_out <- paste0(tree_var, " = \"", write.tree(tree), "\";")
+                        newick_tree_out <- paste0(tree_var, " = \"", ape::write.tree(tree), "\";")
 
                         ## Get the matrix
                         ## Get all the possible states (for ?)
@@ -255,11 +257,20 @@ shinyServer(
                         node_values <- lapply(lapply(states_matrix[2:5], convert.binary.value, states_matrix), unlist)
 
                         ## Get the right traversal order here
-                        traversal_order <- seq(from = 1, to = Ntip(tree)+Nnode(tree))
-                        node_values <- lapply(node_values, function(x, traversal_order) x[traversal_order])
+                        if(input$traversal_order == "") {
+                            traversal_order <- seq(from = 1, to = ape::Ntip(tree) + ape::Nnode(tree))
+                        } else {
+                            traversal_order <- as.numeric(unlist(strsplit(input$traversal_order, ",")))
+                        }
+
+                        ## Sort the passes by traversal
+                        passes_values <- list()
+                        for(pass in 1:4) {
+                            passes_values[[pass]] <- node_values[[pass]][traversal_order]
+                        }
 
                         ## Get the node values in C format
-                        C_node_values <- lapply(node_values, function(x) paste0("{", paste(x, collapse = ", "), "};"))
+                        C_node_values <- lapply(passes_values, function(x) paste0("{", paste(x, collapse = ", "), "};"))
                         C_node_values <- mapply(paste0, as.list(node_var), C_node_values)
 
                         ## Combine both outputs

@@ -153,12 +153,14 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         tree_var <- "char *test_tree"
         char_var <- "char *test_matrix"
         node_var <- "int node_pass"
-        node_var <- paste0(node_var, 1:4, "[", Ntip(states_matrix$tree)+Nnode(states_matrix$tree), "] = ")
+        node_var <- paste0(node_var, 1:4, "[", ape::Ntip(states_matrix$tree)+ape::Nnode(states_matrix$tree), "] = ")
 
         ## Translate the tip labels
         if(!all(sates_matrix$tree$tip.label == "numeric")) {
             if(length(grep("t", sates_matrix$tree$tip.label)) != 0) {
                 sates_matrix$tree$tip.label <- gsub("t", "", sates_matrix$tree$tip.label)
+            } else {
+                tsates_matrix$ree$tip.label <- seq(1:ape::Ntip(sates_matrix$tree))
             }
         }
 
@@ -181,11 +183,16 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         node_values <- lapply(lapply(states_matrix[2:5], convert.binary.value, states_matrix), unlist)
 
         ## Get the right traversal order here
-        traversal_order <- seq(from = 1, to = Ntip(states_matrix$tree)+Nnode(states_matrix$tree))
-        node_values <- lapply(node_values, function(x, traversal_order) x[traversal_order])
+        traversal_order <- seq(from = 1, to = ape::Ntip(states_matrix$tree)+ape::Nnode(states_matrix$tree))
+
+        ## Sort the passes by traversal
+        passes_values <- list()
+        for(pass in 1:4) {
+            passes_values[[pass]] <- node_values[[pass]][traversal_order]
+        }
 
         ## Get the node values in C format
-        C_node_values <- lapply(node_values, function(x) paste0("{", paste(x, collapse = ", "), "};"))
+        C_node_values <- lapply(passes_values, function(x) paste0("{", paste(x, collapse = ", "), "};"))
         C_node_values <- mapply(paste0, as.list(node_var), C_node_values)
 
 

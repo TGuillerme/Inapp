@@ -155,6 +155,13 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         node_var <- "int node_pass"
         node_var <- paste0(node_var, 1:4, "[", Ntip(states_matrix$tree)+Nnode(states_matrix$tree), "] = ")
 
+        ## Translate the tip labels
+        if(!all(sates_matrix$tree$tip.label == "numeric")) {
+            if(length(grep("t", sates_matrix$tree$tip.label)) != 0) {
+                sates_matrix$tree$tip.label <- gsub("t", "", sates_matrix$tree$tip.label)
+            }
+        }
+
         ## Get the newick tree
         newick_tree_out <- paste0(tree_var, " = \"", write.tree(states_matrix$tree), "\";")
 

@@ -224,27 +224,39 @@ shinyServer(
                         tree$edge.length <- NULL
 
                         ## Setting the C variable name
-                        tree_var <- "std::string test_tree"
-                        char_var <- "int node_pass"
-                        node_var <- paste0(char_var, 1:4, "[", ape::Ntip(tree)+ape::Nnode(tree), "] = ")
+                        tree_var <- "char *test_tree"
+                        char_var <- "char *test_matrix"
+                        node_var <- "int node_pass"
+                        node_var <- paste0(node_var, 1:4, "[", Ntip(tree)+Nnode(tree), "] = ")
 
                         ## Get the newick tree
-                        newick_tree_out <- paste0(tree_var, " = \"", ape::write.tree(tree), "\";")
+                        newick_tree_out <- paste0(tree_var, " = \"", write.tree(tree), "\";")
+
+                        ## Get the matrix
+                        ## Get all the possible states (for ?)
+                        all_states <- sort(unique(unlist(states_matrix$Char)))
+                        ## Converts the missing data
+                        raw_matrix <- lapply(states_matrix$Char, get.missing, all_states)
+                        ## Collapse multiple states
+                        raw_matrix <- unlist(lapply(raw_matrix, paste, collapse = ""))
+                        ## Convert the NA
+                        raw_matrix <- gsub("-1", "-", raw_matrix)
+                        ## C output
+                        raw_matrix_out <- paste0(char_var, " = \"", paste(raw_matrix, collapse = ""), "\";")
 
                         ## Get the node array
                         node_values <- lapply(lapply(states_matrix[2:5], convert.binary.value, states_matrix), unlist)
 
                         ## Get the right traversal order here
-                        traversal_order <- seq(from = 1, to = ape::Ntip(tree)+ape::Nnode(tree))
+                        traversal_order <- seq(from = 1, to = Ntip(tree)+Nnode(tree))
                         node_values <- lapply(node_values, function(x, traversal_order) x[traversal_order])
 
                         ## Get the node values in C format
                         C_node_values <- lapply(node_values, function(x) paste0("{", paste(x, collapse = ", "), "};"))
                         C_node_values <- mapply(paste0, as.list(node_var), C_node_values)
 
-
                         ## Combine both outputs
-                        txt_out <- c(newick_tree_out, unlist(C_node_values))
+                        txt_out <- c(raw_matrix_out, newick_tree_out, unlist(C_node_values))
                         writeLines(txt_out, file)
                     }
                 }

@@ -268,3 +268,12 @@ convert.binary.value <- function(vector, states_matrix) {
 
     return(converted_vector)
 }
+
+## Gets missing data
+get.missing <- function(vector, all_states) {
+    if(all(all_states %in% vector)) {
+        return("?")
+    } else {
+        return(vector)
+    }
+}

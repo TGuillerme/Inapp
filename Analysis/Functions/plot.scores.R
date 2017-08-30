@@ -162,6 +162,13 @@ sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range =
 
     ## Setting up the plot length
     xmax <- sum(ceiling(unlist(lapply(ranges, abs))))
+    if(all(unlist(lapply(ranges, abs)) < 0.1)) {
+        ## Scale the ranges if lower than 0.1.
+        xmax <- xmax/10
+        scale_0.1 <- TRUE
+    } else {
+        scale_0.1 <- FALSE
+    }
 
     ## Setting up the positions
     xpos <- numeric()
@@ -171,8 +178,11 @@ sauronplot <- function(proportions_combined, CI = c(95, 50), names, plot.range =
         ## Other positions
         xpos[pos] <- sum(ceiling(abs(ranges[[pos-1]])))+ceiling(abs(ranges[[pos]])[1])
     } 
+    if(scale_0.1) {
+        xpos/10
+    }
 
-    ## Plot window
+    ## Plot window (1.05 for ylim is to allow to print the title)
     plot(1,1, ylim = c(0,1.05), xlim = c(0,xmax), col = "white", xaxt = "n", ...)
     # plot(1,1, ylim = c(0,1.05), xlim = c(0,xmax), col = "white", xaxt = "n") ; warning("DEBUG")
 

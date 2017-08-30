@@ -15,7 +15,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-standardise.score <- function(data, matrix, std = c("MP", "ntax", "nchar", "nas")) {
+standardise.score <- function(data, matrix, std = c("MP", "ntax", "nchar", "nas", "short")) {
     
     ## Standardise the scores by dividing it by the proportion of nas
     if(any(std == "nas")) {
@@ -46,6 +46,14 @@ standardise.score <- function(data, matrix, std = c("MP", "ntax", "nchar", "nas"
         MP <- data$missing[1]
         for(score in 1:length(data)) {
             data[[score]] <- data[[score]]/MP-1
+        }
+    }
+
+
+    if(any(std == "short")) {
+        for(score in 1:length(data)) {
+            shortest <- min(data[[score]])
+            data[[score]] <- data[[score]]/shortest-1
         }
     }
 

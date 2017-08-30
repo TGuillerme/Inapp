@@ -11,6 +11,43 @@ output:
 Effect of character correlation
 ===============
 
+To measure the effect of the our inapplicable algorithm, compared to treating inapplicable tokens as missing data or an extra state, we ran a normal parsimony search on 23 <!-- @@@ --> independent matrices from a range of taxonomic groups with variable number of characters, taxa and inapplicable data.
+
+|              |group         | taxa| characters| % NA characters| % NA cells|
+|:-------------|:-------------|----:|----------:|---------------:|----------:|
+|Aguado2009    |Annelids      |   76|        107|            40.2|        5.0|
+|Asher2005     |Mammals       |   23|        126|            31.7|        3.9|
+|Baker2009     |Angiosperms   |  205|        105|            35.2|        8.3|
+|Bouchenak2010 |Angiosperms   |  818|        417|            81.5|       21.1|
+|Dikow2009     |Insects       |   88|        220|             8.2|        1.6|
+|Eklund2004    |Angiosperms   |   54|        131|            31.3|       10.0|
+|Geisler2001   |Mammals       |   68|        186|            46.8|        2.0|
+|Giles2015     |Fishes        |   78|        236|            74.2|       17.3|
+|Griswold1999  |Spiders       |   43|        137|            43.8|        9.6|
+|Liljeblad2008 |Insects       |   68|        308|            31.5|        6.4|
+|Loconte1991   |Angiosperms   |   56|        104|            63.5|        4.1|
+|Longrich2010  |Dinosaurs     |   19|        119|            26.1|        5.7|
+|OMeara2013    |Mammals       |   63|        317|            44.5|        5.4|
+|Rougier2012   |Mammals       |   58|        317|             2.8|        0.4|
+|Sharkey2011   |Insects       |  105|        392|           100.0|       20.1|
+|Sundue2010    |Pteridophytes |  177|        237|            81.9|       26.5|
+|Vinther2008   |Annelids      |   23|         57|            43.9|       20.9|
+|Wiens2010     |Squamates     |   64|        363|            41.9|        7.7|
+|Wilson2003    |Crustaceans   |   61|        165|            43.0|       11.1|
+|Wortley2006   |Angiosperms   |   37|        105|            20.0|        3.7|
+|Zanol2012     |Annelids      |   80|        230|            69.1|       17.3|
+|Zhu2013       |Fishes        |   75|        253|            70.8|       19.3|
+
+From these matrices, we ran a heuristic search in PAUP* treating all inapplicable data as missing, and saving the island of _n_ trees (default PAUP* options).
+The length of of the trees on this island is called _S~MP~_ the overall most parsimonious score.
+All trees on this island are or the same length _S~MP~_.
+
+The length of the trees from these island are then re-calculated by treating inapplicable as an extra state (or "new state") or by using our inapplicable algorithm.
+This results in two new lists of _n_ scores (for the _n_ trees of each island) with _S~NS~_ and _S~NA~_ being the variable tree lengths for each topology under respectively the "new state" and inapplicable counting algorithms.
+
+We then calculated how many trees were not the shortest in _S~NS~_ and _S~NA~_ (i.e. how many scores in these distributions were greater than the minimum) to measure how many trees were not discarded when treating inapplicable as missing data.
+Finally, we calculated how longer (or shorter!) were the  _S~NS~_ and _S~NA~_ scores compared to the _S~MP~_ to see how both "new state" and the inapplicable algorithm modify tree length in comparison to treating inapplicable data as missing data. 
+
 Before starting
 ===============
 
@@ -29,9 +66,10 @@ source("Functions/test.R")
 Loading the data
 -----------------------------------
 
-The different tree scores are calculated by first running an heuristic search, treating inapplicable data as missing, and saving the island.
-The length of the trees on this island is then measured by treating inapplicable as an extra state (new state) or by using our inapplicable algorithm.
-This results in three list of tree length of _n_ elements (where _n_ is the number of trees on the most parsimonious island): the most parsimonious scores when treating inapplicable tokens as missing; the scores when treating inapplicable as a new state and the scores when treating inapplicable using our algorithm.
+The most parsimonious islands treating inapplicable data as missing were obtained using PAUP* (v 4.0a151) with random sequences addition replicated 100 times with a maximum of 5 x 10^6 rearrangements per replicates (`hsearch addseq=random nreps=100 rearrlimit=5000000 limitperrep=yes` in PAUP).
+The length of the resulting trees within the islands were then measured using PAWM with inapplicable data treated as a new state or using our inapplicable algorithm.
+
+We can load these results using the following:
 
 ```{r, message = FALSE}
 ## Setting the path
@@ -41,6 +79,9 @@ path <- "Data/Scores/"
 chains <- list.files(path, pattern = ".morphy.inapplicable.count")
 chains <- unlist(strsplit(chains, split = ".morphy.inapplicable.count"))
 
+## Remove Sutton2012 (no NA)
+chains <- chains[-which(chains == "Sutton2012")]
+
 ## Loading the tree scores
 scores <- sapply(chains, read.tree.score, path, simplify = FALSE)
 
@@ -48,22 +89,64 @@ scores <- sapply(chains, read.tree.score, path, simplify = FALSE)
 matrices <- lapply(chains, read.matrices, path = "Data/Matrices")
 ```
 
-The scores are then standardise to reflect the proportional length of the trees compared to the most parsimonious tree.
+
+```{r, eval = FALSE, echo = FALSE}
+## Get the characteristics of each matrix
+
+## Get my Claddis version
+install_github("TGuillerme/Claddis")
+library(Claddis)
+
+## Empty matrix
+matrix_characteristics <- matrix(NA, ncol = 5, nrow = length(chains))
+
+for(matrix in 1:length(chains)) {
+    ## Get the matrix
+    mat_tmp <- ReadMorphNexus(paste0("Data/Matrices/", chains[[matrix]], ".nex"), gap.as.missing = FALSE)$matrix
+    ## Number of taxa
+    matrix_characteristics[matrix, 2] <- nrow(mat_tmp)
+    ## Number of characters
+    matrix_characteristics[matrix, 3] <- ncol(mat_tmp)
+    ## Proportion of NA char
+    matrix_characteristics[matrix, 4] <- length(which(apply(mat_tmp, 2, function(X) any(na.omit(X) == "-"))))/ncol(mat_tmp)*100
+    ## Proportion of NA cells
+    matrix_characteristics[matrix, 5] <- length(which(mat_tmp == "-"))/(ncol(mat_tmp)*nrow(mat_tmp))*100
+}
+
+## Convert into a data.frame
+matrix_characteristics <- data.frame(matrix_characteristics)
+matrix_characteristics[,2:5] <- as.numeric(matrix_characteristics[,2:5])
+
+## Groups
+matrix_characteristics[, 1] <- c("Annelids", "Mammals", "Angiosperms", "Angiosperms", "Insects", "Angiosperms", "Mammals", "Fishes", "Spiders", "Insects", "Angiosperms", "Dinosaurs", "Mammals", "Mammals", "Insects", "Pteridophytes", "Annelids", "Squamates", "Crustaceans", "Angiosperms", "Annelids", "Fishes")
+
+## Add the rownames and colnames
+colnames(matrix_characteristics) <- c("group", "taxa", "characters", "% NA characters", "% NA cells")
+rownames(matrix_characteristics) <- chains
+
+
+## markdown:
+knitr::kable(matrix_characteristics, digits = 1)
+## LaTeX
+xtable::xtable(matrix_characteristics, digits = 1)
+```
+
+The scores are then standardise to reflect the proportional length of the trees compared to the shortest tree for both _S~NS~_ and _S~NA~_.
 
 ```{r}
-## Normalising the score
-scores_std <- mapply(standardise.score, scores, std = "MP", SIMPLIFY = FALSE)
+## Normalising the score (dividing by the shortest score from each individual search)
+scores_short <- mapply(standardise.score, scores, std = "short", SIMPLIFY = FALSE)
 ```
 
 Getting the proportion of discarded trees under both algorithms treating inapplicable data as non missing
 ===============
 
-Here we will look at how many trees are discarded when treating the inapplicable data as non-missing data; either using our new algorithm (hereafter "Inapplicable") or treating them as a new state (hereafter "New state").
-The proportion of discarded trees are the number of trees in the most parsimonious island (under inapplicable data treated as missing data) that are one step or more longer than the shortest tree under the "Inapplicable" or "New state" algorithm.
+We can then measure from these standardised scores, how many trees would have been discarded from a default PAUP search (i.e. how values in _S~NS~_ and _S~NA~_ are higher than their minimum).
+Here, the proportion of discarded trees are the number of trees in the most parsimonious island (under each algorithm) that are one step or more longer than the shortest tree.
 
 ```{r}
 ## Getting the proportion of discarded trees
-proportions <- lapply(scores, get.proportion)
+proportions <- lapply(scores_short, get.proportion)
 ## Only selecting these proportions for inapplicable or extra state
 inapp_proportions <- unlist(lapply(proportions, `[[`, 1))
 extra_proportions <- unlist(lapply(proportions, `[[`, 3))
@@ -72,38 +155,53 @@ proportions_combined <- data.frame(inapp_proportions, extra_proportions)
 colnames(proportions_combined) <- c("Inapplicable", "New state")
 ```
 
-We can then visualise how many trees are discarded from the most parsimonious island (treating inapplicable data as missing data) in both algorithms:
+We can then visualise this as follows:
 
 ```{r, fig.width=8, fig.height=8}
 op <- par(bty = "n")
 boxplot(proportions_combined, ylab = "Proportion of discarded (longer) trees")
 par(op)
 ```
-It is interesting to see that the median amount of rejected trees is similar in both algorithm but that the 50% confident interval is between 0.5 and 1 for the "new state" algorithm and between 0.2 and 1 for the "inapplicable" one (hence this one rejects less trees).
+
+```{r, echo = FALSE}
+## Summary table
+knitr::kable(t(apply(proportions_combined, 2, summary)), digits = 2)
+```
+
+We see here a clear effect of the counting algorithm used with nearly 100% of trees discarded (the results are rounded) when not treating inapplicable data as missing data.
+All these trees would have still be saved in a default analysis.
+Note that, although their quantiles overlap, our inapplicable algorithm produces, on average, slightly less trees that are longer than treating inapplicable data as a new state.
 
 How long are the trees?
 -----------------------------------
 
-The problem with such representation is that it is only unidimensional (proportion of discarded trees) and does not informs us on what is the size of the discarded trees.
-We can thus represent the same information but also adding for each individual matrix what is the shortest and the longest tree proportionally to the most parsimonious trees with inapplicable data treated as missing data.
-
-First let's extract these minimum and maximum proportional length and update our data frame:
+This results however, only indicate how many longer trees are generated under these two counting methods, not how long each of them are.
+We can compare each tree length _S~NS~_ and _S~NA~_ to their length _S~MP~_ when treating inapplicable data as missing.
+This information can be added to the previous graph where in a two dimensional way: the vertical information is the same as above (proportion of discarded trees) and the horizontal gives information on, when trees are discarded, what are their minimum and maximum length compared to _S~MP~_.
 
 ```{r}
+## Normalising the score (based on the MP island)
+scores_MP <- mapply(standardise.score, scores, std = "MP", SIMPLIFY = FALSE)
+## Getting the proportion of discarded trees
+proportions_MP <- lapply(scores_MP, get.proportion)
+## Only selecting these proportions for inapplicable or extra state
+inapp_proportions_MP <- unlist(lapply(proportions_MP, `[[`, 1))
+extra_proportions_MP <- unlist(lapply(proportions_MP, `[[`, 3))
+## Combining the data into a data frame
+proportions_MP <- data.frame(inapp_proportions_MP, extra_proportions_MP)
+colnames(proportions_MP) <- c("Inapplicable", "New state")
 ## Getting the relative minimum and maximum tree length from both distributions
-max_scores <- lapply(scores_std, lapply, max)
-min_scores <- lapply(scores_std, lapply, min)
+max_scores <- lapply(scores_MP, lapply, max)
+min_scores <- lapply(scores_MP, lapply, min)
 ## Only selecting these proportions for inapplicable or extra state
 inapp_max <- unlist(lapply(max_scores, `[[`, 1))
 extra_max <- unlist(lapply(max_scores, `[[`, 3))
 inapp_min <- unlist(lapply(min_scores, `[[`, 1))
 extra_min <- unlist(lapply(min_scores, `[[`, 3))
-## Updating the data frame
+## Updating the data frame (using the inapp and extra proportion from before)
 proportions_combined <- data.frame(inapp_proportions, inapp_min, inapp_max,
     extra_proportions, extra_min, extra_max)
 ```
-
-And here we go:
 
 ```{r, fig.width=8, fig.height=8}
 op <- par(bty = "n")
@@ -113,11 +211,16 @@ sauronplot(proportions_combined, names = c("Inapplicable", "New state"),
 par(op)
 ```
 
-The way to read this "sauron" plots is pretty simple: the vertical lines in the middle of both spiky blobs are effectively boxplots.
-The big dot are the medians, the thick lines the 50% CI and the thin ones the 95% CI.
-The relative additional tree length on the other hand is represented horizontally.
-Each deviation from the line represents the maximum (right) and minimum (left) relative extra tree length for the trees at the corresponding level of rejection (y-axis).
-For example, looking at the trees at the median level of rejection (i.e. the islands that have ~70% of their trees bigger than the smallest tree), the inapplicable algorithm generates trees less that 50% longer .
-At the same level of rejection when treating inapplicable tokens as an extra state, the trees are more than 50% longer.
+Again, on the y axis is the same as above but represented as a line: the black dot is the median and the solid and dashed lines are the 50% and 95% confidence intervals respectively.
+The relative additional tree length to the overall most parsimonious tree is represented on the x axis.
+Each deviation represents the proportional extra length of the shortest and longest tree respectively on the left and right from the 0 line.
 
-Basically, the "inapplicable" algorithm generates trees that are shorter than using the "new state" and are more consistent among their islands (i.e. the "new" islands are less broken).
+```{r, echo = FALSE}
+## Summary table
+colnames(proportions_combined)[c(2,3,5,6)] <- c("Minimum extra length (NA)", "Maximum extra length (NA)", "Minimum extra length (NS)", "Maximum extra length (NS)")
+knitr::kable(t(apply(proportions_combined[,c(2,3,5,6)], 2, summary)), digits = 2)
+```
+
+
+Although both algorithms can generate longer trees (even for the minimum extra length), our inapplicable algorithm always generates trees less than 50% longer than the overall most parsimonious trees (apart from some trees were nearly every trees would have been discarded in the search). 
+<!-- This is probably Bouchenak's matrix -->

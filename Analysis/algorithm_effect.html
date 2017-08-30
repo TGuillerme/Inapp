@@ -126,7 +126,7 @@ $(document).ready(function () {
 
 <div id="effect-of-character-correlation" class="section level1">
 <h1>Effect of character correlation</h1>
-<p>To measure the effect of the our inapplicable algorithm, compared to treating inapplicable tokens as missing data or an extra state, we ran a normal parsimony search on 23 <!-- @@@ --> independent matrices from a range of taxonomic groups with variable number of characters, taxa and inapplicable data.</p>
+<p>To measure the effect of the our inapplicable algorithm, compared to treating inapplicable tokens as missing data or an extra state, we ran a normal parsimony search on 22 <!-- @@@ --> matrices from 10 taxonomic classes (plants and animals) with variable number of characters, taxa and inapplicable data.</p>
 <table>
 <thead>
 <tr class="header">
@@ -317,7 +317,7 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
-<p>From these matrices, we ran a heuristic search in PAUP* treating all inapplicable data as missing, and saving the island of <em>n</em> trees (default PAUP* options). The length of of the trees on this island is called <em>S<sub>MP</sub></em> the overall most parsimonious score. All trees on this island are or the same length <em>S<sub>MP</sub></em>.</p>
+<p>From these matrices, we ran a heuristic search in PAUP* treating all inapplicable data as missing, and saving the island of <em>n</em> trees (default PAUP* options). The length of of the trees on this island is called <em>S<sub>MP</sub></em> the overall most parsimonious score. All trees on this island have the same length <em>S<sub>MP</sub></em>.</p>
 <p>The length of the trees from these island are then re-calculated by treating inapplicable as an extra state (or “new state”) or by using our inapplicable algorithm. This results in two new lists of <em>n</em> scores (for the <em>n</em> trees of each island) with <em>S<sub>NS</sub></em> and <em>S<sub>NA</sub></em> being the variable tree lengths for each topology under respectively the “new state” and inapplicable counting algorithms.</p>
 <p>We then calculated how many trees were not the shortest in <em>S<sub>NS</sub></em> and <em>S<sub>NA</sub></em> (i.e. how many scores in these distributions were greater than the minimum) to measure how many trees were not discarded when treating inapplicable as missing data. Finally, we calculated how longer (or shorter!) were the <em>S<sub>NS</sub></em> and <em>S<sub>NA</sub></em> scores compared to the <em>S<sub>MP</sub></em> to see how both “new state” and the inapplicable algorithm modify tree length in comparison to treating inapplicable data as missing data.</p>
 </div>

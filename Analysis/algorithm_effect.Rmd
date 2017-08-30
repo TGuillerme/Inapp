@@ -11,7 +11,7 @@ output:
 Effect of character correlation
 ===============
 
-To measure the effect of the our inapplicable algorithm, compared to treating inapplicable tokens as missing data or an extra state, we ran a normal parsimony search on 23 <!-- @@@ --> independent matrices from a range of taxonomic groups with variable number of characters, taxa and inapplicable data.
+To measure the effect of the our inapplicable algorithm, compared to treating inapplicable tokens as missing data or an extra state, we ran a normal parsimony search on 22 <!-- @@@ --> matrices from 10 taxonomic classes (plants and animals) with variable number of characters, taxa and inapplicable data.
 
 |              |group         | taxa| characters| % NA characters| % NA cells|
 |:-------------|:-------------|----:|----------:|---------------:|----------:|
@@ -40,7 +40,7 @@ To measure the effect of the our inapplicable algorithm, compared to treating in
 
 From these matrices, we ran a heuristic search in PAUP* treating all inapplicable data as missing, and saving the island of _n_ trees (default PAUP* options).
 The length of of the trees on this island is called _S~MP~_ the overall most parsimonious score.
-All trees on this island are or the same length _S~MP~_.
+All trees on this island have the same length _S~MP~_.
 
 The length of the trees from these island are then re-calculated by treating inapplicable as an extra state (or "new state") or by using our inapplicable algorithm.
 This results in two new lists of _n_ scores (for the _n_ trees of each island) with _S~NS~_ and _S~NA~_ being the variable tree lengths for each topology under respectively the "new state" and inapplicable counting algorithms.

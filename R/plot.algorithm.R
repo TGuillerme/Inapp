@@ -143,6 +143,7 @@ plot.states.matrix <- function(
     # Nice to use the same colours for 2, 3, and 4 etc states so that one gets used to 
     # what colour state 1 is.
     vScale <- viridis::viridis(6, begin=0.2, end=1, direction=-1)
+    inappGrey <- '#d0d8d0'
     charCol <- list(
       '0' = vScale[1]  ,
       '1' = vScale[2]  ,
@@ -150,6 +151,7 @@ plot.states.matrix <- function(
       '3' = vScale[4]  ,
       '4' = vScale[5]  ,
       '5' = vScale[6]  ,
+      '?' = '#a8a4b2',
       'x' = inappGrey,
       '-' = inappGrey,
       '-1' = inappGrey

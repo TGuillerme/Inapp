@@ -182,7 +182,9 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
     }
 
     ## Adding the legend
-    graphics::legend("topleft", legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty, lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5, box.lwd = 0,box.col = "white", bg = "white")
+    graphics::legend("topleft", legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,
+                     lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5, 
+                     bty='n', bg = NULL)
 
     ## Add the tip states
     tips_labels <- plot.convert.state(states_matrix[[1]][1:ape::Ntip(tree)], missing = TRUE)

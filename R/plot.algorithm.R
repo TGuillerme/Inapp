@@ -7,6 +7,7 @@
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of up to three colors to be used for displaying respectively the tips, the nodes and the activated/counted nodes (if \code{counts != 0}).
 #' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
+#' @param use.edge.length \code{logical} indicating whether to use the edge lengths of the phylogeny to draw the branches or not (default).
 #' @param ... any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #' 
 #' @examples
@@ -37,7 +38,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"), counts = 0, ...) {
+plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"), counts = 0, use.edge.length = FALSE, ...) {
 
     tree <- states_matrix$tree
 
@@ -138,7 +139,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
     }
 
     ## Plotting the tree
-    graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col, edge.width = 2, ...)
+    graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = use.edge.length, cex = cex, adj = 0.5, edge.color = edge_col, edge.width = 2, ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
 
 

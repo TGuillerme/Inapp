@@ -40,13 +40,12 @@ first.downpass <- function(states_matrix) {
         ## Get the states in common between the descendants
         common_desc <- get.common(left, right)
 
-        if(!is.null(common_desc)) {
-            ## If there is any states in common, set the node to be that one
-            states_matrix$Dp1[[node]] <- common_desc
-
+        if(!is.null(common_desc)) { #TG: enter
             ## If state in common is actually the inapplicable token, but that both descendants have applicables, set it to be the union between the descendants
-            if(all(common_desc == -1) && any(left != -1) && any(right != -1)) {
+            if(all(common_desc == -1) && any(left != -1) && any(right != -1)) { #TG: AND
                 states_matrix$Dp1[[node]] <- get.union.incl(left, right)
+            } else {
+                states_matrix$Dp1[[node]] <- common_desc
             }
         } else {
             ## Else set it to be the union of the descendants
@@ -108,23 +107,23 @@ first.uppass <- function(states_matrix) {
         left <- states_matrix$Dp1[desc_anc[2]][[1]] # The node's left descendant
         ancestor <- states_matrix$Up1[desc_anc[3]][[1]] # The node's ancestor
 
-        if(any(curr_node == -1)) {
+        if(any(curr_node == -1)) { #TG: enter
             ## If any of the states is inapplicable...
-            if(any(curr_node != -1)) {
+            if(any(curr_node != -1)) { #TG: NA1
                 ## If any of the states IS applicable
-                if(any(ancestor == -1)) { #TG: change to to (ancestor == -1) (not any()) At this stage the ancestor is either - or A (not -A) #TG: fix, checked with Martin.
+                if(any(ancestor == -1)) { #TG: NAandA
                     ## If the ancestor state has an inapplicable token
                     states_matrix$Up1[[node]] <- -1
                 } else {
                     ## Else remove the inapplicable
                     states_matrix$Up1[[node]] <- curr_node[curr_node != -1]
                 }
-            } else {
+            } else { #TG: NA2
                 ## No state IS applicable
-                if(any(ancestor == -1)) { #TG: change to to (ancestor == -1) (not any()) At this stage the ancestor is either - or A (not -A) #TG: fix, checked with Martin.
+                if(any(ancestor == -1)) { 
                     ## If the ancestor state has an inapplicable token
                     states_matrix$Up1[[node]] <- -1
-                } else {
+                } else { #TG: NodeNAOR
                     ## If the union of left and right has an applicable
                     union_desc <- get.union.incl(left, right)
                     if(any(union_desc != -1)) {

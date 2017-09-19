@@ -144,6 +144,7 @@ plot.states.matrix <- function(
     # what colour state 1 is.
     vScale <- viridis::viridis(6, begin=0.2, end=1, direction=-1)
     inappGrey <- '#d0d8d0'
+    ambiguousColour <- '#a8a4b2'
     charCol <- list(
       '0' = vScale[1]  ,
       '1' = vScale[2]  ,
@@ -151,7 +152,7 @@ plot.states.matrix <- function(
       '3' = vScale[4]  ,
       '4' = vScale[5]  ,
       '5' = vScale[6]  ,
-      '?' = '#a8a4b2',
+      '?' = ambiguousColour,
       'x' = inappGrey,
       '-' = inappGrey,
       '-1' = inappGrey
@@ -244,7 +245,7 @@ plot.states.matrix <- function(
     if (length(passes) == 1 && passes == 0) {
         ## Get the first set of node labels
         node_labels <- plot.convert.state(states_matrix[[5]][-c(1:ape::Ntip(tree))])
-        bg_col <- as.character(vapply(node_labels, GetStateColour, character(1), multi='orange'))
+        bg_col <- as.character(vapply(node_labels, GetStateColour, character(1), multi=ambiguousColour))
 
         ## Adding node numbers (optional)
         if (show.node.label) {

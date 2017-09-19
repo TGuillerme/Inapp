@@ -3,11 +3,14 @@
 #' @description Plots an ancestral states reconstruction and tree length
 #'
 #' @param states_matrix A \code{states.matrix} list from \code{\link{apply.reconstruction}}
-#' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
+#' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)}). 
+#'               Set to 0 to colour regions of the tree according to the state reconstructed there.
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of up to three colors to be used for displaying respectively the tips, the nodes and the activated/counted nodes (if \code{counts != 0}).
 #' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
 #' @param use.edge.length \code{logical} indicating whether to use the edge lengths of the phylogeny to draw the branches or not (default).
+#' @param tip.font \code{numeric}, font for the tips, see \code{link[ape]{plot.phylo}}
+#' @param tip.col \code{character}, colour to apply to each tip, see \code{\link[ape]{tiplabel}}
 #' @param ... any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #' 
 #' @examples
@@ -36,9 +39,14 @@
 #' @seealso \code{\link{apply.reconstruction}}, \code{\link{runInapp}}
 #' 
 #' @author Thomas Guillerme
+#' @importFrom viridis viridis
 #' @export
 
-plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"), counts = 0, use.edge.length = FALSE, ...) {
+plot.states.matrix <- function(
+  states_matrix, passes = c(1,2,3,4), show.labels = 0, 
+  col.tips.nodes = c("orange", "bisque2", "lightblue"), counts = 0, use.edge.length = FALSE,
+  tip.font = 1, tip.col='black', ...
+) {
 
     tree <- states_matrix$tree
 
@@ -97,7 +105,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
     ## tree character done in make.states.matrix
     
     ## Passes
-    if(class(passes) != "numeric" || any(is.na(match(passes, c(1,2,3,4))))) {
+    if(class(passes) != "numeric" || any(is.na(match(passes, c(0,1,2,3,4))))) {
         stop("passes argument must be any integer(s) between 1 and 4.")
     }
     ## show.labels
@@ -131,17 +139,51 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
     ## Get the text plotting size
     cex <- 1
 
+    # TODO this should scale to max(6, states_in_character)
+    # Nice to use the same colours for 2, 3, and 4 etc states so that one gets used to 
+    # what colour state 1 is.
+    vScale <- viridis::viridis(6, begin=0.2, end=1, direction=-1)
+    charCol <- list(
+      '0' = vScale[1]  ,
+      '1' = vScale[2]  ,
+      '2' = vScale[3]  ,
+      '3' = vScale[4]  ,
+      '4' = vScale[5]  ,
+      '5' = vScale[6]  ,
+      '?' = '#aaaaaa',
+      'x' = '#cccccc',
+      '-' = '#cccccc',
+      '-1' = '#cccccc'
+    )
+
+    GetStateColour <- function (states, multi='black') {
+      if (length(states) == 1 && !is.null(charCol[[as.character(states)]])) return (charCol[[as.character(states)]])
+      return (multi)
+    }
+    
     ## Set the edges' colors
     edge_col <- "black"
     if(any(counts == 1) && !is.null(unlist(states_matrix$Up2))) {
+        finalState <- states_matrix$Up2
+        treeEdge <- tree$edge
+        parent <- treeEdge[, 1]
+        child <- treeEdge[, 2]
         ## Change the colors of the edges' if activations exist (and if the algorithm is NA)
-        edge_col <- ifelse(get.NA.edges(states_matrix, tree, pass = 4) == 1, "black", "grey")
+        edge_col <- vapply(seq_len(nrow(treeEdge)), function (edge) {
+            edgeFinal <- finalState[[child[edge]]]
+            inheritFrom <- ifelse (length(edgeFinal) > 1 || edgeFinal == -1, parent[edge], child[edge])
+            GetStateColour(finalState[[inheritFrom]], multi='#888889') 
+          }, character(1))
     }
 
     ## Plotting the tree
-    graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = use.edge.length, cex = cex, adj = 0.5, edge.color = edge_col, edge.width = 2, ...)
+    graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram", tip.col='white',
+      use.edge.length = use.edge.length, cex = cex, adj = 0.5, edge.color = edge_col,
+      edge.width = 2, ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
-
+    if (show.tip.label) {
+      tiplabels(text=tree$tip.label, col=tip.col, bg=NULL, frame='none', font=tip.font, adj=-0.03)
+    }
 
     ## Setting up the legend parameters
     length_text <-  paste("Tree length is", states_matrix$regions + ifelse(length(states_matrix$changes) > 0, length(states_matrix$changes), 0))
@@ -188,12 +230,29 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
 
     ## Add the tip states
     tips_labels <- plot.convert.state(states_matrix[[1]][1:ape::Ntip(tree)], missing = TRUE)
-    ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
+    ape::tiplabels(tips_labels, cex = 1, bg = as.character(vapply(tips_labels, GetStateColour, character(1), multi='white')), adj = 1)
 
 
     ## ADD THE NODE LABELS
 
-    if(length(passes) > 0) {
+    if (length(passes) == 1 && passes == 0) {
+        ## Get the first set of node labels
+        node_labels <- plot.convert.state(states_matrix[[5]][-c(1:ape::Ntip(tree))])
+        bg_col <- as.character(vapply(node_labels, GetStateColour, character(1), multi='orange'))
+
+        ## Adding node numbers (optional)
+        if (show.node.label) {
+            node_labels <- paste(paste("n",(ape::Ntip(tree)+1):(ape::Ntip(tree) + ape::Nnode(tree)), "\n", sep = ""), node_labels, sep = "")
+        }
+        
+        if (any(counts == 2))  {
+          if(length(states_matrix$changes) > 0) {
+             bg_col[states_matrix$changes - ape::Ntip(tree)] <- col.tips.nodes[3]
+          }
+        }
+        ## Plot the node labels
+        ape::nodelabels(node_labels, cex = 0.90, bg = bg_col)
+    } else if (length(passes) > 0) {
 
         ## Get the first set of node labels
         node_labels <- plot.convert.state(states_matrix[[passes[1]+1]][-c(1:ape::Ntip(tree))])

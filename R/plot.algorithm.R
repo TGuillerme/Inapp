@@ -65,7 +65,7 @@ plot.states.matrix <- function(
             }
         }
 
-        if(missing) {
+        if (missing) {
             ## Getting all states
             all_states <- unique(unlist(character))
             ## Convert the missing states
@@ -114,8 +114,8 @@ plot.states.matrix <- function(
             stop("show.labels argument must be either 1 for tips, 2 for nodes or c(1,2) for both")
         }
         ## Setting up the labels options
-        show.tip.label <- ifelse(any(1 %in% show.labels) ,TRUE, FALSE)
-        show.node.label <- ifelse(any(2 %in% show.labels) ,TRUE, FALSE)
+        show.tip.label <- ifelse(any(1 %in% show.labels), TRUE, FALSE)
+        show.node.label <- ifelse(any(2 %in% show.labels), TRUE, FALSE)
     } else {
         show.tip.label <- show.node.label <- FALSE
     }
@@ -259,12 +259,12 @@ plot.states.matrix <- function(
         node_labels <- paste(paste(passes[1], ":", sep = ""), node_labels)
 
         ## Adding node numbers (optional)
-        if(show.node.label) {
+        if (show.node.label) {
             node_labels <- paste(paste("n",(ape::Ntip(tree)+1):(ape::Ntip(tree) + ape::Nnode(tree)), "\n", sep = ""), node_labels, sep = "")
         }
         
         ## Add the extra node labels
-        for(pass in passes[-1]) {
+        for (pass in passes[-1]) {
             node_labels <- paste(node_labels, paste(pass, ": ", plot.convert.state(states_matrix[[pass + 1]][-c(1:ape::Ntip(tree))]), sep = ""), sep = "\n")
         }
 

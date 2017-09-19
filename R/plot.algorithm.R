@@ -182,7 +182,12 @@ plot.states.matrix <- function(
       edge.width = 2, ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
     if (show.tip.label) {
-      tiplabels(text=tree$tip.label, col=tip.col, bg=NULL, frame='none', font=tip.font, adj=-0.03)
+      if (tip.col) {
+        ape::tiplabels(text=tree$tip.label, col=tip.col, bg=NULL, frame='none', font=tip.font, adj=-0.03)
+      } else {
+        tips_labels <- plot.convert.state(states_matrix[[1]][1:ape::Ntip(tree)], missing = TRUE)
+        ape::tiplabels(text=tree$tip.label, col=as.character(vapply(tips_labels, GetStateColour, character(1), multi='white')), bg=NULL, frame='none', font=tip.font, adj=-0.03)
+      }
     }
 
     ## Setting up the legend parameters

@@ -150,10 +150,9 @@ plot.states.matrix <- function(
       '3' = vScale[4]  ,
       '4' = vScale[5]  ,
       '5' = vScale[6]  ,
-      '?' = '#aaaaaa',
-      'x' = '#cccccc',
-      '-' = '#cccccc',
-      '-1' = '#cccccc'
+      'x' = inappGrey,
+      '-' = inappGrey,
+      '-1' = inappGrey
     )
 
     GetStateColour <- function (states, multi='black') {

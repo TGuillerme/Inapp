@@ -1,0 +1,427 @@
+#NEXUS
+[!This data set was downloaded from TreeBASE, a relational database of phylogenetic knowledge. TreeBASE has been supported by the NSF, Harvard University, Yale University, SDSC and UC Davis. Please do not remove this acknowledgment from the Nexus file.
+
+
+Generated on September 16, 2013; 15:20 GMT
+
+TreeBASE (cc) 1994-2008
+
+Study reference:
+Zanol J., Halanych K., & Fauchald K. 2012. Phylogeny and generic reclassification
+of the bristleworm family Eunicidae (polychaete, Annelida). Zoological Journal
+of the Linnean Society, .
+
+TreeBASE Study URI:  http://purl.org/phylo/treebase/phylows/study/TB2:S13353]
+
+BEGIN TAXA;
+        TITLE  Combined_Data_80_terminals;
+        DIMENSIONS NTAX=80;
+        TAXLABELS
+            Arabella_semimaculata
+            Diopatra_dentata
+            Diopatra_ornata
+            Dorvillea_erucaeformis
+            Dorvillea_sociabilis
+            Eunice_americana
+            Eunice_amoureuxi
+            Eunice_antarctica
+            Eunice_antennata
+            Eunice_antillensis
+            Eunice_aphroditois
+            Eunice_cariboea
+            Eunice_cincta
+            Eunice_filamentosa
+            Eunice_fucata
+            Eunice_gracilicirrata
+            Eunice_harassii
+            Eunice_impexa
+            Eunice_insularis_Cf
+            Eunice_limosa
+            Eunice_lucei
+            Eunice_marcusi
+            Eunice_mikeli
+            Eunice_miurai
+            Eunice_mutilata
+            Eunice_norvegica
+            Eunice_notata
+            Eunice_roussaei
+            Eunice_rubra
+            Eunice_samoae
+            Eunice_sp
+            Eunice_thomasiana
+            Eunice_torquata
+            Eunice_valens
+            Eunice_violacemaculata
+            Euniphysa_aculeata
+            Euniphysa_tridontesa
+            Eurythoe_complanata
+            Glycera_dibranchiata
+            Hipponoe_gaudichaudi
+            Hyalinoecia_sp
+            Lumbrineris_inflata
+            Lumbrineris_latreille
+            Lysidice_collaris
+            Lysidice_ninetta
+            Lysidice_sp1
+            Lysidice_sp2
+            Marphysa_angeli
+            Marphysa_bellii
+            Marphysa_bellii_Cf
+            Marphysa_brevitentaculata
+            Marphysa_californica
+            Marphysa_disjuncta
+            Marphysa_fallax
+            Marphysa_hentscheli_Cf
+            Marphysa_mossambica
+            Marphysa_novahollandiae
+            Marphysa_regalis
+            Marphysa_sanguinea
+            Marphysa_sp
+            Marphysa_viridis
+            Mooreonuphis_pallidula
+            Nematonereis_unicornis
+            Nematonereis_unicornis_B
+            Nothria_conchylega
+            Oenone_fulgida
+            Onuphis_elegans
+            Onuphis_eremita
+            Onuphis_iridescens
+            Palola_siciliensis_Cf
+            Palola_spA1
+            Palola_spA3
+            Palola_spA7Pohnpei142
+            Palola_spA9Kosrae161
+            Palola_spB1
+            Palola_spB5
+            Palola_spB7
+            Palola_viridis
+            Paradiopatra_quadricuspis
+            Paramphinome_jeffreysii
+            ;
+END;
+
+BEGIN CHARACTERS;
+[! TreeBASE Matrix URI: http://purl.org/phylo/treebase/phylows/matrix/TB2:M14387]
+
+	TITLE Morphological_80_terminals;
+	LINK TAXA = Combined_Data_80_terminals;
+	DIMENSIONS NCHAR=230;
+	FORMAT DATATYPE=Standard SYMBOLS= "0123456789ABCDEFGHJKMNPQRSTUVWXYZ" MISSING=? GAP= -;
+	CHARSTATELABELS
+		1    / round dorsoventrally_flattened dorsally_flattened ventrally_flattened,
+		2    / round dorsoventrally_flattened dorsally_flattened ventrally_flattened,
+		3    / round dorsoventrally_flattened dorsally_flattened ventrally_flattened,
+		4    / abruptly_tapering_anteriorly_and_posteriorly 'evenly_tapering_from_anterior-median_chaetigers',
+		5    / at_most_10_times_wider_than_long more_than_10_times_wider_than_long,
+		6    / absent present,
+		7    / 'entire,_distinct_ventrally_by_shallow_grooves' medially_separated,
+		8    / absent present,
+		9    / 'conspicuous,_free,_attached_to_the_prostomium_by_narrow_bases_' 'mostly_inconspicuous,_fused_to_the_dorsal_side_of_the_prostomium',
+		10    / absent present,
+		11    / round truncate_steep round_multilobed truncate_spread,
+		12    / inflated flat 'with_thickened_lateral_margins_(dimpled)' flat_with_higher_anterior_end,
+		13    / as_wide_as narrower wider,
+		14    / dorsolateral_fold_anterior_extension buccal_lips,
+		15    / separated connected_,
+		16    / absent present_,
+		17    / antennae_and_palps_evenly_spaced median_antenna_isolated_by_a_gap_from_the_other_antennae_and_pa palps_isolated_by_a_gap_from_the_antennae. head_appendages_on_conspicuosly_different_regions_of_the_prosto,
+		18    / straight_line 'antennae_in_straight_line,_palps_more_anterior' semicircle_ horseshoe 'lateral_antennae_and_palp_in_a_straight__line,_ma_posterior',
+		19    / absent present,
+		20    / absent present,
+		21    / 'digitiform,_tapering_or_clavate_' 'medially_inflated_(fusiform)' button_shaped,
+		22    / absent present,
+		23    / 'irregular_(wrinkled,_inconspicuous)' 'regular,_conspicuous_(no_irregular_grooves_present)',
+		24    / short_or_long_cylinders moniliform,
+		25    / absent present,
+		26    / 'short,_usually_ring-shaped' 'relatively_long,_usually_articulated' long_not_articulated,
+		27    / absent present,
+		28    / 'digitiform,_tapering_or_clavate' fusiform,
+		29    / absent present,
+		30    / 'irregular_(wrinkled,_inconspicuous)' 'regular,_conspicuous_(no_irregular_grooves_present)',
+		32    / short_or_long_cylinders moniliform,
+		33    / absent present,
+		34    / 'short,_usually_ring-shaped' 'relatively_long,_usually_articulated' long_not_articulated,
+		35    / flat 'set_off_by_distinct_grooves_(onuphidae_state)' visible_only_as_elevated_surfaces,
+		36    / single_ring two_rings_distinct_at_least_dorsally reduced_to_region_around_the_mouth,
+		37    / absent present,
+		38    / anterior_edge 'median/clearly_posterior_to_the_anterior_edge',
+		39    / extending_to_the_ventral_side_of_anterior_chaetigers restricted_to_peristomium,
+		40    / absent present,
+		41    / one_pair_ two_or_more_pairs,
+		42    / absent present,
+		43    / absent calcite aragonite,
+		44    / ctenognath prionognath labidognath,
+		45    / longer_than_half_the_length_of_MxI_ shorter_than_half_the_length_of_MxI_ about_half_of_MxI,
+		46    / dentate fang_shaped,
+		47    / facing_each_other facing_dorsal_side_of_the_body,
+		48    / on_the_anterior_end_only 'on_the_anterior_and_posterior_ends,_most_posterior_1/3_to_???_lack_te' until_the_posterior_end,
+		49    / 'round/distinctly_blunt' 'pointed/triangular',
+		50    / curved straight,
+		51    / 'dentate,_front_end_as_part_of_distal_arc_with_left_MxIV_' 'dentate,_at_least_in_part_located_behind_MxII' edentate_behind_MxII_ 'dentate,_triangular_' 'dentate,_with_teeth_arranged_anterior_to_posterior,__anteriormost_lon' fnag_shaped,
+		52    / present absent,
+		53    / 'arch_like_running_dorsal_to_ventral/angle_of_attachment' arch_like_running_anterior_to_posterior longer_than_wide_often_with_just_one_tooth_ 'triangular,_edentate_or_with_few_teeth_on_the_tip' 'teeth_decreasing__in_size_from_anterior_to_posterior,_anteriormost_lon' fang_shaped,
+		54    / teeth_only_present_on_the_dorsal_quarter_of_the_plate teeth_only_present_on_the_dorsal_half teeth_present_on_the_dorsal_half_and_part_of_the_ventral_half teeth_in_the_whole_length_of_the_plate,
+		55    / fang_shape 'plate_like,_small_tooth_may_be_present',
+		56    / absent present,
+		57    / absent present,
+		58    / flat_ 'strongly_curved,_forming_an_open_scoop,_plates_fused_at_the_anteri' 'curved,_plates_separated_in_a_V_shape_at_the_anterior_end,_not_stro',
+		59    / fused_medially attached_by_ligaments,
+		60    / absent present,
+		61    / posterior_to_mandible_carrier above_mandible_carrier_ between_mandible_carrier_,
+		62    / absent present,
+		63    / 'single_filaments__(maximum_2_filaments)' linearly_distributed spiraled bushy_,
+		64    / palmate pectinate,
+		65    / shorter about_the_same_length longer,
+		66    / on_chaetiger_3 between_chaetigers_4_and_9 'start_late_(after_chaetiger_10)' first_chaetiger,
+		67    / 'mostly_limited_to_the_first_1/3_of_the_body_(less_than_55%_of_the_bod' 'in_most_of_the_body_(present_in_more_then_65%_of_the_body)' 'mostly_limited_to_the_second_1/3_of_the_body_(less_than_55%_of_the_',
+		68    / ventral as_dorsal_as_ dorsal,
+		69    / absent present,
+		70    / reduced_to_notopodial_cirri_ complete_chaetal_lobe,
+		71    / absent present,
+		72    / in_median_chaetigers along_the_whole_body,
+		73    / partially_wrinkled_ completely_wrinkled,
+		74    / anterior_half anterior_shield,
+		75    / absent present,
+		76    / 'dark_(brown,_dark_brown_or_black)' 'light_(nearly_clear_or_yellow)' dark_distal_tip,
+		77    / color_of_aciculae_vary_slightly_along_the_body_but_without_a_clear_p most_anterior_aciculae_is_the_lightest_and_it_has_the_same_color_sha most_anterior_aciculae_is_the_lightest_and_its_color_shade_is_consid most_posterior_aciculae_is_the_lightest_and_it_has_the_same_color_sh most_posterior_aciculae_is_the_lightest_and_its_color_shade_is_consid most_anterior_and_posterior_aciculae_are_the_lightest_and_it_has_the_ most_anterior_and_posterior_aciculae_are_the_lightest_and_its_color_s most_anerior_are_the_darkest,
+		78    / one two three four five,
+		79    / 'light_(nearly_clear_or_yellow)' 'dark_(brown,_dark_brown_or_black)',
+		80    / P2 P3 P4 P5 P6 P1,
+		81    / present_in_every_or_nearly_every_segment_after_first_occurrence 'may_be_missing_irregularly,_sometimes_in_many_segments',
+		82    / color_of_hooks_vary_slightly_along_the_body_but_without_a_clear_patt most_posterior_hook_is_the_lightest_and_it_has_the_same_color_shade_ most_posterior_hook_is_the_lightest_and_its_color_shade_is_considera,
+		83    / absent present,
+		84    / absent present,
+		85    / absent_ present,
+		86    / lateral ventral,
+		87    / fusiform filiform,
+		88    / tapering digitiform leaf_shaped,
+		89    / tapering digitiform button_shaped tapering_flat,
+		90    / tapering digitiform button_shaped,
+		91    / tapering digitiform flattened button_shaped fusiform club_shaped,
+		92    / tapering digitiform flattened button_shaped filiform fusiform thumb_shaped,
+		93    / tapering digitiform flattened thumb_shaped button_shaped filiform fusiform,
+		94    / tapering digitiform flattened button_shaped filiform,
+		95    / absent present,
+		96    / absent present,
+		97    / lower_than_chaetal_lobe longer_than_chaetal_lobe about_as_long_as_chaetal_lobe,
+		98    / lower_than_chaetal_lobe longer_than_chaetal_lobe about_as_long_as_chaetal_lobe absent,
+		99    / lower_than_chaetal_lobe longer_than_chaetal_lobe about_as_long_as_chaetal_lobe absent,
+		100    / lower_than_chaetal_lobe longer_than_chaetal_lobe about_as_long_as_chaetal_lobe,
+		101    / absent present,
+		102    / 'longer_than_chaetal_lobe/shorter2-0' 'about_as_long_as_chaetal_lobe/longer0-1' 'lower_than_chaeta_lobe/about_as_long_as_chaetal_lobe1-2',
+		103    / longer_than_chaetal_lobe about_as_long_as_chaetal_lobe lower_than_chaetal_lobe,
+		104    / longer_than_chaetal_lobe about_as_long_as_chaetal_lobe lower_than_chaetal_lobe,
+		105    / longer_than_chaetal_lobe about_as_long_as_acicular_lobe lower_than_acicular_lobe,
+		106    / tapering round digitiform fusiform truncate,
+		107    / tapering round digitiform truncate,
+		108    / tapering round digitiform,
+		109    / tapering round digitiform straight,
+		110    / absent present,
+		111    / absent present,
+		112    / absent present,
+		113    / absent present,
+		114    / absent present,
+		115    / absent present,
+		116    / round truncate pointed bilobed,
+		117    / round truncate pointed bilobed,
+		118    / round truncate pointed bilobed,
+		119    / round truncate pointed bilobed,
+		120    / absent present,
+		121    / absent present,
+		122    / 'ovoid/knob/continuou' 'thumb_like,_conspicuously_separated_from_the_chaetal_lobe/ovoid' furrow,
+		123    / anterior dorsal,
+		124    / median dorsal_,
+		125    / median dorsal_,
+		126    / median dorsal_,
+		127    / median dorsal_,
+		128    / dorsal_to_ventral anterior_to_posterior,
+		129    / dorsal_to_ventral anterior_to_posterior,
+		130    / 'blunt-tipped,_conical_or_irregularly_knobbed' 'hammer-headed_or_bidentate' mucronate 'diamond_shape_(lanca)',
+		131    / 'blunt-tipped,_conical_or_irregularly_knobbed' 'hammer-headed_or_bidentate' mucronate diamond_shaped,
+		132    / 'blunt-tipped,_conical_or_irregularly_knobbed' 'hammer-headed_or_bidentate' mucronate diamond_shaped,
+		133    / 'blunt-tipped,_conical_or_irregularly_knobbed' 'hammer-headed_or_bidentate' mucronate,
+		134    / absent present,
+		135    / absent present,
+		136    / absent present,
+		137    / absent present,
+		138    / absent present,
+		139    / absent present,
+		140    / 'dorso-posterior' posterior_ dorsal,
+		141    / 'dorso-posterior' posterior_ dorsal,
+		142    / 'dorso-posterior' posterior_ dorsal,
+		143    / 'dorso-posterior_' posterior dorsal,
+		144    / absent present,
+		145    / absent present,
+		146    / absent present,
+		147    / absent present,
+		148    / 'narrow,_shaft_narrower_than_limbate_on_the_same_parapodia' 'wide,_shaft_as_wide_as_or_wider_than_limbate_on_the_same_parapodi',
+		149    / 'narrow,_shaft_narrower_than_limbate_on_the_same_parapodia' 'wide,_shaft_as_wide_as_or_wider_than_limbate_on_the_same_parapodi',
+		150    / 'narrow,_shaft_narrower_than_limbate_on_the_same_parapodia' 'wide,_shaft_as_wide_as_or_wider_than_limbate_on_the_same_parapodi',
+		151    / 'narrow,_shaft_narrower_than_limbate_on_the_same_parapodia' 'wide,_shaft_as_wide_as_or_wider_than_limbate_on_the_same_parapodi',
+		152    / 'narrow_(<=_three_times_the_shaft_width)' wide,
+		153    / 'narrow_(<=_three_times_the_shaft_width)' wide_,
+		154    / 'narrow_(<=_three_times_the_shaft_width)' wide_,
+		155    / 'narrow_(<=_three_times_the_shaft_width)' wide,
+		156    / anterior dorsal posterior,
+		157    / anterior dorsal posterior,
+		158    / anterior dorsal posterior,
+		159    / anterior dorsal posterior,
+		160    / equal 'unequal,_increasing_from_one_side_to_the_other',
+		161    / tranverse oblique,
+		162    / tranverse oblique,
+		163    / tranverse oblique,
+		164    / both_outer_teeth_longer one_outer_teeth_longer inner_and_outer_teeth_the_same_length,
+		165    / both_external_teeth_longer one_of_the_external_teeth_longer all_teeth_are_the_same_length,
+		166    / both_external_teeth_longer one_of_the_external_teeth_longer all_teeth_are_the_same_length,
+		167    / both_external_teeth_longer one_of_the_external_teeth_longer all_teeth_are_the_same_length,
+		168    / flat curved,
+		169    / flat curved,
+		170    / flat curved,
+		171    / flat curved,
+		172    / 'wide,_usually_separated_by_gaps' 'thin_side_by_side,_almost_indistinguishable_as_separate_units_at_the_',
+		173    / 'wide,_usually_separated_by_gaps,_tapering_from_the_base' 'thin_side_by_side,_tapering_at_the_distal_end',
+		174    / 'wide,_usually_separated_by_gaps' 'thin_side_by_side,_almost_indistinguishable_as_separate_units_at_the_',
+		175    / anterior_to_aciculae dorsal_to_aciculae,
+		176    / anterior_to_aciculae dorsal_to_aciculae posterior_to_aciculae dorsalmost_chaetae,
+		177    / anterior_to_aciculae dorsal_to_aciculae posterior_to_aciculae dorsalmost_chaetae,
+		178    / lateral_slightly_folded curved,
+		179    / lateral_slightly_folded curved,
+		180    / lateral_slightly_folded curved,
+		181    / absent present,
+		182    / absent present,
+		183    / absent present,
+		184    / absent present,
+		185    / 'pseudocompound_(article_and_shaft_not_completely_distinct,_just_a_' 'true-compound_(article_and_shaft_completely_distinct,_even_if_they_a',
+		186    / 'pseudocompound_(article_and_shaft_not_completely_distinct,_just_a_' 'true-compound_(article_and_shaft_completely_distinct,_even_if_they_a',
+		187    / 'pseudocompound_(article_and_shaft_not_completely_distinct,_just_a_' 'true-compound_(article_and_shaft_completely_distinct,_even_if_they_a',
+		188    / 'pseudocompound_(article_and_shaft_not_completely_distinct,_just_a_' 'true-compound_(article_and_shaft_completely_distinct,_even_if_they_a',
+		189    / 'fully_connected,_proximal_end_of_the_article_placed_on_the_shaft_ho' 'connected_at_both_edge,_proximal_end_of_the_article_fit_in_a_so',
+		190    / 'fully_connected,_proximal_end_of_the_article_placed_on_the_shaft_ho' 'connected_at_both_extremities,_proximal_end_of_the_article_fit_in_a_so',
+		191    / 'falciger_bidentate,_longest_tooth_proximal' 'falciger_bidentate,_longest_tooth_distal' 'falciger_tridentate,_all_teeth_towards_the_side,_longest_tooth_distal' falciger_multidentate spiniger 'falciger_bidentate,_teeth_inconspicuous,_looks_unidentate_if_not_cle' differ_inconspicuous_from_small_heads_ E_americaMbelliiMdisjuncta_tem_small_heads_butnot_inconspicuous,
+		192    / 'falciger_bidentate,_longest_tooth_proximal_or_about_the_same_size' 'falciger_bidentate,_longest_tooth_distal' falciger_multidentate spiniger 'falciger_bidentate,_teeth_inconspicuous,_looks_unidentate_if_not_cle' differ_inconspicuous_from_small_heads_ E_americaMbelliiMdisjuncta_tem_small_heads_butnot_inconspicuous,
+		193    / 'falciger_bidentate,_longest_tooth_proximal' 'falciger_tridentate,_at_least_one_tooth_towards_the_distal_end' spiniger,
+		194    / 'falciger_bidentate,_longest_tooth_proximal' 'falciger_tridentate,_at_least_one_tooth_towards_the_distal_end' spiniger,
+		195    / rows_mostly_ventral_to_the_aciculae rows_completely_ventral_to_the_aciculae rows_on_the_dorsal_and_ventral_sides_of_the_aciculae single_row_parallel_to_aciculae_lobe_on_the_anterior_and_posterior_sid,
+		196    / rows_mostly_ventral_to_the_aciculae rows_completely_ventral_to_the_aciculae rows_on_the_dorsal_and_ventral_sides_of_the_aciculae,
+		197    / rows_mostly_ventral_to_aciculae rows_on_the_dorsal_and_ventral_sides_of_the_aciculae,
+		198    / absent present,
+		199    / absent present,
+		200    / absent present,
+		201    / absent present,
+		202    / falcate bidentate tridentate spiniger_,
+		203    / falcate bidentate tridentate spiniger_,
+		204    / falcate bidentate tridentate spiniger_,
+		205    / absent present,
+		206    / absent present,
+		207    / absent present,
+		208    / absent present,
+		209    / proximal_tooth_only all_teeth,
+		210    / covering_proximal_tooth covering_all_teeth,
+		211    / covering_proximal_tooth covering_all_teeth,
+		212    / covering_proximal_tooth covering_all_teeth,
+		213    / loose_fibers solid,
+		214    / chaetal_lobe ventral_to_the_chaetal_lobe_on_the_parapodium,
+		215    / chaetal_lobe ventral_to_the_chaetal_lobe_on_the_parapodium,
+		216    / chaetal_lobe ventral_to_the_chaetal_lobe_on_the_parapodium,
+		217    / darkest_near_distal_end 'most_of_it_has_the_darkest_tone,_towards_proximal_end' darkest_in_the_distal_half,
+		218    / darkest_near_distal_end 'most_of_it_has_the_darkest_tone,_towards_proximal_end' darkest_in_the_distal_half,
+		219    / darkest_near_distal_end 'most_of_it_has_the_darkest_tone,_towards_proximal_end' darkest_in_the_distal_half,
+		220    / absent present,
+		221    / absent present,
+		222    / thumb_shaped tapering digitiform oval bottle_shaped 'flat,_leaf_shaped' fusiform ridge_no_tip,
+		223    / 'flat,_leaf_shaped_' 'cushion_shaped,_lack_tip' digitiform 'round_inflated_base,__conspicuous_tip' 'round_inflated_base,_continuous__tip' round 'ventral_ridge,_conspicuous__tip' button_shaped,
+		224    / thumb_shaped tapering digitiform bottle_shaped button_shaped 'flat,_leaf_shaped' 'round_inflated_base,_continuous__tip' 'round_inflated_base,_conspicuous_tip' bowling_pin,
+		225    / thumb_shaped tapering digitform button_shaped 'bowlling_pin_shaped_(similar_she_to_bottle_but_longer_than_chaetal_lo' bottle_shaped,
+		226    / flat bulge slightly_elevated,
+		227    / flat bulge slightly_elevated,
+		228    / flat bulge slightly_elevated,
+		229    / flat bulge slightly_elevated,
+		230    / absent present most_consistent_observed,
+		;
+
+MATRIX
+[                                     10        20        30        40        50        60        70        80        90        100       110       120       130       140       150       160       170       180       190       200       210       220       230       240        ]
+[                                      .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .        ]
+Arabella_semimaculata         00010000-----00---00------0-------010-1100-1-0-210404-00101120-----00-----01------0000--------1122221100000011-??11-???00--1000-02222111011?1110000---------------------------------0000-------------0000------------------00----????-
+Diopatra_dentata              20??00110----00-031100--11100---11101-110112210210111-101011012-010210100001-10?0?????-0-?450?11000?1100?322?010011--2?00--000?00?22?010111111?011?-00?-00?-22?0-00-22?-00?--?--?--?100?1--?0-1--?0--011?11?-11?-11?1{01}{01}?--?1011-???2?1
+Diopatra_ornata               200000110----00-0211010-111010--11101-110112210210111-101011012-010110100001-100010111-1--450011000011002322-010011-02200--000000222200011100010111-000-111-1120-00-222-000---------10001---0-1---0--0111111-?11-?111{01}{01}1---1061--????1
+Dorvillea_erucaeformis        0???0000-----1?---0120--0-110---0-?10-1110-0??-?????????1010-0-----2100---01------????---?56??1?11??110??43??1--?11--??00--11??--?0??00?00?--??00??--??--??--??---?--??--??-??-??-??11??11??1100??11?00??-??--??--??--?????1?02??????1
+Dorvillea_sociabilis          33310000-----1?---0111100-10110-0-010-1110-0??-?????????1010-0-----1100---01------0101----100111222012112----1---11----00--??????0???00011?22??0000---------------------------------111111111100001100000------------------112223????1
+Eunice_americana              00010011111000110211010-10101110102111110112110110111-1110110111000010101-01-301001111-0--405011000012122----000011001211001111000?0200011111011110000-000-?22-0?00111-?01----------111111111100{01}{01}0000011-22--11--111-00---116314221?1
+Eunice_amoureuxi              13300011110010111211110-101010--1021101101121100100102101011010--100101000002111020111-01-10001100001102211--000011?02200--?100?0?00?000111101?111?000?1?1?211?00?0111?110?--?--?--?111111111100000000011-11--1?--0?1-002{02}-1133432?0?1
+Eunice_antarctica             33310011111010110211010-1010111010211111011211011011021{01}10110111{02}00010100001-{01}0100{01}111-00-100011000210121----000011111?00--111100-?00000111111111110000?11022220?0011111011---------111111111111000000011-11--1?--1?1-10---11234221?21
+Eunice_antennata              3331001111121011021101111010111110211111011211011011021010110111111010100001-001001111-102100111000212121----000011111100--11110000??00011111111111000000112222000011111000---------1111111111000{01}0000011-22--?1--?01-11---11032000001
+Eunice_antillensis            0031001111120011021101101010111010211111011211011011021110110111210010100001-101001011-1--045011000010222----000011111100--111100000000011111111111000000112211000011111111---------111111111111000000011-11--1?--0?1-11---113384?1??1
+Eunice_aphroditois            0331{01}011112200111311010-101010--102111110112110110010111101101110110101000000?13{01}00001-002456011000012222----0000111112110111110000000001111111111100001111211100001?210000---------111111111100000000001--1---?---?1--0--1110465????1
+Eunice_cariboea               000{01}0011110200111211010-101010--102110110112{02}10110010210101100-----0101000006011020001----003311000012122----000011222200--0000--0?0000011100111111000001110011000011111110---------111111111100000000011-11--11--001-1122-1104432?0?1
+Eunice_cincta                 ?0??00111102????1211010-101010--102111110112?????????????????0-----010100000?01???????????00??1?00??112??--??000?1102??00--00??--00??00?11?????11??00??00??????000?11??????---------11??11??1100??00?0?1?-1?-?1?-?1?1???2??1104???????
+Eunice_filamentosa            10310011110210101211010-101010--102111110112110110010011101101112210101000004010020111-111445011000212122-?--000011102210011100-??11200011111111110000-000-221-0000111-111----------111111111154000000111111-111-?00101?10-11368211101
+Eunice_fucata                 03310011111210110211010-101010--102110110112110010010211101101110100101001006011020011-1--106011200212111--?-000011111100--111100000000011111111111000011112212000011111111---------111111111111?00000011-1{01}--01---01-0022-11050222221
+Eunice_gracilicirrata         ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Eunice_harassii               30010011111210110211010-101010--10211111011211011011021110110111001010100001-{01}010010??-00-000011000012122----000011111111001111000{02}0{02}000111111111110000000022220?0011111110---------111111111100000000011-11--11--111-00---116382222?1
+Eunice_impexa                 33??{01}011110010101211010-1{02}1010--1{02}2111110112110110010011101101{01}0-2?010100000?{23}1?0?????-10?450?11000?1022?---?000011001?1101111?11000?000111111?111?000??00?221?0000111?110?--?--?--?111?111?11540?000001?-1?--??--??1-0?{01}0?11063?22??1
+Eunice_insularis_Cf           000{01}0011110000101211010-101010--1021111101122100100{01}0210101100-----010101-00{26}0110{12}0011----004011000012122----000011002200--1000--?00000011110111?110?00??012?110??0??11??11---------111111111100000000011-11--1?--1?1-002{02}0110343????1
+Eunice_limosa                 11??0011111110110211011010101110102111110112110110111-1010110111200010100001-00?0?1???-00?045?11000?1212?---?000011001?1100111?00?20?0001?11?1???1???0?????????0????????????-??-??-?111??11??1?00??00001?-2?--??--??1-0?--?11438?1?2?1
+Eunice_lucei                  3001001111121011121101111010111110211111011211011011021010110111011010100001-{01}01001111-11-100011000012222----00001110{01}200--1111000011000111111111110000001122210000?111?1?0---------111111111111000000011-22--11--111-11---11038222221
+Eunice_marcusi                00310011111010110211011110101111102111110112110110010211101101{01}0-110101000001011021011-11-100111000212111----000011111100--111100?002000111111111110000?001?2220?00?111??11---------111111111111000000011-11--11--001-00{12}{12}211038222??1
+Eunice_mikeli                 00010011110210111211010-121010--1221101101121100100101101011010--21010100000?0110?0101--0-000011000012122--?-000011112200--11000000120001111011111100001111211?000000111110---------111111111100000000011-11--??--??1-0011?11333111001
+Eunice_miurai                 03310011111200110211011110101111102111110112110110111-1010110111{02}10010100001-{01}01001011-0--101011000012222----00001101{12}100--111100?10{12}00011111111110000-0??-2?2-0???1?1-??1----------111111111100{01}10000011-22--??--??1-1?---11232222221
+Eunice_mutilata               00010011110200101211010-101010--102110110112110010010110101101112110101000002110020001-11-1004112002111212---000011002200--11000-0000000111101111110000?111?1110?00?111??01---------111111111100000000011-11--??--??1-000{02}011034311101
+Eunice_norvegica              03?10011112210110211010-101010--10211111011211011001011110110111111010100000?01?0??{01}??-11?045?11000?1022?---?000011111?00--111?00000?000111111?111?000??00?222?0?00?11??11?--?--?--?111?111?11000?000001?-1?--1?--0?1-0?11?11038?211?1
+Eunice_notata                 01110011110210101211010-121010--1221111101121100100101101011010--210101000006011020011--1-101111000010222----000011212200--1100-0??{02}00001111111111100000?11111100?011111111---------111111111100000000011-11--1?--1?1-0000-110432222?1
+Eunice_roussaei               00010011112200111211010-101010--102111110112110110010111101101110{12}101010000041110?0011-11-0000110002111111---000011121?1101111100?00?000111101111110000000021110?0011110000---------111111111100000000011-11--??--??1-01111116684????1
+Eunice_rubra                  3001001111101011121101111010111110211111011211011011021010110111011010100001-{01}01001111-012400011022212011?1--000011001100--1111002?1{12}000111111111110000?01022220?0011111111---------111111111110010000011-22--11--111-00--?1163840???1
+Eunice_samoae                 ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Eunice_sp                     30010011110110101111010-101010--102111110112110110010011101101112210101000006010020111--11405411000012222----000011102211011100--1112000111111011110000?011?1110?00?111?111---------111111111154000000111111-111-0001000111116634?2??1
+Eunice_thomasiana             00010011111010100211011010101111102111110112110110010211101101112010101000001011010011-11-000111000010122--?-000011111200--111100000000011111111110000-000-211-0000111-0??----------111111111111000000011-11--11--001-00{12}22110332212?1
+Eunice_torquata               003100111112101102110110101011101021111101121101100102111011011120101010000010110{12}{01}1?1-11-000111200212221?---000011111200--111100?00000011101111111000000001222000011110110---------111111111111000000011-11--11--001-00110113300?2221
+Eunice_valens                 00{03}1001111111011021101101010111010211111011211011011021110110111{01}00010100001-10100{01}1?1-1--000111000012222-?--000011111100--1111000?0000011111111111000011112222000011110000---------111111111111000000011-11--11--001-00---11033000001
+Eunice_violacemaculata        00310011112200111211010-101010--102111110112110110010111101101110110101000003{01}11020001-112400111000?12122---?000011102211011111-?0?0200011100111110000-000-111-0000111-111----------111111111100000000011-11--11--001-0?11-11063220221
+Euniphysa_aculeata            1001101111331011021100--10100---102110110112110110515-0110110110-2101010000043100?0111-112450011000010222----0000110022101100000-00?200011110110010--0---0---1-0--0--1---1----------11110111-143223000111111-111-?01100011?11164011121
+Euniphysa_tridontesa          10?1101111331011121100--10100---10211111011210-010515-0110110110-1?010100000?21?0?????-11?445?11200?1122?1--?000011022?1011100?0-010?100111100?001?-00?-00?-11?0-00-?1?-10?--?--?--?011?-11?-1-3{02}?-00011?11?-11?-11?100?{12}0?11764?211?1
+Eurythoe_complanata           ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Glycera_dibranchiata          000100???-??-???--00------1?10--0--20-00----------------0----10--012110---01------0011-112----11111110002000-????11????00--000?-?000?000000---?0000---------------------------------111?111???432?2210000------------------115051-???1
+Hipponoe_gaudichaudi          ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Hyalinoecia_sp                0???00110----00-1311010-111010--11100-11011221021011031010110????2?210????01?20???????-0??40??1?00??110??32??010?11-2??00--01??0022??11?11?11??01??-0??-1??-2??0-0?-1??-1??-??-??-??00??--??----??--?01??1??-1??-1??10?????1?11??????0
+Lumbrineris_inflata           00010000-----00---00------0-------210-110102011110303-10100100-----10-----01------0100--------1110111100000001---11----00--00000022??11011011--0000---------------------------------110011--0032--11-0000------------------00----????-
+Lumbrineris_latreille         00010000-----00---00------0-------210-110102011110303-10100100-----20-----01------?100--------1111101100010221---11----00--1000?0000010011001--0000---------------------------------10001---0-3---1--0000------------------00----0000-
+Lysidice_collaris             00??001111001010--11110-100-----0-210-110112010100010110121120-----010100000?00???????---?004?11000?1212?---?000011002?00--000?-?000?000111110?011?-00?-11?-11?0-0?-?1?-?1?--?--?--?111?111?11000?000011?11?-11?-?1?100?--?11033??11?0
+Lysidice_ninetta              03??001110-00010--11110-100-----0-210-110112010100010110121120-----110100000?0000?????---?004?11000?1112?1--?000011222?00--100?--000?000111111?111?000?111?221?0{01}00112?00{01}?---------111?111?11000?000011?11?-11?-?1?101?-1?11034?220?0
+Lysidice_sp1                  1????01111002010--11010-100-----0-210-11011201010001021012112??--??010100000??0???????--??11??1?00??112??1-??000?11?2??00--10??--?0??00?11?11??01??-0??-1??-1??0-0?-1??-1??-??-??-??11??11??1100??00?01??1??-1??-1??10?????1?03???0??0
+Lysidice_sp2                  3{03}31001111001010--11110-100-----0-210-110112010100010110121120-----0101000004010020111----00001120001102211--000011002200--1100--0000000111101?111?000?111?211?0000111?111?--?--?--?111111111100000000111111-111-111110011-110333??2?0
+Marphysa_angeli               00?10011110210111211010-1{02}1010--12210-1101121100100102101011010--21010100000401?0201??-00?101?11000?1102?01-?000011102?00--100?000-0?000111101?111?000?001?211?0000111?111?--?--?--?111?111?11000?000001?-1?--1?--1?1-0?00?11034?212?1
+Marphysa_bellii               20??001110-310101211010-1{02}1010--1{02}210-11011201011011031010110111120010101-01-{012}110?????-0-?405?11000?1102?00-?000011122?00--100?01000?000111000?111?000?000?101?1---000?000?--?--?--?111?111?11{04}{03}0?000001?-1?--1?--0?1-0?11?11344??01?1
+Marphysa_bellii_Cf            ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Marphysa_brevitentaculata     22201011110310111211010-101010--10210-110112110010010310101101112210101100000012{01}00111-10-4010110000112221---000011102200--10001000000001110011111100{01}1?11?110?0??0?00??11--00-11-?01111111111432?0000011-00--00------0111-110373?21?1
+Marphysa_californica          02200011110310101211010-101010--10210-110112110010010310101101{01}12210101000005011000111--0-40001100001102201--000011002200--11000000000001110011111100{01}1011-110-0000000-?11--00-01-01111111111143220000011-11--1?--0?1-0011-110330??2?1
+Marphysa_disjuncta            00?0001110-310101211010-101010--10210-11011211001001021010110111120010100000?01?0?????-0-?405?11000?1102?00-?000011002?00--001?11000?000111000?011?-00?-00?-11?1---000?-00?--?--?--?111?111?1143{02}?000001?-{01}?--1?--1?1-0?11?11161?111?1
+Marphysa_fallax               0001001110-000100211010-101010--10210-11011211011001??101011010--{12}0010100001-0010101??-11?000?11000?1101?00-?000011??2?00--110??-?00?000111001?111?000?111?111?0000000?001?--?--?--?111?111?11{04}{03}0?000001?-1?--??--??1-1?--?1?03??22??0
+Marphysa_hentscheli_Cf        00010011110010111211010-1{02}1010--1{02}210-110112110010010110101101{01}0-210101000006011020101-002000111200010122--?-000011222200--10000-000000011100111110000-011-101-0000011-111----------111111111100000000010-1---1---0-1-1-00-11030311101
+Marphysa_mossambica           12201011110310111211010-101010--10210-110112110010010210101101112210101000004001100101-1124503110000112211---000011033000--000011000011111100000110-11---------------------1{01}-00-00-0000-------------0011-11--1?--0?--0?---11044000??1
+Marphysa_novahollandiae       02??00111103101?1211010-101010--10210-110112110010?1??10101??11122?01010??00?00???????-?0?456?1100??10???2????00011000?00--000?1?000?11?111??????1?-?1?--------------------?1??0??0?000?-------------001?-1?--1?--0?--0?---11????????1
+Marphysa_regalis              020{01}0011110010110211010?101010-?10210-1101121100100103101011011122{01}010110001-001010{01}11--1-00111100001102201--000011002200--110000?00000011111111111000001011200000000000001---------111111111100000000011-00--00------00---1103752???1
+Marphysa_sanguinea            0220{01}011113300111211010-101010--10210-11011211001001021010110111221010101-003011000101-00-4000110000111210---000011002000--000011?00000011100010111-0{01}0-111-1020-00-000-110-0--1--0-111111111143220000011-11--1?--0?1-0?11111033500021
+Marphysa_sp                   ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Marphysa_viridis              02{01}00011113320101211010?101010-?1{02}210-110112110010010210101101112210101100004001000101-00-0003110000111220---000011021200--000000000000011100010110-0{01}--11--10-0-00-00--01--0--1--0-1111111111432{02}0000010-1---?---?---0----11037321221
+Mooreonuphis_pallidula        200100110----00-1311010-111010--11101-110112210210111-?01011010--11210100001-1000001?1-00-40001100001102232--010011-?2200--000000222200011111110010--0---1---?-0--1--1---1----------10011--10-2--00--0111111-?1?-?0?1?{01}0---1061--????1
+Nematonereis_unicornis        000100{01}0----0010--10110-1{02}0-----0-210-110112010000010110121120-----1101000007000000101----0043110000111211---000011102200--1000--000000011110010010--00--11--1?0--0--00--00---------111111111100000000111111-111-?111111---11431322020
+Nematonereis_unicornis_B      ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Nothria_conchylega            ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Oenone_fulgida                00010000-----00---1120--0-0-------000-1100-1-0-210404-00101120-----110----01-101000100----22221111111100011001---11----00--0000??000011111122220000---------------------------------0000-------------0011-{13}{13}--11--111-00---00----00001
+Onuphis_elegans               20??00110----00-131100--11100---11101-110112210110111-101011010--3?11010??01-100??????023?455?11012?1100?322?01?011-???00--100?00?22?000111000?111?000?001?222?0000222?001?--?--?--?100?1--?0-2--?0--011?11?-11?-11?1{01}{01}?--?1061-???1?1
+Onuphis_eremita               2???00110----00-131100--1110111-11100-110112010210111-101011010--1?11010--01??00??????-11?450?11000?1100?322?011011--2?00--101?00222?000111111?011?-00?-01?-22?0-11-?2?-01?---------100?1--?0-{12}--?0--011?11?-11?-11?111?---1061-?220??
+Onuphis_iridescens            2???00110----00-031100--11100---11101-110112210210111-101011010--3?110????01-?0???????10??40??1?00??110??32??010?11-1??00--00??0022??00?11?10??01??-0??-???-1??0-1?-2??-1??-??-??-??10??1-??0-2-??0-?01??1??-1??-1??1{01}?????1?61??????1
+Palola_siciliensis_Cf         33??10111130?0102011010-1{02}1010--1{02}2111110112010101212-111111110--2?010100000?-----????--1?000?11000?1022?--??000011122?1001100?-0000?000111110?000?---?---?---?-------?---?--?--?--?111?111?11000?000000?--?---?---?---?--?11067??22?0
+Palola_spA1                   30?10011110220102211010-101010--102111110112010101212-111111110--220101000004-----0111--1-004011000012222---?000011122200--1100--0000000111100?0000---------------------------------111111111100000000000------------------110611?2??0
+Palola_spA3                   30??00111102201?2111010?101010--102111110112010101212-111111110--2?010100000?-----????--1?014?11000?1222?---?000011112?00--110?-?000?000111100?000?---?---?---?-------?---?--?--?--?111?111?11000?000000?--?---?---?---?--?11634?0???0
+Palola_spA7Pohnpei142         33311011110200102111010-101010--102111110112010101212-111111110--220101000004-----0???--0-000311000012122----000011012200--1100--?000000111111?0000---------------------------------111?111?11000?0000000------------------112622211?0
+Palola_spA9Kosrae161          3????011110220102211010-101010--102111110112010101212-1111111??????0101?0000?-----????--??00??1?00??122??--??000?1111??00--11??--00??00?11?10??00??--??--??--??---?--??--??-??-??-??11??11??11?0??00?00??-??--??--??--?????1?03??2???0
+Palola_spB1                   30011011110220102211010?101010--102111110112010101212-111111110--220101000000-----0101--1-011111200012222?-?-000011112200--11100-000000011110000000---------------------------------111111111100000000000------------------110622222?0
+Palola_spB5                   3?011011110??0102211010-101010--10?111110112010101212-111111110--220101000004-----0111--1-104011000012222----000011122200--1000--000000011110000000---------------------------------111111111100000000000------------------1106122?2?0
+Palola_spB7                   30310011110220102211010-101010--102111110112010101212-111111110--220101000004-----01?1--1-0143112000111221---000011?22200-11100--200000011110000000---------------------------------111111111100000000000------------------110622?2??0
+Palola_viridis                30??{01}011110200102211010-101010--102111110112010101212-111111110--22010100000?-----0???--1?100?11000?1212?---?000011201?00--011?--000?000111111?000?---?---?---?-------?---?---------111?111?11000?000000?--?---?---?---?--?11264?111?0
+Paradiopatra_quadricuspis     0???00110----00-2311010-111010--11101-110112210210111-1010110110-1?010????01-1000?????-2??44??1?00??110??32??010?11-1??00--01??0122??00?11?11??01??-0??-1??-2??0-??-0??-???-??-??-??10??1-??0-{12}-??0-?01??1??-1??-1??1{01}?????1?61???2??1
+Paramphinome_jeffreysii       000101-??-??-???3411010-0-1010--0--20-00----------------0----13-2101110---11------0???-1------110000110002222000011?02?00--000????33011111100000000---------------------------------0000-------------0000------------------00----????1
+;
+END;
+

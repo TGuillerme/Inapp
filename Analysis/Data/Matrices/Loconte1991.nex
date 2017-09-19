@@ -1,0 +1,252 @@
+#NEXUS
+[!This data set was downloaded from TreeBASE, a relational database of phylogenetic knowledge. TreeBASE has been supported by the NSF, Harvard University, Yale University, SDSC and UC Davis. Please do not remove this acknowledgment from the Nexus file.
+
+
+Generated on September 16, 2013; 15:22 GMT
+
+TreeBASE (cc) 1994-2008
+
+Study reference:
+Loconte H., & Stevenson D. 1991. Cladistics of the magnoliidae. Cladistics, 7: 267-296.
+
+TreeBASE Study URI:  http://purl.org/phylo/treebase/phylows/study/TB2:S334]
+
+BEGIN TAXA;
+        TITLE  TaxonLabelSet9758;
+        DIMENSIONS NTAX=56;
+        TAXLABELS
+            Alismataceae
+            Amborellaceae
+            Annonaceae
+            Aristolochioideae
+            Asarumoideae
+            Ascarina
+            Austrobaileyaceae
+            Berberidaceae
+            Butomaceae
+            Cabombaceae
+            Calycanthaceae
+            Canellaceae
+            Cercidiphyllaceae
+            Chloranthus
+            Coniferales
+            Cycadales
+            Degeneriaceae
+            Ephedraceae
+            Eupomatiaceae
+            Eupteleaceae
+            Ginkgoales
+            Gnetum
+            Gomortegaceae
+            Gyrocarpus
+            Hamamelidaceae
+            Hedyosmum
+            Hernandia
+            Himantandraceae
+            Idiospermaceae
+            Illiciaceae
+            Illigera
+            Lactoridaceae
+            Lardizabalaceae
+            Lauraceae
+            Limnocharitaceae
+            Magnoliaceae
+            Menispermaceae
+            Monimiaceae
+            Myristicaceae
+            Nelumbonaceae
+            Nymphaeaceae
+            Papaveraceae
+            Piperaceae
+            Platanaceae
+            Pteridophyta
+            Ranunculaceae
+            Sarcandra
+            Saruma
+            Saururaceae
+            Shisandraceae
+            Sparattanthelium
+            Tetracentraceae
+            Trimeniaceae
+            Trochodendraceae
+            Welwitschia
+            Winteraceae
+            ;
+END;
+
+BEGIN CHARACTERS;
+[! TreeBASE Matrix URI: http://purl.org/phylo/treebase/phylows/matrix/TB2:M1687]
+
+	TITLE Table_2;
+	LINK TAXA = TaxonLabelSet9758;
+	DIMENSIONS NCHAR=104;
+	FORMAT DATATYPE=Standard SYMBOLS= "012345*" MISSING=? GAP= -;
+	CHARSTATELABELS
+		1  Habit / 'shrub (n)' tree herb,
+		2  Stem_vasculature / circular cortical scattered,
+		3  Cambial_initials / long short,
+		4  Xylem_conduction / tracheids 'vessels foraminate perforate (n' vessels_scalariform_perforate vessels_simple_perforate,
+		5  Vessel_distribution / whole_plant roots_only,
+		6  Primary_pitting / late_ontogeny_of_tracheary_elem early_ontogeny_of_tracheary_ele,
+		7  'Sieve-tube element companion ce' / absent present,
+		8  Secondary_phloem / 'non-stratified' tangentially_stratified,
+		9  'Sieve-tube plastic inclusions' / starch protein,
+		10  Pith_structure / nonseptate sclereid_septate,
+		11  Sclereids / 'non-hippocrepiform' hippocrepiform,
+		12  Corticalsclerenchyma_sheath / absent present,
+		13  Laticifers / absent present,
+		14  Oil_cells / absent present,
+		15  Nodal_anatomy / 'unilacunar two-trace' 'unilacunar one-trace' trilacunar multilacunar,
+		16  Nodal_morphology / 'non-swollen' swollen,
+		17  Axillary_buds / absent present multiple,
+		18  Phyllotaxy / alternate opposite,
+		19  Ptyxis / circinate adplicate conduplicate supervolute involute,
+		20  Leaf_type / compound simpl,
+		21  Leaf_peltate / absent present,
+		22  Leaf_base / simple 'sheathing (n)' stipulate,
+		23  Leaf_venation / dichotomous pinnate palmate,
+		24  Leaf_margin / entire toothed,
+		25  Leaf_persistence / evergreen deciduous,
+		26  Leaf_pubescence / absent present,
+		27  Foliar_astrosclereids / absent present,
+		28  Foliar_cystoliths / absent present,
+		29  Stomates / anomocytic paracytic laterocytic 'stephanocytic (n)' 'encyclocytic (n)',
+		30  Infloresence / 'absent (flowers solitary)' present,
+		31  Floral_pedicel / present absent,
+		32  Floral_primordium_symmetry / radial 'bilateral (dorsiventral)',
+		33  Calyptra / absent present,
+		34  Perianth_arrangement / helical cyclic_and_trimerous cyclic_and_four_or_five_merous absent,
+		35  Petals / absent tepaloid staminoidal,
+		36  Perianth_androecium_alignment / alternate opposite,
+		37  Sexual_expression / dioecious monoecious monoclinous,
+		38  Stamen_type / connective_with_marginal_sporan 'laminar (with adaxial or abaxia' 'filamental (with terminal spora',
+		39  Stamen_arrangement / helical cyclic,
+		40  Staminal_osmophore / absent present,
+		41  Monadelphy / absent present,
+		42  Filament_appendage / absent present,
+		43  Anther_dehiscence / longitudinal bifurcate valvate,
+		44  Connective_hypodermic / absent 'endothecial-like',
+		45  Tapetum / glandular amoeboid,
+		46  Microsporogenesis / simultaneous successive,
+		47  Pollen_unit / monads tetrads,
+		48  Pollen_size / 'medium (20-50 pm)' 'large (greater than 50pm)' 'small (less than 20pm)',
+		49  Pollen_shape / 'boat-shaped' intermediate globose,
+		50  Pollen_saccate / absent present,
+		51  Pollen_apertures / monosulcate 'disulcate (n)' tricolpate 'holoaperturate (n)' 'ulcerate (n)' 'polyaperturate (n)',
+		52  Apertures / free fused,
+		53  Examine_sculpture / psilate 'punctate (n)' reticulate 'striate (n)',
+		54  Pollen_exine_surface / smooth spinulose spinose,
+		55  Exine_structure / alveolar granular 'solid (n)' columellate 'chanellate (n)',
+		56  Endexine / continuous discontinuous absent,
+		57  Pollen_tube_growth / suspended penetrating,
+		58  Microgametophyte / prothallial_and_sterile_cells_p sterile_cells_absent prothallial_and_sterile_cells_a,
+		59  Microgametophyte_final_mitotic / 'post-pollination' prepollination,
+		60  Sperm / flagellated 'non-flagellated',
+		61  Inner_staminodes / present absent,
+		62  Carpel_type / open closed,
+		63  Carpel_arrangement / helical 'cyclic (n)' solitary,
+		64  Floral_cup / absent present,
+		65  Gynoecial_nectaries / absent present,
+		66  Placentation / marginal laminar apical basal parietal exile,
+		67  Ovule_type / orthotropous anatropous,
+		68  Ovule_number / uniovulate_or_biovulate multiovulate,
+		69  Micropylar_tube / absent present,
+		70  Integuments / unitegmic bitegmic,
+		71  Nucellar_cuticle / thin thick,
+		72  Megagametophyte_meiosis / monosporic tetrasporic,
+		73  Megaspore_wall / thick thin,
+		74  Megagametophyte_apex / cellular 'free-nuclear',
+		75  Fertilization / single double,
+		76  Fruit_type / dehiscent berry achene drupe,
+		77  Seed_size / 'large (>5 mm)' 'small (<5 mm)',
+		78  Seed_coat_anatomy / endotestal mesotestal exotestal tegmic,
+		79  Seed_aril / exarillate arillate,
+		80  Sarcotestum / absent present,
+		81  Seed_chalazal_wings / absent present,
+		82  Seeds_operculate / absent present,
+		83  Endosperm_development / cellular nuclear helobial,
+		84  Endosperm_type / absent present perisperm,
+		85  Ruminate_endosperm / absent present,
+		86  Embryogenesis / 'free-nuclear' onagrad_type asterad_type caryophyllad_type solanum_type,
+		87  Embryo_size / minute large,
+		88  Embryo_with_feeder / absent present,
+		89  Germination / hypogeal epigeal,
+		90  Root_system / allorhizic homorhizic,
+		91  Cotyledon_number / two two_laterally_fused one 'three or more (n)',
+		92  Lignin_subunits / vanillin syringal_aldehyde,
+		93  Hydrolyzable_tannin / absent present,
+		94  Proanthocyanidin_leucoanthocyan / present absent,
+		95  Cyanidin / absent present,
+		96  'Methoxy-anthocyanidin' / absent present,
+		97  '3" 4" 5"-Methoxy-flavonol myric' / absent present,
+		98  '7 3" 4" or 5"-Methoxy-Ravonol' / absent present,
+		99  '8-Oxygenated-flavonol' / absent present,
+		100  Dihydrofiavonol / absent present,
+		101  Apigenin / absent present,
+		102  'C-Glycosylfavone' / absent present,
+		103  Isoflavone / absent present,
+		104  Benzylisoquinoline / absent present,
+		;
+
+MATRIX
+[                             10        20        30        40        50        60        70        80        90        100       110       120       130       140       150       160   ]
+[                              .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .   ]
+Alismataceae          221210101000103010310120100031000100{02}2{01}0000011002050113212111110131{01}0110101{12}1200002003001121010000000100
+Amborellaceae         0000-01000100?1010?100110100{01}100000000000000??002040113212011010000001101013120000?10?10?001001000000000
+Annonaceae            {01}013001{01}1100012010210010{01}{01}101{01}000110{02}{01}00{01}011{01}{01}{01}{01}00{01}0{012}0{23}2120110000{014}1{01}0110101001{01}000011110{01}001000010001001
+Aristolochioideae     {02}0130010{01}00001201021012011000{01}0001002010{01}0000{01}002050?03?12011111051101101011130000010410?001011101000001
+Asarumoideae          201300101000012010210020{01}100000001002010000000002050?03?12011111051101101011130000010410?00101??0?000000
+Ascarina              {01}01200100000010111?1021100004100030-0010000100002000213012011120020001101010100000010?10?001011000000000
+Austrobaileyaceae     0012001000000100112100100000{01}00000002100000000002000103012010100011101101010000100?11-110001011000000000
+Berberidaceae         {01}{02}130010000100?010200121{01}{01}0001000121221000{02}000001020103012011120001{01}011010101{23}{01}0001101101001001011011001
+Butomaceae            221310101000003010-1012010001100010022100000110000001032121111101111011010111200002003001121010000000100
+Cabombaceae           22131010000010301{01}?110201{01}00000001102210000001010000303112011110011{01}0110101{12}120001220?10?111010000000100
+Calycanthaceae        011300101000010021110010{01}1001000000020000000000{01}1010{01}030120101010010011010-2000000000?001001011001001000
+Canellaceae           101200101010012010?100100010{01}{01}000{012}10201010000000{01}000{01}0{13}21201102003100110101101100011{01}1100001000000011010
+Cercidiphyllaceae     {01}0120010000000201141022110000111030-0010001100001020113112011120001101101011120010010300?001100000010000
+Chloranthus           {02}012001000000101112102110000{123}111030-2011000000002050203012011120020001101010100000010110?001011000000000
+Coniferales           {01}000-100{01}00000101{01}110000{01}0000-{01}0----{01}-------{01}0000{01}0000?01001------{01}00000{01}00-0-{01}{01}00-0-00010{03}000{01}000010{01}00
+Cycadales             -000-0000000003000{012}00{12}0001000-00----0-------0000000000000000------0{01}0000000-0-0100-0-00000000{01}0000000{01}00
+Degeneriaceae         1012001111000130102100100000100001102100001000010000002212010020011101101010000100011?101031001101000100
+Ephedraceae           00110100000000002111010000000-{01}0----{01}-------000{01}003-30101001------001000100-02-000-0-0001001000000000101
+Eupomatiaceae         {01}012001010000130102100100{01}101000130-2100{01}010000010100022120100010111011010100100000111101001000000001001
+Eupteleaceae          {01}0120010000000-01021001111100101030-20100011??0010{25}0113012010110001{01}01101012120000010?10?001000010000000
+Ginkgoales            1000-100000000001041000010000-00----0-------0000000000000000------000000000-0-0-00-0-0000000000000000000
+Gnetum                {01}01{12}0100000000312121011000101-{01}0----{01}-------0002103-01101101------001101110-02-000-0-1011001000000001101
+Gomortegaceae         101200101010011011-1001001001100010022000120??00203-124-120111110410011010130?0000?10?00?001010?00000000
+Gyrocarpus            101300101000011010?10020110101000101{12}2100120?100203-124-12011121021001101012000000000?00?001010001000001
+Hamamelidaceae        {01}01200100000002010{123}102{12}11100{0124}1{01}10220201000{01}100001020{12}03{12}12011110051{01}011010110{02}0000110?001001101010011100
+Hedyosmum             {012}0120010-0000101112102110000{23}11101000010{01}00100002050213?12011120020001101010101000010?10?001011000000000
+Hernandia             101300101000011010?10020010011000101{12}2100100?100203-124-12011121021001101012000000000?000001010001000001
+Himantandraceae       10120011010001201021001001101000100021000010??001000002212010100011001101013000000?11?10?001001101000000
+Idiospermaceae        -11300101000011011110010010010000000{12}0000000??001010003?120101210310011010-2000000-00?000031011000001100
+Illiciaceae           00120010000001101031001{01}0010{12}{01}0000002000000000002021203012011010001001101011110000010210?001100000010000
+Illigera              001300101000011010?000-001001100010122100100?100203-124-12011121021001101012000000000?000001010001000001
+Lactoridaceae         001300100000010110-1020000000{01}000100{02}0100000??102100{01}0{13}212011110001101101011120000110?10?001011000000000
+Lardizabalaceae       00120010000100201020001{01}{01}{01}00010001211010{01}0000000102010301201011000{01}10110101{01}120000010?10?001001001001{01}00
+Lauraceae             {01}0120010100001101{01}{14}100{12}0{01}11011000101{012}21001201100203-124-12011121021001101013000000{01}00?000001001111011101
+Limnocharitaceae      2212101010001030103101201{01}001{01}00010022{01}00000110020501032121111101111011010111200002003001121010000000100
+Magnoliaceae          {01}0120011{01}100013010210210{01}{01}10{01}000{01}000{12}10000{01}0000{01}0000{01}0{13}2120110000011011010110001000101101001001101000001
+Menispermaceae        {01}01300100000002010{12}{01}00{12}{01}{01}110{14}100012102{01}0{01}00000001020103112011110001001101013{01}200001{01}{01}1001001010000001001
+Monimiaceae           {01}0120010{01}01001101121001{01}01001{01}000000{012}200{01}1{012}0{01}{01}00{12}0{13}-?2?-120111{02}{01}0{23}10011010130000000102101001000011000001
+Myristicaceae         10120011{01}100012010?100100110110001000010100001000000{012}0{13}11201111004110110101012{01}000?11?10?001000000001011
+Nelumbonaceae         2212101000001030104111201000000000102000000000011020103012011110021001101012020001000?00?111000000001001
+Nymphaeaceae          22121010000010301041012{01}10100000002020000000{01}001000011{13}112{01}1111001{01}10110101012{01}0010202100111101110001100
+Papaveraceae          2{02}130010000010?010{1234}{01}012111000{01}0001202200{01}000000010201{01}31120111100411011010111200001104101001011001100001
+Piperaceae            {012}{02}1200100000013110?10120110031{01}1030?{012}210000000021000003012011110040{01}011{01}1011130000020210100100000000010{01}
+Platanaceae           1012001000000030102102{12}11100{012}1110{12}2110{01}0001100001020103{12}12010110020001101012120000110?10?001001010011000
+Pteridophyta          ---0-{01}00000000?000{01}00{12}000{01}00-------------------------------0--------------0--------0--1--120000000001{01}00
+Ranunculaceae         20120010000000?010{134}{01}01{02}111000{01}000120{02}20000{01}0000010203{01}311201110000{01}{01}0110101{01}1200001101101001001101101101
+Sarcandra             000210100000010111-102110000{1234}111030-2011001000002050203?12011120020001101010100000010110?001011000000000
+Saruma                201300101000012010?10120110000000110221000000?001000203?12011111001101101011130000010410?00101??0?000000
+Saururaceae           20120010000001311041012011003101030?2210000000021000003012011110010{01}011010121300000202101001000000000000
+Shisandraceae         00120010000001-010{34}1001{01}{01}010{012}{01}000000{012}000{01}000000020{25}1203012011000001101101010110000010{12}10?001101010000000
+Sparattanthelium      001300101000011010?1002001010100010122100120?100203-124-12011121021001101012000000000?00?001010001000001
+Tetracentraceae       1000-01000000120104102211000211?020122100011??021020303012011111141101101011120010010?10?001000001010000
+Trimeniaceae          {01}01200100000010011?1001{01}0{01}0011000000{12}0000000?10020{15}0113212021120021001101010100000?10?10?001000101010100
+Trochodendraceae      1000-010000001?01031001100102101030-2200001100021020303012011111141101101011120010010?10?001000010000000
+Welwitschia           00110100000000002111010000101--0----{02}-------000{01}000030101101------001101110-02-000-0-1011001000000000101
+Winteraceae           {01}000-010{01}0000120103100100{01}10{01}{01}00{01}010{02}0000001{01}01020402030120110000{01}1{01}01101010120000010?101001000000011000
+;
+END;
+

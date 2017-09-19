@@ -1,0 +1,261 @@
+#NEXUS
+[!This data set was downloaded from TreeBASE, a relational database of phylogenetic knowledge. TreeBASE has been supported by the NSF, Harvard University, Yale University, SDSC and UC Davis. Please do not remove this acknowledgment from the Nexus file.
+
+
+Generated on September 16, 2013; 15:17 GMT
+
+TreeBASE (cc) 1994-2008
+
+Study reference:
+Griswold C., Coddington J., Platnick N., & Forster R. 1999. Towards a phylogeny of
+entelegyne spiders (Araneae, Araneomorphae, Entelegynae). Journal of Arachnology,
+27: 53-63.
+
+TreeBASE Study URI:  http://purl.org/phylo/treebase/phylows/study/TB2:S583]
+
+BEGIN TAXA;
+        TITLE  TaxonLabelSet10266;
+        DIMENSIONS NTAX=43;
+        TAXLABELS
+            Acanthoctenus
+            Amaurobius
+            Araneoidea
+            Badumna_candida
+            Badumna_longinquua
+            Baiami
+            Callobius
+            Deinopis
+            Dictyna
+            Eresus
+            Filistata
+            Goeldia
+            Hickmania
+            Hypochilus
+            Kukulcania
+            Lathys
+            Maniho
+            Matachia
+            Megadictyna
+            Menneus
+            Metaltella
+            Neolana
+            Neoramia
+            Nigma
+            Octonoba
+            Oecobius
+            Phyxelida
+            Pimus
+            Psechrus
+            Raecius
+            Retiro
+            Stegodyphus
+            Stiphidion
+            Tengella
+            Thaida
+            Titanoeca
+            Tricholathvs
+            Uduba
+            Uloborus
+            Uroctea
+            Vytfutia
+            Xevioso
+            Zoropsis
+            ;
+END;
+
+BEGIN CHARACTERS;
+[! TreeBASE Matrix URI: http://purl.org/phylo/treebase/phylows/matrix/TB2:M2215]
+
+	TITLE Table_1;
+	LINK TAXA = TaxonLabelSet10266;
+	DIMENSIONS NCHAR=137;
+	FORMAT DATATYPE=Standard SYMBOLS= "012345" MISSING=? GAP= -;
+	CHARSTATELABELS
+		1  Femoral_trichobothria / absent present,
+		2  Tarsal_organ / exposed capsulate,
+		3  Tarsal_trichobothria / absent present,
+		4  Tarsal_trichobothrial_rows / l '2+',
+		5  Metatarsal_trichobothria / '1-2' '>2',
+		6  Tarsal_trichobolhria / normal longer_distally,
+		7  Palpal_tibial_trichobothria / absent present,
+		8  Trichobothrial_base / smooth trans._ridge long._ridge,
+		9  Trichobothrial_base / simple notched,
+		10  Trochanteral_notch / absent present,
+		11  Tarsal_claws / 3. 2.,
+		12  Claw_tufts / absent present,
+		13  Calamistral_rows / 2. l. 3.,
+		14  Calamistrum / linear oval,
+		15  Calamistrum_origin / basal median,
+		16  Male_palpal_femoral_thoms / absent present,
+		17  Female_palpal_femoral_thoms / absent present,
+		18  Feathery_hairs / absent present,
+		19  Hair / plumose pseudoserrate serrate,
+		20  Metatarsal_preening_combs / absent present,
+		21  Tibial_ventral_spine_number / '<7' '>7',
+		22  Male_metatarsus_1 / unmodified modified,
+		23  Male_tibial_crack / absent present,
+		24  Serrate_accessory_claw_setae / absent present,
+		25  Fernale_posterior_leg_scopula / absent present,
+		26  Deinopoid_tarsal_comb / absent present,
+		27  Carapace_shape / oval square round,
+		28  Clypeal_hood / absent present,
+		29  Thickened_setae_at_fang_base / absent present,
+		30  Male_chelicerae / normal bowed,
+		31  Chelicerae / normal small,
+		32  Chelicerae / free fused_at_base,
+		33  Cheliceral_teeth / present absent,
+		34  Cheliceral_chela / absent present,
+		35  Cheliceral_boss / absent present,
+		36  Cheliceral_bow / small large,
+		37  Chilum / absent median bilateral,
+		38  Tapetum / primitive canoe grate absent,
+		39  Posterior_eye_row / straight recurved,
+		40  Serrula_tooth_rows / multiple single,
+		41  Sigilla / present absent,
+		42  Medial_cheliceral_concavity / present absent,
+		43  'Venom, gland' / cheliceral carapace absent,
+		44  Coxal_gland_duct / convoluted simple,
+		45  5th_endostemite_invagination / present absent,
+		46  Midgut_cheliceral_diverticula / present absent,
+		47  Pharynx_musele_origin / carapace rostrum,
+		48  Intestine / 'M-shaped' straight,
+		49  Heart_ostia_nurnber / 4. 3_or_2,
+		50  Anal_tubercle / small large,
+		51  Posterior_spiracIes / 2. l.,
+		52  Posterior_spiracies / wide narrow,
+		53  Posterior_respiratory_system / booklungs tracheae,
+		54  Median_tracheae / simple branched,
+		55  Lateral_tracheae / simp_Ie branched absent,
+		56  Epiandrous_spigots / present absent,
+		57  Epiandrous_spigots / dispersed 2_bunches,
+		58  Spinn._cuticle / armul. ridged squam. papill.,
+		59  Cribellum / present absent,
+		60  Cribellum / entire divided,
+		61  Cribellate_spigots / uniform clumped,
+		62  Cribellate_spigots / strobilate claviform,
+		63  Tartipores / absent present,
+		64  ALS_field_margin / narrow broad,
+		65  ALS_MAP / clustered dispersed,
+		66  ALS_MAP_number / '>3' 3. 2. l.,
+		67  ALS_MAP_nubbin / absent present,
+		68  ALS_MAP_nubbin / one extra,
+		69  ALS_piriform_margin / rounded flat sharp,
+		70  PMS_mAP / absent present,
+		71  PMS_mAP_number / l. '>l',
+		72  PMS_mAP_position / medianlanterior posterior,
+		73  PMS_mAP_nubbins / absent present,
+		74  PMS_mAP_nubbins / l. 2.,
+		75  PMS_aciniform / present absent,
+		76  PMS_aciniform_number / '>3' '1-3',
+		77  PMS_paracribellars / absent present,
+		78  PMS_paracribellar / at_apex 'mid-field',
+		79  PMS_paracribellar / bunched encircling,
+		80  PMS_paracribellar_shafts / single_bases grouped,
+		81  PMS_paracribellar_bases / round long narrow,
+		82  PMS_paracribellar / deinopoid strobilate floppy,
+		83  PMS_cylindrical_spigots / absent present,
+		84  PMS_cylindrical_spigot_number / '1-2' many,
+		85  PLS_cuticular_finger / absent present,
+		86  PLS_aggregate_gland_spigot / absent present,
+		87  PLS_paracribellar / absent present,
+		88  PLS_paracribellar_number / l. '2-3',
+		89  PLS_paracribellar / separate '+ modified spigot',
+		90  PLS_modified_spigot / absent present,
+		91  PLS_modified_spigot / in_field segregated,
+		92  PLS_apical_segment / domed conical elongate,
+		93  PLS_apical_enlarged_seta / absent present,
+		94  Tibial_retroapical_process / absent present,
+		95  Tibial_retroapical_process / simple complex,
+		96  Tibial_ventroapical_process / absent present,
+		97  Tibial_dorsal_process / absent apical proximal,
+		98  Tibial_dorsal_process / simple complex_folded,
+		99  Tibial_prolateral_process / absent present,
+		100  Paracymbium / absent present,
+		101  Cymbial_dorsal_scopula / absent present,
+		102  Pyriform_bulb / absent present,
+		103  Tegular_locking_lobe / absent present,
+		104  Subtegular_loeking_lobe / absent present,
+		105  Conductor / present absent tegular_groove,
+		106  Conductor / sclerotized hyaline,
+		107  Scl._C / embr._E opp._E cent. Ulo Oe Th,
+		108  C_embr._E / apex_only desid dict met apical,
+		109  Median_apophysis / present absent,
+		110  Median_apophysis / convex concave,
+		111  Median_apophysis / fixed flexibly_attached,
+		112  Extra_tegular_processes / absent present,
+		113  Extra_tegular_process / conical STP membr.,
+		114  Palpal_tarsus_M29_muscle / present absent,
+		115  Female_genitalia / haplogyne entelegyne,
+		116  Epigynum / absent present,
+		117  Epigynum_teeth / absent present,
+		118  Convoluted_vulva / absent present,
+		119  Posterior_receptaculum / absent present,
+		120  Cribellate_silk_axial_lines / present absent,
+		121  Cribellate_silk_reserve_arp / present absent,
+		122  Cribellate_silk_nodules / absent present,
+		123  Cribellate_fibrils / cylindrical flat,
+		124  Cribellate_silk / uniform puffed,
+		125  Web_posture / inverted erect,
+		126  Orb_web_architecture / absent present,
+		127  Deinopid_web_architecture / absent present,
+		128  Combing_leg_support / fixed_L3 mobile_L4,
+		129  Frame_construction / absent present,
+		130  Radius_construction / absent 'CR-ed' doubled,
+		131  Hub_construction / absent present,
+		132  Temporary_spiral_construction / absent present,
+		133  Sticky_spiral_construction / absent present,
+		134  Sticky_silk_iocalization / absent oLl iL4,
+		135  L4_sticky_silk_shift / absent present,
+		136  'Non-sticky-sticky line grip' / otherwise w_L4,
+		137  Wrap_attack / absent present,
+		;
+
+MATRIX
+[                              10        20        30        40        50        60        70        80        90        100       110       120       130       ]
+[                               .         .         .         .         .         .         .         .         .         .         .         .         .       ]
+Acanthoctenus          011110010111-1000000100010001000001122011111111110111001-1011010020-011010000-----11000--??101000-00101101--0110-111000?????--0?--------?
+Amaurobius             0110111100001000000100000000100000111111111111111011100011010011020-01000-001000011000111100010110100010001-01111111100001001001????????0
+Araneoidea             010-0-000100---00020000100000000001021111111111110111000021---10031001011000------1001---11000-00-010000003-0010-111000-----010-111111111
+Badumna_candida        01101010000010000000000000001000001121111111111110111110-1010011020-11000-0111-1-1110011110101002000000000010110-11110000100100??????????
+Badumna_longinquua     01101010000010000000000000001000001121111111111110111110-1010011021111000-0011-1-1110011110101100-00000000010110-111100?????1001????????0
+Baiami                 0110111?01001000010000000000100000111211111111111011100??1010011020-01000-0010-1-1100011010101000-00000000041----111000?????000?????????1
+Callobius              0110111100001000000100000000100000111111111111111011100011010011021101000-00100101100011010001011010000001--00111111000001001001????????0
+Deinopis               010-0-00000010000110000101001000000-?301111111111011100001000?10001121000-0010000011000--11100-00-000000002-1----111000001010111111112111
+Dictyna                010-0-000000100000000000000011000011?1111111111110111121-1000010031011000-00101101100010010001002000000000021----111000111011001????????0
+Eresus                 010-0-010000100000000000001100000010?301111111111011100003010010100-0110101-0-----11000--0-000-00-00000000001----111000????1?00??????????
+Filistata              010-1-00000020000000000000000001110-00110111111110101--001010100110-01000-011000020-0011-0-000-00-0001001---1----000-0000010100??????????
+Goeldia                010-0-0100001000000000000000100000111111111111111011100??1010010021001000-000-----100011-0-000-0110000002---00110111000???????0??????????
+Hickmania              000-0-00100010100000000000011000000-?01111111110000-0--??1000010021101100-001000000-000--????0-00-0000001---1----000-0101100000??????????
+Hypochilus             000-0-00000000000000000000000000000-000000000000000-0--000000000000-00----000-----0-000--10000-00-01000000000000-000-00000000000000000000
+Kukulcania             010-1-00000020000000000000000001110-00110111111110101--001010100110-01000-001000020-0011-0-000-00-0001001---1----000-00000101000000000001
+Lathys                 011010000000100000000000000010000011?1111111111110111121-1000010030-01000-0110-00110000--0-001000-00000000021----111000??????00??????????
+Maniho                 01101010010010000101000000001000001121111111111110111000-1010011020-01000-0011-1-11000110101011020000000001-0011011111000100100?--------1
+Matachia               01101110010010000001000000000000001111111111111110111110-1000011020-01000-001000010-0010010001100-00000000010010-11110011100100??????????
+Megadictyna            010-0-00000010000000000101001000000-0111111111111011110001000010020-01010-00101001???010010100-020000000002-1----111000001000001????????1
+Menneus                010-0-?0000010?001100001?100?00000???3011111111110111????1000010001111000-0010000011000--11??0-00-000000002-1----111000001010111????????1
+Metaltella             01101110000010000001000000001000001121111111111110111000-1010011020-01000-0011-1-11000110101011020000000000300010111110001000001000000000
+Neolana                0110110000001000000000000000100000112111111111111011100??1010011020-01000-0010-1-11000110101010020000000002-0000-111000????1000??????????
+Neoramia               011011000000100000010000000010000011?1111111111110111001-1010011020-01000-0111-1-110100--10001100-000000001-0010-111100?????100?--------1
+Nigma                  010-0-00000010000000000000001100001101111111111110111121-1000010031011010-001011011-000--10000-01000000000021----11100010101100?????????0
+Octonoba               110-0-?000001000011000010100000000100301112111111011110??1000010031011000-0010000011000--11100-00-000000003-0000-111000011010101121111111
+Oecobius               010-0-01000010000000000000200010100-00111111111111111001-1010010-30-01000-000-----10000--0-200-00-000000004-000101110000010?1001?????????
+Phyxelida              010-0-0100001011100001000000100000112111111111111011110011010010020-0100100010101110000--10010-01000000000010010-111000001000001000000001
+Pimus                  0110111100001001000000000000100000111111111111111011100001010010021101100-0010-001100011010001011000000001--0011111100000100100?????????0
+Psechrus               011010010001-100000000001000100000112211111111111011100?-1010010020-010010000-----11000--1010--00-001011001-1----111000???11000100000000?
+Raecius                011110010000-1000100001010001000001121111111111110111001-1001010020-010010000-----11000--10001010-00101101--0111111100000???1001000000000
+Retiro                 011011000000100110000000000010000011?1111111111110111101-1010010031001000-000-----10000--10--1011010000001--00111111000?????100??????????
+Stegodyphus            010-0-010000100000000000001100000010?30111111111101110000301??1010100110111-0-----11000--0-000-00-00000000001----111000001001001????????0
+Stiphidion             01101110000010000100000000001000001112011111111110111001?1010011020-01000-0010-1-1100011010101000-00000000011----11100000100000?????????0
+Tengella               011110010100-100000000001000100000112111111111111011100?-1010010020-01000-000-----10000--0-?01000-00001101--0010-111000001001001????????0
+Thaida                 000-0-00100010110100000000011000000-?01111111110001100-001000010021101100-001010000-0010010000-00-000000005-00010001001?????000?0???????0
+Titanoeca              010-0-0100001000000000000000100000111111111111111011100001010010020-01000-000-----100010010000-0110000002---0011011100000100100??????????
+Tricholathvs           01101100000010000000000000001000001101111111111110111121-1000010031001000-0011-10111000--0-001000-00000000021----111000??????00??????????
+Uduba                  011110010000-1000000001010001000001121111111111110111001-1011010020-01000-000-----11000--??001010-00100001--00111111000???111001?????????
+Uloborus               110-0-00000010000110000101000000000-?301112111111011110??1000010031011000-0010000011000--11100-00-000000003-0000-111000011010101121111111
+Uroctea                010-0-000000---00000000000200010100-00111111111111111000011---10100-00--0-00------10000--0-200-00-000000004-00010111000-----?00---------?
+Vytfutia               010-0-01000010011000010000001000001111111111111110111001-101001?031001000-0010101111000--100?10010000000001-0010-111000??????001?????????
+Xevioso                010-0-0100001011100101000000100000112111111111111011110011010010020-01001000101011111010010010-010000000001-00010111000?????1001?????????
+Zoropsis               011110010011-1000000101010001000001122011111111110111001-1010010020-211010010-----11000--10001000-00101101--00112111000001001001--------0
+;
+END;
+

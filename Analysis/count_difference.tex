@@ -1,0 +1,62 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{enumerate}
+\usepackage[osf]{mathpazo}
+\usepackage{lastpage}
+\usepackage{url}
+\usepackage{hyperref}
+\pagenumbering{arabic}
+\linespread{1.66}
+
+\begin{document}
+
+\begin{flushright}
+Version dated: \today
+\end{flushright}
+\begin{center}
+
+%Title
+\noindent{\Large{\bf{Counting difference}}}\\
+\bigskip
+
+%Author
+Thomas Guillerme (\href{mailto:t.guillerme@imperial.ac.uk}{t.guillerme@imperial.ac.uk})
+
+\end{center}
+
+Based on 23 matrices and 85181 trees.
+
+We looked at the effect of the three algorithms for counting steps hereafter called ``inapplicable'' for our proposed solution, ``missing'' when  inapplicable data are treated as missing and ``new state'' when the data are treated as an extra (new) state.
+Note that most phylogenetic software available have at least both ``missing'' and ``new state'' algorithms implemented and prefer to use the ``missing'' one as default.
+
+To compare our ``inapplicable'' solution to the two other ones, we collected @@@ discrete morphological matrices containing characters with inapplicable data.
+The matrices were selected to represent an heterogeneous sampling in terms of cladistic data, covering @@@ taxonomic class with a range of taxa from @@@ to @@@ (median = @@@) and a range of characters from @@@ to @@@ (median = @@@).
+
+We first ran the matrices in PAUP* (v 4.0a151), treating inapplicable data as missing to obtain the island of most parsimonious trees (MP trees).
+To speed up and simplify our analysis, we arbitrarily set the first taxa of each matrices as the outgroup and ran a fast heuristic search with random sequences addition replicated 100 times with a maximum of $5 \times 10^6$ rearrangements per replicates (\texttt{hsearch addseq=random nreps=100 rearrlimit=5000000 limitperrep=yes;} in PAUP).
+We then saved the topologies of the MP island as well as the trees length (all equal to the MP score, by definition).
+
+To see how both the ``inapplicable'' and the ``new state'' algorithms performed, we counted the tree length on each topologies of the saved MP islands under both algorithms.
+This resulted in three tree length distributions: the lengths of all the MP trees under (1) the ``missing'' algorithm (all equal); (2) the ``inapplicable'' algorithm and (3) the ``new state'' algorithm.
+All these tree length were calculated using the \texttt{MorphyLib} and \texttt{TreeLib} C libraries compiled under a standalone tree length counting executable (PAWM; see supplementary @@@).
+
+To make the scores comparable between each tree length distribution, we divided the tree length under ``inapplicable'' and ``new state'' algorithms by the most MP tree scores (from the ``missing'' algorithm).
+Additionally, we measured the effect of the two other algorithms (``inapplicable'' and ``new state'') on the island by counting which proportion of trees were longer than the shorter tree under each algorithm.
+In fact, in all phylogenetic software based on optimality (\textit{c.f.} Bayesian inference) only the most optimal trees are retained.
+Measuring the amount of trees discarded from the ``missing'' algorithm MP island hence indicates us the effect of using the different algorithms on the amount of trees available for further phylogenetic analysis (consensus trees, phylogenetic comparative methods, etc.).
+This resulted in two distributions for both algorithms, the proportion of trees that would have been discarded from the island and the proportion of additional tree length added by the ``inapplicable'' and ``new state'' algorithms compared to the ``missing'' one. 
+We represent these results in figure@@@.
+
+Figure@@@\\
+Effect of the two different algorithm on tree length and most parsimonious island size. The two polygons represent the effect of treating inapplicable data using our algorithm (left) and treating them as a new state (right). The information on the vertical axis represent the proportion of discarded tree from the MP island (the black dot represents the median, the thick line the 50\% confidence interval and the thin dashed line the 95\% confidence interval). The information on the horizontal axis (same scale for both polygons) represents the minimum (left) and maximum (right) proportion of extra steps from the MP tree under the ``missing'' algorithm.
+
+As expected form the description of each algorithm, both the ``inapplicable'' and the ``new state'' one consistently recovered longer trees than the ``missing'' algorithm.
+This is expected because in the later, inapplicable data are effectively ignored, thus, taking them into account in one way or the other imperatively increases tree length.
+The difference between both the ``inapplicable'' and ``new state'' algorithm lies both in the variance of tree length and the range of tree length under both algorithm.
+In fact, using the ``inapplicable'' algorithm, less trees were longer that the shortest tree (the 50\% CI ranges from 23.8\% to 98.7\% using the ``inapplicable'' algorithm and between 50\% and 98.6\% using the ``new state'' one).
+This means that under this algorithm, the islands were more slightly more conserved than under in 18.5\% of the matrices against 13.5\% for the ``new state'' algorithm.
+Additionally, using the ``inapplicable'' algorithm, the range of additional tree length is smaller than with the ``new state'' one (the median is 8.2\% and 67.8\% longer respectively and the 50\% CI ranges from 1.5 to 27\% and 17.8\% to 278.8\% longer respectively).
+
+The detailed analysis and R functions are available on \url{https://github.com/TGuillerme/Inapp}
+
+\end{document}

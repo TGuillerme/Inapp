@@ -188,6 +188,7 @@ shinyServer(
                     suffix <- input$output_type
                     suffix <- ifelse(suffix == "newick", "tre", suffix)
                     suffix <- ifelse(suffix == "nexus", "nex", suffix)
+                    suffix <- ifelse(suffix == "C-test", "txt", suffix)
                     ## Getting the output name
                     paste(paste("Inapp", format(Sys.time(), "%Y-%m-%d-%H%M%S"), sep = "_"), sep = ".", suffix)  #TG: or date format as "format(Sys.time(), "%Y-%m-%d-%X")"
                 },
@@ -217,6 +218,64 @@ shinyServer(
                         states_dataframe <- make.output.data.frame(states_matrix)
                         node_notes <- lapply(as.list(1:(ape::Ntip(tree) + ape::Nnode(tree))), create.note, states_dataframe)
                         write.nexus.commented(tree, file, comments = node_notes, translate = TRUE)
+                    }
+                    ## Save as a C-test
+                    if(input$output_type == "C-test") {
+                        tree$edge.length <- NULL
+
+                        ## Setting the C variable name
+                        tree_var <- "char *test_tree"
+                        char_var <- "char *test_matrix"
+                        node_var <- "int node_pass"
+                        node_var <- paste0(node_var, 1:4, "[", ape::Ntip(tree) + ape::Nnode(tree), "] = ")
+
+                        ## Translate the tip labels
+                        if(!all(tree$tip.label == "numeric")) {
+                            if(length(grep("t", tree$tip.label)) != 0) {
+                                tree$tip.label <- gsub("t", "", tree$tip.label)
+                            } else {
+                                tree$tip.label <- seq(1:ape::Ntip(tree))
+                            }
+                        }
+
+                        ## Get the newick tree
+                        newick_tree_out <- paste0(tree_var, " = \"", ape::write.tree(tree), "\";")
+
+                        ## Get the matrix
+                        ## Get all the possible states (for ?)
+                        all_states <- sort(unique(unlist(states_matrix$Char)))
+                        ## Converts the missing data
+                        raw_matrix <- lapply(states_matrix$Char, get.missing, all_states)
+                        ## Collapse multiple states
+                        raw_matrix <- unlist(lapply(raw_matrix, paste, collapse = ""))
+                        ## Convert the NA
+                        raw_matrix <- gsub("-1", "-", raw_matrix)
+                        ## C output
+                        raw_matrix_out <- paste0(char_var, " = \"", paste(raw_matrix, collapse = ""), "\";")
+
+                        ## Get the node array
+                        node_values <- lapply(lapply(states_matrix[2:5], convert.binary.value, states_matrix), unlist)
+
+                        ## Get the right traversal order here
+                        if(input$traversal_order == "") {
+                            traversal_order <- seq(from = 1, to = ape::Ntip(tree) + ape::Nnode(tree))
+                        } else {
+                            traversal_order <- as.numeric(unlist(strsplit(input$traversal_order, ",")))
+                        }
+
+                        ## Sort the passes by traversal
+                        passes_values <- list()
+                        for(pass in 1:4) {
+                            passes_values[[pass]] <- node_values[[pass]][traversal_order]
+                        }
+
+                        ## Get the node values in C format
+                        C_node_values <- lapply(passes_values, function(x) paste0("{", paste(x, collapse = ", "), "};"))
+                        C_node_values <- mapply(paste0, as.list(node_var), C_node_values)
+
+                        ## Combine both outputs
+                        txt_out <- c(raw_matrix_out, newick_tree_out, unlist(C_node_values))
+                        writeLines(txt_out, file)
                     }
                 }
             )

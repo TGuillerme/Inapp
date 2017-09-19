@@ -18,8 +18,10 @@ read.tree.score <- function(chain, path = ".") {
     full_path <- paste(path, chain_list, sep = "")
     names <- strsplit(chain_list, split = paste(chain, ".", sep = ""))
     names <- unlist(lapply(names, `[[`, 2))
-    names <- strsplit(names, split = ".score")
+    names <- strsplit(names, split = ".count")
     names <- unlist(lapply(names, `[[`, 1))
+    names <- strsplit(names, split = "morphy.")
+    names <- unlist(lapply(names, `[[`, 2))
 
 
     data <- list()
@@ -30,4 +32,11 @@ read.tree.score <- function(chain, path = ".") {
     names(data) <- names
 
     return(data)
+}
+
+read.matrices <- function(name, path = ".") {
+    ## Load the matrix
+    matrix <- Claddis::ReadMorphNexus(paste(path, paste(name, "nex", sep = "."), sep = "/"))
+    
+    return(matrix$matrix)
 }

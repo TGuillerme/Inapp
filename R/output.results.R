@@ -3,7 +3,7 @@
 #' @description Outputs ancestral states reconstruction results
 #'
 #' @param states_matrix A \code{states.matrix} list from \code{\link{apply.reconstruction}}.
-#' @param output The type of output, can be either \code{NULL} (default) or \code{"newick"}, \code{"nexus"}, \code{"csv"} or \code{"pdf"} (see details).
+#' @param output The type of output, can be either \code{NULL} (default) or \code{"newick"}, \code{"nexus"}, \code{"csv"}, \code{"pdf"} or \code{"C-test"} (see details).
 #' @param file The name of the output file(code{"character"}). 
 #' @param path The path where to save the output file (code{"character"}).
 #' @param ... If \code{output = "pdf"}, additional arguments to be passed to \code{plot.states.matrix}.
@@ -15,11 +15,12 @@
 #' -\code{"nexus"} outputs a nexus file with a newick string similar as above but also containing the total tree score, the matrix (one character) and the list of taxa.
 #' -\code{"csv"} A matrix containing the different state reconstructions and score for each tip and node.
 #' -\code{"pdf"} A pdf version of the states_matrix plotted with \code{plot.states.matrix}.
+#' -\code{"C-test"} a text version that can be used for testing in C (for DEBUG).
 #' 
 #' @examples
 #' ## A random 5 taxa tree
 #' set.seed(1)
-#' tree <- ape::rtree(5)
+#' tree <- ape::rtree(5, br = NULL)
 #' ## A character with inapplicable data
 #' character <- "01-?1"
 #' 
@@ -57,7 +58,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
     ## output
     if(!is.null(output)) {
         ## Checking output's method
-        all_outputs <- c("newick", "nexus", "csv", "pdf", "tre", "nex")
+        all_outputs <- c("newick", "nexus", "csv", "pdf", "tre", "nex", "C-test")
         if(class(output) != "character") {
             stop("output argument must be one of the following: ", paste(all_outputs[1:4], collapse = ", "), ".")
         } else {
@@ -76,6 +77,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
     ## Change output names
     output <- ifelse(output == "newick", "tre", output)
     output <- ifelse(output == "nexus", "nex", output)
+    output <- ifelse(output == "C-test", "txt", output)
 
     ## Filename and path
     if(class(file) != "character" || length(file) != 1) {
@@ -84,7 +86,14 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         if(class(path) != "character" || length(path) != 1) {
             stop(paste(match_call$path, "must be a single character string."))
         } else {
-            full_path <- paste(path, paste(file, output, sep = "."), sep = "/")
+            
+            if(output != "txt") {
+                ## Default output name
+                full_path <- paste(path, paste(file, output, sep = "."), sep = "/")
+            } else {
+                ## C-test output name
+                full_path <- paste(path, paste(file, "Ctest", output, sep = "."), sep = "/")
+            }
             ## Check if the path exists
             if(!dir.exists(path)) {
                 stop(paste("path", path, "not found."))
@@ -135,7 +144,65 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         grDevices::dev.off()
 
         return(invisible())
-    }    
+    }
+
+    if(output %in% "txt") {
+        ## Outputs a C-test text file
+
+        ## Setting the C variable name
+        tree_var <- "char *test_tree"
+        char_var <- "char *test_matrix"
+        node_var <- "int node_pass"
+        node_var <- paste0(node_var, 1:4, "[", ape::Ntip(states_matrix$tree)+ape::Nnode(states_matrix$tree), "] = ")
+
+        ## Translate the tip labels
+        if(!all(sates_matrix$tree$tip.label == "numeric")) {
+            if(length(grep("t", sates_matrix$tree$tip.label)) != 0) {
+                sates_matrix$tree$tip.label <- gsub("t", "", sates_matrix$tree$tip.label)
+            } else {
+                tsates_matrix$ree$tip.label <- seq(1:ape::Ntip(sates_matrix$tree))
+            }
+        }
+
+        ## Get the newick tree
+        newick_tree_out <- paste0(tree_var, " = \"", write.tree(states_matrix$tree), "\";")
+
+        ## Get the matrix
+        ## Get all the possible states (for ?)
+        all_states <- sort(unique(unlist(states_matrix$Char)))
+        ## Converts the missing data
+        raw_matrix <- lapply(states_matrix$Char, get.missing, all_states)
+        ## Collapse multiple states
+        raw_matrix <- unlist(lapply(raw_matrix, paste, collapse = ""))
+        ## Convert the NA
+        raw_matrix <- gsub("-1", "-", raw_matrix)
+        ## C output
+        raw_matrix_out <- paste0(char_var, " = \"", paste(raw_matrix, collapse = ""), "\";")
+
+        ## Get the node array
+        node_values <- lapply(lapply(states_matrix[2:5], convert.binary.value, states_matrix), unlist)
+
+        ## Get the right traversal order here
+        traversal_order <- seq(from = 1, to = ape::Ntip(states_matrix$tree)+ape::Nnode(states_matrix$tree))
+
+        ## Sort the passes by traversal
+        passes_values <- list()
+        for(pass in 1:4) {
+            passes_values[[pass]] <- node_values[[pass]][traversal_order]
+        }
+
+        ## Get the node values in C format
+        C_node_values <- lapply(passes_values, function(x) paste0("{", paste(x, collapse = ", "), "};"))
+        C_node_values <- mapply(paste0, as.list(node_var), C_node_values)
+
+
+        ## Combine both outputs
+        txt_out <- c(raw_matrix_out, newick_tree_out, unlist(C_node_values))
+        writeLines(txt_out, full_path)
+
+        return(invisible())
+    }   
+
 }
 
 # ' @title Read files generated by \code{output.states.matrix}

@@ -10,7 +10,7 @@ output.states.matrix(states_matrix, output = NULL,
 \arguments{
 \item{states_matrix}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}.}
 
-\item{output}{The type of output, can be either \code{NULL} (default) or \code{"newick"}, \code{"nexus"}, \code{"csv"} or \code{"pdf"} (see details).}
+\item{output}{The type of output, can be either \code{NULL} (default) or \code{"newick"}, \code{"nexus"}, \code{"csv"}, \code{"pdf"} or \code{"C-test"} (see details).}
 
 \item{file}{The name of the output file(code{"character"}).}
 
@@ -28,11 +28,12 @@ Specifically, per data output type:
 -\code{"nexus"} outputs a nexus file with a newick string similar as above but also containing the total tree score, the matrix (one character) and the list of taxa.
 -\code{"csv"} A matrix containing the different state reconstructions and score for each tip and node.
 -\code{"pdf"} A pdf version of the states_matrix plotted with \code{plot.states.matrix}.
+-\code{"C-test"} a text version that can be used for testing in C (for DEBUG).
 }
 \examples{
 ## A random 5 taxa tree
 set.seed(1)
-tree <- ape::rtree(5)
+tree <- ape::rtree(5, br = NULL)
 ## A character with inapplicable data
 character <- "01-?1"
 
@@ -54,10 +55,9 @@ output.states.matrix(NA_matrix, output = "pdf")
 }
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{apply.reconstruction}}, \code{\link{plot.states.matrix}}
 }
-
+\author{
+Thomas Guillerme
+}

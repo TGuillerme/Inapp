@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{states.matrix}(states_matrix, passes = c(1, 2, 3, 4),
   show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"),
-  counts = 0, ...)
+  counts = 0, use.edge.length = FALSE, ...)
 }
 \arguments{
 \item{states_matrix}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}}
@@ -18,6 +18,8 @@
 \item{col.tips.nodes}{\code{character}, a vector of up to three colors to be used for displaying respectively the tips, the nodes and the activated/counted nodes (if \code{counts != 0}).}
 
 \item{counts}{\code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).}
+
+\item{use.edge.length}{\code{logical} indicating whether to use the edge lengths of the phylogeny to draw the branches or not (default).}
 
 \item{...}{any optional arguments to be passed to \code{\link[ape]{plot.phylo}}}
 }
@@ -48,10 +50,9 @@ plot(NA_matrix, show.labels = 2, col.tips.nodes = c("red", "pink", "green"),
      counts = c(1,2), passes = c(3,4))
 
 }
-\author{
-Thomas Guillerme
-}
 \seealso{
 \code{\link{apply.reconstruction}}, \code{\link{runInapp}}
 }
-
+\author{
+Thomas Guillerme
+}

@@ -6,7 +6,13 @@
 *.tre
 *.score
 *.nex
+*.nex*
+tmp
+*.count
 
 # LaTeX
 *.fls
 *.pdf
+
+# Paup jobs
+*.paupjob.sh

@@ -8,27 +8,30 @@
 
 \noindent{\Large \bf Inapplicable algorithm description}
 
+\noindent The following passes are assuming a traversal (or equivalent procedure) to visit each node of a given tree.
+
 \section{First downpass} \label{1stDp}
 
 \begin{enumerate}
-    \item Enter on any cherry (i.e. pair of tips) on the tree and move to its most recent common ancestor; \textbf{then}, \textit{go} to \ref{1stDp:enter}.
-    \item \label{1stDp:enter} \textbf{If} there is any state in common between both descendants, \textit{go} to \ref{1stDp:AND}; \textbf{else} \textit{go} to \ref{1stDp:OR}.
+    % \item Enter on any cherry (i.e. pair of tips) on the tree and move to its most recent common ancestor; \textbf{then}, \textit{go} to \ref{1stDp:enter}.
+    \item \label{1stDp:enter} For any pair of nodes/tips, \textbf{if} there is any state in common between both descendants, \textit{go} to \ref{1stDp:AND}; \textbf{else} \textit{go} to \ref{1stDp:OR}.
     \item \label{1stDp:AND} \textbf{If} the state in common is only the inapplicable state, and both descendants have an applicable state, \textit{set} the node's state to be the union of the descendants' states. \textbf{Else}, \textit{set} the node's state to be the state in common between both descendants \textbf{then} \textit{go} to \ref{1stDp:exit}.
     \item \label{1stDp:OR}  \textbf{If} both descendants have an applicable state, \textit{set} the node's state to be the union of both descendants states without the inapplicable state. \textbf{Else}, \textit{set} the node's state to be the union of its descendants states. \textbf{Then} \textit{go} to \ref{1stDp:exit}.
-    \item \label{1stDp:exit} \textbf{If} possible, move to the node's ancestor and \textit{go} to \ref{1stDp:enter}; \textbf{else} move to the next unvisited cherry's ancestor and \textit{go} to \ref{1stDp:enter}. Once all nodes have been visited, end the first downpass.
+    \item \label{1stDp:exit} Once all nodes have been visited, end the first downpass.
+    % \textbf{If} possible, move to the node's ancestor and \textit{go} to \ref{1stDp:enter}; \textbf{else} move to the next unvisited cherry's ancestor and \textit{go} to \ref{1stDp:enter}.
 \end{enumerate}
 
 
 \section{First uppass} \label{1stUp}
 
 \begin{enumerate}
-    \item Enter the tree on its root. \textbf{If} the root has any applicable state, remove the eventual inapplicable state. \textbf{Then} move to one of the root's descendants and \textit{go} to \ref{1stUp:enter}.
-    \item \label{1stUp:enter} \textbf{If} the node has the inapplicable state, \textit{go} to \ref{1stUp:nodeNA1}; \textbf{else}, leave the node's state unchanged and \textit{go} to \ref{1stUp:exit}.
+    % \item Enter the tree on its root. \textbf{If} the root has any applicable state, remove the eventual inapplicable state. \textbf{Then} move to one of the root's descendants and \textit{go} to \ref{1stUp:enter}.
+    \item \label{1stUp:enter} For any node; \textbf{if} the node has the inapplicable state, \textit{go} to \ref{1stUp:nodeNA1}; \textbf{else}, leave the node's state unchanged and \textit{go} to \ref{1stUp:exit}.
     \item \label{1stUp:nodeNA1} \textbf{If} the node also has an applicable state, \textit{go} to \ref{1stUp:nodeNAandA}; \textbf{else}, \textit{go} to \ref{1stUp:nodeNA2}.
     \item \label{1stUp:nodeNAandA} \textbf{If} the node's ancestor has the inapplicable state, \textit{set} the node's state to be the inapplicable state only and \textit{go} to \ref{1stUp:exit}; \textbf{else} remove the inapplicable state from the current node states. \textbf{Then} \textit{go} to \ref{1stUp:exit}.
     \item \label{1stUp:nodeNA2} \textbf{If} the node's ancestor has the inapplicable state, \textit{set} the node's state to be the inapplicable state only and \textit{go} to \ref{1stUp:exit}; \textbf{else} \textit{go} to \ref{1stUp:nodeNAOR}.
     \item \label{1stUp:nodeNAOR} \textbf{If} any of the descendants have an applicable state, \textbf{then} \textit{set} the node's state to be the union of the applicable states of its descendants; \textbf{else} \textit{set} the node's state to be the inapplicable state only. \textbf{Then} \textit{go} to \ref{1stUp:exit}.
-    \item \label{1stUp:exit} \textbf{If} one of the node's descendants is an unvisited tip, \textit{go} to \ref{1stUp:exitTip}; \textbf{else} move to the closest non-visited node and \textit{go} to \ref{1stUp:enter}. Once all nodes have been visited, end the first uppass.
+    \item \label{1stUp:exit} \textbf{If} one of the node's descendants is an unvisited tip, \textit{go} to \ref{1stUp:exitTip}; \textbf{else} go to \ref{1stUp:enter} until all the nodes have been visited. %move to the closest non-visited node and \textit{go} to \ref{1stUp:enter}. Once all nodes have been visited, end the first uppass.
     \item \label{1stUp:exitTip} \textbf{If} the unvisited tip has both inapplicable and applicable states, \textbf{then} \textit{go} to \ref{1stUp:exitTip2} \textbf{else} \textit{go} to \ref{1stUp:exit}
     \item \label{1stUp:exitTip2} \textbf{If} the current node is inapplicable, solve the tip as inapplicable only; \textbf{else} remove the inapplicable state from the tip \textbf{then} \textit{go} to \ref{1stUp:exit}.
 \end{enumerate}
@@ -37,31 +40,33 @@
 \section{Initialise tracker}
 
 \begin{enumerate}
-    \item \label{2ndDp:tracker} Start at any tip and \textit{go} to \ref{2ndDp:tracker1}.
-    \item \label{2ndDp:tracker1} \textbf{If} the tip only contains an inapplicable state, \textit{set} its tracker to ``off'' \textbf{then} move to the next tip and \textit{go} to \ref{2ndDp:tracker1}; \textbf{else} \textit{go} to \ref{2ndDp:tracker1b}.
+    % \item \label{2ndDp:tracker} Start at any tip and \textit{go} to \ref{2ndDp:tracker1}.
+    \item \label{2ndDp:tracker1} For any tip; \textbf{if} the tip only contains an inapplicable state, \textit{set} its tracker to ``off'' \textbf{then} move to the next tip and \textit{go} to \ref{2ndDp:tracker1}; \textbf{else} \textit{go} to \ref{2ndDp:tracker1b}.
     \item \label{2ndDp:tracker1b} \textbf{If} the tip does not contain the inapplicable state, \textit{set} its tracker to ``on'' \textbf{then} move to the next tip and \textit{go} to \ref{2ndDp:tracker1}. \textbf{Else} \textit{go} to \ref{2ndDp:tracker2}.
-    \item \label{2ndDp:tracker2} \textbf{If} the tip's ancestor contains an inapplicable state, \textit{set} the tip's tracker to ``off'' \textbf{else}, \textit{set} the tip's tracker to ` `on''. \textbf{Then} \textit{go} to the next tip and \textit{go} to \ref{2ndDp:tracker1}.
+    \item \label{2ndDp:tracker2} \textbf{If} the tip's ancestor contains an inapplicable state, \textit{set} the tip's tracker to ``off'' \textbf{else}, \textit{set} the tip's tracker to ``on''. \textbf{Then} \textit{go} to the next tip and \textit{go} to \ref{2ndDp:tracker1}.
 \end{enumerate}
 
 \section{Second downpass} \label{2ndDp}
 
 \begin{enumerate}
 
-    \item \label{2ndDp:entry} Enter on any cherry on the tree and move to its most recent common ancestor. \textbf{If} the trackers of either descendants is ``on'', \textit{set} this node's tracker to ``on''. \textbf{Else} \textit{set} it to ``off''. \textbf{Then}, \textit{go} to \ref{2ndDp:enter}
+    % Enter on any cherry on the tree and move to its most recent common ancestor.
+    \item \label{2ndDp:entry} For any pair of nodes/tips; \textbf{if} the trackers of either descendants is ``on'', \textit{set} this node's tracker to ``on''. \textbf{Else} \textit{set} it to ``off''. \textbf{Then}, \textit{go} to \ref{2ndDp:nodeAppli}
     \item \label{2ndDp:nodeAppli} \textbf{If} the node had an applicable state in the previous pass (first up), \textit{go} to \ref{2ndDp:enter}; \textbf{else} leave the node state unchanged and \textit{go} to \ref{2ndDp:exit}.
     \item \label{2ndDp:enter} \textbf{If} there is any state in common between both descendants, \textit{go} to \ref{2ndDp:AND}; \textbf{else}, \textit{go} to \ref{2ndDp:OR}.
     \item \label{2ndDp:AND} \textbf{If} the states in common are applicable, \textit{set} the node's state to be these states in common without the eventual inapplicable token; \textbf{else} \textit{set} the node's state to be the inapplicable state. \textbf{Then} \textit{go} to \ref{2ndDp:exit}. 
     \item \label{2ndDp:OR} \textit{Set} the node's state to be the union of the applicable states of both descendants (if present) and \textit{go} to \ref{2ndDp:CountChange}.
     \item \label{2ndDp:CountChange} \textbf{If} both descendants have an applicable state, \textbf{\textit{increment}} the tree length (change increment) and \textit{go} to \ref{2ndDp:exit}; \textbf{else} \textit{go} to \ref{2ndDp:CountRegion}.
     \item \label{2ndDp:CountRegion} \textbf{If} both of the node's descendants' trackers are ``on'', \textbf{\textit{increment}} the tree length (applicable region increment) \textbf{then} \textit{go} to \ref{2ndDp:exit}; \textbf{else} just \textit{go} to \ref{2ndDp:exit}.
-    \item \label{2ndDp:exit} \textbf{If} possible, move to the node's ancestor and \textit{go} to \ref{2ndDp:enter}; \textbf{else} move to the next unvisited cherry's ancestor and \textit{go} to \ref{2ndDp:enter}. Once all nodes have been visited, end the second downpass.
+    \item \label{2ndDp:exit} Once all nodes have been visited, end the second downpass. 
+    % \textbf{If} possible, move to the node's ancestor and \textit{go} to \ref{2ndDp:enter}; \textbf{else} move to the next unvisited cherry's ancestor and \textit{go} to \ref{2ndDp:enter}.
 \end{enumerate}
 
 \section{Second uppass} \label{2ndUp}
 
 \begin{enumerate}
-    \item Enter the tree on its root and move to one of the root's descendants. \textbf{Then} \textit{go} to \ref{2ndUp:enter}.
-    \item \label{2ndUp:enter} \textbf{If} the node has any applicable state, \textit{go} to \ref{2ndUp:nodeA}; \textbf{else}, \textit{go} to \ref{2ndUp:CountRegion}.
+    % \item Enter the tree on its root and move to one of the root's descendants. \textbf{Then} \textit{go} to \ref{2ndUp:enter}.
+    \item \label{2ndUp:enter} For any node; \textbf{if} the node has any applicable state, \textit{go} to \ref{2ndUp:nodeA}; \textbf{else}, \textit{go} to \ref{2ndUp:CountRegion}.
     \item \label{2ndUp:nodeA} \textbf{If} the node's ancestor has any applicable state, \textit{go} to \ref{2ndUp:ancestorA1}; \textbf{else}, \textit{go} to \ref{2ndUp:exit}.
     \item \label{2ndUp:ancestorA1} \textbf{If} the node states are the same as its ancestor, \textit{go} to \ref{2ndUp:exit}; \textbf{else}, \textit{go} to \ref{2ndUp:ancestorA2}.
     \item \label{2ndUp:ancestorA2} \textbf{If} there is any state in common between the node's descendants, \textit{go} to \ref{2ndUp:ANDdesc}; \textbf{else} \textit{go} to \ref{2ndUp:ORdesc}.
@@ -70,7 +75,8 @@
     \item \label{2ndUp:ORdescNA} \textbf{If} there is any state in common between either of the node's descendants and its ancestor, \textit{set} the node's states to be its ancestor's; \textbf{else} \textit{add} to the current node states the applicable states also found in its descendants and ancestor. \textbf{Then} \textit{go} to \ref{2ndUp:exit}.
     \item \label{2ndUp:ORdescA} \textit{Add} to the node's states the states of its ancestor. \textbf{Then} \textit{go} to \ref{2ndUp:exit}.
     \item \label{2ndUp:CountRegion} \textbf{If} both of the node's descendants' trackers are ``on'', \textbf{\textit{increment}} the tree length (applicable region increment) \textbf{then} \textit{go} to \ref{2ndDp:exit}; \textbf{else} just \textit{go} to \ref{2ndUp:exit}.
-    \item \label{2ndUp:exit} \textbf{If} any one of the node's descendants is not a tip, move to the next node and \textit{go} to \ref{2ndUp:enter}. \textbf{If} both descendants are tips, move to the closest non-visited node and \textit{go} to \ref{2ndUp:enter}. Once all nodes have been visited, end the second uppass.
+    \item \label{2ndUp:exit} Once all nodes have been visited, end the second uppass.
+    % \textbf{If} any one of the node's descendants is not a tip, move to the next node and \textit{go} to \ref{2ndUp:enter}. \textbf{If} both descendants are tips, move to the closest non-visited node and \textit{go} to \ref{2ndUp:enter}.
 \end{enumerate}
 
 The tree length is then equal to the number of state changes and the number of additional applicable regions.

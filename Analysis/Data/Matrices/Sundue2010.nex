@@ -1,0 +1,630 @@
+#NEXUS
+[!This data set was downloaded from TreeBASE, a relational database of phylogenetic knowledge. TreeBASE has been supported by the NSF, Harvard University, Yale University, SDSC and UC Davis. Please do not remove this acknowledgment from the Nexus file.
+
+
+Generated on September 16, 2013; 15:24 GMT
+
+TreeBASE (cc) 1994-2008
+
+Study reference:
+Sundue M.A., Islam M., & Ranker T. 2010. Systematics of grammitid ferns (Polypodiaceae):
+using morphology and plastid sequence data to resolve the circumscriptions
+of Melpomene and the polyphyletic genera Lellingeria and Terpsichore. Systematic
+Botany, 35.
+
+TreeBASE Study URI:  http://purl.org/phylo/treebase/phylows/study/TB2:S10671]
+
+BEGIN TAXA;
+        TITLE  Taxa;
+        DIMENSIONS NTAX=177;
+        TAXLABELS
+            Calymmodon_gracilis
+            Calymmodon_luerssenianus
+            Campyloneurum_angustifolium
+            Ceradenia_aulaeifolia
+            Ceradenia_aulaeifolia_2
+            Ceradenia_fucoides
+            Ceradenia_intonsa
+            Ceradenia_jungermannioides
+            Ceradenia_kalbreyeri_Colombia
+            Ceradenia_kalbreyeri_Costa_Rica
+            Ceradenia_pilipes_Costa_Rica
+            Ceradenia_pilipes_Ecuador
+            Ceradenia_sp._aff._kalbreyeri
+            Ceradenia_sp._ined._1
+            Ceradenia_sp._ined._1_2
+            Ceradenia_sp._moran_7520
+            Ceradenia_spixiana
+            Chrysogrammitis_musgraveana
+            Cochlidium_punctatum
+            Cochlidium_rostratum
+            Cochlidium_seminudum
+            Ctenopteris_heterophylla
+            Ctenopteris_heterophylla_2
+            Ctenopteris_lasiostipes
+            Ctenopteris_nutans
+            Ctenopteris_repandula
+            Ctenopteris_rhodocarpa
+            Enterosora_enterosoroides
+            Enterosora_percrassa
+            Enterosora_percrassa_2
+            Enterosora_trichosora
+            Enterosora_trifurcata_Costa_Rica
+            Enterosora_trifurcata_Ecuador
+            Grammitis_billardieri
+            Grammitis_ciliata
+            Grammitis_deplanchei
+            Grammitis_forbesiana
+            Grammitis_knutsfordiana
+            Grammitis_melanoloma
+            Grammitis_parva
+            Grammitis_poeppigiana
+            Grammitis_poeppigiana_2
+            Grammitis_pseudociliata
+            Lellingeria_apiculata_Brazil
+            Lellingeria_apiculata_Costa_Rica
+            Lellingeria_bishopii
+            Lellingeria_hellwigii
+            Lellingeria_humilis
+            Lellingeria_limula
+            Lellingeria_limula_2
+            Lellingeria_limula_3
+            Lellingeria_major
+            Lellingeria_major_2
+            Lellingeria_major_3
+            Lellingeria_myosuroides
+            Lellingeria_myosuroides_2
+            Lellingeria_prionodes
+            Lellingeria_pseudomitchellae
+            Lellingeria_saffordii
+            Lellingeria_schenckei
+            Lellingeria_simacensis
+            Lellingeria_subimpressa
+            Lellingeria_subsessilis_Costa_Rica
+            Lellingeria_subsessilis_Ecuador
+            Lellingeria_suprasculpta
+            Lellingeria_suspensa
+            Lellingeria_suspensa_2
+            Melpomene_anazalea_ined.
+            Melpomene_firma
+            Melpomene_flabelliformis
+            Melpomene_moniliformis
+            Melpomene_occidentalis
+            Melpomene_occidentalis_2
+            Melpomene_personata_ined.
+            Melpomene_pseudonutans
+            Melpomene_vernicosa
+            Microgramma_percussa
+            Microgramma_squamulosa
+            Micropolypodium_achilleifolium
+            Micropolypodium_hyalinum
+            Micropolypodium_taenifolium
+            Micropolypodium_zurquinum
+            Oreogrammitis_hookeri
+            Pecluma_alfredii
+            Polypodium_glycyrrhiza
+            Prosaptia_alata
+            Prosaptia_contigua
+            Prosaptia_obliquata
+            Prosaptia_pubipes
+            Scleroglossum_sulcatum
+            Scleroglossum_sulcatum_2
+            Terpsichore_aff._subtilis_inded.
+            Terpsichore_alsopteris
+            Terpsichore_amphidasyon_2
+            Terpsichore_amphidasyon_3
+            Terpsichore_amphidasyon_Moran_7646
+            Terpsichore_anfractuosa_Bolivia
+            Terpsichore_anfractuosa_Bolivia_2
+            Terpsichore_anfractuosa_Costa_Rica
+            Terpsichore_anfractuosa_Ecuador
+            Terpsichore_anfractuosa_Ecuador_2
+            Terpsichore_anfractuosa_Mexico
+            Terpsichore_anfractuosa_Mexico_2
+            Terpsichore_anfractuosa_Peru
+            Terpsichore_anfractuosa_Peru_2
+            Terpsichore_angustipes
+            Terpsichore_angustipes_2
+            Terpsichore_athyrioides
+            Terpsichore_attenuatissima
+            Terpsichore_attenuatissima_2
+            Terpsichore_attenuatissima_3
+            Terpsichore_clathrata
+            Terpsichore_clavigera_ined.
+            Terpsichore_colombiense_ined.
+            Terpsichore_colombiense_ined._2
+            Terpsichore_cretata
+            Terpsichore_cuencana
+            Terpsichore_cultrata
+            Terpsichore_davidsmithii
+            Terpsichore_davidsmithii_2
+            Terpsichore_davidsmithii_3
+            Terpsichore_davidsmithii_4
+            Terpsichore_davidsmithii_5
+            Terpsichore_delicatula
+            Terpsichore_dilatata
+            Terpsichore_dilatata_2
+            Terpsichore_hanekeana
+            Terpsichore_lanigera
+            Terpsichore_lehmanniana
+            Terpsichore_leucosticta
+            Terpsichore_leucosticta_2
+            Terpsichore_loja_ined.
+            Terpsichore_loja_ined._2
+            Terpsichore_loja_ined._3
+            Terpsichore_longicaulis
+            Terpsichore_longipilosa_ined.
+            Terpsichore_longipilosa_ined._2
+            Terpsichore_longisetosa
+            Terpsichore_mollissima
+            Terpsichore_nana
+            Terpsichore_pacifica
+            Terpsichore_pichinchae
+            Terpsichore_pichinchense
+            Terpsichore_pichinchense_2
+            Terpsichore_pichinchense_3
+            Terpsichore_praeceps
+            Terpsichore_semihirsuta
+            Terpsichore_semihirsuta_Bolivia
+            Terpsichore_semihirsuta_Bolivia_2
+            Terpsichore_semihirsuta_Colombia
+            Terpsichore_semihirsuta_Colombia_Choco
+            Terpsichore_semihirsuta_Ecuador
+            Terpsichore_semihirsuta_Peru
+            Terpsichore_semihirsuta_ined._2_Costa_Rica
+            Terpsichore_semihirsuta_ined._3_Mexico
+            Terpsichore_senilis
+            Terpsichore_smithii
+            Terpsichore_sp._Sundue_1160
+            Terpsichore_sp._Sundue_1167
+            Terpsichore_sp._aff._alsopteris_ined._1_Bolivia
+            Terpsichore_sp._aff._alsopteris_ined._1_Bolivia_2
+            Terpsichore_sp._aff._alsopteris_ined._1_Bolivia_3
+            Terpsichore_sp._aff._alsopteris_ined._1_Bolivia_4
+            Terpsichore_sp._aff._alsopteris_ined._2_Costa_Rica
+            Terpsichore_sp._aff._taxifolia_ined._Colombia
+            Terpsichore_subscabra
+            Terpsichore_subscabra_2
+            Terpsichore_subtilis
+            Terpsichore_subtilis_2
+            Terpsichore_taxifolia_Brazil
+            Terpsichore_taxifolia_Ecuador
+            Terpsichore_vascoi_ined.
+            Terpsichore_zeledoniana
+            Xiphopteris_conjunctisora
+            Zygophlebia_mathewsii_Costa_Rica
+            Zygophlebia_mathewsii_Ecuador
+            Zygophlebia_sectifrons
+            ;
+END;
+
+BEGIN CHARACTERS;
+[! TreeBASE Matrix URI: http://purl.org/phylo/treebase/phylows/matrix/TB2:M5975]
+
+	TITLE Morphology_and_Indels;
+	LINK TAXA = Taxa;
+	DIMENSIONS NCHAR=237;
+	FORMAT DATATYPE=Standard SYMBOLS= "01234" MISSING=? GAP= -;
+	CHARSTATELABELS
+		1  habit / epiphytic epipetric terrestrial rheophytic,
+		2  habit_2_position_of_fronds / erect arching pendant prostrate,
+		3  root_insertion / dorsally_and_ventrally ventral_side_only,
+		4  proliferous_roots / absent present,
+		5  rhizome_symmetry / radial dorsiventral,
+		6  Stele_perforations / 'absent_[stele_not_perforated]' 'present_[stele_perforated]',
+		7  rhizome_phytomer_internode_length / short_creeping long_creeping,
+		8  branch_buds / absent present,
+		9  phyllopodia / absent present,
+		10  rhizome_branching / branched commonly_unbranched,
+		11  Rhizome_setae / absent present,
+		12  hairs_on_rhizome / absent present,
+		13  rhizome_hairs / white_waxy 'hyaline,',
+		14  rhizome_scales / absent present,
+		15  Rhizome_scale_attachment / 'basifixed_[or_pseudopeltate]' peltate,
+		16  rhizome_scale_cell_shape / flat_or_semiturgid turgid,
+		17  Rhizome_scale_cell_lumen_induration / non_indurate indurate,
+		18  scale_base_shape / non_auriculate auriculate,
+		19  scale_shape / ovate lanceolate,
+		20  'scales clathrate vs. concolorous [cell walls distinctly different color than lumen]' / 'concolorous_[cell_walls_and_lumen_the_same_color]' 'Clathrate__[indurate_or_not]',
+		21  'scale color [color of cell wall in clathrate scales]' / orange_to_castaneous dark_reddish_to_blackish reddish_brown tan,
+		22  scale_iridescence / no yes,
+		23  rhizome_scale_sheen / dull subglossy glossy,
+		24  'scale margin indument present vs. absent [distinct from apical gland]' / absent present,
+		25  distribution_of_marginal_indument / even apical_only,
+		26  scale_margin_indument_type / setae_unicelular_simple_eglandular glandular_unicelular_or_multicelluar_and_glandular,
+		27  color_of_marginal_or_apical_setae / orange_to_castaneous whitish_clear reddish tan,
+		28  'scale margin entire vs. denticulate [not inclusive of marginal indument, N/A for taxa with marginal indument]' / entire denticulate,
+		29  scale_surfaces / glabrous present,
+		30  'apical glandlike cell(s)' / absent present,
+		31  number_of_apical_glandlike_cells / singular multiple,
+		32  fronds_determinate_vs._indeterminate / determinate indeteminate,
+		33  sterilefertile_leaf_dimorphy / essentially_monomorphic hemidimorphic_fertile_portion_of_leaves_morphologically_different,
+		34  Fertile_portions_of_fronds_more_setose_than_sterile_portions / equally_setose more_setose,
+		35  leaf_articulation / non_articulate articulate,
+		36  petiole_shape_in_x_section / terrete flattened,
+		37  petiole_sclerenchyma_outermost_layer / outermost_layer_of_petiole_sclerenchymatous outermost_layer_of_petiole_parenchymatous,
+		38  Petiole_stele_number / monostele distele polystele,
+		39  petiole_marginate_or_terete / marginate_throughout distally_marginate terete,
+		40  blade_base / 'tapered_[reduced_pinnae_present]' truncate,
+		41  blade_apex / gradually_reduced_w_confluent_divisions conform_to_the_pinnae,
+		42  blade_dissection_at_least_at_base / 'simple_(undivided)' pinnatifid pinnatisect 1_pinnate pinnate_pinnatifid_or_more_divided,
+		43  pinna_base_shape / even_sided 'expanded_[the_base_dilated_decurrent_and_or_surcurrent]',
+		44  pinna_apex_shape / acute rounded,
+		45  Lamina_texture / chartaceous membranaceous carnose spongiose,
+		46  Leaf_pallisade_parenchyma_layer / present absent,
+		47  Leaf_spongy_parenchyma_layer / short_armed_peg_cells long_armed_cells,
+		48  Leaf_vasculature_position_relative_to_palisade_parenchyma / at_abaxial_surface_of_pallisade_parenchyma below_abaxial_surface_of_pallisade_parenchyma,
+		49  Lamina_margin_black_and_sclerenchymatous / absent present,
+		50  Sclerenchyma_present_on_pinna_costae_or_first_order_veins / absent present only_on_proximal_half_of_first_order,
+		51  Sclerenchyma_present_on_first_order_veins / absent present present_only_on_the_proximal_half,
+		52  sclerenchyma_of_midrib_visible_abaxially / no yes,
+		53  sclerenchyma_of_midrib_visible_adaxially / no yes,
+		54  sclerenchyma_of_pinna_costae_visible_abaxially / no yes only_proximally,
+		55  sclerenchyma_of_pinna_costae_visible_adaxially / no yes,
+		56  sclerenchyma_of_veins_visible_abaxially / no yes,
+		57  sclerenchyma_of_veins_visible_adaxially / no yes,
+		58  vein_order / two three four_or_more 'one_[pinna_costa_only]',
+		59  'secondary vein form [NA if 2ndary veins are unbranched]' / dichotomous non_dichotomous,
+		60  vein_fusion_in_sterile_blades / non_anastomosing anastomosing,
+		61  hydathodes / absent present,
+		62  'Hydathodes cretaceous vs. glabrous [NA taxa without hydathodes]' / glabrous cretaceous,
+		63  blade_scales / absent present,
+		64  blade_scale_color_pattern / uniformly_colored clathrate,
+		65  setae_present_absent / absent present,
+		66  Seta_color / reddish whitish,
+		67  Setaphores / absent present,
+		68  setae_branching_pattern / simple bifurcate stellate,
+		69  petiole_setae / absent present,
+		70  adaxial_midrib_setae / absent present,
+		71  rachis_setae_uniform_vs._long_and_short / uniform long_and_short,
+		72  marginal_setae / absent present,
+		73  marginal_setae_distribution / even confined_to_pinna_apex,
+		74  adaxial_lamina_setae / absent present,
+		75  abaxial_lamina_setae / absent present,
+		76  adaxial_pinna_costa_setae / absent present,
+		77  'hairs [distinct from setae]' / absent present,
+		78  hair_branching_pattern / simple 1_furcate 2_furcate 3_furcate,
+		79  multicellular_hair_no_of_cells / 2_celled 3_celled more_than_3_celled 1_celled,
+		80  hairs_modification_of_cells / acicular setose capitate_globose_or_glandular unmodified,
+		81  Gland_cell_color_texture / white_opaque translucent,
+		82  Gland_cells_secretory / 'non-secretory' 'secretory_[either_as_wax_or_fluid]',
+		83  soral_receptacle / '(nearly)_flat' convex,
+		84  sori_distinct_or_confluent / more_than_2 '2_(coenosori)',
+		85  'soral position [applicable only when sori are uniseriate between axis and margin]' / nearest_to_penultimate_axis midway_between_axis_and_margin nearer_to_margin_than_to_penultimate_axis directly_over_the_first_order_vein,
+		86  distribution_of_sori / distirbuted_evenly_throughout_the_frond confined_to_the_distal_portion_of_the_frond,
+		87  mature_sorus_outline / round elliptic_never_more_than_2x_longer elongtate_2x_longer_than_wide_or_longer,
+		88  sorus_sunken_vs._surficial / surficial sunken slightly_sunken,
+		89  'Wall angle of sunken sori [n/a for surficial sori]' / sloping_sides vertical_sides,
+		90  sori_embossed_on_adaxial_side_of_blade / no yes,
+		91  blade_margin_infolded_over_sori / no yes,
+		92  tissue_subtending_receptacle / entirely_from_abaxial_surface in_part_by_blade_margin,
+		93  paraphyses / absent present,
+		94  cells_of_paraphyses_modification / unmodified with_waxlike_glands glandular_glands_not_waxy with_setose_branches glandular_glands_reddish,
+		95  receptacular_setae / absent present,
+		96  sporangial_stalk_width_at_midstalk / 2_3_cells 1_cell,
+		97  episporangial_indument / absent present,
+		98  position_of_episporangial_indument / from_side_walls_of_capsule from_annulus,
+		99  localization_of_episporangial_indument / scattered aggregated,
+		100  spore_color / yellow green,
+		101  spore_number / 64 32 16,
+		102  spore_laesura / linear triradiate,
+		103  number_of_cells_in_newly_shed_spores / one two three_to_four,
+		104  'exospore (exine) surface' / '(nearly)_smooth_or_plain' obviously_patterned_or_sculptured,
+		105  gametophyte_form / cordate_thalloid elongate_thalloid_to_filamentous,
+		106  rhizoid_developed_in_first_cell_division / no yes,
+		107  base_number / 37 35 33 32,
+		108  Acrospermum_ascomes / absent present,
+		109  Aromatic_odor_when_dry / absent present,
+		110    / absent present,
+		111    / absent present,
+		112    / absent present,
+		113    / absent present,
+		114    / absent present,
+		115    / absent present,
+		116    / absent present,
+		117    / absent present,
+		118    / absent present,
+		119    / absent present,
+		120    / absent present,
+		121    / absent present,
+		122    / absent present,
+		123    / absent present,
+		124    / absent present,
+		125    / absent present,
+		126    / absent present,
+		127    / absent present,
+		128    / absent present,
+		129    / absent present,
+		130    / absent present,
+		131    / absent present,
+		132    / absent present,
+		133    / absent present,
+		134    / absent present,
+		135    / absent present,
+		136    / absent present,
+		137    / absent present,
+		138    / absent present,
+		139    / absent present,
+		140    / absent present,
+		141    / absent present,
+		142    / absent present,
+		143    / absent present,
+		144    / absent present,
+		145    / absent present,
+		146    / absent present,
+		147    / absent present,
+		148    / absent present,
+		149    / absent present,
+		150    / absent present,
+		151    / absent present,
+		152    / absent present,
+		153    / absent present,
+		154    / absent present,
+		155    / absent present,
+		156    / absent present,
+		157    / absent present,
+		158    / absent present,
+		159    / absent present,
+		160    / absent present,
+		161    / absent present,
+		162    / absent present,
+		163    / absent present,
+		164    / absent present,
+		165    / absent present,
+		166    / absent present,
+		167    / absent present,
+		168    / absent present,
+		169    / absent present,
+		170    / absent present,
+		171    / absent present,
+		172    / absent present,
+		173    / absent present,
+		174    / absent present,
+		175    / absent present,
+		176    / absent present,
+		177    / absent present,
+		178    / absent present,
+		179    / absent present,
+		180    / absent present,
+		181    / absent present,
+		182    / absent present,
+		183    / absent present,
+		184    / absent present,
+		185    / absent present,
+		186    / absent present,
+		187    / absent present,
+		188    / absent present,
+		189    / absent present,
+		190    / absent present,
+		191    / absent present,
+		192    / absent present,
+		193    / absent present,
+		194    / absent present,
+		195    / absent present,
+		196    / absent present,
+		197    / absent present,
+		198    / absent present,
+		199    / absent present,
+		200    / absent present,
+		201    / absent present,
+		202    / absent present,
+		203    / absent present,
+		204    / absent present,
+		205    / absent present,
+		206    / absent present,
+		207    / absent present,
+		208    / absent present,
+		209    / absent present,
+		210    / absent present,
+		211    / absent present,
+		212    / absent present,
+		213    / absent present,
+		214    / absent present,
+		215    / absent present,
+		216    / absent present,
+		217    / absent present,
+		218    / absent present,
+		219    / absent present,
+		220    / absent present,
+		221    / absent present,
+		222    / absent present,
+		223    / absent present,
+		224    / absent present,
+		225    / absent present,
+		226    / absent present,
+		227    / absent present,
+		228    / absent present,
+		229    / absent present,
+		230    / absent present,
+		231    / absent present,
+		232    / absent present,
+		233    / absent present,
+		234    / absent present,
+		235    / absent present,
+		236    / absent present,
+		237    / absent present,
+		;
+
+MATRIX
+[                                                              10        20        30        40        50        60        70        80        90        100       110       120       130       140       150       160       170       180       190       200       210       220       230       240    ]
+[                                                               .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .         .    ]
+Calymmodon_gracilis                                    00000?000100?1000{01}100011102001000000100002112?0?0101000??0?0100-1000110101111111--00110?-010??010--1010111?00000111-11011--11---11011100010111-1---1011----0-10110-0111111--000000---00000--00--0000000000-0---0--00000-00000-000-000--0--000
+Calymmodon_luerssenianus                               0-000-0-0100?100001020?????????00000-?-012100?0?010------0-0--0-10001101011-------000110-0100-010--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Campyloneurum_angustifolium                            021011101100?10001001000---000-00-111210?0??000?00000000021110110-----------0-----101000-0000-000--0000000000111111111111111111111111111111????????-00-00000----?0?0??0000--0?000?0-?0000??-?000?000000000??-?-???0000000--0?000-?0?0-???-000
+Ceradenia_aulaeifolia                                  02101?011100?10100100021010001010000102003110?0?0101111001100-0-1000110100001223--001000-00011010--101?111?0001111--110111----111001110001011111111111111111111110-0000000--00-0000--000000-000-00000000---0-0-000-000000000000-0-000-00--000
+Ceradenia_aulaeifolia_2                                02101?011100?10100100021010001010000102003110?0?0111111001100-0-1000110100001223--001000-00011010--101?111?0001111--110111----111001110001011111111111111111111110-0000000--00-0000--000000-000-00000000---0-0-000-000000000000-0-000-00--000
+Ceradenia_fucoides                                     02000-01010100-----------------00000100001100?0?0100000000-00-0-10001000?00012220-002010-00011010--101?111?0001111--110111-011111101110001011111111111111110111110-0000000-000-0000--000000000000000000000-0-0-000-00000000000000-000-00--000
+Ceradenia_intonsa                                      02101?011100?10100100021001001000000012102102?0?0111000001100-0-1000110101111{01}23--002000-00012010--101?111?0001111--110111----111101110001011111111111111111111110-0000000--00-0000--000000-000-00000000---0-0-000-000000000000-0-000-00--000
+Ceradenia_jungermannioides                             00100-010100?0-----------------00000-0???0??0?0?0110?????1100-0-1000100?????101---001000-000???10--1010111000--------------------------------------------------------------------------------------------------------------------------------
+Ceradenia_kalbreyeri_Colombia                          02101?011100?10100100021000001000000002112102?0?0111120001100-0-1000010100001{02}21--001010-00011010--101?111?0001111--110111-111111001110001011111111111111110111110-0000000--00-0000--000000-00000000000000-0-0-000-00000000000000-000-00--000
+Ceradenia_kalbreyeri_Costa_Rica                        02101?011100?10100100021000001000000012102102?0?0111100001100-0-10001100?0101{012}23--001000-00010010--1011111?0001111--110111-111111001110001011111111111111110111110-0000000--00-0000--000000-00000000000000-0-0-000-00000000000000-000-00--000
+Ceradenia_pilipes_Costa_Rica                           02000?010100?001001000210{01}0001000000102002100?0?0121100001100-0-10001000?000122{23}01001100-00011010--101?111?0001111--110111-1111-1101110001011111111111111110111111-0000000--00-0000--000000-00000000000000-0-0-000-00000000000000-000-00--000
+Ceradenia_pilipes_Ecuador                              02000?010100?001001000210{01}0001000000102002100?0?0121100001100-0-10001000?000122{23}01001100-00011010--101?111?0001111--110111-1111-1101110001011111111111111110111111-0000000--00-0000--000000-00000000000000-0-0-000-00000000000000-000-00--000
+Ceradenia_sp._aff._kalbreyeri                          02101?0??100?1010010002100000??00000002102102?0?011110?001100-0-10001?00??0?10{01}201002011000011010--101?111?0001111--110111-111111001110001011111111111111110111110-0000000--00-0000--000000-00000000000000-0-0-000-00000000000000-000-00--000
+Ceradenia_sp._ined._1                                  02101?011100?101001000210{01}1001100000012103102?0?0111100001100-0-100011010000122{123}11001010-00011010--101?111?0001111--110111----1110011100010111101111111111111--11011000000--00-0-00--000000-000-00000000---0-0-000-000000-00000---000-00--000
+Ceradenia_sp._ined._1_2                                02101?011100?101001000210{01}1001100000012103102?0?0111100001100-0-100011010000122{123}11001010-00011010--101?111?0001111--110111----1110011100010111101111111111111--11011000000--00-0-00--000000-000-00000000---0-0-000-000000-00000---000-00--000
+Ceradenia_sp._moran_7520                               02101-0??100?1010010002?????01?000000?2102102?0?011000000-100-0-10001-010-1-------002010-00011010--101?111?0001111--110111----111001110001011111111111111111111110-0000000--00-0000--000000-000-00000000---0-0-000-000000000000-0-000-00--000
+Ceradenia_spixiana                                     02101?011100?101001000210{01}1001000000002102102?0?0110-0-0?1100-0-10001?010?1?122?01001000-0001{13}010--1011111000--------------------------------------------------------------------------------------------------------------------------------
+Chrysogrammitis_musgraveana                            0-001---0100?100-000201101-----00-001?-002--0?0?01-------210000-1000--------1-----00-100-000---10--101?111?00011111-110111-0111-1-011100010111-1111101010010110111-0100000111000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Cochlidium_punctatum                                   0?000?0?0100?1?00{01}100000---10??01-0010?0?0??2?0?0000000--3-0100-0-----------1013--01012100000--10--1111111?0011111---10111-11111110111000101111-111-0111111001-110-0000000--0111100--000000-00000000000000-0-0--00-00000000000000-000-00--000
+Cochlidium_rostratum                                   0?000-0-0100?1100{01}100000---100?01-0010?0?0??2?0?00000----3-00-0-0-----------0-----0101211000?--10--1010111300--------------------------------------------------------------------------------------------------------------------------------
+Cochlidium_seminudum                                   00000?0?0100?10000100000---000?00-0010?0?0??2?0?00010----3-00-0-0-----------10{12}3--010120-0000--10--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Ctenopteris_heterophylla                               {0123}-001---0100?100-0102010---0---00-001?-001--0?0?01-------110100-1000--------1-----00-100-000---10--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Ctenopteris_heterophylla_2                             {0123}-001---0100?100-0102010---0---00-001?-001--0?0?01-------110100-1000--------1-----00-100-000---10--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Ctenopteris_lasiostipes                                0-001---0100?100-0111010---0---00-001?-003--0?0?01-------110100-1000--------1-----00-100-000---10--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Ctenopteris_nutans                                     0-001---1100?100-011101100-----00-101?-002--0?0?01-------110000-1000--------1-----00-100-000---10--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Ctenopteris_repandula                                  {013}-000---0100?100-0103010---0---00-001?-002--0?0?01-------110100-1000--------1-----00-100-000---10--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Ctenopteris_rhodocarpa                                 0-001---1100?100-011101100-----00-101?-002--0?0?01-------110000-1000--------1-----00-100-000---10--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Enterosora_enterosoroides                              02101-011100?10000103010---100-000000020?0??201?0110000001100-0-10001001000011221000101110000-010--101111100001111--110111-1111111011000010111-1111111111110111110-0-00000--00-00111-000000-00000000000000-0-0-000-0000000000-000-000-0---000
+Enterosora_percrassa                                   0210110?1100?101001030110130110000001120?0??311?0100000001110-0-100?1101011?0-----00101110000-010--101111100001111---------------------00101111111010----------11--100---0---00--00-1111100-00--0--00-00---0-0-00000-0----0-000----00-00--000
+Enterosora_percrassa_2                                 0210110?1100?101001030110130110000001120?0??311?0100000001110-0-10001101011?0-----00101110000-010--101111100001111---------------------00101111111010----------11--100---0---00--00-1111100-00--0--00-00---0-0-00000-0----0-000----00-00--000
+Enterosora_trichosora                                  02101?011100?10100103010---10??000001020?0??311?0110000001100-0-10001101011?10221000102100000-110--101?111?0001111--110111-111111101100001011111111111111110111110-0000000--00-00001-000000-00000000000000-0-0-000-00000000000000-000-00--000
+Enterosora_trifurcata_Costa_Rica                       02101?011100?101001030110100111000000120011{01}311?01100000011{01}0-0-10001100?0001223--00102100000-010--101?11100011111---------------------001011111111-0--------1111--000---0---00-000--111100-00--0--00-00---0-0-00000-0---00-000-0--00-00--000
+Enterosora_trifurcata_Ecuador                          02101?011100?10100103010---0111000000120011{01}311?01100000011{01}0-0-10001100?0001223--00102100000-010--101?11100011111---------------------001011111111-0--------1111--000---0---00-000--111100-00--0--00-00---0-0-00000-0---00-000-0--00-00--000
+Grammitis_billardieri                                  {01}-1010000100?10000103000---001000-001010?0??0?0?0101000001100-0-10001000?0001{23}20??00011101000-010--101?111000--------------------------------------------------------------------------------------------------------------------------------
+Grammitis_ciliata                                      {012}-000-0-0100?10000103010---00--00-001?-0-0--0?0?0----00--0-00-0-0--0--------1?????002000-0000-010--1010111?00--------------------------------------------------------------------------------------------------------------------------------
+Grammitis_deplanchei                                   001011001100?10100100010---100-00-001000?0??2?0?0110000001000-0-0--0--------0-----002110-0000-011111010111?00011111-110111-1001111011100010111-1111101110010111110-0-00000--0000000--000010-00000000000000-0-0-000000000000000000-000-00-0000
+Grammitis_forbesiana                                   0-001-0-0100?10000103010---00--00-001?-0-0--0?0?0--------0-00-0-100---------0-----000000-0000-01111101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Grammitis_knutsfordiana                                00001?100100?11000100110---000-00-001020?0??0?0?0111100001100-0-1000110101100-----000110-0000-111011010111?00011111-110011-0111110011000010111111--10111001011-110-0000000-000001000-000001100000000000000-0-0-000000000000000000-000-00--000
+Grammitis_melanoloma                                   0?000?0?0100?10000103010---00??00-001??0?0??0?0?1--??----1000-0-0-----------0-----000100-0000--10--101?11100001111---10111-11-11110111000101111-111-011--01001-110-0000000--0-11100--000000-11110000000000-0-0--00-000000000-0000-000-00--000
+Grammitis_parva                                        0-000-0-0100?10000103010---00--00-001?-0-0--0?0?0--------1000-0-100---------1-----000100-0000--1101101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Grammitis_poeppigiana                                  20001?010000?10000100010---000-00-00100??0??200?00000----1000-0-0-----------1223--000110-0000-010--1011111000--------------------------------------------------------------------------------------------------------------------------------
+Grammitis_poeppigiana_2                                20001?010000?10000100010---000-00-00100??0??200?00000----1000-0-0-----------1223--000110-0000-010--1011111000--------------------------------------------------------------------------------------------------------------------------------
+Grammitis_pseudociliata                                0-001-0-0100?10000103010---00--00-001?-0-0--0?0?0--------0-00-0-1000--------1-----0001{01}0-0000--10--1011111000--------------------------------------------------------------------------------------------------------------------------------
+Lellingeria_apiculata_Brazil                           01101?000100?10000111011001011000-00102103100?0?0101100--0-0100-0-----------11{12}0--00110200000--10--1011111?00011111-100111-111111101110001010101110101111110111110-0000000--0000000-0000000-00000000000000-0-0-000000000000000000-000-00--000
+Lellingeria_apiculata_Costa_Rica                       01101?000100?10000111011001011000-00102103100?0?0101100--0-0100-0-----------11{12}0--001100-0000--10--1011111?00--------------------------------------------------------------------------------------------------------------------------------
+Lellingeria_bishopii                                   02101?0?0100?10100111001001001?00-00102012100?0?0101110--0-0110-0-----------1110--001100-0000--10--101?111?00011111-1-0111-111111101110001010101111101-11110110110-0000000--0000000--000000-00000000010000-0-0-000000000000000000-000-00--000
+Lellingeria_hellwigii                                  00000?010100?11000011111102001001-00102002100?0?01011??--3-?100-0-----------1110--00011200000--10--101?111?00011111-1----1-111111101110001011111111101-11110111110-0000000--0000000--000000-000011-0000000-0-0-000000000000000000-0-0-00--000
+Lellingeria_humilis                                    11101?000100?1000011100100100??00-00102002100?0?0121100--0-0100-0-----------12{12}0--001000-0100--10--101?111?00011111-110111-111111101110001010101111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Lellingeria_limula                                     00000?010100?10001011110---001?00-00101002100?0?0101100--0-0100-0-----------1110--010120-0000--10--101?111300011111-1----1-111111101110001011111111101-11110111110-0000000--0000000--000000-000011-0000000-0-0-000000000000000000-0-0-00--000
+Lellingeria_limula_2                                   00000?010100?10001011110---001?00-00101002100?0?0101100--0-0100-0-----------1110--010120-0000--10--101?111300011111-1----1-111111101110001011111111101-11110111110-0000000--0000000--000000-000011-0000000-0-0-000000000000000000-0-0-00--000
+Lellingeria_limula_3                                   00000?010100?10001011110---001?00-00101002100?0?0101100--0-0100-0-----------1110--01312200000--10--101?111300011111-1----1-111111101110001011111111101-11110111110-0000000--0000000--000000-000011-0000000-0-0-000000000000000000-0-0-00--000
+Lellingeria_major                                      01101?010100?10100111001001001000-00112003100?0?0121100--0-0110-0-----------1110--001100-0000--10--101?111?00011111-110111-111111101110001010101110101111110111110-0000000--0000000-0000000-00000000000000-0-0-000000000000000000-000-00--000
+Lellingeria_major_2                                    01101?010100?10100111001001001000-00112003100?0?0121100--0-0110-0-----------1110--001100-0000--10--101?111?00011111--10111-11111110111000101010111110-111110111110-0000000--0000000--000000-00000000100000-0-0-000000000000000000-000-00--000
+Lellingeria_major_3                                    01101?010100?10100111001001001000-00112003100?0?0121100--0-0110-0-----------1110--001100-0000--10--101?111?00011111-110111-111111101110001010101110101111110111110-0000000--0000000-0000000-00000000000000-0-0-000000000000000000-000-00--000
+Lellingeria_myosuroides                                00000?010100?10001011111102101001-00102002100?0?0101010--3-?100-0-----------1110--00311200000--10--101?111?00011111-1----1----111101110001011111111101-11110111110-0000000--0000000--000000-000011-000001--0-0-0000000000000000-0-0-0-00--000
+Lellingeria_myosuroides_2                              00000?010100?10001011111102101001-00102002100?0?0101010--3-?100-0-----------1110--00011200000--10--101?111?00011111-1----1-111111101110001011111111101-11110111110-0000000--0000000--000000-000011-0000000-0-0-000000000000000000-0-0-00--000
+Lellingeria_prionodes                                  00000?010100?11000011111102001001-00102002100?0?0101010--3-?100-0-----------1110--00011200000--10--101?111?00011111-1----1-111111101110001011111111101-11110111110-0000000--0000000--000000-000011-0000000-0-0-000000000000000000-0-0-00--000
+Lellingeria_pseudomitchellae                           00000-0-0100?0-----------------00000101001010?0?0101000--0-0100-1100110111111101--000100-00000-10--1011111?00--------------------------------------------------------------------------------------------------------------------------------
+Lellingeria_saffordii                                  00000?000100?10001011111102001001-00101002100?0?0101010--3-?100-0-----------1110--00311200000--10--101?111?00011111-1----1-111111101110001011111111101-11110111110-0000000--0000000--000000-000011-0000000-0-0-000000000000000000-0-0-00--000
+Lellingeria_schenckei                                  01000?0?010??1000011101100?00??00000100002000?0?0101000000-0100-110011?110101100--000100-00000010--1011111?00011110-010111----1111011100010????1---101111110111110-0?10000--00000?---0000?--00000000000001-?---0--00000000000-0-0-000--?--000
+Lellingeria_simacensis                                 01101?010100?10100111001001001000-0010000111311?010{01}000--0-0110-0-----------1110--001000-0000--10--101?111?00010111-110111-111111101110001011101111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Lellingeria_subimpressa                                011011000100?10000111001001001000-00102113100?0?0101111--0-0100-0-----------1030--001?00-0000-010--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Lellingeria_subsessilis_Costa_Rica                     02101?000100?10100111001001001000-001010011000110101000--0-0110-0-----------1110--00100201000--10--101?111?00011111-1-0111-111111101110001010101111101-11110110110-0000000--0000000--000000-00000000011000-0-0-000000000000000000-000-00--000
+Lellingeria_subsessilis_Ecuador                        02101?000100?10100111001001001000-001010011000110101000--0-0110-0-----------1110--00100201000--10--101?111?00011111-1-0111-111111101110001010101111101-11110111010-0000000--0000000--000000-00000000010000-0-0-000000000000000000-000-00--000
+Lellingeria_suprasculpta                               02001?000100?10100112000---00??00-00101001101?0?0101010--0-0100-0-----------0-----00000101000--10--101?111?00011111-110111-111111101110001011101111101111110111110-0000000--0000000--000000-00000000000100-0-0-000000000000000000-000-00--000
+Lellingeria_suspensa                                   02001?0?0100?10000111120---001000-00101002100?0?0101100--0-0100-0-----------10{01}3--00100101000--10--101?111?00011111-110110-111111101110001011101111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Lellingeria_suspensa_2                                 02001?0?0100?10000111120---001000-00101002100?0?0101100--0-0100-0-----------10{01}3--00100101000--10--101?111?00011111-110110-111111101110001011101111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Melpomene_anazalea_ined.                               13101?110000?10001112110---001100100101002112?0?0101100000-0100-1000110101111123--001000-0000-110--101?111?01011111-110111-111011101110001011111111101111110110110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Melpomene_firma                                        01101?0?0100?10011112120---001000100101103000?0?0101111000-0100-10001100?01111{012}{13}--000100-0000-110--111?111?01011111-110111-111011101110001011111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Melpomene_flabelliformis                               {02}0101?1?0000?1000{01}112120---001100100100002112?0?0101100000-0100-10000000?0001123--001100-0000-110--1210111001--------------------------------------------------------------------------------------------------------------------------------
+Melpomene_moniliformis                                 {12}0101?110000?10001112120---001100100100002112?0?0101100000-0100-10001100?0001{012}23--0011?0-0000-010--111?111001011111-110111-111011101110001011111101101111110111110-0000000--0000000--000000-0000000000000010-0-0000000000000000000000-00--000
+Melpomene_occidentalis                                 001011010100?10001112110---001000100110003100?0?0101111000-0100-100000?0?0101123--000110-0000-010--101?111?01011111-110111-111011101110001011111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Melpomene_occidentalis_2                               001011010100?10001112110---001000100110003100?0?0101111000-0100-100000?0?0101123--000110-0000-010--101?111?01011111-110111-111011101110001011111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Melpomene_personata_ined.                              01101-000100?10000112120---001000100101102110?0?0101100000-0100-1000100101101123--000000-0000-110--101-111?01011111-110111-111011101110001011111101101111110111110-0000000--0000000--000000-0000000000000010-0-0000000000000000000000-00--000
+Melpomene_pseudonutans                                 {02}1101?0?0100?10001112120---0011001001000021001000101100000-0100-10000000?0101{12}23--001100-0000-110--1011111001--------------------------------------------------------------------------------------------------------------------------------
+Melpomene_vernicosa                                    01101?000100?10001112120---001100100102102112?0?0101100000-0100-10001101101011{12}{13}--001100-0000-110--101?111?01011111-110111-111011101110001011111101101111110111110-0000000--0000000--000000-0000000000000010-0-0000000000000000000000-00--000
+Microgramma_percussa                                   001011101000?10001111000---100-00-111220?0??0?0?01100000021110110-----------0-----101000-1001-000--0000000000111110011011111111111010101010???--111-001000001--1?0-0-00000--0-00000--000000--000-000000000-110--000000000-00-000--0-0-0---000
+Microgramma_squamulosa                                 001011101000?10001111001001100-00-111220?0??0?0?01100000021110110-----------0-----101000-0001-000--000000000011111101101111111111101010101011111----001000001--110-0000000--0000000--00000--00000000000000-00110-00000000-000000--000-00--000
+Micropolypodium_achilleifolium                         {01}?000?000100?10000100000--0000-00000101002000?0?011000000010100-10001100?1111{12}23--000000-0000-110--1011111000--------------------------------------------------------------------------------------------------------------------------------
+Micropolypodium_hyalinum                               02000?1001111101011000210{01}2001000000102002100?0?00000??--0-0100-1000110101101123--000100-0000-010--1011111000011110-0101---11111110--??????????1---101110010?????0-??0000?--0000??0?-000??0-0000?000000000-?-0-1111110000??000?0?-00??-?--000
+Micropolypodium_taenifolium                            02000?000100?10100100021000001000000102002100?0?00010??--0-0100-1000110100101121--000100-0000-010--1012111000--------------------------------------------------------------------------------------------------------------------------------
+Micropolypodium_zurquinum                              02000?000100?10100100020---001000000102002100?0?00000??--0-0100-1000110101111{12}23--000100-0000-010--101?111000--------------------------------------------------------------------------------------------------------------------------------
+Oreogrammitis_hookeri                                  01001?010100?11000100110---000-000001020?0??00110110000001100-0-1000110101101003--000000-0000-011011010111?00--------------------------------------------------------------------------------------------------------------------------------
+Pecluma_alfredii                                       011011001100?10000002000---000-00-10012102100?0?0001110--110100-0-----------10{12}3--002000-0000--00--0000000000--------------------------------------------------------------------------------------------------------------------------------
+Polypodium_glycyrrhiza                                 1110111?1000?10000100000---100-00-11122112100?0?00000100011{01}10100-----------1003--100000-0000-000--000000000011110001101111111111-011101010???0-111-001000001--110-0000000--0100000--0000?0-00000000000000-0000-000001100-000000--000-00--000
+Prosaptia_alata                                        0210110?1100?10001111001002001000010101001100?0?0110000001000-0-1000110100101110--?0210111010-010--1010111000--------------------------------------------------------------------------------------------------------------------------------
+Prosaptia_contigua                                     0?10110?1100?10000111011002001000000101002100?0?0101110--0-00-0-1000110100101110--?0210111010-010--1010111000--------------------------------------------------------------------------------------------------------------------------------
+Prosaptia_obliquata                                    0100110?1100?10000113011002000-00010101003100?0?0110000001100-0-1000110100101110--00110111010-010--1010111000--------------------------------------------------------------------------------------------------------------------------------
+Prosaptia_pubipes                                      {02}?101?001100?10000111111002000-00000101002100?0?0101111--0-00-0-1000110100111110--?0210111010-010--1010111000--------------------------------------------------------------------------------------------------------------------------------
+Scleroglossum_sulcatum                                 10000?0?0100?11000100000---000-00-001?20?0??2?0?00000----3-?0-0-0-----------1{01}23--01212100010--10--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Scleroglossum_sulcatum_2                               10000?0?0100?11000100000---000-00-001?20?0??2?0?00000----3-?0-0-0-----------1{01}23--01212100010--10--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Terpsichore_aff._subtilis_inded.                       02101?010100?101001000210000010?0000102002111?0?0111111100-0110-1000111101111113--00??00-0000-?1?--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_alsopteris                                 02101?011100?10100100021000001000000112003100?0?0111111100-0110-1000111100101113--002000-0000-010--101?111?10--------------------------------------------------------------------------------------------------------------------------------
+Terpsichore_amphidasyon_2                              011011001100?10100100121101001000000102003010?0?0111111100-0110-1000110101111113--001000-0000-110--101?111?10011111-110111--110011011100010111111111011----01--110-1000000--0000-00--000000-00-00000000000-0-0-0000000011-000000--000-00--000
+Terpsichore_amphidasyon_3                              011011001100?10100100121101001000000102003010?0?0111111100-0110-1000110101111113--001000-0000-110--101?111?10011111-110111--110011011100010111111111011----01--110-1000000--0000-00--000000-00-00000000000-0-0-0000000011-000000--000-00--000
+Terpsichore_amphidasyon_Moran_7646                     011011001100?10100100121101001000000102003010?0?0111111100-0110-1000110101111113--001000-0000-110--101?111?10011111-110111--110011011100010111111111011----01--100-1000000--0000-00--000000-00-00000000000-0-0-0000000011-000000--000-00--000
+Terpsichore_anfractuosa_Bolivia                        00111?000100?10001011111002001000100100002100?0?0101010--0-0110-1000110{01}10101113--000110-0000-110--101?111?10011111-110111-111111101110001011111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_anfractuosa_Bolivia_2                      ?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Terpsichore_anfractuosa_Costa_Rica                     00111?000100?10001011111002001000100100002100?0?0101100--0-0100-1000110100101113--000110-0000-110--101?111?10011111-110111-111111101110000011111111101111110011110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_anfractuosa_Ecuador                        {01}0111?000100?10001011111102001000100100002100?0?0101100--0-0110-10001100?0101113--000110-0000-110--101?111?10011111-110111-1-1111101110001011111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000010-000-00--000
+Terpsichore_anfractuosa_Ecuador_2                      00111?000100?10001011111002001000100100002100?0?0101100--0-0100-1000110100101113--000110-0000-110--101?111?10011111-110111-1-1111101110001011111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000010-000-00--000
+Terpsichore_anfractuosa_Mexico                         00111?000100?10001011110-0-001000100100002100?0?0101010--0-0100-1000110100101113--000110-0000-110--101?111?10011111-010111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_anfractuosa_Mexico_2                       00111?000100?10001011110-0-001000100100002100?0?0101010--0-0100-1000110100101113--000110-0000-110--101?111?10011111-010111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_anfractuosa_Peru                           20111?000100?10001011111002001000100100002100?0?0101010--0-0110-1000110100101113--000110-0000-110--101?111?10--------------------------------------------------------------------------------------------------------------------------------
+Terpsichore_anfractuosa_Peru_2                         ?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Terpsichore_angustipes                                 02101?0?0100?10001111001002001000100101002110?0?0101110--0-0110-10001100?{01}111113--000010-0000-010--101?111?10011111-110111-1111111011100010011111110011111101-1110-0000000--0000000--000000-00000000000000-0-0-000000000000000001-000-00--000
+Terpsichore_angustipes_2                               02101?0?0100?10001111001002001000100101002110?0?0101110--0-0110-10001100??111113--000010-0000-010--101?111?10011111-110111-1111111011100010011111110011111101-1110-0000000--0000000--000000-00000000000000-0-0-000000000000000001-000-00--000
+Terpsichore_athyrioides                                021010000100?10011111001002001000100111004100?0?0101111000-0110-10001100?0001113--001010-0000-010--101?111?10011111-110111-111111101110001001111111101011110111110-00000000-0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_attenuatissima                             02101?011100?10100100021000001000000112003100?0?0111111100-0110-1000111100101113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_attenuatissima_2                           02101-011100?10100100021000001000000112003100?0?0111111100-0110-1000111100101113--002000-0000-010--101-111-10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_attenuatissima_3                           02101?011100?10100100021000001000000112003100?0?0101111100-0110-1000111100101113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_clathrata                                  02101?010100?100011111110020010001001?2?03100?0?0101111--0-0100-10001100?0101113--000010-0000-110--101?111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_clavigera_ined.                            011011010100?10011111001002001000100111002100?0?0101111--0-0100-10001100?0001113--000110-0000-010--101?111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_colombiense_ined.                          011011010100?10011111001002001000100111003100?0?0101111--0-0100-10001100?0111113--000110-0000-110--101-111?10011111-110111-111111101110001?011111111011111101011?0-0000000--0000000--000000-00000000000000-0-0-000000000000000000-00?000--000
+Terpsichore_colombiense_ined._2                        ?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+Terpsichore_cretata                                    02101?010100?1011010100110000100000010000211110002011{01}0000-0110-1000100101111120--000000-0000-110--101?111?10011111-110111--1111-10111000101111111110111---01--110-0000000--0000000--000000-00000000000000-0-0-000000000-1010000--100-00--000
+Terpsichore_cuencana                                   00101?000100?10001111001002001000000101002100?0?0101111--0-0110-1000110100101113--000110-0000-110--101?111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_cultrata                                   02000?000100?10100100021001000-10000102003111?0?0101111--0-0100-100{012}110101111321--000000-0000-0110010{01}1111000--------------------------------------------------------------------------------------------------------------------------------
+Terpsichore_davidsmithii                               00101?000100?1000111100100{12}001000100101003000?0?0101110--0-0110-10001100?0101113--000110-0000-110--101?111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-010-00--000
+Terpsichore_davidsmithii_2                             00101?000100?1000111100100{12}001000100101003000?0?0101110--0-0110-10001100?0101113--000110-0000-110--101?111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-010-00--000
+Terpsichore_davidsmithii_3                             00101?000100?1000111100100{12}001000100101003000?0?0101110--0-0110-10001100?0101113--000110-0000-110--101?111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-010-00--000
+Terpsichore_davidsmithii_4                             00101?000100?1000111100100{12}001000100101003000?0?0101110--0-0110-10001100?0101113--000110-0000-110--101?111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_davidsmithii_5                             00101?000100?1000111100100{12}001000100101003000?0?0101110--0-0110-10001100?0101113--000110-0000-110--101?111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_delicatula                                 021010000100?10100100001010011010000102013001?0?0101110--0-0100-1000110101111{01}3211000000-0000-110--101?111?00011111-110111-11011110111000101111011-10111111011111000000000--0000000--000000-00000000000000-0-0-000000000000000000-000-1011000
+Terpsichore_dilatata                                   01101?000100?10001111001002001000100100002100?0?0101111--0-0110-10001100?0111113--000110-0000-110--1011111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_dilatata_2                                 01101?000100?10001111001002001000100100002100?0?0101111--0-0110-10001100?0111113--000110-0000-110--1011111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_hanekeana                                  02101?001110?101001000210{01}0010-00000102002110?0?0101100--110100-1000110101101123--000000-0000-01100101?111000--------------------------------------------------------------------------------------------------------------------------------
+Terpsichore_lanigera                                   021010000110?1010010002100001000000011200211100?0101111--0-0100-100{01}110101111323--000000-0000-01100101011100001111--110111-1---????????????111-1---1--1--010??????-?-10-??--?0-0?0-?--00?0--001-0000000000-0---0---0?0?00??00-?-?-?0??-1--110
+Terpsichore_lehmanniana                                02100-000100?10000103001003010000000102103100?0?011110000110100-10001101011110{01}3--000000-0000-01{01}00101?111000--------------------------------------------------------------------------------------------------------------------------------
+Terpsichore_leucosticta                                021011011100?10100100021000001000000112003110?0?0111111100-0110-1000111100101003--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--001-00--000
+Terpsichore_leucosticta_2                              021011011100?10100100021000001000000112003110?0?0111111100-0110-1000111100101003--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--001-00--000
+Terpsichore_loja_ined.                                 01101?000100?10001111001002001000100100002100?0?0101111--0-0110-1000110000111113--000110-0000-110--1011111?10011111-110111-11111110111000100111111100111111011-110-0000000--0000100--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_loja_ined._2                               01101?000100?10001111001002001000100100002100?0?0101111--0-0110-1000110000111113--000110-0000-110--1011111?10011111-110111-11111110111000100111111100111111011-110-0000000--0000100--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_loja_ined._3                               01101?000100?10001111001002001000100100002100?0?0101111000-0110-100011000011111?--000110-0000-110--1011111?10011111-110111-11111110111000100111111100111111011-110-0000000--0000100--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_longicaulis                                21101?110000?10101100021000001000000112003100?0?0111111100-0110-10001100?0001113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_longipilosa_ined.                          011011001100?10100100021101001000000102003000?0?0111110100-0110-1000110101111113--001100-0000-010--101?111?10011111-110111--111111011100010111-11111011----01--110-1100000--0000-00--000000-00-00000000000-0-0-0000000011-000000--000-00--000
+Terpsichore_longipilosa_ined._2                        011011001100?10100100021101001000000102003000?0?0111110100-0110-1000110101111113--001100-0000-010--101?111?10011111-110111--111111011100010111-11111011----01--110-1100000--0000-00--000000-00-00000000000-0-0-0000000011-000000--000-00--000
+Terpsichore_longisetosa                                {01}?0011010100?10000100011010000-0000010100400000?0111110??0-0100-10001100?1111323--000000-0000-110--1?1?111?00--------------------------------------------------------------------------------------------------------------------------------
+Terpsichore_mollissima                                 02000?0?0110?0-----------------10000102003111?0?0101100--0-0100-100{02}1101011110?211002000-0000-01100101?111?00011--------------1111011100010111-1---1--------111110-0-1-000--00--00-----000--00--0-----00---0---0----000--00-0-0-0-000--1---01
+Terpsichore_nana                                       00101?000100?10011111001002001000100101003100?0?0101111--0-0110-1000110110101{01}{12}3--000110-0000-010--101?111?10011110-110101-111111101110001001111101101111110101110-0000000--0000000--000000-0000000000000000-0-0000000000000000000000100--000
+Terpsichore_pacifica                                   021011000100?10100100021100001100000102003100?0?0111111100-0110-10001100?0101111--001000-0000-110--101?111?10011111-110111--1111010111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--000-00--000
+Terpsichore_pichinchae                                 011011000100?10001111001002001000000101003100?0?0101111--0-0110-1000110101111113--000010-0000-110--101?111?10011111-110111-111111101110001001111111101111110111110-0000000--0000000--000000-00000000000000-0-0-000000000000000000-000-00--000
+Terpsichore_pichinchense                               02101?000100?100011110110020010001001010031110000101{01}00--0-0110-1000110101111123--000110-0000-110--1011111?10011111-110101-111111101110001001111101101111110101110-0000000--0000000--000000-0000000000000000-0-0000000000000000000000100--000
+Terpsichore_pichinchense_2                             {01}2101?000100?100011110110020010001001010031110000101{01}00--0-0110-1000110101111123--000110-0000-110--1011111?10011111-110101-111111101110001001111101101111110101110-0000000--0000000--000000-0000000000000000-0-0000000000000000000000100--000
+Terpsichore_pichinchense_3                             02101?000100?100011110110020010001001010031110000101{01}00--0-0110-1000110101111123--000110-0000-110--1011111?10011111-110101-111111101110001001111101101111110101110-0000000--0000000--000000-0000000000000000-0-0000000000000000000000100--000
+Terpsichore_praeceps                                   1?101?010000?10100100021100001010000102003111?0?0101110--0-0110-1000110101111113--002000-0000-010--101?111?00011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_semihirsuta                                02101?011100?10100100021000001000000102003100?0?0111111100-0110-10001110?0001003--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_semihirsuta_Bolivia                        021011011100?10100100021000001000000102003000?0?0111111100-0110-1000111100001113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--000-00--000
+Terpsichore_semihirsuta_Bolivia_2                      021011011100?10100100021000001000000102003000?0?0111111100-0110-1000111100001113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--000-00--000
+Terpsichore_semihirsuta_Colombia                       021011011100?10100100021000001000000102003000?0?0111111100-0110-1000111100001113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_semihirsuta_Colombia_Choco                 021011011100?10100100021000001000000102003000?0?0111111100-0110-1000111100001113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_semihirsuta_Ecuador                        021011011100?10100100021000001000000102003000?0?0111111100-0110-1000111100001113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_semihirsuta_Peru                           021011011100?10100100021000001000000102003000?0?0111111100-0110-1000111100001113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_semihirsuta_ined._2_Costa_Rica             02101?010100?10100100021000001000000102003100?0?0111111100-0110-10001110?0001003--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_semihirsuta_ined._3_Mexico                 02101?010100?10100100021000001000000102003100?0?0111111100-0110-1000111100001113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_senilis                                    02000?000110?10100100001001010?10000102003111?0?0101100--0-0100-1000110101101321--000000-0000-01100100?111?00011111-11011101111111011100010111-1---1011--000111110-0-10000--000000---00000--00100000000000-0---0--00000000000-000-000--1--000
+Terpsichore_smithii                                    020000000110?1010010002100001??1000011200311100?0101111--0-0100-100{01}110101111321--000000-0000-01100101?111?00011111-110111-1111111011100010111-1---101111110111110-0-10000--000000---00000--00000000000000-0---0--00000000000-000-000--1--000
+Terpsichore_sp._Sundue_1160                            02101?0?0100?10101100021000001000000102003100?0?0111111100-0110-10001100?1011003--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_sp._Sundue_1167                            02101?0?0100?10110100021000001000000112003100?0?0111111100-0110-1000110100101113--00???0-0000-?10--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_sp._aff._alsopteris_ined._1_Bolivia        02101?011100?10100100021000001000000112003100?0?0111111100-0110-1000111100101113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--000-00--000
+Terpsichore_sp._aff._alsopteris_ined._1_Bolivia_2      02101?011100?10100100021000001000000112003100?0?0111111100-0110-1000111100101113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--000-00--000
+Terpsichore_sp._aff._alsopteris_ined._1_Bolivia_3      02101?011100?10100100021000001000000112003100?0?0111111100-0110-1000111100101113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--000-00--000
+Terpsichore_sp._aff._alsopteris_ined._1_Bolivia_4      02101?011100?101001000210000010000001?2003100?0?0111111100-0110-1000111100101113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--000-00--000
+Terpsichore_sp._aff._alsopteris_ined._2_Costa_Rica     02101?011100?10100100021100001000000112003100?0?0111111100-0110-10001110?0101113--002000-0000-010--101?111?10011111-110111--1111110111000101111111110111---01--110-1000000--0000-00--000000-00000000000000-0-0-000000000--010000--000-00--000
+Terpsichore_sp._aff._taxifolia_ined._Colombia          01101?010100?10100100021100001000000102003100?0?0111111100-0100-10001100?0101113--001000-0000-110--101?111?10011111-110111--111111011100010111111111011----01---10-0000000--0000000--000000-00-00000000000-0-0-00000000111100000--000-00--000
+Terpsichore_subscabra                                  021011000100?10100100011010001010000102003001?0?0101111--0-0100-0-----------1{01}{12}211000000-0000-010--101?111?00011111-110111-11011110111000101111011-10111111011111010000000--0000000--000000-00000000000000-0-0-000000000000000000-000-10-0000
+Terpsichore_subscabra_2                                021011000100?10100100011010001010000102003001?0?0101111--0-0100-0-----------1{01}{12}211000000-0000-010--101?111?00011111-110111-11011110111000101111011-10111111011111010000000--0000000--000000-00000000000000-0-0-000000000000000000-000-10-0000
+Terpsichore_subtilis                                   02101?0?0100?1011010102100100??00000102002111?0?011110000010110-100010010{01}111111--000000-0000-110--1011111?10011111-110111--1111110111000101111111110111---0110110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_subtilis_2                                 02101?0?0100?1011010102100100??00000102002111?0?011110000010110-100010010{01}111111--000000-0000-110--1011111?10--------------------------------------------------------------------------------------------------------------------------------
+Terpsichore_taxifolia_Brazil                           0110110?0100?10100100021101001000000112003010?0?011?111100-0110-1000110100001113--001000-0000-010--101?111?10011111-110111--111111011100010111111111011----01--110-1000000--0000-00--000000-00-00000000000-0-0-0000000011-000000--000-00--000
+Terpsichore_taxifolia_Ecuador                          0110110?0100?10100100021101001000000112003010?0?0111111100-0110-1000110100001113--001000-0000-010--101?111?10011111-110111--1111110111000-0111111111011----01--110-1000000--0000-00--000000-00-00000000000-0-0-0000000011-000010--000-00--000
+Terpsichore_vascoi_ined.                               021011010100?10100100021000001000000102003000?0?0111111100-0110-?000111100101003--000000-0000-010--101?111?10011111-110111--1111110111000101111111110111---0111110-0000000--0000000--000000-00000000000000-0-0-000000000-00100000-000-00--000
+Terpsichore_zeledoniana                                011011011100?10100100020---000-00000112003100?0?0111111100-0110-10001110?0101003--001000-0000-110--101?111?10--------------------------------------------------------------------------------------------------------------------------------
+Xiphopteris_conjunctisora                              ?20011000100?10001110110---000-00000112002110?0?0100000--0-0100-10000000?0{01}00-----000100-0000-?10--1010111?00--------------------------------------------------------------------------------------------------------------------------------
+Zygophlebia_mathewsii_Costa_Rica                       021011011100?10100100020---0010000001121011020000110000001110-0-100011010111122211101010-00012010--101?111?0001111--110111-11111110111000101111111110-111110111110-0000000--0000000--100000-00000000000000-0-0-000000000000000000-000-00--000
+Zygophlebia_mathewsii_Ecuador                          021011011100?10100100020---0010000001121011020000110000001110-0-100011010111122211101010-00012010--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+Zygophlebia_sectifrons                                 021011011100?10100100020---001000000112111102?0?0100000001110-0-10001000?000102211101010-00012010--101?111?00--------------------------------------------------------------------------------------------------------------------------------
+;
+END;
+

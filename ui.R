@@ -77,9 +77,17 @@ shinyUI(fluidPage(
           hr(),
           h3("Export results"),
           ## Export format - input$export_type
-          selectInput("output_type", "Export format:", choices = c("csv", "pdf", "newick", "nexus")),
-          downloadButton('downloadData', 'Download')
+          selectInput("output_type", "Export format:", choices = c("csv", "pdf", "newick", "nexus", "C-test")),
+          downloadButton('downloadData', 'Download'),
           
+          conditionalPanel(condition = "input.output_type == \"C-test\"",
+            ## Enter some traversal order - input$traversal_order
+            textInput("traversal_order", label = h5("Enter an optional traversal order for output:"), value = ""),
+            ## Help text for the traversal
+            helpText("The traversal must be written in a comma separated format (e.g. 1,2,3). If left as blank the order is: tips, root, right left nodes (traversal).")
+          )
+
+
           # hr(),
           # ## Citation! - input$cite_type
           # selectInput("cite_type", label = "Cite us", choices = list("format", "plain", "BibTeX"), selected = "format"),

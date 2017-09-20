@@ -1,5 +1,7 @@
 # R garbage
 .Rapp.history
+**/.R*
+!.RBuildIgnore
 
 # Data
 *.tre

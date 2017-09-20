@@ -210,3 +210,53 @@ test_that("second.uppass works", {
         expect_equal(pass4_3_6[[5]][node+12], results3_6_inapp4[node])
     }
 })
+
+
+
+
+## Testing get side applicable
+
+tree <- read.tree(text = "((a,b),(c,d));")
+character <- "1?{2-}{1-}"
+states_matrix <- make.states.matrix(tree, character, inapplicable = NULL, match.tip.char = FALSE)
+states_matrix <- first.downpass(states_matrix)
+states_matrix <- first.uppass(states_matrix)
+states_matrix <- second.downpass(states_matrix)
+states_matrix <- second.uppass(states_matrix)
+
+
+# node <- 7
+# side = "right"
+# pass = 3
+
+
+
+# get.side.applicable <- function(states_matrix, node, side, pass) {
+
+#     side <- ifelse(side == "right", 1, 2)
+
+#     desc_anc <- desc.anc(node, states_matrix$tree)
+
+#     curr_node <- states_matrix[[pass]][[node]]
+
+#     if(desc_anc[side] < ape::Ntip(states_matrix$tree)+1) {
+#         ## Get the tip value
+#         tip <- states_matrix[[pass+1]][desc_anc[side]][[1]]
+#         if(length(tip) == 1) {
+#             ## If the tip has only one state
+#             side_applicable <- !any(tip == -1)
+#         } else {
+#             ## If the tip is ambiguous (question mark), solve using the current node
+#             if(any(tip == -1)) {
+#                 side_applicable <- !any(curr_node == -1)
+#             } else {
+#                 side_applicable <- TRUE
+#             }
+#         }
+#     } else {
+#         ## Get the applicability from the node (saved in the tracker)
+#         side_applicable <- states_matrix$tracker[[pass]][desc_anc[side]][[1]]
+#     }
+
+#     return(side_applicable)
+# }     

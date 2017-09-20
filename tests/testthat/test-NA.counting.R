@@ -43,9 +43,7 @@ test_that("right counting", {
                     "10----11---1", # 36
                     "320--??3--21") # 37
     ## Results
-    expected_results <- c(5, 2, 3, 2, 1, 5, 5, 2, 5, 2, 2, 4, 3, 2, 5, 0, 5, 2, 4, 5, 2, 4, 3, 3, 2, 5, 1, 4, 4, 0, 5, 5, 
-        5, #4 
-        5, 2, 1, 3, 5)
+    expected_results <- c(5, 2, 3, 2, 1, 5, 5, 2, 5, 2, 2, 4, 3, 2, 5, 0, 5, 2, 4, 5, 2, 4, 3, 3, 2, 5, 1, 4, 4, 0, 5, 5, 4, 5, 2, 1, 3, 5)
 
     ## Run the tests
     for(test in 1:length(characters)) {
@@ -78,6 +76,8 @@ test_that("right counting", {
         tree_length <- output$regions + ifelse(length(output$changes) > 0, length(output$changes), 0)
         expect_equal(tree_length, expected_results[test])
     }
+
+
 
 
     # ## Run one bigger ambiguous tree

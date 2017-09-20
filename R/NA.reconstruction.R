@@ -178,20 +178,25 @@ second.downpass <- function(states_matrix) {
     ## Loop through the nodes
     for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) {
 
+
+        # if(node == 136) {
+        #     return(states_matrix)
+        # }
+
         curr_node <- states_matrix$Up1[[node]]
         ## Select the descendants and ancestors
         desc_anc <- desc.anc(node, tree)
-        right <- states_matrix$Up1[desc_anc[1]][[1]]
-        left <- states_matrix$Up1[desc_anc[2]][[1]]
+        right <- states_matrix$Dp2[desc_anc[1]][[1]]
+        left <- states_matrix$Dp2[desc_anc[2]][[1]]
 
-        ## Get the actives
-        right_applicable <- get.side.applicable(states_matrix, node = node, side = "right", pass = 3)
-        left_applicable <- get.side.applicable(states_matrix, node = node, side = "left", pass = 3)
+        # ## Get the actives
+        # right_applicable <- get.side.applicable(states_matrix, node = node, side = "right", pass = 3)
+        # left_applicable <- get.side.applicable(states_matrix, node = node, side = "left", pass = 3)
 
-        ## Record the region tracker for displaying later
-        states_matrix$tracker$Dp2[desc_anc[1]][[1]] <- right_applicable
-        states_matrix$tracker$Dp2[desc_anc[2]][[1]] <- left_applicable
-        states_matrix$tracker$Dp2[node][[1]] <- left_applicable | right_applicable
+        # ## Record the region tracker for displaying later
+        # states_matrix$tracker$Dp2[desc_anc[1]][[1]] <- right_applicable
+        # states_matrix$tracker$Dp2[desc_anc[2]][[1]] <- left_applicable
+        # states_matrix$tracker$Dp2[node][[1]] <- left_applicable | right_applicable
 
         if(any(curr_node != -1)) { #TG: \ref Node apply
             ## Get the states in common between the descendants
@@ -201,13 +206,24 @@ second.downpass <- function(states_matrix) {
                 ## If there is any applicable state in this common, set the node to be that state
                 if(any(common_desc != -1)) { #TG: \ref AND
                     states_matrix$Dp2[[node]] <- common_desc[common_desc != -1]
+                    ## Get the actives
+                    right_applicable <- get.side.applicable(states_matrix, node = node, side = "right", pass = 3)
+                    left_applicable <- get.side.applicable(states_matrix, node = node, side = "left", pass = 3)
+
                 } else {
                     states_matrix$Dp2[[node]] <- -1
+                    ## Get the actives
+                    right_applicable <- get.side.applicable(states_matrix, node = node, side = "right", pass = 3)
+                    left_applicable <- get.side.applicable(states_matrix, node = node, side = "left", pass = 3)
                 }
             } else { #TG: \ref OR
                 ## Else set the node state to be the union of the descendants without the inapplicable tokens
                 union_desc <- get.union.incl(left, right)
                 states_matrix$Dp2[[node]] <- union_desc[union_desc != -1]
+
+                ## Get the actives
+                right_applicable <- get.side.applicable(states_matrix, node = node, side = "right", pass = 3)
+                left_applicable <- get.side.applicable(states_matrix, node = node, side = "left", pass = 3)
 
                 ## Counting
                 if(any(left != -1) && any(right != -1)) { #TG:\ref countcchange
@@ -215,7 +231,10 @@ second.downpass <- function(states_matrix) {
                     states_matrix$changes <- c(states_matrix$changes, node)
                 } else { #TG:\ref count regions
                     if(right_applicable && left_applicable) {
-                        states_matrix$regions <- states_matrix$regions + 1
+                        if(any(desc_anc[1:2] > ape::Ntip(tree))) {
+                            ## Increment the counting only if the region is depending on at least one node (i.e. ignore tips)
+                            states_matrix$regions <- states_matrix$regions + 1
+                        }
                     }
                 }
 
@@ -223,7 +242,18 @@ second.downpass <- function(states_matrix) {
         } else {
             ## Else, leave the state as it was after the first uppass
             states_matrix$Dp2[[node]] <- curr_node
+
+            ## Get the actives
+            right_applicable <- get.side.applicable(states_matrix, node = node, side = "right", pass = 3)
+            left_applicable <- get.side.applicable(states_matrix, node = node, side = "left", pass = 3)
+
         }
+
+        ## Record the region tracker for displaying later
+        states_matrix$tracker$Dp2[desc_anc[1]][[1]] <- right_applicable
+        states_matrix$tracker$Dp2[desc_anc[2]][[1]] <- left_applicable
+        states_matrix$tracker$Dp2[node][[1]] <- left_applicable | right_applicable
+
 
     }
 
@@ -348,7 +378,7 @@ get.side.applicable <- function(states_matrix, node, side, pass) {
     desc_anc <- desc.anc(node, states_matrix$tree)
 
     ## Select the current node value
-    curr_node <- states_matrix[[pass]][[node]]
+    curr_node <- states_matrix[[pass+1]][[node]] #TG +1 is because the first element of the list is $Char (same below)
 
     ## Check the side's applicability
     if(desc_anc[side] < ape::Ntip(states_matrix$tree)+1) {

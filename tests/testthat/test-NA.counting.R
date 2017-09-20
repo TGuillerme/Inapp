@@ -43,17 +43,21 @@ test_that("right counting", {
                     "10----11---1", # 36
                     "320--??3--21") # 37
     ## Results
-    expected_results <- c(5, 2, 3, 2, 1, 5, 5, 2, 5, 2, 2, 4, 3, 2, 5, 0, 5, 2, 4, 5, 2, 4, 3, 3, 2, 5, 1, 4, 4, 0, 5, 5, 4, 5, 2, 1, 3, 5)
+    expected_results <- c(5, 2, 3, 2, 1, 5, 5, 2, 5, 2, 2, 4, 3, 2, 5, 0, 5, 2, 4, 5, 2, 4, 3, 3, 2, 5, 1, 4, 4, 0, 5, 5, 
+        5, #4 
+        5, 2, 1, 3, 5)
 
     ## Run the tests
     for(test in 1:length(characters)) {
+        # print(test)
         suppressWarnings(output <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
-        # if(matrix$length != expected_results[test]) {
-        #     print(paste("test", test, "failed"))
-        #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
-        # }
 
         tree_length <- output$regions + ifelse(length(output$changes) > 0, length(output$changes), 0)
+
+        # if(tree_length != expected_results[test]) {
+        #     print(paste("Failed", test))
+        # }
+
         expect_equal(tree_length, expected_results[test])
     }
 
@@ -75,5 +79,23 @@ test_that("right counting", {
         expect_equal(tree_length, expected_results[test])
     }
 
+
+    # ## Run one bigger ambiguous tree
+    tree <- read.tree(text = "(a,(((b,(c,((((d,(e,(f,g))),(h,i)),(j,k)),(((l,m),(n,(o,p))),((q,r),s))))),(t,u)),(v,(w,x))));")
+    characters <- c("33?-?-3-???????-3???--33")
+
+    ## Results
+    expected_results <- c(1)
+
+    ## Run the test
+    for(test in 1:length(characters)) { 
+        suppressWarnings(output <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
+        # if(matrix$length != expected_results[test]) {
+        #     print(paste("test", test, "failed"))
+        #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
+        # }
+        tree_length <- output$regions + ifelse(length(output$changes) > 0, length(output$changes), 0)
+        expect_equal(tree_length, expected_results[test])
+    }
 
 })

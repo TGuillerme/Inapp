@@ -181,8 +181,8 @@ second.downpass <- function(states_matrix) {
         curr_node <- states_matrix$Up1[[node]]
         ## Select the descendants and ancestors
         desc_anc <- desc.anc(node, tree)
-        right <- states_matrix$Dp2[desc_anc[1]][[1]]
-        left <- states_matrix$Dp2[desc_anc[2]][[1]]
+        right <- states_matrix$Up1[desc_anc[1]][[1]]
+        left <- states_matrix$Up1[desc_anc[2]][[1]]
 
         ## Get the actives
         right_applicable <- get.side.applicable(states_matrix, node = node, side = "right", pass = 3)
@@ -203,7 +203,7 @@ second.downpass <- function(states_matrix) {
                     states_matrix$Dp2[[node]] <- common_desc[common_desc != -1]
                 } else {
                     states_matrix$Dp2[[node]] <- -1
-                }   
+                }
             } else { #TG: \ref OR
                 ## Else set the node state to be the union of the descendants without the inapplicable tokens
                 union_desc <- get.union.incl(left, right)
@@ -326,7 +326,10 @@ second.uppass <- function(states_matrix) {
 
             ## Counting
             if(right_applicable && left_applicable) {
-                states_matrix$regions <- states_matrix$regions + 1
+                if(any(desc_anc[1:2] > ape::Ntip(tree))) {
+                    ## Increment the counting only if the region is depending on at least one node (i.e. ignore tips)
+                    states_matrix$regions <- states_matrix$regions + 1
+                }
             }
         }
     }
@@ -338,12 +341,16 @@ second.uppass <- function(states_matrix) {
 ## Set up the right and left actives (special condition if tips)
 get.side.applicable <- function(states_matrix, node, side, pass) {
 
+    ## Select the side
     side <- ifelse(side == "right", 1, 2)
 
+    ## Select the descendants and ancestors
     desc_anc <- desc.anc(node, states_matrix$tree)
 
+    ## Select the current node value
     curr_node <- states_matrix[[pass]][[node]]
 
+    ## Check the side's applicability
     if(desc_anc[side] < ape::Ntip(states_matrix$tree)+1) {
         ## Get the tip value
         tip <- states_matrix[[pass+1]][desc_anc[side]][[1]]

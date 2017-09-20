@@ -105,7 +105,7 @@ plot.states.matrix <- function(
     ## tree character done in make.states.matrix
     
     ## Passes
-    if(class(passes) != "numeric" || any(is.na(match(passes, c(0,1,2,3,4))))) {
+    if(!(class(passes) %in% c("numeric", "integer")) || any(is.na(match(passes, c(0,1,2,3,4))))) {
         stop("passes argument must be any integer(s) between 1 and 4.")
     }
     ## show.labels

@@ -157,7 +157,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 
         ## Translate the tip labels
         if(!all(sates_matrix$tree$tip.label == "numeric")) {
-            if(length(grep("t", sates_matrix$tree$tip.label)) != 0) {
+            if(length(grep("t", sates_matrix$tree$tip.label)) == ape::Ntip(tree)) {
                 sates_matrix$tree$tip.label <- gsub("t", "", sates_matrix$tree$tip.label)
             } else {
                 tsates_matrix$ree$tip.label <- seq(1:ape::Ntip(sates_matrix$tree))
@@ -165,7 +165,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         }
 
         ## Get the newick tree
-        newick_tree_out <- paste0(tree_var, " = \"", write.tree(states_matrix$tree), "\";")
+        newick_tree_out <- paste0(tree_var, " = \"", ape::write.tree(states_matrix$tree), "\";")
 
         ## Get the matrix
         ## Get all the possible states (for ?)

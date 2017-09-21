@@ -20,6 +20,19 @@ apply.reconstruction(tree, character, passes = 4, method, inapplicable,
 
 \item{match.tip.char}{\code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)}
 }
+\value{
+A \code{states.matrix} object that is a \code{list} of:
+ \item{\code{$Char}}{a \code{list} of character (\code{numeric}) where "NA" is equal to \code{-1}}
+ \item{\code{$Dp1}}{a \code{list} of character from the first downpass}
+ \item{\code{$Up1}}{a \code{list} of character from the first uppass}
+ \item{\code{$Dp2}}{a \code{list} of character from the second downpass}
+ \item{\code{$Up2}}{a \code{list} of character from the second uppass}
+ \item{\code{$tracker}}{a \code{list} of the same \code{Dp1}, \code{Up1}, \code{Dp2} and \code{Up2} elements but tracking the applicable regions}
+ \item{\code{$region}}{a single \code{numeric} value indicating the number of additional applicable regions}
+ \item{\code{$changes}}{a vector of \code{numeric} values indicating the nodes where a state change was recorded}
+ \item{\code{$length}}{a single \code{numeric} value that is the length of the tree (\code{X$length = X$region + length(X$changes)})}
+ \item{\code{$tree}}{the tree (\code{phylo})}
+}
 \description{
 Apply a series of passes for an ancestral states reconstruction
 }

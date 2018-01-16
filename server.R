@@ -4,6 +4,26 @@ library(ape)
 ## Load the R functions
 source("helpers.R")
 
+## Sanitise input text to check that newick tree can be extracted
+read.newick.tree <- function (newick_text) {
+  newick_text <- trimws(newick_text)
+  chars_to_count <- c("\\(", "\\)", ",")
+  if (length(unique(vapply(chars_to_count, function (char)
+     lengths(regmatches(newick_text, gregexpr(char, newick_text))), 0))) > 1) {
+    stop("Braces and commas in input tree must balance.")
+  }
+  
+  # Add trailing semicolon, if missing
+  if (substr(newick_text, nchar(newick_text), nchar(newick_text)) != ";") {
+    newick_text <- paste0(newick_text, ';')
+  }
+  
+  if(is.null(tree)) {
+    stop("Enter a tree in newick format.")
+  }
+  return (ape::read.tree(text = newick_text))
+}
+  
 ## Get the tree details
 get.tree <- function(input, simple = FALSE) {
 
@@ -48,10 +68,7 @@ get.tree <- function(input, simple = FALSE) {
 
         ## Newick tree
         if(input$tree == 2) {
-            tree <- ape::read.tree(text = input$newick_tree)
-            if(is.null(tree)) {
-              stop("Enter a tree in newick format.")
-            }
+            tree <- read.newick.tree(input$newick_tree)
         }
 
         ## Nexus tree
@@ -76,7 +93,7 @@ get.tree <- function(input, simple = FALSE) {
 
         ## Newick tree
         if(input$tree == 2) {
-            tree <- ape::read.tree(text = input$newick_tree)
+            tree <- read.newick.tree(input$newick_tree)
         }
 
         ## Nexus tree
@@ -100,9 +117,9 @@ get.tree <- function(input, simple = FALSE) {
 get.character <- function(input, tree) {
     ## Generate a random character
     if(input$character == 1) {
-        character <- paste(sample(c("0", "1", "2", "-", "?"), ape::Ntip(tree), prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
+        character <- paste(sample(c("0", "1", "2", "-", "?"), states_matrix$n_tip, prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
         ## Adding at least three inapplicable tokens (if there's at least 5 tips)
-        if(ape::Ntip(tree) >= 5) {
+        if(states_matrix$n_tip >= 5) {
             character[sample(1:length(character), 3)] <- "-"
         }
     }
@@ -209,14 +226,14 @@ shinyServer(
                     if(input$output_type == "newick") {
                         tree$edge.length <- NULL
                         states_dataframe <- make.output.data.frame(states_matrix)
-                        node_notes <- lapply(as.list(1:(ape::Ntip(tree) + ape::Nnode(tree))), create.note, states_dataframe)
+                        node_notes <- lapply(as.list(1:(states_matrix$n_tip + states_matrix$n_node)), create.note, states_dataframe)
                         write.tree.commented(tree, file, comments = node_notes, append = FALSE, digits = 10, tree.names = FALSE)
                     }
                     ## Save as a nexus
                     if(input$output_type == "nexus") {
                         tree$edge.length <- NULL
                         states_dataframe <- make.output.data.frame(states_matrix)
-                        node_notes <- lapply(as.list(1:(ape::Ntip(tree) + ape::Nnode(tree))), create.note, states_dataframe)
+                        node_notes <- lapply(as.list(1:(states_matrix$n_tip + states_matrix$n_node)), create.note, states_dataframe)
                         write.nexus.commented(tree, file, comments = node_notes, translate = TRUE)
                     }
                     ## Save as a C-test
@@ -227,14 +244,14 @@ shinyServer(
                         tree_var <- "char *test_tree"
                         char_var <- "char *test_matrix"
                         node_var <- "int node_pass"
-                        node_var <- paste0(node_var, 1:4, "[", ape::Ntip(tree) + ape::Nnode(tree), "] = ")
+                        node_var <- paste0(node_var, 1:4, "[", states_matrix$n_tip + states_matrix$n_node, "] = ")
 
                         ## Translate the tip labels
                         if(!all(tree$tip.label == "numeric")) {
                             if(length(grep("t", tree$tip.label)) != 0) {
                                 tree$tip.label <- gsub("t", "", tree$tip.label)
                             } else {
-                                tree$tip.label <- seq(1:ape::Ntip(tree))
+                                tree$tip.label <- seq(1:states_matrix$n_tip)
                             }
                         }
 
@@ -258,7 +275,7 @@ shinyServer(
 
                         ## Get the right traversal order here
                         if(input$traversal_order == "") {
-                            traversal_order <- seq(from = 1, to = ape::Ntip(tree) + ape::Nnode(tree))
+                            traversal_order <- seq(from = 1, to = states_matrix$n_tip + states_matrix$n_node)
                         } else {
                             traversal_order <- as.numeric(unlist(strsplit(input$traversal_order, ",")))
                         }
@@ -287,8 +304,8 @@ shinyServer(
             tree <- get.tree(input, simple = TRUE)
             
             ## Set the plot window
-            if(ape::Ntip(tree) > 10) {
-                plotOutput("plot_out", width ="100%", height = paste(round(ape::Ntip(tree)*0.4), "00px", sep = ""))
+            if(states_matrix$n_tip > 10) {
+                plotOutput("plot_out", width ="100%", height = paste(round(states_matrix$n_tip*0.4), "00px", sep = ""))
             } else {
                 plotOutput("plot_out", width ="100%", height = "400px")
             }

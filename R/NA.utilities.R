@@ -117,12 +117,12 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
         }
         options(warn = 0)
     } else {
-        ordering <- seq(1:ape::Ntip(tree))
+        ordering <- seq_len(n_tip)
     }
 
 
     ## Add the character into the list
-    states_matrix$Char[1:ape::Ntip(tree)] <- character[ordering]
+    states_matrix$Char[1:states_matrix$n_tip] <- character[ordering]
 
     ## Add tip labels
 

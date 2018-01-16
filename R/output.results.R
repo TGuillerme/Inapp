@@ -216,7 +216,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 # ' A \code{states.matrix} object.
 # ' 
 # ' @examples
-# ' ## A balanced 12 taxon tree
+# ' ## A balanced 12 taxa tree
 # ' tree <- ape::read.tree(
 # '                  text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 # ' ## A character with inapplicable data

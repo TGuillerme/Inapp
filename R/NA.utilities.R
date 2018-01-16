@@ -13,13 +13,17 @@
 #' @return
 #' A list of character states for each node and tip per pass:
 #' -\code{$Char}: a \code{list} of character states for the tips.
-#' -\code{$Dp1}: a \code{list} of the tips and noes states after the first downpass.
-#' -\code{$Up1}: a \code{list} of the tips and noes states after the first uppass.
-#' -\code{$Dp2}: a \code{list} of the tips and noes states after the second downpass.
-#' -\code{$Up2}: a \code{list} of the tips and noes states after the second uppass.
+#' -\code{$Dp1}: a \code{list} of the tips' and nodes' states after the first downpass.
+#' -\code{$Up1}: a \code{list} of the tips' and nodes' states after the first uppass.
+#' -\code{$Dp2}: a \code{list} of the tips' and nodes' states after the second downpass.
+#' -\code{$Up2}: a \code{list} of the tips' and nodes' states after the second uppass.
 #' -\code{$tracker}: a \code{list} tracking the applicable regions.
 #' -\code{$regions}: a single \code{numeric} value counting the number of applicable regions.
 #' -\code{$changes}: a \code{numeric} vector recording the node with state changes.
+#' -\code{$length}: a \code{numeric} vector recording the length of the tree.
+#' -\code{$tree}: a \code{phylo} object describing the tree.
+#' -\code{$n_tip}: a \code{numeric} vector recording the number of tips.
+#' -\code{$n_node}: a \code{numeric} vector recording the number of (internal) nodes within the tree.
 #' 
 #' @examples
 #' ## A simple topology
@@ -44,20 +48,24 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Check if the tree is a tree!
     if(class(tree) != "phylo") {
         stop("The tree must be of class 'phylo'.")
-    }
-
+    } 
+    
+    # Read tree properties
+    n_tip <- ape::Ntip(tree)
+    n_node <- ape::Nnode(tree)
+    
     ## Transform character
     if(class(character) != "list") {
         character <- convert.char(character)
     }
 
     ## Check if the character is the same length as the tree
-    if(ape::Ntip(tree) != length(character)) {
+    if(n_tip != length(character)) {
         stop("The tree and character arguments don't match.")
     }
 
     ## Set up the list of characters
-    filling <- vector("list", ape::Ntip(tree)+ape::Nnode(tree))
+    filling <- vector("list", n_tip + n_node)
     states_matrix <- list("Char" = filling, "Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
 
     if(!is.null(inapplicable)) {
@@ -130,8 +138,11 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Total length
     states_matrix$length <- numeric(0)
 
-    ## Add the tree
+    ## Add the tree, with its properties
     states_matrix$tree <- tree
+    states_matrix$n_tip <- n_tip
+    states_matrix$n_node <- n_node
+    
 
     ## Set up the NA_matrix class
     class(states_matrix) <- "states.matrix"

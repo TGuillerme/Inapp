@@ -28,7 +28,7 @@ fitch.downpass <- function(states_matrix) {
     states_matrix$Dp1 <- states_matrix$Char
 
     ## Loop through the nodes
-    for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) {
+    for(node in states_matrix$n_tip + states_matrix$n_node:1) {
         ## Select the descendants and ancestors
         desc_anc <- desc.anc(node, tree)
         right <- states_matrix$Dp1[desc_anc[1]][[1]] # The node's right descendant
@@ -82,10 +82,10 @@ fitch.uppass <- function(states_matrix) {
     states_matrix$Up1 <- states_matrix$Char
 
     ## Set up the root
-    states_matrix$Up1[[ape::Ntip(tree)+1]] <- states_matrix$Dp1[[ape::Ntip(tree)+1]]
+    states_matrix$Up1[[states_matrix$n_tip+1]] <- states_matrix$Dp1[[states_matrix$n_tip+1]]
 
     ## For each node from the root
-    for(node in (ape::Ntip(tree)+2:ape::Nnode(tree))) { ## Start past the root (+2)
+    for(node in (states_matrix$n_tip+2:states_matrix$n_node)) { ## Start past the root (+2)
 
         curr_node <- states_matrix$Dp1[[node]] # The current node (i.e. prelim)
         ## Select the descendants and ancestors

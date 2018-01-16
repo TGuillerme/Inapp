@@ -115,11 +115,12 @@ get.tree <- function(input, simple = FALSE) {
 
 ## Getting the character details
 get.character <- function(input, tree) {
+    n_tip = ape::Ntip(tree)
     ## Generate a random character
     if(input$character == 1) {
-        character <- paste(sample(c("0", "1", "2", "-", "?"), states_matrix$n_tip, prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
+        character <- paste(sample(c("0", "1", "2", "-", "?"), n_tip, prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
         ## Adding at least three inapplicable tokens (if there's at least 5 tips)
-        if(states_matrix$n_tip >= 5) {
+        if(n_tip >= 5) {
             character[sample(1:length(character), 3)] <- "-"
         }
     }

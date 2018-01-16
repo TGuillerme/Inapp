@@ -122,7 +122,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
 
 
     ## Add the character into the list
-    states_matrix$Char[1:states_matrix$n_tip] <- character[ordering]
+    states_matrix$Char[1:n_tip] <- character[ordering]
 
     ## Add tip labels
 

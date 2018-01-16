@@ -48,7 +48,19 @@ get.tree <- function(input, simple = FALSE) {
 
         ## Newick tree
         if(input$tree == 2) {
-            tree <- ape::read.tree(text = input$newick_tree)
+            ## Sanitise input tree to avoid crashing ape::read.tree
+            newick_tree <- trimws(input$newick_tree)
+            chars_to_count <- c("\\(", "\\)", ",")
+            if (!all.equal(vapply(chars_to_count, function (char) lengths(regmatches(newick_tree, gregexpr(char, newick_tree))), 0))) {
+              stop("Braces and commas in input tree do not balance.")
+            }
+            
+            # Add trailing semicolon, if missing
+            if (substr(newick_tree, nchar(newick_tree), nchar(newick_tree)) != ";") {
+              newick_tree <- paste0(newick_tree, ';')
+            }
+            
+            tree <- ape::read.tree(text = newick_tree)
             if(is.null(tree)) {
               stop("Enter a tree in newick format.")
             }

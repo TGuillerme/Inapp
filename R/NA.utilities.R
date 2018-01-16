@@ -204,11 +204,11 @@ print.states.matrix <- function(x, ...) {
                 cat(": NULL\n")
             }
         }
-        ## Length
-        length <- x$regions + ifelse(length(x$changes) > 0, length(x$changes), 0)
-        cat(paste("Tree length is:", length, "\n"))
+        ## Score
+        score <- x$regions + ifelse(length(x$changes) > 0, length(x$changes), 0)
+        cat(paste("Tree score is:", score, "\n"))
         ## Details
-        if(length != 0) {
+        if(score != 0) {
             cat(paste(x$regions, "additional applicable regions.\n"))
             if(length(x$changes) > 1) {
                 cat("State changes at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
@@ -221,7 +221,7 @@ print.states.matrix <- function(x, ...) {
             }
         } 
     } else {
-        cat("No reconstructions calculated. See:\n ?apply.reconstruction\nto reconstruct ancestral states and count the tree length.\n")
+        cat("No reconstructions calculated. See:\n ?apply.reconstruction\nto reconstruct ancestral states and score the tree.\n")
     }
     return(invisible())
 }

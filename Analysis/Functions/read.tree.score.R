@@ -1,6 +1,6 @@
 #' @title Read tree scores
 #'
-#' @description Reads a list of tree lengths
+#' @description Reads a list of tree scores
 #'
 #' @param chain The chain name
 #' @param path The path to the file to be read

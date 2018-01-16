@@ -4,6 +4,26 @@ library(ape)
 ## Load the R functions
 source("helpers.R")
 
+## Sanitise input text to check that newick tree can be extracted 
+read.newick.tree <- function (newick_text) {
+  newick_text <- trimws(newick_text)
+  chars_to_count <- c("\\(", "\\)", ",")
+  if (length(unique(vapply(chars_to_count, function (char)
+     lengths(regmatches(newick_text, gregexpr(char, newick_text))), 0))) > 1) {
+    stop("Braces and commas in input tree must balance.")
+  }
+  
+  # Add trailing semicolon, if missing
+  if (substr(newick_text, nchar(newick_text), nchar(newick_text)) != ";") {
+    newick_text <- paste0(newick_text, ';')
+  }
+  
+  if(is.null(tree)) {
+    stop("Enter a tree in newick format.")
+  }
+  return (ape::read.tree(text = newick_text))
+}
+  
 ## Get the tree details
 get.tree <- function(input, simple = FALSE) {
 
@@ -48,22 +68,7 @@ get.tree <- function(input, simple = FALSE) {
 
         ## Newick tree
         if(input$tree == 2) {
-            ## Sanitise input tree to avoid crashing ape::read.tree
-            newick_tree <- trimws(input$newick_tree)
-            chars_to_count <- c("\\(", "\\)", ",")
-            if (!all.equal(vapply(chars_to_count, function (char) lengths(regmatches(newick_tree, gregexpr(char, newick_tree))), 0))) {
-              stop("Braces and commas in input tree do not balance.")
-            }
-            
-            # Add trailing semicolon, if missing
-            if (substr(newick_tree, nchar(newick_tree), nchar(newick_tree)) != ";") {
-              newick_tree <- paste0(newick_tree, ';')
-            }
-            
-            tree <- ape::read.tree(text = newick_tree)
-            if(is.null(tree)) {
-              stop("Enter a tree in newick format.")
-            }
+            tree <- read.newick.tree(input$newick_tree)
         }
 
         ## Nexus tree
@@ -88,7 +93,7 @@ get.tree <- function(input, simple = FALSE) {
 
         ## Newick tree
         if(input$tree == 2) {
-            tree <- ape::read.tree(text = input$newick_tree)
+            tree <- read.newick.tree(input$newick_tree)
         }
 
         ## Nexus tree

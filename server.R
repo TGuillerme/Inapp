@@ -304,10 +304,11 @@ shinyServer(
         output$plot.ui <- renderUI({
 
             tree <- get.tree(input, simple = TRUE)
+            n_tip <- length(tree$tip.label)
             
             ## Set the plot window
-            if(states_matrix$n_tip > 10) {
-                plotOutput("plot_out", width ="100%", height = paste(round(states_matrix$n_tip*0.4), "00px", sep = ""))
+            if(n_tip > 10) {
+                plotOutput("plot_out", width ="100%", height = paste(round(n_tip*0.4), "00px", sep = ""))
             } else {
                 plotOutput("plot_out", width ="100%", height = "400px")
             }

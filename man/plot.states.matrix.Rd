@@ -5,8 +5,8 @@
 \title{Plot tree and ancestral states}
 \usage{
 \method{plot}{states.matrix}(states_matrix, passes = c(1, 2, 3, 4),
-  show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue"),
-  counts = 0, use.edge.length = FALSE, ...)
+  show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue",
+  "lightgreen"), counts = 0, use.edge.length = FALSE, ...)
 }
 \arguments{
 \item{states_matrix}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}}
@@ -15,7 +15,9 @@
 
 \item{show.labels}{\code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).}
 
-\item{col.tips.nodes}{\code{character}, a vector of up to three colors to be used for displaying respectively the tips, the nodes and the activated/counted nodes (if \code{counts != 0}).}
+\item{col.tips.nodes}{\code{character}, a vector of up to four colors to be used for displaying 
+respectively the tips, the nodes, and (if \code{counts != 0}) the activated/counted nodes
+and the nodes at which regions are counted.}
 
 \item{counts}{\code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).}
 
@@ -24,7 +26,7 @@
 \item{...}{any optional arguments to be passed to \code{\link[ape]{plot.phylo}}}
 }
 \description{
-Plots an ancestral states reconstruction and tree length
+Plots an ancestral states reconstruction and tree score
 }
 \examples{
 ## A balanced 12 taxa tree

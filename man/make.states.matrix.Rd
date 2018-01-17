@@ -2,7 +2,7 @@
 % Please edit documentation in R/NA.utilities.R
 \name{make.states.matrix}
 \alias{make.states.matrix}
-\title{Sates matrix}
+\title{States matrix}
 \usage{
 make.states.matrix(tree, character, inapplicable = NULL,
   match.tip.char = FALSE)
@@ -19,13 +19,17 @@ make.states.matrix(tree, character, inapplicable = NULL,
 \value{
 A list of character states for each node and tip per pass:
 -\code{$Char}: a \code{list} of character states for the tips.
--\code{$Dp1}: a \code{list} of the tips and noes states after the first downpass.
--\code{$Up1}: a \code{list} of the tips and noes states after the first uppass.
--\code{$Dp2}: a \code{list} of the tips and noes states after the second downpass.
--\code{$Up2}: a \code{list} of the tips and noes states after the second uppass.
+-\code{$Dp1}: a \code{list} of the tips' and nodes' states after the first downpass.
+-\code{$Up1}: a \code{list} of the tips' and nodes' states after the first uppass.
+-\code{$Dp2}: a \code{list} of the tips' and nodes' states after the second downpass.
+-\code{$Up2}: a \code{list} of the tips' and nodes' states after the second uppass.
 -\code{$tracker}: a \code{list} tracking the applicable regions.
--\code{$regions}: a single \code{numeric} value counting the number of applicable regions.
--\code{$changes}: a \code{numeric} vector recording the node with state changes.
+-\code{$regions}: an \code{integer} vector recording the nodes at which additional applicable regions are counted.
+-\code{$changes}: an \code{integer} vector recording the node with state changes.
+-\code{$score}: a single \code{integer} vector recording the score of the tree.
+-\code{$tree}: a \code{phylo} object describing the tree.
+-\code{$n_tip}: a \code{numeric} vector recording the number of tips.
+-\code{$n_node}: a \code{numeric} vector recording the number of (internal) nodes within the tree.
 }
 \description{
 Creates a states matrix

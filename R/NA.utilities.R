@@ -384,8 +384,12 @@ get.union.excl <- function(a, b) {
     }
 }
 
-## steps should be a vector listing all regions - returning 
-#' @value The number of items in the vector: zero if none
+#' Score from marked nodes
+#' 
+#' @param counted.nodes An \code{integer} vector listing nodes at which a score was noted
+#' 
+#' @return The number of items in the vector: zero if none
+#' @keywords internal
 score.from <- function (counted.nodes) {
   if (length(counted.nodes)) return (length(counted.nodes)) else return (0);
 }

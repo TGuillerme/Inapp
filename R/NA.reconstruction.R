@@ -247,6 +247,13 @@ second.downpass <- function(states_matrix) {
             right_applicable <- get.side.applicable(states_matrix, node = node, side = "right", pass = 3)
             left_applicable <- get.side.applicable(states_matrix, node = node, side = "left", pass = 3)
 
+            
+            ## #MS: \ref CountRegion
+            if (left_applicable && right_applicable && all(curr_node == -1)) {
+                states_matrix$regions <- c(states_matrix$regions, node)
+                states_matrix$downpassRegions <- c(states_matrix$downpassRegions, node) # MS TESTING LINE - TODO DELETE
+            }
+        
         }
 
         ## Record the region tracker for displaying later
@@ -358,7 +365,7 @@ second.uppass <- function(states_matrix) {
             if(right_applicable && left_applicable) {
                 if(any(desc_anc[1:2] > states_matrix$n_tip)) {
                     ## Increment the counting only if the region is depending on at least one node (i.e. ignore tips)
-                    states_matrix$regions <- c(states_matrix$regions, node)
+                    states_matrix$uppassRegions <- c(states_matrix$uppassRegions, node)
                 }
             }
         }

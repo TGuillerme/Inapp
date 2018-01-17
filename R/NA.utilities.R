@@ -220,7 +220,20 @@ print.states.matrix <- function(x, ...) {
         cat(paste("Tree score is:", score, "\n"))
         ## Details
         if(score != 0) {
-            cat(paste(x$regions, "additional applicable regions.\n"))
+            if(length(x$regions) > 1) {
+                cat(length(x$regions), " additional applicable regions counted at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
+                cat("Type 2s counted on downpass: ", x$downpassRegions, ".\n", sep = "") ## MS TESTING LINE - TODO DELETE
+                cat("Type 2s that would have been counted on uppass: ", x$uppassRegions, ".\n", sep = "") ## MS TESTING LINE - TODO DELETE
+                
+            } else {
+                if(length(x$regions) == 1) {
+                    cat("One additional applicable region counted at node: ", x$regions, ".\n", sep = "")
+                    cat("Type 2s counted on downpass: ", x$downpassRegions, ".\n", sep = "") ## MS TESTING LINE - TODO DELETE
+                    cat("Type 2s that would have been counted on uppass: ", x$uppassRegions, ".\n", sep = "") ## MS TESTING LINE - TODO DELETE
+                } else {
+                    cat("No additional applicable region.\n")
+                }
+            }
             if(length(x$changes) > 1) {
                 cat("State changes at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
             } else {
@@ -374,5 +387,5 @@ get.union.excl <- function(a, b) {
 ## steps should be a vector listing all regions - returning 
 #' @value The number of items in the vector: zero if none
 score.from <- function (counted.nodes) {
-  if (length(counted.nodes)) return length(counted.nodes) else return (0);
+  if (length(counted.nodes)) return (length(counted.nodes)) else return (0);
 }

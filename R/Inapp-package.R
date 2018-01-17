@@ -15,8 +15,6 @@
 #' Brazeau, M. D., Guillerme, T., and Smith, M. R. 2017. Morphological 
 #' phylogenetic analysis with inapplicable data. Biorxiv. <https://doi.org/10.1101/209775>
 #'
-#' @keywords maximum parsimony, inapplicable characters, states reconstruction, tree length
-#'
 #' @examples
 #' 
 #' @exportPattern "^[[:alpha:]]+"

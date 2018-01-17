@@ -21,6 +21,12 @@ We assume that you'll already have read [OurAlgorithm.Rmd].
 - Our algorithm counterbalances that by charging a levy for each innoation of the parent character
 - This has a side-effect that we'll study with an invariant character
 
+## Multiple dependencies
+
+It's not a problem to have characters dependent on characters that are dependent on characters.
+This is our chance to respond to Goloboff's point 6.
+
+
 ## A parsimony uninformative character that informs parsimony!
 
 - All tails are blue.  Let's say that they are all blue for some complex molecular reason

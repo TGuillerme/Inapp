@@ -23,8 +23,23 @@ See De Laet's work on this.
 
 The total score = steps + (additional) regions.
 
-Here's an example tree showing that
+Here's an example tree showing that.
+
+### What does it take to denote separate regions?
+- Three inapplicable tips, arranged just so.
+(Addresses Goloboff's comment.)
+
+## How this fixes the problem
 
 Here are some examples of how this fixes the problems that we encountered.
+
+## Furhter examples
+
+Here are Goloboff's trees as examples of how we would approach them, and why that's preferable to how he woudl approach them
+
+Here are De Laet's cases and here's why they aren't problematic.
+
+
+## Summary
 
 We can show that this produces the correct behaviour.  But how do we count this in practice?

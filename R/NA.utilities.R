@@ -222,14 +222,14 @@ print.states.matrix <- function(x, ...) {
         if(score != 0) {
             if(length(x$regions) > 1) {
                 cat(length(x$regions), "additional applicable regions counted at nodes:", paste(x$changes, collapse = ", "), ".\n")
-                cat("Type 2s counted on downpass:", x$downpassRegions, ".\n") ## MS TESTING LINE - TODO DELETE
-                cat("Type 2s that would have been counted on uppass:", x$uppassRegions, ".\n") ## MS TESTING LINE - TODO DELETE
+                cat("Type 2s counted on downpass:", sort(x$downpassRegions), ".\n") ## MS TESTING LINE - TODO DELETE
+                cat("Type 2s that would have been counted on uppass:", sort(x$uppassRegions), ".\n") ## MS TESTING LINE - TODO DELETE
                 
             } else {
                 if(length(x$regions) == 1) {
                     cat("One additional applicable region counted at node:", x$regions, ".\n",)
-                    cat("Type 2s counted on downpass:", x$downpassRegions, ".\n") ## MS TESTING LINE - TODO DELETE
-                    cat("Type 2s that would have been counted on uppass:", x$uppassRegions, ".\n") ## MS TESTING LINE - TODO DELETE
+                    cat("Type 2s counted on downpass:", sort(x$downpassRegions), ".\n") ## MS TESTING LINE - TODO DELETE
+                    cat("Type 2s that would have been counted on uppass:", sort(x$uppassRegions), ".\n") ## MS TESTING LINE - TODO DELETE
                 } else {
                     cat("No additional applicable region.\n")
                 }

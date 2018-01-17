@@ -187,7 +187,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
                      bty='n', bg = NULL)
 
     ## Add the tip states
-    tips_labels <- plot.convert.state(states_matrix[[1]][1:ape::Ntip(tree)], missing = TRUE)
+    tips_labels <- plot.convert.state(states_matrix[[1]][1:states_matrix$n_tip], missing = TRUE)
     ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
 
 
@@ -196,25 +196,25 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
     if(length(passes) > 0) {
 
         ## Get the first set of node labels
-        node_labels <- plot.convert.state(states_matrix[[passes[1]+1]][-c(1:ape::Ntip(tree))])
+        node_labels <- plot.convert.state(states_matrix[[passes[1]+1]][-c(1:states_matrix$n_tip)])
         node_labels <- paste(paste(passes[1], ":", sep = ""), node_labels)
 
         ## Adding node numbers (optional)
         if(show.node.label) {
-            node_labels <- paste(paste("n",(ape::Ntip(tree)+1):(ape::Ntip(tree) + ape::Nnode(tree)), "\n", sep = ""), node_labels, sep = "")
+            node_labels <- paste(paste("n",(states_matrix$n_tip+1):(states_matrix$n_tip + states_matrix$n_node), "\n", sep = ""), node_labels, sep = "")
         }
         
         ## Add the extra node labels
         for(pass in passes[-1]) {
-            node_labels <- paste(node_labels, paste(pass, ": ", plot.convert.state(states_matrix[[pass + 1]][-c(1:ape::Ntip(tree))]), sep = ""), sep = "\n")
+            node_labels <- paste(node_labels, paste(pass, ": ", plot.convert.state(states_matrix[[pass + 1]][-c(1:states_matrix$n_tip)]), sep = ""), sep = "\n")
         }
 
         ## Set the colors for the changes
         if(any(counts == 2)) {
             ## Change the colors of the nodes if activations exist
             if(length(states_matrix$changes) > 0) {
-                bg_col <- rep(col.tips.nodes[2], ape::Nnode(tree))
-                bg_col[states_matrix$changes - ape::Ntip(tree)] <- col.tips.nodes[3]
+                bg_col <- rep(col.tips.nodes[2], states_matrix$n_node)
+                bg_col[states_matrix$changes - states_matrix$n_tip] <- col.tips.nodes[3]
             } else {
                 bg_col <- col.tips.nodes[2]
             }

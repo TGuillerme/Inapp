@@ -48,7 +48,7 @@ test_that("make.states.matrix works", {
     ## Right output style
     expect_warning(matrix <- make.states.matrix(tree, character))  # Warning is some weird NA management by testthat
     expect_is(matrix, "states.matrix")
-    expect_equal(unique(unlist(lapply(matrix, class))), c("list", "numeric", "phylo", "integer"))
+    expect_equal(unique(unlist(lapply(matrix, class))), c("list", "integer", "phylo"))
     expect_equal(unique(unlist(lapply(matrix, length))), c(7,4,1,0,3))
     expect_equal(length(matrix), 12)
     expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "regions", "changes", "length",  "tree", "n_tip", "n_node"))
@@ -96,8 +96,8 @@ test_that("desc.anc works", {
     ## Not working (wrong input)
     expect_error(desc.anc(1, "tree"))
     expect_error(desc.anc(1, matrix(0)))
-    expect_equal(desc.anc("a", tree), numeric(0))
-    expect_equal(desc.anc(88, tree), numeric(0))
+    expect_equal(desc.anc("a", tree), integer(0))
+    expect_equal(desc.anc(88, tree), integer(0))
 
     ## Right output
     expect_is(desc.anc(6, tree), "integer")

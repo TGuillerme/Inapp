@@ -16,6 +16,9 @@
 #' phylogenetic analysis with inapplicable data. Biorxiv. <https://doi.org/10.1101/209775>
 #'
 #' @examples
+#' \dontrun{
+#' runInapp()
+#' }
 #' 
 #' @exportPattern "^[[:alpha:]]+"
 #' @import ape

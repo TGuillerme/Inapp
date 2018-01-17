@@ -75,7 +75,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
         ## Convert the inapplicables
         character <- lapply(character, plot.convert.inappli)
 
-        ## Convert into character
+        ## Convert into character
         return(unlist(lapply(character, function(X) paste(as.character(X), collapse = ""))))
     }
 
@@ -223,17 +223,16 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
 
         ## Set the colors for the changes
         if(any(counts == 2)) {
+            bg_col <- rep(col.tips.nodes[2], states_matrix$n_node)
+            if (any(changes %in% regions)) {
+              warning("Probable bug: Shouldn't be able to have a transformation and a region at the same node")
+            }
+            
             ## Change the colors of the nodes if activations exist
             if(length(changes) > 0) {
-                bg_col <- rep(col.tips.nodes[2], states_matrix$n_node)
                 bg_col[changes - n_tip] <- col.tips.nodes[3]
-            } else {
-                bg_col <- col.tips.nodes[2]
             }
             if (length(regions)) {
-                if (any(changes %in% regions)) {
-                    warning("Probable bug: Shouldn't be able to have a transformation and a region at the same node")
-                }
                 bg_col[regions - n_tip] <- col.tips.nodes[4]
             }
         } else {

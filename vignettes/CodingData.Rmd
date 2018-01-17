@@ -1,0 +1,51 @@
+---
+title: "How to code characters"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{6. Implications for characters}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Inapplicable data in a parsimony setting
+
+This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [@ThisStudy].
+
+We assume that you'll already have read [OurAlgorithm.Rmd].
+
+## How this algorithm weights against multiple innovations
+
+- We saw in an earlier section that step counts can be avoided by causing multiple innovations
+- Our algorithm counterbalances that by charging a levy for each innoation of the parent character
+- This has a side-effect that we'll study with an invariant character
+
+## A parsimony uninformative character that informs parsimony!
+
+- All tails are blue.  Let's say that they are all blue for some complex molecular reason
+- This complex molecular reason is grounds to suspect that the tails have a common ancestor
+- More formally, we wish to attribute this complex molecular reason to common ancestry, rather than homoplasy
+- Thus "blueness" represents a separate character that has the same distribution as tails (or a sbuset thereof, if some tails are of uncertain colour)
+
+- We should include this character if it's meaningful.  But not if it's not (e.g. number of base pairs in a tail).
+
+
+## Separate handling of neomorphic and transformational characters
+### The situation
+- One sort of character that would not be meaningful is a neomorphic character.  
+- Neomorphic characters are asymmetrical.
+- Let's imagine a silly example to illustrate the case.  Let's say that none of the tails in our dataset have laser-firing capability.  (This is probably true for all datasets that include taxa with tails.)
+- It would be silly if a character "Lazer firing ability: (0) absent" made us more likely to group tails
+  together as having a common ancestry, particulalry if this means that another organ (wings perhaps) would have to have multiple origins
+- On the other hand, if all the tails in our dataset DID have laser firing abilities, we might want a character
+  "laser firing ability (1) present" to require an explanation by common ancestry - that is, to serve as evidence that the observed tails had a single evolutionary origin
+
+### Recommendation
+- Neomorphic characters should be ABSENT everywhere they are absent, whether this is because there's no tail or because there's a tail without a ray gun.
+- Transformational characters need our algorithm though.
+
+### Difficulties
+Here are some marginal cases where discretion is required.
+Here are some trees that show why we would code things our way
+this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!

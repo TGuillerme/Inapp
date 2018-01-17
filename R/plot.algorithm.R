@@ -191,7 +191,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
         }
     }
     
-    if (states_matrix$uppassRegions != states_matrix$downpassRegions) text(1, 4, "YOU BROKE IT!", col="red", cex=3, font=2, pos=4) ## TESTING LINE - TODO DELETE
+    if (length(states_matrix$uppassRegions) != length(states_matrix$downpassRegions)) text(1, 4, "YOU BROKE IT!", col="red", cex=3, font=2, pos=4) ## TESTING LINE - TODO DELETE
     
     ## Adding the legend
     graphics::legend("topleft", legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,

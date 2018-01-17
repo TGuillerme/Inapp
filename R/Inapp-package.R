@@ -23,7 +23,8 @@
 #' @exportPattern "^[[:alpha:]]+"
 #' @import ape
 #' @importFrom graphics plot legend
-#' @importFrom shiny runGitHub
 #' @importFrom grDevices pdf dev.off
+#' @importFrom Rdpack reprompt 
+#' @importFrom shiny runGitHub
 #' @importFrom utils write.csv
 NULL

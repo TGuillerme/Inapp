@@ -8,10 +8,10 @@
 *.nex*
 tmp
 *.count
-
 # LaTeX
 *.fls
 *.pdf
-
 # Paup jobs
 *.paupjob.sh
+.Rproj.user
+inst/doc

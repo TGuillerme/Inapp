@@ -6,6 +6,10 @@ source("helpers.R")
 
 ## Sanitise input text to check that newick tree can be extracted 
 read.newick.tree <- function (newick_text) {
+  if (is.null(newick_text)) {
+    stop("Enter a tree in newick format.")
+  }
+
   newick_text <- trimws(newick_text)
   chars_to_count <- c("\\(", "\\)", ",")
   if (length(unique(vapply(chars_to_count, function (char)
@@ -17,10 +21,7 @@ read.newick.tree <- function (newick_text) {
   if (substr(newick_text, nchar(newick_text), nchar(newick_text)) != ";") {
     newick_text <- paste0(newick_text, ';')
   }
-  
-  if(is.null(tree)) {
-    stop("Enter a tree in newick format.")
-  }
+
   return (ape::read.tree(text = newick_text))
 }
   

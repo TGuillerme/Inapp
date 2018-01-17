@@ -210,3 +210,4 @@ test_that("second.uppass works", {
         expect_equal(pass4_3_6[[5]][node+12], results3_6_inapp4[node])
     }
 })
+

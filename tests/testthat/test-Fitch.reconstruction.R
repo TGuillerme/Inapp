@@ -179,3 +179,4 @@ test_that("fitch.uppass works", {
         expect_equal(pass2_3_6_2[[2]][node+12], results3_6_fitch2_2[node])
     }
 })
+

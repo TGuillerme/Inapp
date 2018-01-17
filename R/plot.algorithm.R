@@ -154,7 +154,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
         par_col = "white"
     } else {
         if(all(counts == 1)) {
-            legend_text <- c(length_text, paste("applicable region (1 + ", states_matrix$regions, ")", sep = ""))
+            legend_text <- c(length_text, paste("applicable region (1 + ", score.from(states_matrix$regions), ")", sep = ""))
             par_cex = c(0, 0)
             par_pch = c(0, 0)
             par_lty = c(0, 1)
@@ -162,7 +162,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
             par_col = "black"
         } else {
             if(all(counts == 2)) {
-                legend_text <- c(length_text, paste("state changes (", length(states_matrix$changes), ")", sep = ""))
+                legend_text <- c(length_text, paste("state changes (", score.from(states_matrix$changes), ")", sep = ""))
                 par_cex = c(0, 2)
                 par_pch = c(0, 15)
                 par_lty = c(0, 0)
@@ -170,7 +170,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
                 par_col = col.tips.nodes[3]
             } else {
                 if(all(counts %in% c(1,2))) {
-                    legend_text <- c(length_text, paste("applicable region (1 + ", states_matrix$regions, ")", sep = ""), paste("state changes (", length(states_matrix$changes), ")", sep = ""))
+                    legend_text <- c(length_text, paste("applicable region (1 + ", score.from(states_matrix$regions), ")", sep = ""), paste("state changes (", length(states_matrix$changes), ")", sep = ""))
                     par_cex = c(0, 0, 2)
                     par_pch = c(0, 0, 15)
                     par_lty = c(0, 1, 0)

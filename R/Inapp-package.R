@@ -1,6 +1,6 @@
 #' Inapplicable Discrete Characters Reconstruction
 #' 
-#' An algorithm allowing states reconstruction and tree length counting for inapplicable discrete characters
+#' An algorithm allowing states reconstruction and tree score calculation for inapplicable discrete characters
 #' 
 #' @name Inapp-package
 #'

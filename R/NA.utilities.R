@@ -18,9 +18,9 @@
 #' -\code{$Dp2}: a \code{list} of the tips' and nodes' states after the second downpass.
 #' -\code{$Up2}: a \code{list} of the tips' and nodes' states after the second uppass.
 #' -\code{$tracker}: a \code{list} tracking the applicable regions.
-#' -\code{$regions}: a single \code{numeric} value counting the number of applicable regions.
-#' -\code{$changes}: a \code{numeric} vector recording the node with state changes.
-#' -\code{$length}: a \code{numeric} vector recording the length of the tree.
+#' -\code{$regions}: an \code{integer} vector recording the nodes at which additional applicable regions are counted.
+#' -\code{$changes}: an \code{integer} vector recording the node with state changes.
+#' -\code{$score}: a single \code{integer} vector recording the score of the tree.
 #' -\code{$tree}: a \code{phylo} object describing the tree.
 #' -\code{$n_tip}: a \code{numeric} vector recording the number of tips.
 #' -\code{$n_node}: a \code{numeric} vector recording the number of (internal) nodes within the tree.
@@ -136,7 +136,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     states_matrix$changes <- integer(0)
 
     ## Total length
-    states_matrix$length <- integer(0)
+    states_matrix$score <- integer(0)
 
     ## Add the tree, with its properties
     states_matrix$tree <- tree
@@ -221,15 +221,15 @@ print.states.matrix <- function(x, ...) {
         ## Details
         if(score != 0) {
             if(length(x$regions) > 1) {
-                cat(length(x$regions), " additional applicable regions counted at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
-                cat("Type 2s counted on downpass: ", x$downpassRegions, ".\n", sep = "") ## MS TESTING LINE - TODO DELETE
-                cat("Type 2s that would have been counted on uppass: ", x$uppassRegions, ".\n", sep = "") ## MS TESTING LINE - TODO DELETE
+                cat(length(x$regions), "additional applicable regions counted at nodes:", paste(x$changes, collapse = ", "), ".\n")
+                cat("Type 2s counted on downpass:", x$downpassRegions, ".\n") ## MS TESTING LINE - TODO DELETE
+                cat("Type 2s that would have been counted on uppass:", x$uppassRegions, ".\n") ## MS TESTING LINE - TODO DELETE
                 
             } else {
                 if(length(x$regions) == 1) {
-                    cat("One additional applicable region counted at node: ", x$regions, ".\n", sep = "")
-                    cat("Type 2s counted on downpass: ", x$downpassRegions, ".\n", sep = "") ## MS TESTING LINE - TODO DELETE
-                    cat("Type 2s that would have been counted on uppass: ", x$uppassRegions, ".\n", sep = "") ## MS TESTING LINE - TODO DELETE
+                    cat("One additional applicable region counted at node:", x$regions, ".\n",)
+                    cat("Type 2s counted on downpass:", x$downpassRegions, ".\n") ## MS TESTING LINE - TODO DELETE
+                    cat("Type 2s that would have been counted on uppass:", x$uppassRegions, ".\n") ## MS TESTING LINE - TODO DELETE
                 } else {
                     cat("No additional applicable region.\n")
                 }

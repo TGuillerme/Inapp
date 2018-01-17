@@ -83,8 +83,8 @@ apply.reconstruction <- function(tree, character, passes = 4, method, inapplicab
         states_matrix <- pass(states_matrix)
     }
 
-    ## Get the total length of the tree
-    states_matrix$length <- score.from(states_matrix$changes) + score.from(states_matrix$regions)
+    ## Get the total score of the tree
+    states_matrix$score <- score.from(states_matrix$changes) + score.from(states_matrix$regions)
 
     return(states_matrix)
 }

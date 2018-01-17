@@ -124,7 +124,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Add the character into the list
     states_matrix$Char[1:n_tip] <- character[ordering]
 
-    ## Add tip labels
+    ## Add tip labels
 
     ## Set up the active region tracker
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)

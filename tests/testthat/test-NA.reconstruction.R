@@ -211,3 +211,63 @@ test_that("second.uppass works", {
     }
 })
 
+
+context("correct tree scoring")
+test_that("trees are scored correctly", {
+  characters <- c("23--1??--032=5", # 0,
+                  "1---1111---1=2", # 1,
+                  "1100----1100=3", # 2,
+                  "11-------100=2", # 3,
+                  "----1111---1=1", # 4,
+                  "01----010101=5", # 5,
+                  "01---1010101=5", # 6,
+                  "1??--??--100=2", # 7,
+                  "21--3??--032=5", # 8,
+                  "11--1??--111=2", # 9,
+                  "11--1000001-=2", # 10,
+                  "01------0101=4", # 11
+                  "110--?---100=3", # 12
+                  "11--1??--111=2", # 13
+                  "210--100--21=5", # 14
+                  "????----1???=0", # 15
+                  "23--1----032=5", # 16
+                  "1----1----1-=2", # 17
+                  "-1-1-1--1-1-=4", # 18
+                  "23--1??--032=5", # 19
+                  "--------0101=2", # 20
+                  "10101-----01=4", # 21
+                  "011--?--0011=3", # 22
+                  "110--??--100=3", # 23
+                  "11--1000001-=2", # 24
+                  "21--1----012=5", # 25
+                  "11----111111=1", # 26
+                  "10101-----01=4", # 27
+                  "210210------=4", # 28
+                  "----1111----=0", # 29
+                  "230--??1--32=5", # 30
+                  "023--??1--32=5", # 31
+                  "023-???1--32=4", # 32
+                  "23--1?1--023=5", # 33
+                  "----1010----=2", # 34
+                  "------11---1=1", # 35
+                  "10----11---1=3", # 36
+                  "320--??3--21=5", # 37
+                  "000011110000=2"  # 38
+  )
+  
+  for (character_score in characters) {
+    character <- unlist(strsplit(character_score, "=", fixed=TRUE))
+    expected_score <- as.integer(character[2])
+    matrix <- make.states.matrix(tree3, character[1])
+    matrix <- second.uppass(second.downpass(first.uppass(first.downpass(matrix))))
+    expect_equal(expected_score, matrix$score)
+    if (length(matrix$uppassRegions)) {
+      expect_equal(length(matrix$uppassRegions), length(matrix$downpas))
+      if (!identical(sort(matrix$uppassRegions), sort(matrix$downpassRegions))) {
+        expect_equal("Problematic character:", character[1])
+        expect_identical(sort(matrix$uppassRegions), sort(matrix$downpassRegions))
+      }
+    }
+  }
+})
+

@@ -263,7 +263,9 @@ second.downpass <- function(states_matrix) {
 
 
     }
-
+    
+    # We've completed scoring, so register this in the states matrix
+    states_matrix$score = score.from(states_matrix$changes) + score.from(states_matrix$regions)
     return(states_matrix)
 }
 

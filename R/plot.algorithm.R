@@ -180,7 +180,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
                 if(all(counts %in% c(1,2))) {
                     legend_text <- c(length_text, 
                                      paste("applicable region (1 + ", score.from(regions), ")", sep = ""),
-                                     paste("state changes (", length(states_matrix$changes), ")", sep = ""))
+                                     paste("state changes (", score.from(changes), ")", sep = ""))
                     par_cex = c(0, 0, 2)
                     par_pch = c(0, 0, 15)
                     par_lty = c(0, 1, 0)
@@ -190,7 +190,9 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
             }
         }
     }
-
+    
+    if (states_matrix$uppassRegions != states_matrix$downpassRegions) text(1, 4, "YOU BROKE IT!", col="red", cex=3, font=2, pos=4) ## TESTING LINE - TODO DELETE
+    
     ## Adding the legend
     graphics::legend("topleft", legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,
                      lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5, 

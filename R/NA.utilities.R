@@ -1,4 +1,4 @@
-#' @title Sates matrix
+#' @title States matrix
 #'
 #' @description Creates a states matrix
 #'
@@ -130,13 +130,13 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
 
     ## Set a applicable regions counts
-    states_matrix$regions <- 0
+    states_matrix$regions <- integer(0)
 
     ## Save the node with changes
-    states_matrix$changes <- numeric(0)
+    states_matrix$changes <- integer(0)
 
     ## Total length
-    states_matrix$length <- numeric(0)
+    states_matrix$length <- integer(0)
 
     ## Add the tree, with its properties
     states_matrix$tree <- tree
@@ -216,7 +216,7 @@ print.states.matrix <- function(x, ...) {
             }
         }
         ## Score
-        score <- x$regions + ifelse(length(x$changes) > 0, length(x$changes), 0)
+        score <- score.from(x$regions) + score.from(x$changes)
         cat(paste("Tree score is:", score, "\n"))
         ## Details
         if(score != 0) {
@@ -369,4 +369,10 @@ get.union.excl <- function(a, b) {
     } else {
         return(sort(unique(out)))
     }
+}
+
+## steps should be a vector listing all regions - returning 
+#' @value The number of items in the vector: zero if none
+score.from <- function (counted.nodes) {
+  if (length(counted.nodes)) return length(counted.nodes) else return (0);
 }

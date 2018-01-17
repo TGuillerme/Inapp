@@ -144,7 +144,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
 
 
     ## Setting up the legend parameters
-    length_text <-  paste("Tree score is", states_matrix$regions + ifelse(length(states_matrix$changes) > 0, length(states_matrix$changes), 0))
+    length_text <-  paste("Tree score is", score.from(states_matrix$regions) + score.from(states_matrix$changes))
     if(all(counts == 0)) {
         legend_text <- length_text
         par_cex = 0

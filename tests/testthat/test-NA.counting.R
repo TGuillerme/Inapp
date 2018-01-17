@@ -50,13 +50,13 @@ test_that("right counting", {
         # print(test)
         suppressWarnings(output <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
 
-        tree_length <- output$regions + ifelse(length(output$changes) > 0, length(output$changes), 0)
+        tree_score <- score.from(output$regions) + score.from(output$changes)
 
-        # if(tree_length != expected_results[test]) {
+        # if(tree_score != expected_results[test]) {
         #     print(paste("Failed", test))
         # }
 
-        expect_equal(tree_length, expected_results[test])
+        expect_equal(tree_score, expected_results[test])
     }
 
     ## Run the bigger tree tests
@@ -73,8 +73,8 @@ test_that("right counting", {
         #     print(paste("test", test, "failed"))
         #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
         # }
-        tree_length <- output$regions + ifelse(length(output$changes) > 0, length(output$changes), 0)
-        expect_equal(tree_length, expected_results[test])
+        tree_score <- score.from(output$regions) + score.from(output$changes)
+        expect_equal(tree_score, expected_results[test])
     }
 
 
@@ -94,8 +94,8 @@ test_that("right counting", {
         #     print(paste("test", test, "failed"))
         #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
         # }
-        tree_length <- output$regions + ifelse(length(output$changes) > 0, length(output$changes), 0)
-        expect_equal(tree_length, expected_results[test])
+        tree_score <- score.from(output$regions) + score.from(output$changes)
+        expect_equal(tree_score, expected_results[test])
     }
 
 })

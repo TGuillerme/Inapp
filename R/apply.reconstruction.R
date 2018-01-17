@@ -47,7 +47,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-apply.reconstruction <- function(tree, character, passes = 4, method, inapplicable, match.tip.char = FALSE) {
+apply.reconstruction <- function(tree, character, passes = 4, method = "NA", inapplicable = NULL, match.tip.char = FALSE) {
 
     ## Method
     if(!(method %in% c("NA","Fitch"))) {

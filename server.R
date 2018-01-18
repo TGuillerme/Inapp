@@ -12,9 +12,10 @@ read.newick.tree <- function (newick_text) {
 
   newick_text <- trimws(newick_text)
   chars_to_count <- c("\\(", "\\)", ",")
-  if (length(unique(vapply(chars_to_count, function (char)
-     lengths(regmatches(newick_text, gregexpr(char, newick_text))), 0))) > 1) {
-    stop("Braces and commas in input tree must balance.")
+  char_counts <- vapply(chars_to_count, function (char)
+     lengths(regmatches(newick_text, gregexpr(char, newick_text))), 0)
+  if (length(unique(char_counts)) > 1) {
+    stop("Braces and commas in input tree must balance: ", char_counts[1], " (s; ", char_counts[2], " )s; ", char_counts[3], " commas.")
   }
   
   # Add trailing semicolon, if missing

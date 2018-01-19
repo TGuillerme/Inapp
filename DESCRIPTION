@@ -1,6 +1,6 @@
 Package: Inapp
 Title: Inapplicable Discrete Characters Reconstruction
-Version: 0.2.3.9000
+Version: 0.3
 Author: c(person("Thomas", "Guillerme", email = "guillert@tcd.ie", role = c("aut",
     "cre")), person("Martin D.", "Brazeau", role = c("aut")), person("Martin R.",
     "Smith", role = c("aut")))

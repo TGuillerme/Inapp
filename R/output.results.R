@@ -12,8 +12,8 @@
 #' The output contains the for different reconstructions (Dp1, Up1, Dp2, Up2), the potential change or applicable region and the list of tips and nodes
 #' Specifically, per data output type:
 #' -\code{"newick"} outputs a newick string with annotated nodes as follows: (t1[Dp1:X,Up1:X,Dp2:X,Up2:X,Change:X,Applicable:X]).
-#' -\code{"nexus"} outputs a nexus file with a newick string similar as above but also containing the total tree score, the matrix (one character) and the list of taxa.
-#' -\code{"csv"} A matrix containing the different state reconstructions and score for each tip and node.
+#' -\code{"nexus"} outputs a nexus file with a newick string similar as above but also containing the total tree length, the matrix (one character) and the list of taxa.
+#' -\code{"csv"} A matrix containing the different state reconstructions and length for each tip and node.
 #' -\code{"pdf"} A pdf version of the states_matrix plotted with \code{plot.states.matrix}.
 #' -\code{"C-test"} a text version that can be used for testing in C (for DEBUG).
 #' 
@@ -157,7 +157,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 
         ## Translate the tip labels
         if(!all(sates_matrix$tree$tip.label == "numeric")) {
-            if(length(grep("t", sates_matrix$tree$tip.label)) == ape::Ntip(tree)) {
+            if(length(grep("t", sates_matrix$tree$tip.label)) == states_matrix$n_tip) {
                 sates_matrix$tree$tip.label <- gsub("t", "", sates_matrix$tree$tip.label)
             } else {
                 tsates_matrix$ree$tip.label <- seq(1:ape::Ntip(sates_matrix$tree))
@@ -216,7 +216,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 # ' A \code{states.matrix} object.
 # ' 
 # ' @examples
-# ' ## A balanced 12 taxa tree
+# ' ## A balanced 12 taxon tree
 # ' tree <- ape::read.tree(
 # '                  text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 # ' ## A character with inapplicable data

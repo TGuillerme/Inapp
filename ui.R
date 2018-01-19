@@ -3,7 +3,7 @@ shinyUI(fluidPage(
   wellPanel(
   
     titlePanel("Inapplicable data reconstruction"),
-    p("This will be supplementary material from", a(href="", "an awesome paper"), "."),
+    p("This package accompanies Brazeau, M. D., Guillerme, T., and Smith, M. R. (2017).  Morphological phylogenetic analysis with inapplicable data. Biorxiv. doi:", a(href="https://doi.org/10.1101/209775", "10.1101/209775"), "."),
     hr(),
   
     fluidRow(

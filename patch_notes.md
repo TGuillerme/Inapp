@@ -1,5 +1,9 @@
 Patch notes
 ----
+* 2018/01/19 - v0.3
+  * Updated references
+  * Updated error messages
+  * Changed mentions of "score" to "length" (in code and manuals)
 * 2017/09/20 - v0.2.2
   * Many minor bug fixes
   * Updated display management

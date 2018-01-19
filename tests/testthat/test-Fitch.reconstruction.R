@@ -1,19 +1,30 @@
 library(ape)
-context("preparing.fitch.matrices")
+context("preparing Fitch matrices")
 ## Trees for testing
 tree1 <- read.tree(text = "((((1,2),((3,4),(5,6))),7),8);")
 tree2 <- read.tree(text = "((((((((1,2),3),4),5),6),7),8),9);")
 tree3 <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 
 ## Characters for testing
-character1 <- "-125-2-1"
-character2 <- "01---1010"
+character1   <- "-125-2-1"
+character2   <- "01---1010"
 character3_1 <- "23--1??--032"
 character3_2 <- "1---1111---1"
 character3_3 <- "1100----0011"
 character3_4 <- "23--1----032"
 character3_5 <- "01---1010101"
 character3_6 <- "210--100--21"
+
+test_that("Characters can be parsed", {
+  expect_is(convert.char(character1  ), 'list')
+  expect_is(convert.char(character2  ), 'list')
+  expect_is(convert.char(character3_1), 'list') # Triggering warning
+  expect_is(convert.char(character3_2), 'list')
+  expect_is(convert.char(character3_3), 'list')
+  expect_is(convert.char(character3_4), 'list')
+  expect_is(convert.char(character3_5), 'list')
+  expect_is(convert.char(character3_6), 'list')
+})
 
 #########
 # Fitch
@@ -60,17 +71,17 @@ context("fitch.downpass")
 test_that("fitch.downpass works", {
     results1_fitch1_1 <- list(c(1),c(1,2),c(1,2),c(1),c(2),c(2,5),c(2))
     results2_fitch1_1 <- list(c(0,1),c(1),c(0,1),c(1),c(0,1),c(0,1),c(0,1),c(0,1))
-    
+
     results3_1_fitch1_1 <- list(c(2,3),c(1,2,3),c(1,2,3),c(2,3),c(2,3),c(2,3),c(0,2,3),c(0,2,3),c(0,2,3),c(0,2,3),c(2,3))
     results3_2_fitch1_1 <- list(c(1),c(1),c(1),c(1),c(1),c(1),c(1),c(1),c(1),c(1),c(1))
     results3_3_fitch1_1 <- list(c(0),c(0),c(0),c(0),c(0,1),c(1),c(0),c(0),c(0),c(0,1),c(1))
     results3_4_fitch1_1 <- list(c(2,3),c(1,2,3),c(1,2,3),c(2,3),c(2,3),c(2,3),c(0,2,3),c(0,2,3),c(0,2,3),c(0,2,3),c(2,3))
     results3_5_fitch1_1 <- list(c(1),c(1),c(0,1),c(0,1),c(0,1),c(0,1),c(0,1),c(1),c(0,1),c(1),c(0,1))
     results3_6_fitch1_1 <- list(c(0,1),c(1),c(0,1,2),c(0,1,2),c(0,1,2),c(1,2),c(0),c(0,1,2),c(1,2),c(1,2),c(1,2))
-    
+
     results1_fitch1_2 <- list(c(1,6),c(6),c(1,2,6),c(1,6),c(2),c(2,5),c(2,6))
     results2_fitch1_2 <- list(c(0,1),c(1),c(0,1,2),c(1,2),c(2),c(2),c(0,1,2),c(0,1))
-    
+
     results3_1_fitch1_2 <- list(c(4),c(1,4),c(1,4),c(4),c(2,3,4),c(2,3),c(4),c(4),c(0,2,3,4),c(0,2,3),c(2,3))
     results3_2_fitch1_2 <- list(c(1),c(1),c(1,2),c(2),c(2),c(1,2),c(1),c(1,2),c(2),c(2),c(1,2))
     results3_3_fitch1_2 <- list(c(2),c(2),c(0,2),c(0),c(0,1),c(1),c(2),c(0,2),c(0),c(0,1),c(1))
@@ -91,7 +102,7 @@ test_that("fitch.downpass works", {
         expect_equal(pass1_2_1[[2]][node+9], results2_fitch1_1[node])
         expect_equal(pass1_2_2[[2]][node+9], results2_fitch1_2[node])
     }
-    
+
     ## Testing tree 3
     for(node in 1:11) {
         # cat(paste(node, " ", sep =""))
@@ -161,7 +172,7 @@ test_that("fitch.uppass works", {
         expect_equal(pass2_2_1[[2]][node+9], results2_fitch2_1[node])
         expect_equal(pass2_2_2[[2]][node+9], results2_fitch2_2[node])
     }
-    
+
     ## Testing tree 3
     for(node in 1:11) {
         # cat(paste(node, " ", sep =""))

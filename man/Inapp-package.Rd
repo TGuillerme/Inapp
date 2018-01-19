@@ -12,7 +12,8 @@ An algorithm allowing states reconstruction and tree length counting for inappli
 
 }
 \references{
-Smith, M. R., Brazeau, M. D., and Guillerme, T., 20??. @@
+Brazeau, M. D., Guillerme, T., and Smith, M. R. 2017. Morphological 
+phylogenetic analysis with inapplicable data. Biorxiv. <https://doi.org/10.1101/209775>
 }
 \author{
 Thomas Guillerme <guillert@tcd.ie>

@@ -1,5 +1,5 @@
 library(ape)
-
+context("preparing.fitch.matrices")
 ## Trees for testing
 tree1 <- read.tree(text = "((((1,2),((3,4),(5,6))),7),8);")
 tree2 <- read.tree(text = "((((((((1,2),3),4),5),6),7),8),9);")

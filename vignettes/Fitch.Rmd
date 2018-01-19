@@ -1,6 +1,6 @@
 ---
 title: "The Fitch Algorithm"
-author: "Vignette Author"
+author: "Thomas Guillerme"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

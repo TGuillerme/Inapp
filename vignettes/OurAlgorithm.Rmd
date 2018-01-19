@@ -1,6 +1,6 @@
 ---
 title: "A four-pass algorithm for inapplicable data"
-author: "Vignette Author"
+author: "Thomas Guillerme"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

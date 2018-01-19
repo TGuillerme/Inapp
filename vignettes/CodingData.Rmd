@@ -1,6 +1,6 @@
 ---
 title: "How to code characters"
-author: "Vignette Author"
+author: "Martin R. Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -23,17 +23,44 @@ We assume that you'll already have read [OurAlgorithm.Rmd].
 
 ## Multiple dependencies
 
-It's not a problem to have characters dependent on characters that are dependent on characters.
-This is our chance to respond to Goloboff's point 6.
-
+- It's not a problem to have characters dependent on characters that are dependent on characters.
+- This is our chance to respond to Goloboff's point 6.
 
 ## A parsimony uninformative character that informs parsimony!
 
-- All tails are blue.  Let's say that they are all blue for some complex molecular reason
+- All tails are blue.  Let's say that they are all blue for some complex molecular reason, such that it is most parsimonious if "blueness" has a single evolutionary origin.
+
+```{r tail colour characters, echo = FALSE, results='asis'}
+library(knitr)
+tail <- c(0, 0, 0, 0, 1, 1, 1, 1)
+col <- c(rep('-', 4), rep(1, 4))
+bcol <- c(1,1, 2,2,2,2, 1,1)
+blueTails <- matrix(c(tail, col, bcol), byrow=TRUE, ncol=length(tail))
+colnames(blueTails) <- LETTERS[seq_along(char)]
+rownames(blueTails) <- c("Tail: (0), absent; (1), present",
+                         "Tail colour: (-), inapplicable; (1), blue",
+                         "Body colour: (1), black; (2), white")
+kable(blueTails, capiton="Coding")
+```
+
 - This complex molecular reason is grounds to suspect that the tails have a common ancestor
 - More formally, we wish to attribute this complex molecular reason to common ancestry, rather than homoplasy
 - Thus "blueness" represents a separate character that has the same distribution as tails (or a sbuset thereof, if some tails are of uncertain colour)
 
+Let's compare two trees.  One groups taxa based on the presence of tails; the other
+groups taxa based on body colour.
+
+```{R invariant yet informative, echo=FALSE}
+par(mfrow=c(1, 2))
+tailTree <- ape::read.tree(text="((((A, B), C), D), (E, (F, (G, H))));")
+bodyTree <- ape::read.tree(text="((A, B), (((C, D), (E, F)), (G, H)));")
+plot(tailTree)
+character <- "----1111"
+tailMatrix <- apply.reconstruction(tailTree, character, method='NA')
+plot.states.matrix(matrix, 1, counts=2)
+plot(bodyTree)
+
+```
 - We should include this character if it's meaningful.  But not if it's not (e.g. number of base pairs in a tail).
 
 

@@ -16,7 +16,7 @@ test_that("convert.char works", {
     expect_is(convert.char(list(1)), "list")
 
     ## Right conversion
-    expect_warning(test <- convert.char(character))
+    test <- convert.char(character)
     for(elem in 1:length(list_out)) {
         expect_true(all(test[[elem]] == list_out[[elem]]))
     }
@@ -29,7 +29,7 @@ test_that("convert.char works", {
     ## Complex conversion
     character <- "{01}{-0}?-01"
     list_out <- list(c(0,1), c(-1,0), c(-1,0,1), -1, 0, 1)
-    expect_warning(test <- convert.char(character))
+    test <- convert.char(character)
     for(elem in 1:length(list_out)) {
         expect_true(all(test[[elem]] == list_out[[elem]]))
     }
@@ -46,7 +46,7 @@ test_that("make.states.matrix works", {
     expect_error(make.states.matrix(tree, 1, inapplicable = NULL))
 
     ## Right output style
-    expect_warning(matrix <- make.states.matrix(tree, character))  # Warning is some weird NA management by testthat
+    matrix <- make.states.matrix(tree, character)
     expect_is(matrix, "states.matrix")
     expect_equal(unique(unlist(lapply(matrix, class))), c("list", "integer", "phylo"))
     expect_equal(as.integer(lapply(matrix, length)), c(7,7,7,7,7,4,0,0,0,3,1,1))
@@ -54,10 +54,10 @@ test_that("make.states.matrix works", {
     expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "regions", "changes", "score",  "tree", "n_tip", "n_node"))
     expect_equal(ape::Ntip(matrix$tree), matrix$n_tip)
     expect_equal(ape::Nnode(matrix$tree), matrix$n_node)
-    
+
     ## Right output values
-    expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1)))  # Warning is some weird NA management by testthat
-    expect_warning(expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2, match.tip.char = TRUE)[[1]]), c(2,0,1,2,0,1)))  # Warning is some weird NA management by testthat
+    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1))
+    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2, match.tip.char = TRUE)[[1]]), c(2,0,1,2,0,1))
 
 
     ## Matching the character to the tips

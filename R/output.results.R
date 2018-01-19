@@ -157,7 +157,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 
         ## Translate the tip labels
         if(!all(sates_matrix$tree$tip.label == "numeric")) {
-            if(length(grep("t", sates_matrix$tree$tip.label)) == ape::Ntip(tree)) {
+            if(length(grep("t", sates_matrix$tree$tip.label)) == states_matrix$n_tip) {
                 sates_matrix$tree$tip.label <- gsub("t", "", sates_matrix$tree$tip.label)
             } else {
                 tsates_matrix$ree$tip.label <- seq(1:ape::Ntip(sates_matrix$tree))
@@ -216,7 +216,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 # ' A \code{states.matrix} object.
 # ' 
 # ' @examples
-# ' ## A balanced 12 taxa tree
+# ' ## A balanced 12 taxon tree
 # ' tree <- ape::read.tree(
 # '                  text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 # ' ## A character with inapplicable data

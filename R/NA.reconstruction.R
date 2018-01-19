@@ -28,10 +28,10 @@ first.downpass <- function(states_matrix) {
     states_matrix$Dp1 <- states_matrix$Char
 
     ## Set up the root state
-    # states_matrix$Up1[[ape::Ntip(tree)+1]] <- states_matrix$Dp1[[ape::Ntip(tree)+1]]
+    # states_matrix$Up1[[states_matrix$n_tip+1]] <- states_matrix$Dp1[[states_matrix$n_tip+1]]
 
     ## Loop through the nodes
-    for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) {
+    for(node in rev(states_matrix$n_tip+1:states_matrix$n_node)) {
         ## Select the descendants and ancestors
         desc_anc <- desc.anc(node, tree)
         right <- states_matrix$Dp1[desc_anc[1]][[1]] # The node's right descendant
@@ -91,14 +91,14 @@ first.uppass <- function(states_matrix) {
     states_matrix$Up1 <- states_matrix$Char
         
     ## Pre-condition: if the root is inapplicable AND applicable, remove inapplicable (if there's more than 2 states and one -1)
-    if(length(states_matrix$Dp1[[ape::Ntip(tree)+1]]) > 1 && any(states_matrix$Dp1[[ape::Ntip(tree)+1]] == -1)) {
-        states_matrix$Up1[[ape::Ntip(tree)+1]] <- states_matrix$Dp1[[ape::Ntip(tree)+1]][states_matrix$Dp1[[ape::Ntip(tree)+1]] != -1]
+    if(length(states_matrix$Dp1[[states_matrix$n_tip+1]]) > 1 && any(states_matrix$Dp1[[states_matrix$n_tip+1]] == -1)) {
+        states_matrix$Up1[[states_matrix$n_tip+1]] <- states_matrix$Dp1[[states_matrix$n_tip+1]][states_matrix$Dp1[[states_matrix$n_tip+1]] != -1]
     } else {
-        states_matrix$Up1[[ape::Ntip(tree)+1]] <- states_matrix$Dp1[[ape::Ntip(tree)+1]]
+        states_matrix$Up1[[states_matrix$n_tip+1]] <- states_matrix$Dp1[[states_matrix$n_tip+1]]
     }
 
     ## For each node from the root
-    for(node in (ape::Ntip(tree)+2:ape::Nnode(tree))) { ## Start past the root (+2)
+    for(node in (states_matrix$n_tip+2:states_matrix$n_node)) { ## Start past the root (+2)
 
         curr_node <- states_matrix$Dp1[[node]] # The current node
         ## Select the descendants and ancestors
@@ -176,7 +176,7 @@ second.downpass <- function(states_matrix) {
     states_matrix$Dp2 <- states_matrix$Char
 
     ## Loop through the nodes
-    for(node in rev(ape::Ntip(tree)+1:ape::Nnode(tree))) {
+    for(node in states_matrix$n_tip+states_matrix$n_node:1) {
 
 
         # if(node == 136) {
@@ -231,7 +231,7 @@ second.downpass <- function(states_matrix) {
                     states_matrix$changes <- c(states_matrix$changes, node)
                 } else { #TG:\ref count regions
                     if(right_applicable && left_applicable) {
-                        if(any(desc_anc[1:2] > ape::Ntip(tree))) {
+                        if(any(desc_anc[1:2] > states_matrix$n_tip)) {
                             ## Increment the counting only if the region is depending on at least one node (i.e. ignore tips)
                             states_matrix$regions <- states_matrix$regions + 1
                         }
@@ -292,7 +292,7 @@ second.uppass <- function(states_matrix) {
     states_matrix$Up2 <- states_matrix$Char
 
     ## For each node from the root
-    for(node in (ape::Ntip(tree)+1:ape::Nnode(tree))) {
+    for(node in (states_matrix$n_tip+1:states_matrix$n_node)) {
 
         curr_node <- states_matrix$Dp2[[node]]
         ## Select the descendants and ancestors
@@ -356,7 +356,7 @@ second.uppass <- function(states_matrix) {
 
             ## Counting
             if(right_applicable && left_applicable) {
-                if(any(desc_anc[1:2] > ape::Ntip(tree))) {
+                if(any(desc_anc[1:2] > states_matrix$n_tip)) {
                     ## Increment the counting only if the region is depending on at least one node (i.e. ignore tips)
                     states_matrix$regions <- states_matrix$regions + 1
                 }

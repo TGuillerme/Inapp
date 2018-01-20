@@ -209,7 +209,7 @@ shinyServer(
                     suffix <- ifelse(suffix == "nexus", "nex", suffix)
                     suffix <- ifelse(suffix == "C-test", "txt", suffix)
                     ## Getting the output name
-                    paste(paste("Inapp", format(Sys.time(), "%Y-%m-%d-%H%M%S"), sep = "_"), sep = ".", suffix)  #TG: or date format as "format(Sys.time(), "%Y-%m-%d-%X")"
+                    paste(paste("Inapp", format(Sys.time(), "%Y-%m-%d-%H%M%S"), sep = "_"), sep = ".", suffix)
                 },
 
                 ## Export management

@@ -225,22 +225,27 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
             node_labels <- paste(node_labels, paste(pass, ": ", plot.convert.state(states_matrix[[pass + 1]][-seq_len(n_tip)]), sep = ""), sep = "\n")
         }
 
-        ## Set the colors for the changes
-        if(any(counts == 2)) {
-            bg_col <- rep(col.tips.nodes[2], states_matrix$n_node)
-            if (any(changes %in% regions)) {
-              warning("Probable bug: Shouldn't be able to have a transformation and a region at the same node")
-            }
-            
-            ## Change the colors of the nodes if activations exist
-            if(length(changes) > 0) {
-                bg_col[changes - n_tip] <- col.tips.nodes[3]
-            }
-            if (length(regions)) {
-                bg_col[regions - n_tip] <- col.tips.nodes[4]
-            }
+        ## Set the nodes colours
+        bg_col <- rep(col.tips.nodes[2], states_matrix$n_node)
+
+        if(all(counts == 1)) {
+            ## Regions only
+            if(length(regions) > 0) bg_col[regions - n_tip] <- col.tips.nodes[4]
         } else {
-            bg_col <- col.tips.nodes[2]
+            if(all(counts == 2)) {
+                ## Changes only
+                if(length(changes) > 0) bg_col[changes - n_tip] <- col.tips.nodes[3]
+            } else {
+                if(all(counts %in% c(1,2))) {
+                    ## Regions and changes
+                    if(length(changes) > 0) bg_col[changes - n_tip] <- col.tips.nodes[3]
+                    if(length(regions) > 0) bg_col[regions - n_tip] <- col.tips.nodes[4]
+                    ## Overlapping
+                    # if(any(changes %in% regions)) {
+                    #     bg_col[changes[which(changes %in% regions)]] <- 
+                    # }
+                }
+            }
         }
 
         ## Plot the node labels

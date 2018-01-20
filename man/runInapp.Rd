@@ -4,10 +4,12 @@
 \alias{runInapp}
 \title{Run Inapp}
 \usage{
-runInapp(...)
+runInapp(..., remote = TRUE)
 }
 \arguments{
 \item{...}{Any optional option to be passed to shiny::runApp}
+
+\item{remote}{Whether to run the app from a remote server (\code{TRUE}, default - \code{shiny::runGitHub("Inapp", "TGuillerme", ...)}) or from the local server (\code{FALSE} - \code{shiny::runApp(".", ...)}).}
 }
 \description{
 Running the Inapp GUI via shiny

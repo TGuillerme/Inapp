@@ -24,7 +24,7 @@
 \item{...}{any optional arguments to be passed to \code{\link[ape]{plot.phylo}}}
 }
 \description{
-Plots an ancestral states reconstruction and tree length
+Plots an ancestral states reconstruction and tree score
 }
 \examples{
 ## A balanced 12 taxa tree

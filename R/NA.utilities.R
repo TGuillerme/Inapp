@@ -9,7 +9,7 @@
 #'
 #' @details
 #' If \code{character} argument is a list, each element of the list must be a \code{"numeric"} vector with \code{"?"} being all states and \code{"-"} being \code{-1}.
-#' 
+#'
 #' @return
 #' A list of character states for each node and tip per pass:
 #' -\code{$Char}: a \code{list} of character states for the tips.
@@ -24,22 +24,22 @@
 #' -\code{$tree}: a \code{phylo} object describing the tree.
 #' -\code{$n_tip}: a \code{numeric} vector recording the number of tips.
 #' -\code{$n_node}: a \code{numeric} vector recording the number of (internal) nodes within the tree.
-#' 
+#'
 #' @examples
 #' ## A simple topology
 #' tree <- ape::read.tree(text = "((a,b),(c,d));")
-#' 
+#'
 #' ## A simple character
 #' character <- "0101"
-#' 
+#'
 #' ## Create a states matrix for reconstruction
 #' make.states.matrix(tree, character)
-#' 
+#'
 #' ## A complex character
 #' character <- "0{01}-?"
-#' 
+#'
 #' @seealso \code{\link{apply.reconstruction}}.
-#' 
+#'
 #' @author Thomas Guillerme
 #' @export
 
@@ -48,12 +48,12 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Check if the tree is a tree!
     if(class(tree) != "phylo") {
         stop("The tree must be of class 'phylo'.")
-    } 
-    
+    }
+
     # Read tree properties
-    n_tip <- ape::Ntip(tree)
-    n_node <- ape::Nnode(tree)
-    
+    n_tip <- length(tree$tip.label)
+    n_node <- tree$Nnode
+
     ## Transform character
     if(class(character) != "list") {
         character <- convert.char(character)
@@ -72,8 +72,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
         ## How to treat inapplicables (for Fitch)
         find.inapplicable <- function(one_char, replace) {
             if(any(one_char == -1)) {
-                one_char <- one_char[one_char != -1]
-                one_char <- c(one_char, replace)
+                one_char <- c(one_char[one_char != -1], replace)
                 one_char <- sort(unique(one_char))
             }
             return(one_char)
@@ -85,37 +84,33 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
             character <- lapply(character, find.inapplicable, replace)
         } else {
             ## Inapplicable is an extra state
-            replace <- max(unlist(character))+1
+            replace <- max(unlist(character)) + 1
             character <- lapply(character, find.inapplicable, replace)
         }
     }
 
     ## Sorting the character to match the tip.labels entry
     if(match.tip.char == TRUE) {
-        options(warn = -1)
+        tip_labels <- tree$tip.label
         ## Check if tips are alphanumeric
-        if(any(is.na(as.numeric(tree$tip.label)))) {
+        if(all(vapply(tip_labels, is.numeric, logical(1)))) {
+          ## Get the tips in numeric order
+          ordering <- match(as.numeric(tip_labels), sort(as.numeric(tip_labels)))
+        } else {
             ## Check if tips contain numeric
-            if(all(grepl("\\d", tree$tip.label))) {
-                ## Getting the numeric part of the tips in alphabetical order
-                alpha_char <- unique(unlist(strsplit(tree$tip.label, split = "\\d")))
-                ## Remove blanks
-                alpha_char <- alpha_char[alpha_char != ""]
-                ## Get the tips ordering
-                tips_numbers <- unlist(strsplit(tree$tip.label, split = alpha_char))
-                ## Remove blanks
-                tips_numbers <- tips_numbers[tips_numbers != ""]
-                ## Getting the tips order
-                ordering <- match(tips_numbers, sort(tips_numbers))
+          matches <- gregexpr("\\d+(\\.\\d+)?", tip_labels, perl=TRUE)
+          if (all(matches > -1)) {
+              tip_numbers <- regmatches(tip_labels, matches)
+              if (any (vapply(tip_numbers, length, integer(1)) > 1)) {
+                stop("Some tips bear multiple numeric components.")
+              }
+              tip_numbers <- as.numeric(tip_numbers)
+              ordering <- match(tip_numbers, sort(tip_numbers))
             } else {
                 ## Getting the tips in alphabetical order
-                ordering <- match(tree$tip.label, sort(tree$tip.label))
+                ordering <- match(tip_labels, sort(tip_labels))
             }
-        } else {
-            ## Getting the tips in numeric order
-            ordering <- match(as.numeric(tree$tip.label), sort(as.numeric(tree$tip.label)))
         }
-        options(warn = 0)
     } else {
         ordering <- seq_len(n_tip)
     }
@@ -142,7 +137,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     states_matrix$tree <- tree
     states_matrix$n_tip <- n_tip
     states_matrix$n_node <- n_node
-    
+
 
     ## Set up the NA_matrix class
     class(states_matrix) <- "states.matrix"
@@ -157,28 +152,28 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
 #'
 #' @param x A \code{dispRity} object.
 #' @param ... further arguments to be passed to \code{print}.
-#' 
+#'
 #' @examples
 #' ## A simple topology
 #' tree <- ape::read.tree(text = "((a,b),(c,d));")
-#' 
+#'
 #' ## A simple character
 #' character <- "01?-"
-#' 
+#'
 #' ## Create a states matrix for reconstruction
 #' make.states.matrix(tree, character)
-#' 
+#'
 #'
 #' @seealso \code{\link{make.states.matrix}}.
 #'
 #' @author Thomas Guillerme
-#' 
+#'
 
 print.states.matrix <- function(x, ...) {
 
     ## Record the call
     match_call <- match.call()
-    x_name <- ifelse(class(match_call$x) == "name", as.character(as.name(match_call$x)), "states_matrix") 
+    x_name <- ifelse(class(match_call$x) == "name", as.character(as.name(match_call$x)), "states_matrix")
 
     ## Number of tips
     num_tips <- ceiling(length(x$Char)/2)
@@ -215,11 +210,11 @@ print.states.matrix <- function(x, ...) {
                 cat(": NULL\n")
             }
         }
-        ## Length
-        length <- x$regions + ifelse(length(x$changes) > 0, length(x$changes), 0)
-        cat(paste("Tree length is:", length, "\n"))
+        ## Score
+        score <- x$regions + ifelse(length(x$changes) > 0, length(x$changes), 0)
+        cat(paste("Tree score is:", score, "\n"))
         ## Details
-        if(length != 0) {
+        if(score != 0) {
             cat(paste(x$regions, "additional applicable regions.\n"))
             if(length(x$changes) > 1) {
                 cat("State changes at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
@@ -230,9 +225,9 @@ print.states.matrix <- function(x, ...) {
                     cat("No state changes.\n")
                 }
             }
-        } 
+        }
     } else {
-        cat("No reconstructions calculated. See:\n ?apply.reconstruction\nto reconstruct ancestral states and count the tree length.\n")
+        cat("No reconstructions calculated. See:\n ?apply.reconstruction\nto reconstruct ancestral states and score the tree.\n")
     }
     return(invisible())
 }
@@ -241,18 +236,6 @@ print.states.matrix <- function(x, ...) {
 
 ## Converts a character (inapplicable or missing)
 convert.char <- function(character) {
-
-    convert.inappli <- function(X) {
-        return(ifelse(X == "-", -1, X))
-    }
-
-    convert.missing <- function(X, all_states) {
-        if(X[1] == "?") {
-            return(all_states)
-        } else {
-            return(X)
-        }
-    }
 
     ## Character is a list
     if(class(character) == "list") {
@@ -267,62 +250,32 @@ convert.char <- function(character) {
     if(class(character) == "numeric") {
         return(as.list(character))
     }
-    
+
     ## Character is not numeric
     if(class(character) == "character") {
-    
+
+        ## Get all the states
+        stateslist <- paste0(character, collapse='')
+        matches <- gregexpr("[0-9\\-]", stateslist, perl=TRUE)
+        all_states <- unique(regmatches(stateslist, matches)[[1]])
+
+        ## Split into individual character states
         if(length(character) == 1) {
-            #Split the character chain
-            character <- as.character(strsplit(as.character(character), "")[[1]])
-            ## Check for polymorphic characters
-            polymorphic_start <- which(character == "{")
-            polymorphic_end <- which(character == "}")
-            if(length(polymorphic_start) != length(polymorphic_end)) {
-                stop("Some brackets are missing for polymorphic characters")
-            }
-
-            ## Dealing with the polymorphic positions
-            if(length(polymorphic_start) > 0) {
-                poly_states <- list()
-                for(one_char in 1:length(polymorphic_start)) {
-                    ## Getting the character states
-                    poly_states[[one_char]] <- character[(polymorphic_start[one_char]+1):(polymorphic_end[one_char]-1)]
-                    ## Removing the polymorphy
-                    character[(polymorphic_start[one_char]+1):polymorphic_end[one_char]] <- NA
-                }
-                ## Remove NAs (the polymorphies)
-                character <- character[!is.na(character)]
-            }
-
-        } else {
-            polymorphic_start <- numeric()
+            matches <- gregexpr("\\{[^\\}]+\\}|.", character, perl=TRUE)
+            character <- regmatches(character, matches)[[1]]
         }
-
-        ## Convert into list
         character <- as.list(character)
-        if(length(polymorphic_start) > 0) {
-            ## add the polymorphic characters back in position
-            poly_position <- which(character == "{")
-            ## Replace the characters
-            for(one_char in 1:length(polymorphic_start)) {
-                character[[poly_position[one_char]]] <- poly_states[[one_char]]
-            }
-        }
+
+        ## Convert ambiguous
+        character[character=="?"] <- list(all_states)
 
         ## Convert inapplicable
-        character <- lapply(character, convert.inappli)
-        
-        ## Get all states
-        options(warn = -1)
-        all_states <- unlist(lapply(character, as.numeric))
-        options(warn = 0)
-        all_states <- unique(all_states[!is.na(all_states)]) # | (all_states != -1))]
-
-        ## Convert missing
-        character <- lapply(character, convert.missing, all_states)
-
-        ## Convert into numeric
-        return(lapply(character, function(X) sort(as.numeric(X))))
+        character <- lapply(character, function (states) {
+          states <- unlist(strsplit(gsub("[\\{\\}]", "", states), ''))
+          states[states=='-'] <- -1
+          sort(as.numeric(states))
+        })
+        return(character)
     }
 }
 

@@ -6,8 +6,8 @@ test_that("make.output.data.frame works", {
     ## Generating some data
     tree <- ape::read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
     character <- "23--1??--032"
-    expect_warning(NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA"))
-    expect_warning(Fitch_matrix <- apply.reconstruction(tree, character, passes = 2, method = "Fitch"))
+    NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
+    Fitch_matrix <- apply.reconstruction(tree, character, passes = 2, method = "Fitch")
 
     ## Creating the output matrix
     test_NA <- make.output.data.frame(NA_matrix)
@@ -40,7 +40,7 @@ test_that("write.tree.commented works", {
     ## Generating some data
     tree <- ape::read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
     character <- "23--1??--032"
-    expect_warning(NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA"))
+    NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
     test_NA <- make.output.data.frame(NA_matrix)
 
 

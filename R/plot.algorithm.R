@@ -1,6 +1,6 @@
 #' @title Plot tree and ancestral states
 #'
-#' @description Plots an ancestral states reconstruction and tree length
+#' @description Plots an ancestral states reconstruction and tree score
 #'
 #' @param states_matrix A \code{states.matrix} list from \code{\link{apply.reconstruction}}
 #' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
@@ -144,7 +144,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
 
 
     ## Setting up the legend parameters
-    length_text <-  paste("Tree length is", states_matrix$regions + ifelse(length(states_matrix$changes) > 0, length(states_matrix$changes), 0))
+    length_text <-  paste("Tree score is", states_matrix$regions + ifelse(length(states_matrix$changes) > 0, length(states_matrix$changes), 0))
     if(all(counts == 0)) {
         legend_text <- length_text
         par_cex = 0

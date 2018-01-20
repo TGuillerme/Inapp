@@ -20,7 +20,7 @@
 #' -\code{$tracker}: a \code{list} tracking the applicable regions.
 #' -\code{$regions}: a single \code{numeric} value counting the number of applicable regions.
 #' -\code{$changes}: a \code{numeric} vector recording the node with state changes.
-#' -\code{$length}: a \code{numeric} vector recording the length of the tree.
+#' -\code{$score}: a \code{numeric} vector recording the score of the tree.
 #' -\code{$tree}: a \code{phylo} object describing the tree.
 #' -\code{$n_tip}: a \code{numeric} vector recording the number of tips.
 #' -\code{$n_node}: a \code{numeric} vector recording the number of (internal) nodes within the tree.
@@ -125,13 +125,13 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
 
     ## Set a applicable regions counts
-    states_matrix$regions <- 0
+    states_matrix$regions <- integer(0)
 
     ## Save the node with changes
-    states_matrix$changes <- numeric(0)
+    states_matrix$changes <- integer(0)
 
-    ## Total length
-    states_matrix$length <- numeric(0)
+    ## Total score
+    states_matrix$score <- integer(0)
 
     ## Add the tree, with its properties
     states_matrix$tree <- tree
@@ -211,11 +211,11 @@ print.states.matrix <- function(x, ...) {
             }
         }
         ## Score
-        score <- x$regions + ifelse(length(x$changes) > 0, length(x$changes), 0)
+        score <- length(x$regions) + ifelse(length(x$changes) > 0, length(x$changes), 0)
         cat(paste("Tree score is:", score, "\n"))
         ## Details
         if(score != 0) {
-            cat(paste(x$regions, "additional applicable regions.\n"))
+            cat(paste(length(x$regions), "additional applicable regions.\n"))
             if(length(x$changes) > 1) {
                 cat("State changes at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
             } else {
@@ -322,4 +322,15 @@ get.union.excl <- function(a, b) {
     } else {
         return(sort(unique(out)))
     }
+}
+
+
+# Score from marked nodes
+# 
+# @param counted.nodes An \code{integer} vector listing nodes at which a score was noted
+# 
+# @return The number of items in the vector: zero if none
+# @keywords internal
+score.from <- function (counted.nodes) {
+  if (length(counted.nodes)) return (length(counted.nodes)) else return (0);
 }

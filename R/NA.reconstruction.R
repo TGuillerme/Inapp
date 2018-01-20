@@ -233,7 +233,8 @@ second.downpass <- function(states_matrix) {
                     if(right_applicable && left_applicable) {
                         if(any(desc_anc[1:2] > states_matrix$n_tip)) {
                             ## Increment the counting only if the region is depending on at least one node (i.e. ignore tips)
-                            states_matrix$regions <- states_matrix$regions + 1
+                            states_matrix$regions <- c(states_matrix$regions, node)
+                            # states_matrix$regions <- states_matrix$regions + 1
                         }
                     }
                 }
@@ -358,7 +359,8 @@ second.uppass <- function(states_matrix) {
             if(right_applicable && left_applicable) {
                 if(any(desc_anc[1:2] > states_matrix$n_tip)) {
                     ## Increment the counting only if the region is depending on at least one node (i.e. ignore tips)
-                    states_matrix$regions <- states_matrix$regions + 1
+                    # states_matrix$regions <- states_matrix$regions + 1
+                    states_matrix$regions <- c(states_matrix$regions, node)
                 }
             }
         }

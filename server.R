@@ -196,9 +196,8 @@ shinyServer(
                 show_passes <- as.vector(as.numeric(input$showPassFitch))
             }
 
-            plot.states.matrix(states_matrix, passes = show_passes, show.labels = showlabels, counts = as.vector(as.numeric(input$counts)))
-
-
+            plot.states.matrix(states_matrix, passes = show_passes, show.labels = showlabels, counts = as.vector(as.numeric(input$counts)), col.states = input$colour_states)
+            
             ## Exporting data
             output$downloadData <- downloadHandler(
 

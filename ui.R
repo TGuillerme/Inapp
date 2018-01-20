@@ -71,6 +71,10 @@ shinyUI(fluidPage(
             numericInput("character_num", label = h5("Selected character:"), value = 1)
           ),
 
+          ## Colour states
+          checkboxInput("colour_states", label = "Colour states", value = FALSE),
+
+
           ## --------------------
           ## Exports (in column "character")
           ## --------------------

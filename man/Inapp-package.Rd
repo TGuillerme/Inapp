@@ -20,9 +20,9 @@ Thomas Guillerme <guillert@tcd.ie>
 }
 \keyword{characters,}
 \keyword{inapplicable}
-\keyword{length}
 \keyword{maximum}
 \keyword{parsimony,}
 \keyword{reconstruction,}
+\keyword{score}
 \keyword{states}
 \keyword{tree}

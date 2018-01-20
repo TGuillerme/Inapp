@@ -365,6 +365,10 @@ second.uppass <- function(states_matrix) {
             }
         }
     }
+
+    ## Update the tree score
+    states_matrix$score <- score.from(states_matrix$regions) + score.from(states_matrix$changes) 
+
     return(states_matrix)
 }
 

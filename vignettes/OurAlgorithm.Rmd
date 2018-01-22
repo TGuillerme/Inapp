@@ -1,0 +1,48 @@
+---
+title: "A four-pass algorithm for inapplicable data"
+author: "Thomas Guillerme"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{5. Our algorithm}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Inapplicable data in a parsimony setting
+
+This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [@ThisStudy].
+
+We assume that you'll already have read [Fitch.Rmd], [Problems.Rmd] and [FailedSolutions.Rmd] and [OurSolution.Rmd].
+
+## Outline 
+### Task one: Identify applicable regions
+- Easy - infer the distribution of the parent character and do a fitch on it.  Assume present whereever you can.
+
+### Task two: Count changes in applicable regions
+- Easy - if you are in a region, count the change; if not, don't.
+
+### Task three: Count the number of applicable regions
+- Harder. 
+
+#### Colouring rule A
+
+#### Colouring rule B
+
+#### Implications
+- Both rules identify a unique and different node whenever they are performed.
+- Perhaps, instead of doing the colouring, we could just identify and count these nodes?
+
+## Implementation
+### Passes 1 & 2
+- Basically a standard Fitch on the inferred parent character, working out where it can be present
+
+### Pass 3
+- Does the scoring.  Looks for:
+-- Transformations in applicable regions
+-- Nodes affected by colouring rule one
+-- Nodes affected by colouring rule two
+
+### Pass 4
+- Only required if you want to reconstruct character states.
+

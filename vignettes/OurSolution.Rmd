@@ -1,0 +1,45 @@
+---
+title: "Counting homologies is the answer"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{4. Our solyution}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Inapplicable data in a parsimony setting
+
+This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [@ThisStudy].
+
+We assume that you'll already have read [Fitch.Rmd], [Problems.Rmd] and [FailedSolutions.Rmd].
+
+## What we count
+The problem with the Fitch is that it counts steps.
+
+We get around this by counting homoplasies.
+See De Laet's work on this.
+
+The total score = steps + (additional) regions.
+
+Here's an example tree showing that.
+
+### What does it take to denote separate regions?
+- Three inapplicable tips, arranged just so.
+(Addresses Goloboff's comment.)
+
+## How this fixes the problem
+
+Here are some examples of how this fixes the problems that we encountered.
+
+## Furhter examples
+
+Here are Goloboff's trees as examples of how we would approach them, and why that's preferable to how he woudl approach them
+
+Here are De Laet's cases and here's why they aren't problematic.
+
+
+## Summary
+
+We can show that this produces the correct behaviour.  But how do we count this in practice?

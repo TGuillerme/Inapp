@@ -96,8 +96,8 @@ test_that("desc.anc works", {
     ## Not working (wrong input)
     expect_error(desc.anc(1, "tree"))
     expect_error(desc.anc(1, matrix(0)))
-    expect_equal(desc.anc("a", tree), numeric(0))
-    expect_equal(desc.anc(88, tree), numeric(0))
+    expect_equal(desc.anc("a", tree), integer(0))
+    expect_equal(desc.anc(88, tree), integer(0))
 
     ## Right output
     expect_is(desc.anc(6, tree), "integer")

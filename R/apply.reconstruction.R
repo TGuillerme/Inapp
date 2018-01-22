@@ -47,7 +47,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-apply.reconstruction <- function(tree, character, passes = 4, method, inapplicable, match.tip.char = FALSE) {
+apply.reconstruction <- function(tree, character, passes = 4, method = "NA", inapplicable = NULL, match.tip.char = FALSE) {
 
     ## Method
     if(!(method %in% c("NA","Fitch"))) {
@@ -73,18 +73,18 @@ apply.reconstruction <- function(tree, character, passes = 4, method, inapplicab
 
     ## Setting the list of passes
     if(method == "NA") {
-        n_passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
+        passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
     } else {
-        n_passes <- list(fitch.downpass, fitch.uppass)
+        passes <- list(fitch.downpass, fitch.uppass)
     }
 
     ## Applying the passes for each node
-    for (pass in 1:passes) {
-        states_matrix <- n_passes[[pass]](states_matrix)
+    for (pass in passes) {
+        states_matrix <- pass(states_matrix)
     }
 
-    ## Get the total length of the tree
-    states_matrix$score <- length(states_matrix$changes) + length(states_matrix$regions)
+    ## Get the total score of the tree
+    states_matrix$score <- score.from(states_matrix$changes) + score.from(states_matrix$regions)
 
     return(states_matrix)
 }

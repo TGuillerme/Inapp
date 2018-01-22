@@ -30,7 +30,7 @@ nodelabels(tree$node.label)
 
 A downpass traversal will first apply the algorithm to the first cherry (or pair of taxa) (`A` below), then save the results in `n1` and move to the second pair of tips/nodes (`B`), apply the algorithm and save the results in `n2`, etc. until all the nodes/tips are visited.
 
-```{r downpass, echo = FALSE, fig.width = 6, fig.height = 6}
+```{r EGdownpass, echo = FALSE, fig.width = 6, fig.height = 6}
 plot(tree, main = "downpass traversal")
 nodelabels(tree$node.label)
 
@@ -108,47 +108,82 @@ text(0.7, 3.5, "A", cex = 1)
 
 In both traversals, the direction (i.e. which cherry to pick first in a downpass traversal or whether to continue left or right in an uppass traversal) can be arbitrary as long as all tips and nodes are always visited.
 
-### Downpass
-
 Now let's consider a more complex tree `((((a, b), c), d), (e, (f, (g, h))));` with a binary character distributed for the tips `10011001` respectively to the tips alphabetical order.
 
 
-
-- Scoring occurs on downpass
-
-```{r Fitch Downpass, echo=FALSE, eval = FALSE}
-library(Inapp)
+```{r TreeExample, echo = FALSE, fig.width = 6, fig.height = 6}
 tree <- ape::read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
-character <- "10011001"
 
 ## Plotting the tree and characters,
-plot(tree, show.tip.label = FALSE)
-tiplabels(c(1,0,0,1,1,0,0,1), col = "orange")
-tiplabels(tree$tip.label, adj = 0.5)
+plot(tree, adj = 0.5)
+tiplabels(c(1,0,0,1,1,0,0,1), cex = 1, bg = "orange", adj = 1)
+nodelabels(paste0("n", 9:15), bg = "bisque")
 
+```
 
+We can use the `Inapp` package to apply the Fitch algorithm for this character on this tree.
 
+```{r FitchRecon}
+## Loading the Inapp package
+library(Inapp)
+
+## The tree
+tree <- read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
+
+## The character
+character <- "10011001"
+
+## Applying the Fitch algorithm
 matrix <- apply.reconstruction(tree, character, method = "Fitch", passes = 2)
-plot.states.matrix(matrix, 1, counts = 2)
+```
+
+### Downpass
+
+The downpass is quiet simple and follow the following rules for the two possible cases in the traversal:
+
+ 1. If the two considered tips or nodes have _at least one state in common_, set the node to be these states in *common*.
+ 2. Else, if there is _nothing in common_ between the to tips or nodes, set the node to be the *union* of the two states.
+
+For example, node `n15` is case 2 because there is _nothing in common_ between the tips `h` and `g` (respectively states `1` and `0`). Node `n14` is case 1 because there is _at least one state in common_ between the tip `f` and the node `n15` (state `0`).
+
+> Important: when the case 2 is encountered, a transformation is implied in the descendants of the considered node. The score of the tree is incremented by +1.
+
+In the following example, nodes that are in case one are in light orange and nodes that imply a transformation (i.e. that add to the tree score) are in blue.
 
 
-plot(states_matrix, passes = 0, show.labels = 1, use.edge.length = FALSE, col.states = FALSE)
-
-
+```{r plotDownpass, fig.width = 6, fig.height = 6}
+## Plotting the first downpass
+plot.states.matrix(matrix, passes = 1, counts = 2, show.labels = c(1,2))
 ```
 
 ### Uppass
 
+The downpass is sufficient for calculating the score of the tree but some nodes might node yet be properly resolved.
+For example, it seems clear that the sate of node `n14` could not be `0` since both it's ancestor and one of its descendant as an ambiguous state of `01`.
+It would less parsimonious for this node to be also ambiguous (rather than implying the loss and the subsequent gain of the state `1` on the branch fron `n13` to `h`).
 
-- Character states finalised on uppass
+Similarly to the downpass, it is possible to run a traversal with the following rules:
 
-```{r Fitch Uppass, echo=FALSE, eval = FALSE}
-tree <- ape::read.tree(text="((((a, b), c), d), (e, (f, (g, h))));")
-character <- "10011001"
-matrix <- apply.reconstruction(tree, character, method="Fitch")
-plot.states.matrix(matrix, 1:2, counts=2)
+ 1. If the current node and its ancestor have _all states in common_, the node is resolved.
+ 2. If there is _at least one state in common_ between both left and right tips or nodes directly descending from the current node, resolve the node as being _the states in common_ between its ancestor and both his descendants.
+ 3. If there is _there are no states in common_ between its descendants, resolve the node as being _the states in common_ between the ancestor and the current node.
+
+
+For example, node `n13` is already resolved (it has all its states in common with the ancestor - case 1).
+Node `n14` has not all its states in common with its ancestor but its two descendants (`n15` and `f`) have at least one state in common (`0`).
+This node is thus solved to be the states in common between both descendants (`01`) and its ancestor (`01` as well).
+
+```{r plotUppass, fig.width = 6, fig.height = 6}
+## Plotting the first downpass
+plot.states.matrix(matrix, passes = c(1,2), counts = 2, show.labels = c(1,2))
 ```
 
+More complex cases can be studied in the Inapp App (running in your favourite web browser) by switching the **`Reconstruction method`** to **`Normal Fitch`**.
+
+```{r, eval = FALSE}
+## Running the Inapp App
+runInapp()
+```
 
 ### Discussion: How to optimise characters
 

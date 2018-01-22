@@ -13,25 +13,137 @@ vignette: >
 
 This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [@ThisStudy].
 
-
 ## The Fitch algorithm
+
+This algorithm was proposed by Fitch [TODO: citefitch] and is implemented in many phylogenetic softwares based on maximum parsimony [TODO: citeTNT and citePAUP] or probabilistic methods [TODO: citeRAxML and citeMrBayes].
+The procedure is rather simple and elegant and consist in going down the tree to count the number of transformation and then go up the tree again to finalise the ancestral states reconstructions.
+
+The way the algorithms goes up and down depends on the software but often uses a _traversal_: a recursive function that can visit all tips and nodes in a logical fashion.
+For example, consider the following tree:
+
+```{r exampleTree, echo = FALSE, fig.width = 6, fig.height = 6}
+tree <- ape::read.tree(text = "(((a, b), (c, d)), e);")
+tree$node.label <- c("n4", "n3", "n1", "n2")
+plot(tree)
+nodelabels(tree$node.label)
+```
+
+A downpass traversal will first apply the algorithm to the first cherry (or pair of taxa) (`A` below), then save the results in `n1` and move to the second pair of tips/nodes (`B`), apply the algorithm and save the results in `n2`, etc. until all the nodes/tips are visited.
+
+```{r downpass, echo = FALSE, fig.width = 6, fig.height = 6}
+plot(tree, main = "downpass traversal")
+nodelabels(tree$node.label)
+
+## a
+a <- c(4, 1.2)
+## b
+b <- c(4, 1.8)
+## c
+c <- c(4, 3.2)
+## d
+d <- c(4, 3.8)
+## e
+e <- c(4, 4.8)
+## n2
+n2_1 <- c(3.2, 3.5)
+n2_2 <- c(2.8, 3.3)
+## n1
+n1_1 <- c(3.2, 1.5)
+n1_2 <- c(2.8, 1.7)
+## n3
+n3_1 <- c(1.2, 2.5)
+n3_2 <- c(0.8, 2.7)
+## n4
+n4 <- c(0.2, 3.75)
+
+## First cherry
+arrows(a[1], a[2], n1_1[1], n1_1[2]-0.025, length = 0.05)
+arrows(b[1], b[2], n1_1[1], n1_1[2]+0.025, length = 0.05)
+points(3.8, 1.5, cex = 3)
+text(3.8, 1.5, "A", cex = 1)
+## Second cherry
+arrows(d[1], d[2], n2_1[1], n2_1[2]+0.025, length = 0.05)
+arrows(c[1], c[2], n2_1[1], n2_1[2]-0.025, length = 0.05)
+points(3.8, 3.5, cex = 3)
+text(3.8, 3.5, "B", cex = 1)
+## Third
+arrows(n1_2[1], n1_2[2], n3_1[1], n3_1[2]-0.025, length = 0.05)
+arrows(n2_2[1], n2_2[2], n3_1[1], n3_1[2]+0.025, length = 0.05)
+points(2.5, 2.5, cex = 3)
+text(2.5, 2.5, "C", cex = 1)
+## Fourth
+arrows(n3_2[1], n3_2[2], n4[1], n4[2]-0.025, length = 0.05)
+arrows(e[1], e[2], n4[1], n4[2]+0.025, length = 0.05)
+points(0.7, 3.5, cex = 3)
+text(0.7, 3.5, "D", cex = 1)
+```
+
+An uppass traversal works identically but in the other way, going from the nodes to towards the tips.
+
+```{r downpass, echo = FALSE, fig.width = 6, fig.height = 6}
+plot(tree, main = "uppass traversal")
+nodelabels(tree$node.label)
+
+## First cherry
+arrows(n1_1[1], n1_1[2]-0.025, a[1], a[2], length = 0.05)
+arrows(n1_1[1], n1_1[2]+0.025, b[1], b[2], length = 0.05)
+points(3.8, 1.5, cex = 3)
+text(3.8, 1.5, "D", cex = 1)
+## Second cherry
+arrows(n2_1[1], n2_1[2]+0.025, d[1], d[2], length = 0.05)
+arrows(n2_1[1], n2_1[2]-0.025, c[1], c[2], length = 0.05)
+points(3.8, 3.5, cex = 3)
+text(3.8, 3.5, "C", cex = 1)
+## Third
+arrows(n3_1[1], n3_1[2]-0.025, n1_2[1], n1_2[2], length = 0.05)
+arrows(n3_1[1], n3_1[2]+0.025, n2_2[1], n2_2[2], length = 0.05)
+points(2.5, 2.5, cex = 3)
+text(2.5, 2.5, "B", cex = 1)
+## Fourth
+arrows(n4[1], n4[2]-0.025, n3_2[1], n3_2[2], length = 0.05)
+arrows(n4[1], n4[2]+0.025, e[1], e[2], length = 0.05)
+points(0.7, 3.5, cex = 3)
+text(0.7, 3.5, "A", cex = 1)
+```
+
+In both traversals, the direction (i.e. which cherry to pick first in a downpass traversal or whether to continue left or right in an uppass traversal) can be arbitrary as long as all tips and nodes are always visited.
 
 ### Downpass
 
+Now let's consider a more complex tree `((((a, b), c), d), (e, (f, (g, h))));` with a binary character distributed for the tips `10011001` respectively to the tips alphabetical order.
+
+
+
 - Scoring occurs on downpass
 
-```{r Fitch Downpass, echo=FALSE}
-tree=ape::read.tree(text="((((a, b), c), d), (e, (f, (g, h))));")
+```{r Fitch Downpass, echo=FALSE, eval = FALSE}
+library(Inapp)
+tree <- ape::read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
 character <- "10011001"
-matrix <- apply.reconstruction(tree, character)
-plot.states.matrix(matrix, 1, counts=2)
+
+## Plotting the tree and characters,
+plot(tree, show.tip.label = FALSE)
+tiplabels(c(1,0,0,1,1,0,0,1), col = "orange")
+tiplabels(tree$tip.label, adj = 0.5)
+
+
+
+matrix <- apply.reconstruction(tree, character, method = "Fitch", passes = 2)
+plot.states.matrix(matrix, 1, counts = 2)
+
+
+plot(states_matrix, passes = 0, show.labels = 1, use.edge.length = FALSE, col.states = FALSE)
+
+
 ```
 
 ### Uppass
+
+
 - Character states finalised on uppass
 
-```{r Fitch Uppass, echo=FALSE}
-tree=ape::read.tree(text="((((a, b), c), d), (e, (f, (g, h))));")
+```{r Fitch Uppass, echo=FALSE, eval = FALSE}
+tree <- ape::read.tree(text="((((a, b), c), d), (e, (f, (g, h))));")
 character <- "10011001"
 matrix <- apply.reconstruction(tree, character, method="Fitch")
 plot.states.matrix(matrix, 1:2, counts=2)

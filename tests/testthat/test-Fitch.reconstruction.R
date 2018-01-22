@@ -1,6 +1,5 @@
-context("Fitch reconstruction - setup")
-
 library(ape)
+context("preparing Fitch matrices")
 ## Trees for testing
 tree1 <- read.tree(text = "((((1,2),((3,4),(5,6))),7),8);")
 tree2 <- read.tree(text = "((((((((1,2),3),4),5),6),7),8),9);")
@@ -191,4 +190,3 @@ test_that("fitch.uppass works", {
         expect_equal(pass2_3_6_2[[2]][node+12], results3_6_fitch2_2[node])
     }
 })
-

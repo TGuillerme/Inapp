@@ -18,15 +18,11 @@
 #' @keywords maximum parsimony, inapplicable characters, states reconstruction, tree score
 #'
 #' @examples
-#' \dontrun{
-#' runInapp()
-#' }
 #' 
 #' @exportPattern "^[[:alpha:]]+"
 #' @import ape
 #' @importFrom graphics plot legend
 #' @importFrom shiny runGitHub runApp
 #' @importFrom grDevices pdf dev.off
-#' @importFrom Rdpack reprompt 
 #' @importFrom utils write.csv
 NULL

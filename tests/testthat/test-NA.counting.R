@@ -51,11 +51,12 @@ test_that("right counting", {
         suppressWarnings(output <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
 
         tree_length <- score.from(output$regions) + score.from(output$changes)
-        # if(tree_score != expected_results[test]) {
+
+        # if(tree_length != expected_results[test]) {
         #     print(paste("Failed", test))
         # }
 
-        expect_equal(tree_score, expected_results[test])
+        expect_equal(tree_length, expected_results[test])
     }
 
     ## Run the bigger tree tests
@@ -68,9 +69,9 @@ test_that("right counting", {
     ## Run the tests
     for(test in 1:length(characters)) { 
         suppressWarnings(output <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
-        # if(matrix$score != expected_results[test]) {
+        # if(matrix$length != expected_results[test]) {
         #     print(paste("test", test, "failed"))
-        #     print(paste("Is", matrix$score, "instead of", expected_results[test]))
+        #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
         # }
         tree_length <- score.from(output$regions) + score.from(output$changes)
         expect_equal(tree_length, expected_results[test])
@@ -89,9 +90,9 @@ test_that("right counting", {
     ## Run the test
     for(test in 1:length(characters)) { 
         suppressWarnings(output <- apply.reconstruction(tree, characters[test], passes = 4, method = "NA", inapplicable = NULL))
-        # if(matrix$score != expected_results[test]) {
+        # if(matrix$length != expected_results[test]) {
         #     print(paste("test", test, "failed"))
-        #     print(paste("Is", matrix$score, "instead of", expected_results[test]))
+        #     print(paste("Is", matrix$length, "instead of", expected_results[test]))
         # }
         tree_length <- score.from(output$regions) + score.from(output$changes)
         expect_equal(tree_length, expected_results[test])

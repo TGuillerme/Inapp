@@ -211,7 +211,6 @@ test_that("second.uppass works", {
     }
 })
 
-
 context("correct tree scoring")
 test_that("trees are scored correctly", {
   characters <- c("23--1??--032=5", # 0,
@@ -259,7 +258,7 @@ test_that("trees are scored correctly", {
     character <- unlist(strsplit(character_score, "=", fixed=TRUE))
     expected_score <- as.integer(character[2])
     matrix <- make.states.matrix(tree3, character[1])
-    matrix <- second.uppass(second.downpass(first.uppass(first.downpass(matrix))))
+    matrix <- second.downpass(first.uppass(first.downpass(matrix)))
     expect_equal(expected_score, matrix$score)
     if (length(matrix$uppassRegions)) {
       expect_equal(length(matrix$uppassRegions), length(matrix$downpas))
@@ -270,4 +269,3 @@ test_that("trees are scored correctly", {
     }
   }
 })
-

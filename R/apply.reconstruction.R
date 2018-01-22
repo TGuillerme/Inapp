@@ -17,9 +17,9 @@
 #'  \item{\code{$Dp2}}{a \code{list} of character from the second downpass}
 #'  \item{\code{$Up2}}{a \code{list} of character from the second uppass}
 #'  \item{\code{$tracker}}{a \code{list} of the same \code{Dp1}, \code{Up1}, \code{Dp2} and \code{Up2} elements but tracking the applicable regions}
-#'  \item{\code{$region}}{a vector of \code{integer} value indicating the nodes where an additional applicable region was recorded}
-#'  \item{\code{$changes}}{a vector of \code{itneger} values indicating the nodes where a state change was recorded}
-#'  \item{\code{$score}}{a single \code{integer} value that is the score of the tree (\code{X$score = length(X$region) + length(X$changes)})}
+#'  \item{\code{$region}}{a vector of \code{numeric} value indicating the number of additional applicable regions}
+#'  \item{\code{$changes}}{a vector of \code{numeric} values indicating the nodes where a state change was recorded}
+#'  \item{\code{$score}}{a single \code{numeric} value that is the score of the tree (\code{X$score = length(X$region) + length(X$changes)})}
 #'  \item{\code{$tree}}{the tree (\code{phylo})}
 #' 
 #' @examples

@@ -18,9 +18,9 @@
 #' -\code{$Dp2}: a \code{list} of the tips' and nodes' states after the second downpass.
 #' -\code{$Up2}: a \code{list} of the tips' and nodes' states after the second uppass.
 #' -\code{$tracker}: a \code{list} tracking the applicable regions.
-#' -\code{$regions}: an \code{integer} vector recording the nodes at which additional applicable regions are counted.
-#' -\code{$changes}: an \code{integer} vector recording the node with state changes.
-#' -\code{$score}: a single \code{integer} vector recording the score of the tree.
+#' -\code{$regions}: a single \code{numeric} value counting the number of applicable regions.
+#' -\code{$changes}: a \code{numeric} vector recording the node with state changes.
+#' -\code{$score}: a \code{numeric} vector recording the score of the tree.
 #' -\code{$tree}: a \code{phylo} object describing the tree.
 #' -\code{$n_tip}: a \code{numeric} vector recording the number of tips.
 #' -\code{$n_node}: a \code{numeric} vector recording the number of (internal) nodes within the tree.
@@ -130,7 +130,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Save the node with changes
     states_matrix$changes <- integer(0)
 
-    ## Total length
+    ## Total score
     states_matrix$score <- integer(0)
 
     ## Add the tree, with its properties
@@ -211,24 +211,11 @@ print.states.matrix <- function(x, ...) {
             }
         }
         ## Score
-        score <- score.from(x$regions) + score.from(x$changes)
+        score <- length(x$regions) + ifelse(length(x$changes) > 0, length(x$changes), 0)
         cat(paste("Tree score is:", score, "\n"))
         ## Details
         if(score != 0) {
-            if(length(x$regions) > 1) {
-                cat(length(x$regions), "additional applicable regions counted at nodes:", paste(x$changes, collapse = ", "), ".\n")
-                cat("Type 2s counted on downpass:", sort(x$downpassRegions), ".\n") ## MS TESTING LINE - TODO DELETE
-                cat("Type 2s that would have been counted on uppass:", sort(x$uppassRegions), ".\n") ## MS TESTING LINE - TODO DELETE
-                
-            } else {
-                if(length(x$regions) == 1) {
-                    cat("One additional applicable region counted at node:", x$regions, ".\n",)
-                    cat("Type 2s counted on downpass:", sort(x$downpassRegions), ".\n") ## MS TESTING LINE - TODO DELETE
-                    cat("Type 2s that would have been counted on uppass:", sort(x$uppassRegions), ".\n") ## MS TESTING LINE - TODO DELETE
-                } else {
-                    cat("No additional applicable region.\n")
-                }
-            }
+            cat(paste(length(x$regions), "additional applicable regions.\n"))
             if(length(x$changes) > 1) {
                 cat("State changes at nodes: ", paste(x$changes, collapse = ", "), ".\n", sep = "")
             } else {
@@ -337,12 +324,12 @@ get.union.excl <- function(a, b) {
     }
 }
 
-#' Score from marked nodes
-#' 
-#' @param counted.nodes An \code{integer} vector listing nodes at which a score was noted
-#' 
-#' @return The number of items in the vector: zero if none
-#' @keywords internal
+# Score from marked nodes
+# 
+# @param counted.nodes An \code{integer} vector listing nodes at which a score was noted
+# 
+# @return The number of items in the vector: zero if none
+# @keywords internal
 score.from <- function (counted.nodes) {
   if (length(counted.nodes)) return (length(counted.nodes)) else return (0);
 }

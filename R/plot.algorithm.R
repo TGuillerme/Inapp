@@ -5,11 +5,10 @@
 #' @param states_matrix A \code{states.matrix} list from \code{\link{apply.reconstruction}}
 #' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
-#' @param col.tips.nodes \code{character}, a vector of up to four colors to be used for displaying 
-#'                       respectively the tips, the nodes, and (if \code{counts != 0}) the activated/counted nodes
-#'                       and the nodes at which regions are counted.
+#' @param col.tips.nodes \code{character}, a vector of up to four colors to be used for displaying respectively the tips, the nodes, and (if \code{counts != 0}) the activated/counted nodes and the nodes at which regions are counted.
 #' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
 #' @param use.edge.length \code{logical} indicating whether to use the edge lengths of the phylogeny to draw the branches or not (default).
+#' @param col.states \code{logical}, whether to colour the states of the tips (\code{TRUE}) or not (\code{FALSE}, default).
 #' @param ... any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #' 
 #' @examples
@@ -40,10 +39,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels = 0, 
-                               col.tips.nodes = c("orange", "bisque2", "lightblue", "lightgreen"), 
-                               counts = 0, use.edge.length = FALSE, ...) {
-
+plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels = 0,  col.tips.nodes = c("orange", "bisque2", "lightblue", "lightgrey"), counts = 0, use.edge.length = FALSE, col.states = FALSE, ...) {
     ## More efficient to avoid multiple list lookups - and it keeps the source code cleaner too
     tree <- states_matrix$tree
     regions <- states_matrix$regions
@@ -162,12 +158,12 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
         par_col = "white"
     } else {
         if(all(counts == 1)) {
-            legend_text <- c(length_text, paste("applicable region (1 + ", score.from(regions), ")", sep = ""))
-            par_cex = c(0, 0)
-            par_pch = c(0, 0)
-            par_lty = c(0, 1)
-            par_lwd = c(0, 2)
-            par_col = "black"
+            legend_text <- c(length_text, paste("applicable region (1 + ", score.from(regions), ")", sep = ""), paste("additional region (", score.from(regions), ")", sep = ""))
+            par_cex = c(0, 0, 2)
+            par_pch = c(0, 0, 15)
+            par_lty = c(0, 1, 0)
+            par_lwd = c(0, 2, 0)
+            par_col = c("black", col.tips.nodes[4])
         } else {
             if(all(counts == 2)) {
                 legend_text <- c(length_text, paste("state changes (", score.from(changes), ")", sep = ""))
@@ -180,12 +176,13 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
                 if(all(counts %in% c(1,2))) {
                     legend_text <- c(length_text, 
                                      paste("applicable region (1 + ", score.from(regions), ")", sep = ""),
+                                     paste("additional region (", score.from(regions), ")", sep = ""),
                                      paste("state changes (", score.from(changes), ")", sep = ""))
-                    par_cex = c(0, 0, 2)
-                    par_pch = c(0, 0, 15)
-                    par_lty = c(0, 1, 0)
-                    par_lwd = c(0, 2, 0)
-                    par_col = c("white", "black", col.tips.nodes[3])
+                    par_cex = c(0, 0, 2, 2)
+                    par_pch = c(0, 0, 15, 15)
+                    par_lty = c(0, 1, 0, 0)
+                    par_lwd = c(0, 2, 0, 0)
+                    par_col = c("white", "black", col.tips.nodes[4], col.tips.nodes[3])
                 }
             }
         }
@@ -200,8 +197,14 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
 
     ## Add the tip states
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
-    ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
 
+    ## Colour the tip states.
+    if(!col.states) {
+        ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
+    } else {
+        col.states <- rainbow(length(unique(tips_labels)))
+        ape::tiplabels(tips_labels, cex = 1, bg = col.states[as.factor(tips_labels)], adj = 1)
+    }
 
     ## ADD THE NODE LABELS
 
@@ -221,22 +224,26 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
             node_labels <- paste(node_labels, paste(pass, ": ", plot.convert.state(states_matrix[[pass + 1]][-seq_len(n_tip)]), sep = ""), sep = "\n")
         }
 
-        ## Set the colors for the changes
-        if(any(counts == 2)) {
-            bg_col <- rep(col.tips.nodes[2], states_matrix$n_node)
-            if (any(changes %in% regions)) {
-              warning("Probable bug: Shouldn't be able to have a transformation and a region at the same node")
-            }
-            
-            ## Change the colors of the nodes if activations exist
-            if(length(changes) > 0) {
-                bg_col[changes - n_tip] <- col.tips.nodes[3]
-            }
-            if (length(regions)) {
-                bg_col[regions - n_tip] <- col.tips.nodes[4]
-            }
+        ## Set the nodes colours
+        bg_col <- rep(col.tips.nodes[2], states_matrix$n_node)
+
+        if(all(counts == 1)) {
+            ## Regions only
+            if(length(regions) > 0) bg_col[regions - n_tip] <- col.tips.nodes[4]
         } else {
-            bg_col <- col.tips.nodes[2]
+            if(all(counts == 2)) {
+                ## Changes only
+                if(length(changes) > 0) bg_col[changes - n_tip] <- col.tips.nodes[3]
+            } else {
+                if(all(counts %in% c(1,2))) {
+                    ## Regions and changes
+                    if(length(changes) > 0) bg_col[changes - n_tip] <- col.tips.nodes[3]
+                    if(length(regions) > 0) bg_col[regions - n_tip] <- col.tips.nodes[4]
+                    ## Overlapping
+                    # if(any(changes %in% regions)) {
+                    #     bg_col[changes[which(changes %in% regions)]] <- 
+                    # }
+                }
         }
 
         ## Plot the node labels

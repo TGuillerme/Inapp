@@ -12,9 +12,10 @@ read.newick.tree <- function (newick_text) {
 
   newick_text <- trimws(newick_text)
   chars_to_count <- c("\\(", "\\)", ",")
-  if (length(unique(vapply(chars_to_count, function (char)
-     lengths(regmatches(newick_text, gregexpr(char, newick_text))), 0))) > 1) {
-    stop("Braces and commas in input tree must balance.")
+  char_counts <- vapply(chars_to_count, function (char)
+     lengths(regmatches(newick_text, gregexpr(char, newick_text))), 0)
+  if (length(unique(char_counts)) > 1) {
+    stop("Braces and commas in input tree must balance: ", char_counts[1], " (s; ", char_counts[2], " )s; ", char_counts[3], " commas.")
   }
   
   # Add trailing semicolon, if missing
@@ -195,9 +196,8 @@ shinyServer(
                 show_passes <- as.vector(as.numeric(input$showPassFitch))
             }
 
-            plot.states.matrix(states_matrix, passes = show_passes, show.labels = showlabels, counts = as.vector(as.numeric(input$counts)))
-
-
+            plot.states.matrix(states_matrix, passes = show_passes, show.labels = showlabels, counts = as.vector(as.numeric(input$counts)), col.states = input$colour_states)
+            
             ## Exporting data
             output$downloadData <- downloadHandler(
 
@@ -209,7 +209,7 @@ shinyServer(
                     suffix <- ifelse(suffix == "nexus", "nex", suffix)
                     suffix <- ifelse(suffix == "C-test", "txt", suffix)
                     ## Getting the output name
-                    paste(paste("Inapp", format(Sys.time(), "%Y-%m-%d-%H%M%S"), sep = "_"), sep = ".", suffix)  #TG: or date format as "format(Sys.time(), "%Y-%m-%d-%X")"
+                    paste(paste("Inapp", format(Sys.time(), "%Y-%m-%d-%H%M%S"), sep = "_"), sep = ".", suffix)
                 },
 
                 ## Export management

@@ -18,3 +18,11 @@ phylogenetic analysis with inapplicable data. Biorxiv. <https://doi.org/10.1101/
 \author{
 Thomas Guillerme <guillert@tcd.ie>
 }
+\keyword{characters,}
+\keyword{inapplicable}
+\keyword{maximum}
+\keyword{parsimony,}
+\keyword{reconstruction,}
+\keyword{score}
+\keyword{states}
+\keyword{tree}

@@ -3,6 +3,7 @@
 #' @description Running the Inapp GUI via shiny
 #'
 #' @param ... Any optional option to be passed to shiny::runApp
+#' @param remote Whether to run the app from a remote server (\code{TRUE}, default - \code{shiny::runGitHub("Inapp", "TGuillerme", ...)}) or from the local server (\code{FALSE} - \code{shiny::runApp(".", ...)}).
 #' 
 #' @examples
 #' \dontrun{
@@ -15,6 +16,10 @@
 #' @author Thomas Guillerme
 #' @export
 
-runInapp <- function(...) {
-    shiny::runGitHub("Inapp", "TGuillerme", ...)
+runInapp <- function(..., remote = TRUE) {
+    if(remote) {
+        shiny::runGitHub("Inapp", "TGuillerme", ...)
+    } else {
+        shiny::runApp(".", ...)
+    }
 }

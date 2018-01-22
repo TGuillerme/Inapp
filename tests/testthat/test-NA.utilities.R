@@ -49,7 +49,7 @@ test_that("make.states.matrix works", {
     matrix <- make.states.matrix(tree, character)
     expect_is(matrix, "states.matrix")
     expect_equal(unique(unlist(lapply(matrix, class))), c("list", "integer", "phylo"))
-    expect_equal(as.integer(lapply(matrix, length)), c(7,7,7,7,7,4,0,0,0,3,1,1))
+    expect_equal(unique(unlist(lapply(matrix, length))), c(7,4,0,3,1))
     expect_equal(length(matrix), 12)
     expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "regions", "changes", "score",  "tree", "n_tip", "n_node"))
     expect_equal(ape::Ntip(matrix$tree), matrix$n_tip)

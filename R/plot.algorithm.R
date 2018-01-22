@@ -40,6 +40,7 @@
 #' @export
 
 plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels = 0,  col.tips.nodes = c("orange", "bisque2", "lightblue", "lightgrey"), counts = 0, use.edge.length = FALSE, col.states = FALSE, ...) {
+
     ## More efficient to avoid multiple list lookups - and it keeps the source code cleaner too
     tree <- states_matrix$tree
     regions <- states_matrix$regions
@@ -244,6 +245,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
                     #     bg_col[changes[which(changes %in% regions)]] <- 
                     # }
                 }
+            }
         }
 
         ## Plot the node labels

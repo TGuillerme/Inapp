@@ -1,4 +1,4 @@
-#' @title States matrix
+#' @title Sates matrix
 #'
 #' @description Creates a states matrix
 #'
@@ -119,7 +119,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Add the character into the list
     states_matrix$Char[1:n_tip] <- character[ordering]
 
-    ## Add tip labels
+    ## Add tip labels
 
     ## Set up the active region tracker
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
@@ -323,6 +323,7 @@ get.union.excl <- function(a, b) {
         return(sort(unique(out)))
     }
 }
+
 
 # Score from marked nodes
 # 

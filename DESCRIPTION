@@ -14,10 +14,5 @@ LazyData: true
 RoxygenNote: 6.0.1
 Imports:
 	ape,
-  Rdpack,
 	shiny
-Suggests: 
-    knitr,
-    rmarkdown,
-    testthat
-VignetteBuilder: knitr
+Suggests: testthat

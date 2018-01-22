@@ -2,7 +2,7 @@
 % Please edit documentation in R/NA.utilities.R
 \name{make.states.matrix}
 \alias{make.states.matrix}
-\title{States matrix}
+\title{Sates matrix}
 \usage{
 make.states.matrix(tree, character, inapplicable = NULL,
   match.tip.char = FALSE)

@@ -31,12 +31,12 @@ We assume that you'll already have read [OurAlgorithm.Rmd].
 - All tails are blue.  Let's say that they are all blue for some complex molecular reason, such that it is most parsimonious if "blueness" has a single evolutionary origin.
 
 ```{r tail colour characters, echo = FALSE, results='asis'}
-library(knitr)
+library(knitr); library('Inapp')
 tail <- c(0, 0, 0, 0, 1, 1, 1, 1)
 col <- c(rep('-', 4), rep(1, 4))
 bcol <- c(1,1, 2,2,2,2, 1,1)
 blueTails <- matrix(c(tail, col, bcol), byrow=TRUE, ncol=length(tail))
-colnames(blueTails) <- LETTERS[seq_along(char)]
+colnames(blueTails) <- LETTERS[seq_along(tail)]
 rownames(blueTails) <- c("Tail: (0), absent; (1), present",
                          "Tail colour: (-), inapplicable; (1), blue",
                          "Body colour: (1), black; (2), white")
@@ -58,13 +58,13 @@ tail <- "00001111"
 col <- "----1111"
 bcol <- "11222211"
 
-plot.states.matrix(apply.reconstruction(tailTree, tail, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
+plot(apply.reconstruction(tailTree, tail, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
 text(1, 1, "Tail presence")
-plot.states.matrix(apply.reconstruction(bodyTree, tail, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
+plot(apply.reconstruction(bodyTree, tail, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
 text(1, 1, "Tail presence")
 
 
-plot.states.matrix(apply.reconstruction(tailTree, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
+plot(apply.reconstruction(tailTree, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
 text(1, 1, "Tail colour")
 plot.states.matrix(apply.reconstruction(bodyTree, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
 text(1, 1, "Tail colour")
@@ -103,7 +103,7 @@ kable(tailEyes, capiton="Coding")
 
 The presence of tail eyespots obviously contains grouping information, but it is less obvious whether the absence of such complex features should convey grouping information.  This decision ought to be defended for individual characters by individual researchers, but researchers should be aware of the implications of their chosen coding strategy. 
 
-```{R invariant yet informative, echo=FALSE, fig.height=8, fig.width=4}
+```{R tail spot alternatives, echo=FALSE, fig.height=8, fig.width=4}
 par(mfrow=c(3, 1), mar=c(0.2, 0.2, 0.2, 0.2))
 splitSpots <- ape::read.tree(text="(((H, C), A), (B, (D, (E, (G, (F, H))))));")
 naysHaveIt <- ape::read.tree(text="((((H, I), C), A), (B, (D, (E, (G, F)))));")
@@ -135,7 +135,7 @@ It is possible that a researcher might feel uncomfortable grouping taxa on the b
 A researcher that argues that the absence of a feature contains phylogenetic information must surely include all properties of a tail that are only observed in a single taxon (because the absence of that feature in other taxa also contains grouping information).  A researcher may also include all properties of a tail that do not occur in any of the taxon in interest, for these too will influence tree topology.
 
 
-```{r Glowing in the dark, echo = FALSE, results='asis'}
+```{r Glowing in the dark 2, echo = FALSE, results='asis'}
 
 tail <- c(0, 0, 0, 1, 1, 1, 1)
 gitd <- c("-", "-", "-", "{01}","{01}",0,0)
@@ -151,7 +151,7 @@ kable(unobserved, capiton="Coding")
 
 Note that each of the unobserved characters provides evidence against independent origins of the tail, preferring instead independent losses:
 
-```{R unobserved character, echo=FALSE, fig.height=3, fig.width=8}
+```{R unobserved character 2, echo=FALSE, fig.height=3, fig.width=8}
 par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
@@ -169,7 +169,7 @@ This behaviour is desired if the similarity between the tails requires an evoltu
 
 The solution here is to deploy a different character coding strategy, coding absences as absences.  That way, absence CAN be inherited from a common ancestor, in whcih the a compelx-feature-of-the-tail (eyespots, glow-inthe-dark pigment) was absent (and the tail was absent too).
 
-```{r Glowing in the dark, echo = FALSE, results='asis'}
+```{r Glowing in the dark 3, echo = FALSE, results='asis'}
 
 tail <- c(0, 0, 0, 1, 1, 1, 1)
 gitd <- c(0, 0,0, "{01}","{01}",0,0)
@@ -184,7 +184,7 @@ kable(unobserved, capiton="Coding")
 ```
 
 This can be handled by the Fitch algorithm, and works well in simple cases:
-```{R unobserved character, echo=FALSE, fig.height=3, fig.width=8}
+```{R unobserved character 3, echo=FALSE, fig.height=3, fig.width=8}
 par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
@@ -219,7 +219,7 @@ Perhaps there are cases -- as might be seen in phenotypic plasticity -- where a 
 Should ? be scored as (01) or (-01)?
 
 If you're coding a neomorphic character as transformational, then you encounter problems.
-```{R unobserved character, echo=FALSE, fig.height=3, fig.width=6}
+```{R Untitled 4, echo=FALSE, fig.height=3, fig.width=6}
 par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")

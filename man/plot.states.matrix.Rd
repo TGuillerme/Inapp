@@ -4,13 +4,12 @@
 \alias{plot.states.matrix}
 \title{Plot tree and ancestral states}
 \usage{
-\method{plot}{states.matrix}(states_matrix, passes = c(1, 2, 3, 4),
-  show.labels = 0, col.tips.nodes = c("orange", "bisque2", "lightblue",
-  "lightgrey"), counts = 0, use.edge.length = FALSE, col.states = FALSE,
-  ...)
+\method{plot}{states.matrix}(x, passes = c(1, 2, 3, 4), show.labels = 0,
+  col.tips.nodes = c("orange", "bisque2", "lightblue", "lightgrey"),
+  counts = 0, use.edge.length = FALSE, col.states = FALSE, ...)
 }
 \arguments{
-\item{states_matrix}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}}
+\item{x}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}}
 
 \item{passes}{\code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})}
 
@@ -24,7 +23,7 @@
 
 \item{col.states}{\code{logical}, whether to colour the states of the tips (\code{TRUE}) or not (\code{FALSE}, default).}
 
-\item{...}{any optional arguments to be passed to \code{\link[ape]{plot.phylo}}}
+\item{\dots}{any optional arguments to be passed to \code{\link[ape]{plot.phylo}}}
 }
 \description{
 Plots an ancestral states reconstruction and tree score

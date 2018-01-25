@@ -7,7 +7,7 @@
 \method{print}{states.matrix}(x, ...)
 }
 \arguments{
-\item{x}{A \code{dispRity} object.}
+\item{x}{A \code{states.matrix} object.}
 
 \item{...}{further arguments to be passed to \code{print}.}
 }

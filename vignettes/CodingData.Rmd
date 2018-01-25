@@ -221,6 +221,7 @@ Perhaps there are cases -- as might be seen in phenotypic plasticity -- where a 
 Should ? be scored as (01) or (-01)?
 
 If you're coding a neomorphic character as transformational, then you encounter problems.
+
 ```{R Untitled 4, echo=FALSE, fig.height=3, fig.width=6}
 par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")

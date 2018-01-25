@@ -11,7 +11,7 @@ vignette: >
 
 # Inapplicable data in a parsimony setting
 
-This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [@ThisStudy].
+This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
 
 We assume that you'll already have read [Fitch.Rmd].
 

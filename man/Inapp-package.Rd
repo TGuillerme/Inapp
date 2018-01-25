@@ -9,6 +9,9 @@
 An algorithm allowing states reconstruction and tree score calculation for inapplicable discrete characters
 }
 \examples{
+\dontrun{
+runInapp()
+}
 
 }
 \references{

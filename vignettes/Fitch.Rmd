@@ -3,6 +3,8 @@ title: "The Fitch Algorithm"
 author: "Thomas Guillerme"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 vignette: >
   %\VignetteIndexEntry{1. The Fitch Algorithm}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,11 +13,11 @@ vignette: >
 
 # Inapplicable data in a parsimony setting
 
-This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [@ThisStudy].
+This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [-@ThisStudy].
 
 ## The Fitch algorithm
 
-This algorithm was proposed by Fitch [TODO: citefitch] and is implemented in many phylogenetic softwares based on maximum parsimony [TODO: citeTNT and citePAUP] or probabilistic methods [TODO: citeRAxML and citeMrBayes].
+This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [TODO: citeTNT and citePAUP] or probabilistic methods [TODO: citeRAxML and citeMrBayes].
 The procedure is rather simple and elegant and consist in going down the tree to count the number of transformation and then go up the tree again to finalise the ancestral states reconstructions.
 
 The way the algorithms goes up and down depends on the software but often uses a _traversal_: a recursive function that can visit all tips and nodes in a logical fashion.

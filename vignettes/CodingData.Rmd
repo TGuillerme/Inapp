@@ -3,6 +3,8 @@ title: "How to code characters"
 author: "Martin R. Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 vignette: >
   %\VignetteIndexEntry{6. Implications for characters}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,7 +13,7 @@ vignette: >
 
 # Inapplicable data in a parsimony setting
 
-This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [@ThisStudy].
+This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [-@ThisStudy].
 
 We assume that you'll already have read [OurAlgorithm.Rmd].
 

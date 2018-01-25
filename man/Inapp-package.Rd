@@ -9,10 +9,13 @@
 An algorithm allowing states reconstruction and tree score calculation for inapplicable discrete characters
 }
 \examples{
+\dontrun{
+runInapp()
+}
 
 }
 \references{
-Brazeau, M. D., Guillerme, T., and Smith, M. R. 2017. Morphological 
+Brazeau, M. D., Guillerme, T., and Smith, M. R. 2017. Morphological
 phylogenetic analysis with inapplicable data. Biorxiv. <https://doi.org/10.1101/209775>
 }
 \author{

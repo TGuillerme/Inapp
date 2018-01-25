@@ -4,8 +4,8 @@
 \alias{apply.reconstruction}
 \title{Apply reconstruction}
 \usage{
-apply.reconstruction(tree, character, passes = 4, method, inapplicable,
-  match.tip.char = FALSE)
+apply.reconstruction(tree, character, passes = 4, method = "NA",
+  inapplicable = 1, match.tip.char = FALSE)
 }
 \arguments{
 \item{tree}{\code{phylo}, a tree}

@@ -18,7 +18,7 @@
 #' @keywords maximum parsimony, inapplicable characters, states reconstruction, tree score
 #'
 #' @examples
-#' \dontRun{
+#' \dontrun{
 #' runInapp()
 #' }
 #'

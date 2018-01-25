@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 Analysis/
 Writing/
+support/
+^.*.yml$
+^.*.md$

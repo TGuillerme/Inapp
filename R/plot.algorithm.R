@@ -2,51 +2,54 @@
 #'
 #' @description Plots an ancestral states reconstruction and tree score
 #'
-#' @param states_matrix A \code{states.matrix} list from \code{\link{apply.reconstruction}}
+#' @param x A \code{states.matrix} list from \code{\link{apply.reconstruction}}
 #' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of up to four colors to be used for displaying respectively the tips, the nodes, and (if \code{counts != 0}) the activated/counted nodes and the nodes at which regions are counted.
 #' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
 #' @param use.edge.length \code{logical} indicating whether to use the edge lengths of the phylogeny to draw the branches or not (default).
 #' @param col.states \code{logical}, whether to colour the states of the tips (\code{TRUE}) or not (\code{FALSE}, default).
-#' @param ... any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
-#' 
+#' @param \dots any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
+#'
 #' @examples
 #' ## A balanced 12 taxa tree
 #' tree <- ape::read.tree(
 #'                  text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 #' ## A character with inapplicable data
 #' character <- "23--1??--032"
-#' 
+#'
 #' ## NA algorithm
 #' NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
-#' 
+#'
 #' ## Plotting the tree and the states
 #' plot(NA_matrix)
-#' 
+#'
 #' ## Plotting the tree and the states with the state changes and regions
 #' plot(NA_matrix, counts = c(1,2))
-#' 
+#'
 #' ## Plot the tree with tip/node labels, and only the 1st and 2nd downpass
 #' plot(NA_matrix, passes = c(1,3), show.labels = c(1,2))
-#' 
+#'
 #' ## Plot the tree only the 2nd uppass with the state changes in green
 #' plot(NA_matrix, show.labels = 2, col.tips.nodes = c("red", "pink", "green"),
 #'      counts = c(1,2), passes = c(3,4))
-#' 
+#'
 #' @seealso \code{\link{apply.reconstruction}}, \code{\link{runInapp}}
-#' 
+#'
 #' @author Thomas Guillerme
 #' @export
 
-plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels = 0,  col.tips.nodes = c("orange", "bisque2", "lightblue", "lightgrey"), counts = 0, use.edge.length = FALSE, col.states = FALSE, ...) {
-
+plot.states.matrix <- function(
+  x, passes = c(1,2,3,4), show.labels = 0,
+  col.tips.nodes = c("orange", "bisque2", "lightblue", "lightgrey"),
+  counts = 0, use.edge.length = FALSE, col.states = FALSE, ...) {
+  states_matrix <- x # We have to use x in the function definition to extend the generic function "plot"
     ## More efficient to avoid multiple list lookups - and it keeps the source code cleaner too
     tree <- states_matrix$tree
     regions <- states_matrix$regions
     changes <- states_matrix$changes
     n_tip <- states_matrix$n_tip
-    
+
     ## Internal plot utility: converts characters (-1,0,n,c(-1,0,n)) into character ("-0n?")
     plot.convert.state <- function(character, missing = FALSE) {
 
@@ -100,7 +103,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
 
     ## SANITIZING
     ## tree character done in make.states.matrix
-    
+
     ## Passes
     if(!(class(passes) %in% c("numeric", "integer")) || any(is.na(match(passes, c(1,2,3,4))))) {
         stop("passes argument must be any integer(s) between 1 and 4.")
@@ -175,7 +178,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
                 par_col = col.tips.nodes[3]
             } else {
                 if(all(counts %in% c(1,2))) {
-                    legend_text <- c(length_text, 
+                    legend_text <- c(length_text,
                                      paste("applicable region (1 + ", score.from(regions), ")", sep = ""),
                                      paste("additional region (", score.from(regions), ")", sep = ""),
                                      paste("state changes (", score.from(changes), ")", sep = ""))
@@ -188,12 +191,12 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
             }
         }
     }
-    
+
     if (length(states_matrix$uppassRegions) != length(states_matrix$downpassRegions)) graphics::text(1, 4, "YOU BROKE IT!", col="red", cex=3, font=2, pos=4) ## TESTING LINE - TODO DELETE
-    
+
     ## Adding the legend
     graphics::legend("topleft", legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,
-                     lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5, 
+                     lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5,
                      bty='n', bg = NULL)
 
     ## Add the tip states
@@ -219,7 +222,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
         if(show.node.label) {
             node_labels <- paste(paste("n",(n_tip+1):(n_tip + states_matrix$n_node), "\n", sep = ""), node_labels, sep = "")
         }
-        
+
         ## Add the extra node labels
         for(pass in passes[-1]) {
             node_labels <- paste(node_labels, paste(pass, ": ", plot.convert.state(states_matrix[[pass + 1]][-seq_len(n_tip)]), sep = ""), sep = "\n")
@@ -242,7 +245,7 @@ plot.states.matrix <- function(states_matrix, passes = c(1,2,3,4), show.labels =
                     if(length(regions) > 0) bg_col[regions - n_tip] <- col.tips.nodes[4]
                     ## Overlapping
                     # if(any(changes %in% regions)) {
-                    #     bg_col[changes[which(changes %in% regions)]] <- 
+                    #     bg_col[changes[which(changes %in% regions)]] <-
                     # }
                 }
             }

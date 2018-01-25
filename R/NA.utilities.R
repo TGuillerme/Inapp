@@ -150,7 +150,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
 #'
 #' @description Summarises the content of a \code{states.matrix} object.
 #'
-#' @param x A \code{dispRity} object.
+#' @param x A \code{states.matrix} object.
 #' @param ... further arguments to be passed to \code{print}.
 #'
 #' @examples
@@ -167,6 +167,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
 #' @seealso \code{\link{make.states.matrix}}.
 #'
 #' @author Thomas Guillerme
+#' @export
 #'
 
 print.states.matrix <- function(x, ...) {
@@ -326,9 +327,9 @@ get.union.excl <- function(a, b) {
 
 
 # Score from marked nodes
-# 
+#
 # @param counted.nodes An \code{integer} vector listing nodes at which a score was noted
-# 
+#
 # @return The number of items in the vector: zero if none
 # @keywords internal
 score.from <- function (counted.nodes) {

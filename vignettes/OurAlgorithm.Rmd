@@ -3,8 +3,6 @@ title: "A four-pass algorithm for inapplicable data"
 author: "Thomas Guillerme"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-    fig_width: 6
-    fig_height: 6
 vignette: >
   %\VignetteIndexEntry{5. Our algorithm}
   %\VignetteEngine{knitr::rmarkdown}

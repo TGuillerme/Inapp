@@ -139,7 +139,7 @@ matrix <- apply.reconstruction(tree, character, method = "Fitch", passes = 2)
 
 ### Downpass
 
-The downpass is quiet simple and follow the following rules for the two possible cases in the traversal:
+The downpass is quite simple and follows the following rules for the two possible cases in the traversal:
 
  1. If the two considered tips or nodes have _at least one state in common_, set the node to be these states in *common*.
  2. Else, if there is _nothing in common_ between the to tips or nodes, set the node to be the *union* of the two states.
@@ -158,8 +158,8 @@ plot.states.matrix(matrix, passes = 1, counts = 2, show.labels = c(1,2))
 
 ### Uppass
 
-The downpass is sufficient for calculating the score of the tree but some nodes might node yet be properly resolved.
-For example, it seems clear that the sate of node `n14` could not be `0` since both it's ancestor and one of its descendant as an ambiguous state of `01`.
+The downpass is sufficient for calculating the score of the tree, but some nodes might node yet be properly resolved.
+For example, it seems clear that the sate of node `n14` could not be `0` since both its ancestor and one of its descendants has an ambiguous state of `01`.
 It would less parsimonious for this node to be also ambiguous (rather than implying the loss and the subsequent gain of the state `1` on the branch fron `n13` to `h`).
 
 Similarly to the downpass, it is possible to run a traversal with the following rules:

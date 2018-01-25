@@ -68,14 +68,14 @@ apply.reconstruction <- function(tree, character, passes = 4, method = "NA", ina
 
     ## Setting the list of passes
     if(method == "NA") {
-        n_passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
+        passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
     } else {
-        n_passes <- list(fitch.downpass, fitch.uppass)
+        passes <- list(fitch.downpass, fitch.uppass)
     }
 
     ## Applying the passes for each node
-    for (pass in 1:passes) {
-        states_matrix <- n_passes[[pass]](states_matrix)
+    for (pass in passes) {
+        states_matrix <- pass(states_matrix)
     }
 
     ## Get the total length of the tree

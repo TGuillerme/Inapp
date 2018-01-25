@@ -22,6 +22,7 @@ The way the algorithms goes up and down depends on the software but often uses a
 For example, consider the following tree:
 
 ```{r exampleTree, echo = FALSE, fig.width = 6, fig.height = 6}
+library('Inapp'); library('ape')
 tree <- ape::read.tree(text = "(((a, b), (c, d)), e);")
 tree$node.label <- c("n4", "n3", "n1", "n2")
 plot(tree)

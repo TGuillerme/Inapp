@@ -1,6 +1,7 @@
 # R garbage
 .Rapp.history
 .Rproj.user
+*.Rproj
 
 # Data
 *.tre

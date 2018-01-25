@@ -26,6 +26,6 @@
 #' @import ape
 #' @importFrom graphics plot legend
 #' @importFrom shiny runGitHub runApp
-#' @importFrom grDevices pdf dev.off
+#' @importFrom grDevices dev.off pdf rainbow
 #' @importFrom utils write.csv
 NULL

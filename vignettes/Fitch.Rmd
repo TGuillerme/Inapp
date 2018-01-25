@@ -13,7 +13,7 @@ vignette: >
 
 # Inapplicable data in a parsimony setting
 
-This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [-@ThisStudy].
+This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
 
 ## The Fitch algorithm
 
@@ -194,8 +194,7 @@ runInapp()
 - With transformational characters, there's no way to decide.
 - With neomorphic characters though, we want to assume the minimum number of innovations of the innovation.
 - This is what we mean by maximising homology: always assume a neomorphic character is present if you can
-- Here's how we'd resolve the ambiguous trees from [@AccTranVsDelTran2008].
-
+- Here's how we'd resolve the ambiguous trees from [@Agnarsson2008].
 
 
 ## References

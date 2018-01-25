@@ -17,7 +17,7 @@ We assume that you'll already have read [Fitch.Rmd].
 
 ## Problems with the Fitch algorithm
 
-This file essentially replicates [@Maddison1991].
+This file essentially replicates [@Maddison1993].
 
 
 ### Red tails, blue tails

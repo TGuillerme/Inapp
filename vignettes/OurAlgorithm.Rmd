@@ -17,6 +17,7 @@ This is one of a series of vignettes that works through the inapplicable algorit
 We assume that you'll already have read [Fitch.Rmd], [Problems.Rmd] and [FailedSolutions.Rmd] and [OurSolution.Rmd].
 
 ## Outline 
+
 ### Task one: Identify applicable regions
 - Easy - infer the distribution of the parent character and do a fitch on it.  Assume present whereever you can.
 
@@ -35,10 +36,89 @@ We assume that you'll already have read [Fitch.Rmd], [Problems.Rmd] and [FailedS
 - Perhaps, instead of doing the colouring, we could just identify and count these nodes?
 
 ## Implementation
+
+Consider a tree with 12 taxa and the following multi-state characters with inapplicable data `23--1??--032` (say the character is "number of eye patches on a tail" ranging from none (0 - but the tail is present!) to 3.
+Four taxa in our example have no tail (hence the inapplicable data `-`) and for two taxa, the data is missing (`?`- we don't known the number of eye patches or even whether the taxa has a tail or not).
+
+```{r TreeExample, echo = FALSE, fig.width = 6, fig.height = 6}
+tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+character <- "23--1??--032"
+
+## Plotting the tree
+plot(tree, adj = 0.5)
+tiplabels(c("2","3","-","-","1","?","?","-","-","0","3","2"), cex = 1, bg = "orange", adj = 1)
+nodelabels(paste0("n", 13:23), bg = "bisque")
+```
+
+We can use the `Inapp` package to apply our four passes inapplicable algorithm for this character on this tree.
+
+```{r NARecon}
+## Loading the Inapp package
+library(Inapp)
+
+## The tree
+tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+
+## The character
+character <- "23--1??--032"
+
+## Applying the NA algorithm
+matrix <- apply.reconstruction(tree, character, method = "NA", passes = 4)
+```
+
+Here is what is happening:
+
+
 ### Passes 1 & 2
-- Basically a standard Fitch on the inferred parent character, working out where it can be present
+
+The first two passes are a standard Fitch algorithm applied the the parent character of the studied character (see [Fitch.Rmd]) with a special rule for the inapplicable state (`-`).
+
+For the first pass (first downpass):
+ 
+ * If state in common between the two descendants is the inapplicable state, but that both have also applicable states, set the node's state to be the union between the descendants states (rather than their state in common).
+ * If there is no state in common between the descendants and both descendants have applicable states, remove the inapplicable state from their union (rather than simply setting the nodal state to their union).
+
+For the second pass (first uppass):
+
+ * If the focal node has both applicable and inapplicable states, set it to be the inapplicable state only if its ancestor has also only the inapplicable state, else remove the inapplicable state.
+ * If the focal node has only an inapplicable state and it's ancestor has not only the inapplicable state, set it to be the union between it's descendants states if their are both applicable, else, leave it as the inapplicable state.
+
+```{r 2passNA, fig.width = 6, fig.height = 6}
+## Plotting the NA two first passes
+plot(matrix, passes = c(1,2), counts = 0, main = "Inapplicable reconstruction")
+```
+
+The parent character can be considered as a binary character "presence (`1`) or absence (`0`) of a tail" that would be `11001??00111`.
+The character would be reconstructed as:
+
+```{r 2passFitch, fig.width = 6, fig.height = 6}
+## The parent character
+parent_character <- "11001??00111"
+
+## Applying the Fitch algorithm
+matrix_parent <- apply.reconstruction(tree, parent_character, method = "Fitch", passes = 2)
+plot(matrix_parent, passes = c(1,2), counts = 0, main = "Fitch reconstruction of the parent character")
+```
+
+As you can see, both reconstructions are identical: nodes with no tail are denoted as `0` in the case of the "parent character" and as `-` for our current character/
+Note however that contrary to the Fitch algorithm, there is no tree score counting in our algorithm for the two first passes.
+Indeed, in the case of the Fitch reconstruction of the "parent character", the gain or losses of a tail are counted but not the changes in states for the subtending character (the tree score is 3 in Fitch, 5 in our case).
 
 ### Pass 3
+Here we propose a third pass that counts both:
+
+ * the gain or loss of a tail (the switch from inapplicable to applicable)
+ * the changes in states for the character "number of eye patches on the tail"
+
+The changes of states are calculated the same way as Fitch:
+
+ 1. If the two considered tips or nodes have _at least one state in common_, set the node to be these states in *common*.
+ 2. Else, if there is _nothing in common_ between the to tips or nodes, set the node to be the *union* of the two states and increment the tree score (+1).
+
+The switch to or from an inapplicable and applicable region are counted as follow:
+
+
+
 - Does the scoring.  Looks for:
 -- Transformations in applicable regions
 -- Nodes affected by colouring rule one

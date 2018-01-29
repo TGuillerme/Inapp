@@ -16,25 +16,6 @@ vignette: >
 
 This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
 
-
-## Outline 
-
-### Task one: Identify applicable regions
-- Easy - infer the distribution of the parent character and do a fitch on it.  Assume present whereever you can.
-
-### Task two: Count changes in applicable regions
-- Easy - if you are in a region, count the change; if not, don't.
-
-### Task three: Count the number of applicable regions
-- Harder. 
-
-#### Colouring rule A
-
-#### Colouring rule B
-
-#### Implications
-- Both rules identify a unique and different node whenever they are performed.
-- Perhaps, instead of doing the colouring, we could just identify and count these nodes?
 We assume that you'll already have read the vignettes on the [Fitch algorithm](Fitch.html), [Problems with Fitch](Problems.html), [Unsuitable solutions](FailedSolutions.html) and [Our solution](OurSolution.Rmd).
 
 ## Implementation

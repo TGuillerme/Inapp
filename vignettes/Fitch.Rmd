@@ -23,7 +23,7 @@ The procedure is rather simple and elegant and consist in going down the tree to
 The way the algorithms goes up and down depends on the software but often uses a _traversal_: a recursive function that can visit all tips and nodes in a logical fashion.
 For example, consider the following tree:
 
-```{r exampleTree, echo = FALSE, fig.width = 6, fig.height = 6}
+```{r exampleTree, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
 library('Inapp'); library('ape')
 tree <- ape::read.tree(text = "(((a, b), (c, d)), e);")
 tree$node.label <- c("n4", "n3", "n1", "n2")
@@ -33,7 +33,7 @@ nodelabels(tree$node.label)
 
 A downpass traversal will first apply the algorithm to the first cherry (or pair of taxa) (`A` below), then save the results in `n1` and move to the second pair of tips/nodes (`B`), apply the algorithm and save the results in `n2`, etc. until all the nodes/tips are visited.
 
-```{r EGdownpass, echo = FALSE, fig.width = 6, fig.height = 6}
+```{r EGdownpass, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
 plot(tree, main = "downpass traversal")
 nodelabels(tree$node.label)
 
@@ -83,7 +83,7 @@ text(0.7, 3.5, "D", cex = 1)
 
 An uppass traversal works identically but in the other way, going from the nodes to towards the tips.
 
-```{r downpass, echo = FALSE, fig.width = 6, fig.height = 6}
+```{r downpass, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
 plot(tree, main = "uppass traversal")
 nodelabels(tree$node.label)
 
@@ -114,7 +114,7 @@ In both traversals, the direction (i.e. which cherry to pick first in a downpass
 Now let's consider a more complex tree `((((a, b), c), d), (e, (f, (g, h))));` with a binary character distributed for the tips `10011001` respectively to the tips alphabetical order.
 
 
-```{r TreeExample, echo = FALSE, fig.width = 6, fig.height = 6}
+```{r TreeExample, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
 tree <- ape::read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
 
 ## Plotting the tree and characters,
@@ -154,7 +154,7 @@ For example, node `n15` is case 2 because there is _nothing in common_ between t
 In the following example, nodes that are in case one are in light orange and nodes that imply a transformation (i.e. that add to the tree score) are in blue.
 
 
-```{r plotDownpass, fig.width = 6, fig.height = 6}
+```{r plotDownpass, fig.width = 7.1, fig.height = 7.1}
 ## Plotting the first downpass
 plot.states.matrix(matrix, passes = 1, counts = 2, show.labels = c(1,2))
 ```
@@ -176,7 +176,7 @@ For example, node `n13` is already resolved (it has all its states in common wit
 Node `n14` has not all its states in common with its ancestor but its two descendants (`n15` and `f`) have at least one state in common (`0`).
 This node is thus solved to be the states in common between both descendants (`01`) and its ancestor (`01` as well).
 
-```{r plotUppass, fig.width = 6, fig.height = 6}
+```{r plotUppass, fig.width = 7.1, fig.height = 7.1}
 ## Plotting the first downpass
 plot.states.matrix(matrix, passes = c(1,2), counts = 2, show.labels = c(1,2))
 ```

@@ -3,6 +3,8 @@ title: "A four-pass algorithm for inapplicable data"
 author: "Thomas Guillerme"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 vignette: >
   %\VignetteIndexEntry{5. Our algorithm}
   %\VignetteEngine{knitr::rmarkdown}
@@ -41,6 +43,7 @@ Consider a tree with 12 taxa and the following multi-state characters with inapp
 Four taxa in our example have no tail (hence the inapplicable data `-`) and for two taxa, the data is missing (`?`- we don't known the number of eye patches or even whether the taxa has a tail or not).
 
 ```{r TreeExample, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+library('ape')
 tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 character <- "23--1??--032"
 

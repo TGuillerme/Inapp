@@ -20,8 +20,8 @@ We assume that you'll already have read the vignettes on the [Fitch algorithm](F
 
 ## Implementation
 
-Consider a tree with 12 taxa and the following multi-state characters with inapplicable data `23--1??--032` (say the character is "number of eye patches on a tail" ranging from none (0 - but the tail is present!)<!-- I don't like this example, as it would be better coded, in my opinion, as two characters: eye spots present/absent + number of eye spots, 1 2 or 3.--> to 3.
-Four taxa in our example have no tail (hence the inapplicable data `-`) and for two taxa, the data is missing (`?`- we don't known the number of eye patches or even whether the taxa has a tail or not).
+Consider a tree with 12 taxa and the following multi-state characters with inapplicable data `23--1??--032`; say the character is "number of eye patches on a tail" ranging from none (0 - but the tail is present!)<!-- I don't like this example, as it would be better coded, in my opinion, as two characters: eye spots present/absent + number of eye spots, 1 2 or 3. TG: that was actually what I was thinking as it makes it easy to explain/understand the parent character. Feel free to change the example though.--> to 3.
+Four taxa in our example have no tail (hence the inapplicable data `-`) and for two taxa, the data is missing (`?`- we don't known the number of eye patches or even whether the taxa have a tail or not).
 
 ```{r TreeExample, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
 library('ape')

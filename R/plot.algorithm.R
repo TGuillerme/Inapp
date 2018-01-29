@@ -167,7 +167,7 @@ plot.states.matrix <- function(
             par_pch = c(0, 0, 15)
             par_lty = c(0, 1, 0)
             par_lwd = c(0, 2, 0)
-            par_col = c("black", col.tips.nodes[4])
+            par_col = c("white", "black", col.tips.nodes[4])
         } else {
             if(all(counts == 2)) {
                 legend_text <- c(length_text, paste("state changes (", score.from(changes), ")", sep = ""))
@@ -175,7 +175,7 @@ plot.states.matrix <- function(
                 par_pch = c(0, 15)
                 par_lty = c(0, 0)
                 par_lwd = c(0, 0)
-                par_col = col.tips.nodes[3]
+                par_col = c("white", col.tips.nodes[3])
             } else {
                 if(all(counts %in% c(1,2))) {
                     legend_text <- c(length_text,
@@ -192,7 +192,6 @@ plot.states.matrix <- function(
         }
     }
 
-    if (length(states_matrix$uppassRegions) != length(states_matrix$downpassRegions)) graphics::text(1, 4, "YOU BROKE IT!", col="red", cex=3, font=2, pos=4) ## TESTING LINE - TODO DELETE
 
     ## Adding the legend
     graphics::legend("topleft", legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,

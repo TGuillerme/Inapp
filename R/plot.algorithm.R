@@ -44,7 +44,7 @@
 
 plot.states.matrix <- function(
   x, passes = c(1,2,3,4), show.labels = 0,
-  col.tips.nodes = c("#fc8d59", "#eeeeee", "#7fbf7b", "#af8dc3"), # http://colorbrewer2.org/#type=diverging&scheme=BrBG&n=3
+  col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"), # http://colorbrewer2.org/#type=diverging&scheme=BrBG&n=3
   counts = 0, use.edge.length = FALSE, col.states = FALSE, ...) {
   states_matrix <- x # We have to use x in the function definition to extend the generic function "plot"
     ## More efficient to avoid multiple list lookups - and it keeps the source code cleaner too
@@ -153,15 +153,15 @@ plot.states.matrix <- function(
         # http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3
         c("#fc8d59"),
         c("#fc8d59", "#91bfdb"),
-        c("#fc8d59", "#eeeeae", "#91bfdb"),
+        c("#fc8d59", "#e2e2a2", "#91bfdb"),
         c("#d7191c", "#fdae61", "#abd9e9", "#2c7bb6"),
-        c("#d7191c", "#fdae61", "#eeeeae", "#abd9e9", "#2c7bb6"),
+        c("#d7191c", "#fdae61", "#e2e2a2", "#abd9e9", "#2c7bb6"),
         c("#d73027", "#fc8d59", "#fee090", "#e0f3f8", "#91bfdb", "#4575b4"),
-        c("#d73027", "#fc8d59", "#fee090", "#eeeeae", "#e0f3f8", "#91bfdb", "#4575b4"),
+        c("#d73027", "#fc8d59", "#fee090", "#e2e2a2", "#e0f3f8", "#91bfdb", "#4575b4"),
         c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
-        c("#d73027", "#f46d43", "#fdae61", "#fee090", "#eeeeae", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
+        c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
         c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695"),
-        c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#eeeeae", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695")
+        c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695")
       )
       tips_colours <- tips_labels
       tips_colours[nchar(tips_labels) > 1] <- "?"
@@ -170,7 +170,7 @@ plot.states.matrix <- function(
       state_colours <- c(palettes[[max_colour + 1]], "#aaaaaa", "#eeeeee")
       names(state_colours) <- c(0:max_colour, '?', '-')
       edge_palette <- state_colours
-      edge_palette['?'] <- '#111111'
+      edge_palette['?'] <- '#222222'
     }
 
     if(any(counts == 1) && !is.null(unlist(states_matrix$Up2))) {

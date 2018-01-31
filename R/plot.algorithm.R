@@ -213,12 +213,13 @@ plot.states.matrix <- function(
           c("#d73027", "#fc8d59", "#fee090", "#e0f3f8", "#91bfdb", "#4575b4"),
           c("#d73027", "#fc8d59", "#fee090", "#ffffbf", "#e0f3f8", "#91bfdb", "#4575b4"),
           c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
-          c("#d73027","#f46d43", "#fdae61", "#fee090", "#ffffbf", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
+          c("#d73027", "#f46d43", "#fdae61", "#fee090", "#ffffbf", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
           c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695"),
           c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#ffffbf", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695")
         )
         state_colours <- palettes[[length(unique(tips_labels))]]
-        ape::tiplabels(tips_labels, cex = 1, bg = col.states[as.factor(tips_labels)], adj = 1)
+        ape::tiplabels(tips_labels, cex = 1, adj = 1,
+                       bg = state_colours[as.factor(tips_labels)])
     } else {
       ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
     }

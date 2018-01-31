@@ -152,7 +152,7 @@ get.character <- function(input, tree) {
                                   nrow = length(data_matrix[[1]]), byrow = FALSE)
             ## Select the right character
             if(input$character_num < 1 | input$character_num > nrow(data_matrix)) {
-                stop(paste("Select a character between 0 and ", nrow(data_matrix), ".", sep = ""))
+                stop(paste("Select a character between 1 and ", nrow(data_matrix), ".", sep = ""))
             } else {
                 character <- data_matrix[input$character_num, ]
             }

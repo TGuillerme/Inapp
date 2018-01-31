@@ -135,7 +135,7 @@ shinyUI(fluidPage(
           ),
 
           ## Show activations/counts - input$counts
-          checkboxGroupInput("counts", label = h5("Show counts details"),  choices = list("Applicable regions" = 1, "State changes" = 2), selected = 0),
+          checkboxGroupInput("counts", label = h5("Show counts details"),  choices = list("Applicable regions" = 1, "State changes" = 2), selected = c(1, 2)),
 
           hr(),
           ## Refresh button - input$refresh

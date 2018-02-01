@@ -142,14 +142,13 @@ get.character <- function(input, tree) {
             data_matrix <- ape::read.nexus.data(nexus_matrix$datapath)
             matrix_taxa <- names(data_matrix)
             if (all(tree$tip.label %in% matrix_taxa)) {
-              data_matrix <- data_matrix[matrix_taxa %in% tree$tip.label]
+              data_matrix <- vapply(tree$tip.label, function (tip) data_matrix[[tip]], data_matrix[[1]])
             } else {
               missingTaxa <- tree$tip.label[!tree$tip.label %in% matrix_taxa]
               stop("Tree contains taxa [", paste(missingTaxa, collapse=", "),
                    "] not found in Nexus matrix.")
             }
-            data_matrix <- matrix(data = unlist(data_matrix),
-                                  nrow = length(data_matrix[[1]]), byrow = FALSE)
+
             ## Select the right character
             if(input$character_num < 1 | input$character_num > nrow(data_matrix)) {
                 stop(paste("Select a character between 1 and ", nrow(data_matrix), ".", sep = ""))

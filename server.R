@@ -27,6 +27,7 @@ read.newick.tree <- function (newick_text) {
 }
 
 ## Get the tree details
+## Return a tree, or an error message to be written to output.
 get.tree <- function(input, simple = FALSE) {
 
     if(!simple) {
@@ -83,7 +84,7 @@ get.tree <- function(input, simple = FALSE) {
                     tree <- tree[[1]]
                 }
             } else {
-                stop("Load a tree in nexus format.")
+              return("Load a tree in nexus format.")
             }
         }
     } else {
@@ -116,6 +117,8 @@ get.tree <- function(input, simple = FALSE) {
 }
 
 ## Getting the character details
+## Return a character string if character extracted correctly,
+## a list (detailing the error message to be displayed) if there's an error.
 get.character <- function(input, tree) {
     n_tip = ape::Ntip(tree)
     ## Generate a random character
@@ -131,7 +134,7 @@ get.character <- function(input, tree) {
     if(input$character == 2) {
         character <- as.character(input$character_string)
         if(is.null(character)) {
-            stop("Enter a character as a string (e.g. 0123).")
+            return(list("Enter a character as a string (e.g. 0123)."))
         }
     }
 
@@ -145,18 +148,19 @@ get.character <- function(input, tree) {
               data_matrix <- vapply(tree$tip.label, function (tip) data_matrix[[tip]], data_matrix[[1]])
             } else {
               missingTaxa <- tree$tip.label[!tree$tip.label %in% matrix_taxa]
-              stop("Tree contains taxa [", paste(missingTaxa, collapse=", "),
-                   "] not found in Nexus matrix.")
+              return(list("Tree contains taxa [", paste(missingTaxa, collapse=", "),
+                   "] not found in Nexus matrix."))
             }
 
             ## Select the right character
             if(input$character_num < 1 | input$character_num > nrow(data_matrix)) {
-                stop(paste("Select a character between 1 and ", nrow(data_matrix), ".", sep = ""))
+                return(list("Select a character between 1 and ",
+                            nrow(data_matrix), "."))
             } else {
                 character <- data_matrix[input$character_num, ]
             }
         } else {
-            stop("Load a matrix in Nexus format.")
+            return(list("Load a matrix in Nexus format."))
         }
     }
     return(character)
@@ -169,15 +173,21 @@ seeds <- sample(1:200)*sample(1:10)
 # server.R
 shinyServer(
     function(input, output, session) {
-
         ## Plotting function
         output$plot_out <- renderPlot({
             ## Reset the seed when hitting the refresh button
             set.seed(seeds[(input$refresh)+1])
 
+
             ## Getting the parameters
             tree <- get.tree(input)
+            if (class(tree) == 'character') {
+              return(plotError(tree))
+            }
             character <- get.character(input, tree)
+            if (class(character) == 'list') {
+              return(plotError(paste(character, sep='', collapse='')))
+            }
 
             ## Run the algorithm
             if(as.numeric(input$method) == 1) {

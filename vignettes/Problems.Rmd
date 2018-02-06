@@ -50,8 +50,8 @@ edgeWidths <- rep(2, dim(treeUnresolved$edge)[1])
 edgeWidths[5:8] <- 4
 plot(treeUnresolved, direction='upwards', use.edge.length=TRUE, show.tip.label=FALSE,
      edge.width = edgeWidths)
-c0 <- palettes[[2]][1]
-c1 <- palettes[[2]][2]
+c0 <- brewer[[2]][1]
+c1 <- brewer[[2]][2]
 cX <- "#cccccc"
 tiplabels(c(0, 1, 0, 1, rep('-', 6), 1, 1, 0, 0), bg=c(c0, c1, c0, c1, rep(cX, 6), c1, c1, c0, c0))
      

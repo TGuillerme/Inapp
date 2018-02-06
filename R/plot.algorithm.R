@@ -178,9 +178,13 @@ plot.states.matrix <- function(
     }
 
     ## Colour the states if the fourth uppass is available
-    if (col.states && !is.null(unlist(states_matrix$Up2))) {
+    if (col.states && !is.null(unlist(states_matrix$Up1))) {
         ## get the states
-        final_state <- states_matrix$Up2
+        if (!is.null(unlist(states_matrix$Up2))) {
+            final_state <- states_matrix$Up2
+        } else {
+            final_state <- states_matrix$Up1
+        }
         all_states <- -1:max_colour
         col_states <- c('-', 0:max_colour)
         ## Get the edge colours

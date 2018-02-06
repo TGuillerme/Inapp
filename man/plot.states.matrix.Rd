@@ -5,7 +5,7 @@
 \title{Plot tree and ancestral states}
 \usage{
 \method{plot}{states.matrix}(x, passes = c(1, 2, 3, 4), show.labels = 0,
-  col.tips.nodes = c("orange", "bisque2", "lightblue", "lightgrey"),
+  col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
   counts = 0, use.edge.length = FALSE, col.states = FALSE, ...)
 }
 \arguments{
@@ -15,7 +15,10 @@
 
 \item{show.labels}{\code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).}
 
-\item{col.tips.nodes}{\code{character}, a vector of up to four colors to be used for displaying respectively the tips, the nodes, and (if \code{counts != 0}) the activated/counted nodes and the nodes at which regions are counted.}
+\item{col.tips.nodes}{\code{character}, a vector of up to four colors to be
+used for displaying respectively the tips, the nodes,
+and (if \code{counts != 0}) the activated/counted nodes
+and the nodes at which regions are counted.}
 
 \item{counts}{\code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).}
 

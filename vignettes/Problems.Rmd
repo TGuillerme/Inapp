@@ -1,6 +1,6 @@
 ---
 title: "A four-pass algorithm for inapplicable data"
-author: "Vignette Author"
+author: "Martin R. Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
@@ -10,6 +10,9 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+```{R setup}
+library('Inapp')
+```
 
 # Inapplicable data in a parsimony setting
 
@@ -19,10 +22,45 @@ We assume that you are already familiar with the [Fitch algorithm](Fitch.html).
 
 ## Problems with the Fitch algorithm
 
-This file essentially replicates [@Maddison1993].
-
+The Fitch algorithm counts changes in a character.
+It assumes that the character is applicable throughout the tree.
 
 ### Red tails, blue tails
+Maddison [-@Maddison1993] provided the following example to demonstrate
+the problem encountered by the Fitch algorithm when inapplicable
+characters were present.
+
+Consider the following tree, each node of which is supported by a number of
+characters.  Tail colour (illustrated; 0 = red, 1 = blue) has not yet been 
+considered, but has the potential to resolve the polytomy on the left hand side (bold).
+
+```{R Maddison example, echo=FALSE, fig.height=5, fig.width=8}
+par(mar=rep(0.2, 4))
+treeUnresolved <- ape:::read.tree(text="(((((A, B, C, D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
+treeUnresolved$edge.length <- rep(1, dim(treeUnresolved$edge)[1])
+plot(treeUnresolved, direction='upwards', use.edge.length=TRUE)
+tip
+     
+```
+
+Tail colour should group the red-tailed tips together, and the blue-tailed tips together,
+but does not establish whether the ancestor of the left-hand tail-bearing clade 
+had a red or blue tail.
+
+The Fitch algorithm, however, will prefer trees in which the left-hand tail-bearing clade
+has a blue tail, simply because the right-hand tail-bearing clade ancestrally did.
+
+```{R Maddison example 2, echo=FALSE, fig.height=5, fig.width=8}
+par(mar=rep(0.2, 4), mfrow=c(2, 2))
+treeUnresolved <- ape:::read.tree(text="(((((A, B, C, D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
+treeUnresolved$edge.length <- rep(1, dim(treeUnresolved$edge)[1])
+plot(apply.reconstruction(treeUnresolved, '0101------0011',
+                          method='Fitch', match.tip.char=TRUE),
+       passes=0, counts=NULL,
+       direction='upwards', legend.pos='none',
+       col.states=TRUE, use.edge.length=TRUE)
+     
+```
 
 ### Why Reductive coding doesn't work
 

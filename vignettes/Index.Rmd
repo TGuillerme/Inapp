@@ -21,7 +21,7 @@ This series of vignettes works through the inapplicable algorithm proposed by Br
   - [An introduction](Fitch.html)
     - Status: In progress (TG)
   - [Shortcomings](Problems.html)
-    - Status: Not allocated
+    - Status: In progress (MS)
   - [Proposed solutions](FailedSolutions.html)
     - Status: Not allocated
   

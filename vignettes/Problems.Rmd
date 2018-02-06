@@ -12,6 +12,8 @@ vignette: >
 ---
 ```{R setup}
 library('Inapp')
+library('ape')
+data("palettes")
 ```
 
 # Inapplicable data in a parsimony setting
@@ -38,8 +40,14 @@ considered, but has the potential to resolve the polytomy on the left hand side 
 par(mar=rep(0.2, 4))
 treeUnresolved <- ape:::read.tree(text="(((((A, B, C, D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeUnresolved$edge.length <- rep(1, dim(treeUnresolved$edge)[1])
-plot(treeUnresolved, direction='upwards', use.edge.length=TRUE)
-tip
+edgeWidths <- rep(2, dim(treeUnresolved$edge)[1])
+edgeWidths[5:8] <- 4
+plot(treeUnresolved, direction='upwards', use.edge.length=TRUE, show.tip.label=FALSE,
+     edge.width = edgeWidths)
+c0 <- palettes[[2]][1]
+c1 <- palettes[[2]][2]
+cX <- "#cccccc"
+tiplabels(c(0, 1, 0, 1, rep('-', 6), 1, 1, 0, 0), bg=c(c0, c1, c0, c1, rep(cX, 6), c1, c1, c0, c0))
      
 ```
 
@@ -54,7 +62,7 @@ has a blue tail, simply because the right-hand tail-bearing clade ancestrally di
 par(mar=rep(0.2, 4), mfrow=c(2, 2))
 treeUnresolved <- ape:::read.tree(text="(((((A, B, C, D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeUnresolved$edge.length <- rep(1, dim(treeUnresolved$edge)[1])
-plot(apply.reconstruction(treeUnresolved, '0101------0011',
+plot(apply.reconstruction(treeUnresolved, '0101------1100',
                           method='Fitch', match.tip.char=TRUE),
        passes=0, counts=NULL,
        direction='upwards', legend.pos='none',

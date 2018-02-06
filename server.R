@@ -4,7 +4,7 @@ library(ape)
 ## Load the R functions
 source("helpers.R")
 
-## Sanitise input text to check that newick tree can be extracted 
+## Sanitise input text to check that newick tree can be extracted
 read.newick.tree <- function (newick_text) {
   if (is.null(newick_text)) {
     stop("Enter a tree in newick format.")
@@ -17,7 +17,7 @@ read.newick.tree <- function (newick_text) {
   if (length(unique(char_counts)) > 1) {
     stop("Braces and commas in input tree must balance: ", char_counts[1], " (s; ", char_counts[2], " )s; ", char_counts[3], " commas.")
   }
-  
+
   # Add trailing semicolon, if missing
   if (substr(newick_text, nchar(newick_text), nchar(newick_text)) != ";") {
     newick_text <- paste0(newick_text, ';')
@@ -25,7 +25,7 @@ read.newick.tree <- function (newick_text) {
 
   return (ape::read.tree(text = newick_text))
 }
-  
+
 ## Get the tree details
 get.tree <- function(input, simple = FALSE) {
 
@@ -139,16 +139,25 @@ get.character <- function(input, tree) {
     if(input$character == 3) {
         nexus_matrix <- input$nexus_matrix
         if(!is.null(nexus_matrix)) {
-            matrix <- ape::read.nexus.data(nexus_matrix$datapath)
-            matrix <- matrix(data = unlist(matrix), nrow = length(matrix[[1]]), byrow = FALSE)
-            ## Select the right character
-            if(input$character_num < 1 | input$character_num > nrow(matrix)) {
-                stop(paste("Select a character between 0 and ", nrow(matrix), ".", sep = ""))
+            data_matrix <- ape::read.nexus.data(nexus_matrix$datapath)
+            matrix_taxa <- names(data_matrix)
+            if (all(tree$tip.label %in% matrix_taxa)) {
+              data_matrix <- data_matrix[matrix_taxa %in% tree$tip.label]
             } else {
-                character <- matrix[input$character_num, ]
+              missingTaxa <- tree$tip.label[!tree$tip.label %in% matrix_taxa]
+              stop("Tree contains taxa [", paste(missingTaxa, collapse=", "),
+                   "] not found in Nexus matrix.")
+            }
+            data_matrix <- matrix(data = unlist(data_matrix),
+                                  nrow = length(data_matrix[[1]]), byrow = FALSE)
+            ## Select the right character
+            if(input$character_num < 1 | input$character_num > nrow(data_matrix)) {
+                stop(paste("Select a character between 1 and ", nrow(data_matrix), ".", sep = ""))
+            } else {
+                character <- data_matrix[input$character_num, ]
             }
         } else {
-            stop("Load a matrix in nexus format.")
+            stop("Load a matrix in Nexus format.")
         }
     }
     return(character)
@@ -161,9 +170,9 @@ seeds <- sample(1:200)*sample(1:10)
 # server.R
 shinyServer(
     function(input, output, session) {
-    
+
         ## Plotting function
-        output$plot_out <- renderPlot({ 
+        output$plot_out <- renderPlot({
             ## Reset the seed when hitting the refresh button
             set.seed(seeds[(input$refresh)+1])
 
@@ -176,7 +185,7 @@ shinyServer(
                 states_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA", inapplicable = NULL, match.tip.char = as.logical(input$matchtipchar))
             } else {
                 states_matrix <- apply.reconstruction(tree, character, passes = 2, method = "Fitch", inapplicable = as.numeric(input$fitch_inapp), match.tip.char = as.logical(input$matchtipchar))
-            } 
+            }
 
             ## ~~~~~~~~~~
             ## Plotting the results
@@ -196,8 +205,11 @@ shinyServer(
                 show_passes <- as.vector(as.numeric(input$showPassFitch))
             }
 
-            plot.states.matrix(states_matrix, passes = show_passes, show.labels = showlabels, counts = as.vector(as.numeric(input$counts)), col.states = input$colour_states)
-            
+            plot.states.matrix(states_matrix, passes = show_passes,
+                               show.labels = showlabels,
+                               counts = as.vector(as.numeric(input$counts)),
+                               col.states = input$colour_states)
+
             ## Exporting data
             output$downloadData <- downloadHandler(
 
@@ -305,7 +317,7 @@ shinyServer(
 
             tree <- get.tree(input, simple = TRUE)
             n_tip <- length(tree$tip.label)
-            
+
             ## Set the plot window
             if(n_tip > 10) {
                 plotOutput("plot_out", width ="100%", height = paste(round(n_tip*0.4), "00px", sep = ""))

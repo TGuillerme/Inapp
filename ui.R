@@ -1,11 +1,11 @@
 shinyUI(fluidPage(
 
   wellPanel(
-  
+
     titlePanel("Inapplicable data reconstruction"),
     p("This package accompanies Brazeau, M. D., Guillerme, T., and Smith, M. R. (2017).  Morphological phylogenetic analysis with inapplicable data. Biorxiv. doi:", a(href="https://doi.org/10.1101/209775", "10.1101/209775"), "."),
     hr(),
-  
+
     fluidRow(
         ## ---------------
         ## Tree parameters
@@ -44,23 +44,30 @@ shinyUI(fluidPage(
           ## Tips and nodes options
           checkboxGroupInput("showlabels", label = "Show labels", choices = list("Tips" = 1, "Nodes" = 2), selected = NULL)
         ),
-        
+
         ## --------------------
         ## Character parameters
         ## --------------------
         column(width = 4,
           ## Character input - input$character
-          radioButtons("character", label = h3("Character input method"), choices = list("Random" = 1, "User" = 2, "Nexus input" = 3), selected = 1),
-          
+          radioButtons("character", label = h3("Character input method"),
+                       choices = list("Random" = 1, "User" = 2, "Nexus input" = 3),
+                       selected = 1),
+
           ## Manual character input
           conditionalPanel(condition = "input.character == 2",
             ## Character string - input$character_string
-            textInput("character_string", label = h5("Enter a character string:"), value = "1?2-"),
+            textInput("character_string", label = h5("Enter a character string:"),
+                      value = "1?2-"),
             ## Help text for the character string
-            helpText("Accepted character states are any values from 0 to 9 as well as - for the inapplicable token and ? for all states (missing data). Polymorphic characters can be entered as {01}."),
+            helpText("Accepted character states are any values from 0 to 9 as well ",
+                     "as - for the inapplicable token and ? for all states (missing ",
+                     "data). Polymorphic characters can be entered as {01}."),
             ## Match character
-            checkboxInput("matchtipchar", label = "Match character to tips", value = FALSE),
-            helpText("Tick to match left-right state input order state to the alphanumeric order of the tip labels.")
+            checkboxInput("matchtipchar", label = "Match character to tips",
+                          value = FALSE),
+            helpText("Tick to match left-right state input order state to the ",
+                     "alphanumeric order of the tip labels.")
           ),
 
           ## Nexus character
@@ -72,7 +79,7 @@ shinyUI(fluidPage(
           ),
 
           ## Colour states
-          checkboxInput("colour_states", label = "Colour states", value = FALSE),
+          checkboxInput("colour_states", label = "Colour states", value = TRUE),
 
 
           ## --------------------
@@ -83,7 +90,7 @@ shinyUI(fluidPage(
           ## Export format - input$export_type
           selectInput("output_type", "Export format:", choices = c("csv", "pdf", "newick", "nexus", "C-test")),
           downloadButton('downloadData', 'Download'),
-          
+
           conditionalPanel(condition = "input.output_type == \"C-test\"",
             ## Enter some traversal order - input$traversal_order
             textInput("traversal_order", label = h5("Enter an optional traversal order for output:"), value = ""),
@@ -128,8 +135,8 @@ shinyUI(fluidPage(
           ),
 
           ## Show activations/counts - input$counts
-          checkboxGroupInput("counts", label = h5("Show counts details"),  choices = list("Applicable regions" = 1, "State changes" = 2), selected = 0),
-        
+          checkboxGroupInput("counts", label = h5("Show counts details"),  choices = list("Applicable regions" = 1, "State changes" = 2), selected = c(1, 2)),
+
           hr(),
           ## Refresh button - input$refresh
           actionButton("refresh", label = "Refresh")
@@ -137,7 +144,7 @@ shinyUI(fluidPage(
         )
     )
   ),
-  
+
   ## Displaying the results
   fluidRow(
     ## Plots the algorithm results

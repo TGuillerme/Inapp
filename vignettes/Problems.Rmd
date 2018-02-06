@@ -100,7 +100,7 @@ An alternative is to code the inapplicable token as an extra state:
 
 This seems to resolve the problem case that we encountered with reductive coding:
 
-```{R Maddison example 2cd, echo=FALSE, fig.height=9, fig.width=8}
+```{R Extra state no good, echo=FALSE, fig.height=9, fig.width=8}
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
@@ -159,25 +159,20 @@ Consider a character with just three ontologically dependent characters:
 >
 > Tail shape: Straight / curly
 
-This could be coded as a single transformation series:
-
-> Tail: (0), absent; (1), present, red, scaly, straight; (2), present, red, scaly, curly;
-> (3), present, red, hairy, straight, [....] (8), present, blue, hairy, curly
-
-and a Sankoff matrix constructed:
+This could be coded as a single transformation series using a Sankoff matrix:
 
 ```{R Sankoff example, echo = FALSE, results='asis'}
 dots <- rep('.', 3)
 state <- c(0:3, dots, 8)
 costs <- matrix(c(
-  c(0, "3*", "3*", "3*", dots, "3*"),
-  c(3, 0, 1, 1, dots, 3),
-  c(3, 1, 0, 2, dots, 2),
-  c(3, 1, 2, 0, dots, 2),
+  c(0, 4, 4, 4, dots, 4),
+  c(4, 0, 1, 1, dots, 3),
+  c(4, 1, 0, 2, dots, 2),
+  c(4, 1, 2, 0, dots, 2),
   c(rep('.', 4), 0, rep('.', 3)),
   c(rep('.', 5), 0, rep('.', 2)),
   c(rep('.', 6), 0, rep('.', 1)),
-  c(3, 3, 2, 2, dots, 0)) , byrow=TRUE, ncol=length(state))
+  c(4, 3, 2, 2, dots, 0)) , byrow=TRUE, ncol=length(state))
 colnames(costs) <-  state
 rownames(costs) <- c("(0), absent", 
                      "(1), present, red, scaly, straight",
@@ -185,14 +180,45 @@ rownames(costs) <- c("(0), absent",
                      "(3) present, red, hairy, straight",
                      dots,
                      "(8), present, blue, hairy, curly")
-knitr::kable(costs, capiton="Sankoff matrix")
-```
+knitr::kable(costs, caption="Tail: Cost to go from left to top entry:")
+
 ```
 
-Note that entries denoted `3*` could instead be coded with a cost of 1, if the loss
-of a tail was to be treated separately from the gain of a tail
-
+This doesn't work:
 ```{R Sankoff is no good, echo=FALSE, fig.height=5, fig.width=8}
 
-````
+```
+
+The alternative is to allow loss to cost less than gain:
+
+```{R Sankoff example 2, echo = FALSE, results='asis'}
+dots <- rep('.', 3)
+state <- c(0:3, dots, 8)
+costs <- matrix(c(
+  c(0, 4, 4, 4, dots, 4),
+  c(1, 0, 1, 1, dots, 3),
+  c(1, 1, 0, 2, dots, 2),
+  c(1, 1, 2, 0, dots, 2),
+  c(rep('.', 4), 0, rep('.', 3)),
+  c(rep('.', 5), 0, rep('.', 2)),
+  c(rep('.', 6), 0, rep('.', 1)),
+  c(1, 3, 2, 2, dots, 0)) , byrow=TRUE, ncol=length(state))
+colnames(costs) <-  state
+rownames(costs) <- c("(0), absent", 
+                     "(1), present, red, scaly, straight",
+                     "(2) present, red, scaly, curly",
+                     "(3) present, red, hairy, straight",
+                     dots,
+                     "(8), present, blue, hairy, curly")
+knitr::kable(costs, caption="Tail: Cost to go from left to top entry:")
+
+```
+
+This doesn't work either:
+```{R Sankoff is still no good, echo=FALSE, fig.height=5, fig.width=8}
+sankTree <- ape::read.tree(text="(((((a, b), c), dX), eX), (fX, (gX, (p, (q, r)))));")
+vignettePlot(sankTree, '1110000888', na=FALSE, legend='none')
+legend('bottomleft', "Nope")
+```
+
 ## References

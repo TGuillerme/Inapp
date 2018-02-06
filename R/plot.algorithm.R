@@ -157,14 +157,14 @@ plot.states.matrix <- function(
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     if (col.states) {
-        data("palettes")
+        data("brewer")
         ## Matching the states and colours
         tips_colours <- tips_labels
         tips_colours[nchar(tips_labels) > 1] <- "?"
 
         ## Select the palette
         max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
-        state_colours <- c(palettes[[max_colour + 1]], "lightgrey", "grey")
+        state_colours <- c(brewer[[max_colour + 1]], "lightgrey", "grey")
         names(state_colours) <- c(0:max_colour, "?", "-")
 
         ## Get the edge palette

@@ -79,7 +79,7 @@ shinyUI(fluidPage(
           ),
 
           ## Colour states
-          checkboxInput("colour_states", label = "Colour states", value = TRUE),
+          checkboxInput("colour_states", label = "Colour states", value = FALSE),
 
 
           ## --------------------

@@ -44,10 +44,10 @@
 
 plot.states.matrix <- function(
   x, passes = c(1,2,3,4), show.labels = 0,
-  col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"), # http://colorbrewer2.org/#type=diverging&scheme=BrBG&n=3
+  col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
   counts = 0, use.edge.length = FALSE, col.states = FALSE, ...) {
-  states_matrix <- x # We have to use x in the function definition to extend the generic function "plot"
-    ## More efficient to avoid multiple list lookups - and it keeps the source code cleaner too
+    
+    states_matrix <- x
     tree <- states_matrix$tree
     regions <- states_matrix$regions
     changes <- states_matrix$changes
@@ -149,28 +149,34 @@ plot.states.matrix <- function(
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     if (col.states) {
-      palettes <- list(
+        ## Generate the palette list
+        palettes <- list(
         # http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3
-        c("#fc8d59"),
-        c("#fc8d59", "#91bfdb"),
-        c("#fc8d59", "#e2e2a2", "#91bfdb"),
-        c("#d7191c", "#fdae61", "#abd9e9", "#2c7bb6"),
-        c("#d7191c", "#fdae61", "#e2e2a2", "#abd9e9", "#2c7bb6"),
-        c("#d73027", "#fc8d59", "#fee090", "#e0f3f8", "#91bfdb", "#4575b4"),
-        c("#d73027", "#fc8d59", "#fee090", "#e2e2a2", "#e0f3f8", "#91bfdb", "#4575b4"),
-        c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
-        c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
-        c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695"),
-        c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695")
-      )
-      tips_colours <- tips_labels
-      tips_colours[nchar(tips_labels) > 1] <- "?"
-      max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
+            c("#fc8d59"),
+            c("#fc8d59", "#91bfdb"),
+            c("#fc8d59", "#e2e2a2", "#91bfdb"),
+            c("#d7191c", "#fdae61", "#abd9e9", "#2c7bb6"),
+            c("#d7191c", "#fdae61", "#e2e2a2", "#abd9e9", "#2c7bb6"),
+            c("#d73027", "#fc8d59", "#fee090", "#e0f3f8", "#91bfdb", "#4575b4"),
+            c("#d73027", "#fc8d59", "#fee090", "#e2e2a2", "#e0f3f8", "#91bfdb", "#4575b4"),
+            c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
+            c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
+            c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695"),
+            c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695")
+        )
 
-      state_colours <- c(palettes[[max_colour + 1]], "#aaaaaa", "#eeeeee")
-      names(state_colours) <- c(0:max_colour, '?', '-')
-      edge_palette <- state_colours
-      edge_palette['?'] <- '#222222'
+        ## Matching the states and colours
+        tips_colours <- tips_labels
+        tips_colours[nchar(tips_labels) > 1] <- "?"
+
+        ## Select the palette
+        max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
+        state_colours <- c(palettes[[max_colour + 1]], "lightgrey", "grey")
+        names(state_colours) <- c(0:max_colour, "?", "-")
+
+        ## Get the edge palette
+        edge_palette <- state_colours
+        edge_palette["?"] <- "darkgrey"
     }
 
     if(any(counts == 1) && !is.null(unlist(states_matrix$Up2))) {
@@ -178,22 +184,26 @@ plot.states.matrix <- function(
       edge_col <- ifelse(get.NA.edges(states_matrix, tree, pass = 4) == 1, "black", "grey")
     }
 
+    ## Colour the states if the fourth uppass is available
     if (col.states && !is.null(unlist(states_matrix$Up2))) {
-      final_state <- states_matrix$Up2
-      all_states <- -1:max_colour
-      col_states <- c('-', 0:max_colour)
-      edge_col <- as.character(edge_palette[apply(tree$edge, 1, function (edge) {
-        parent <- all_states %in% final_state[[edge[1]]]
-        child <-all_states %in% final_state[[edge[2]]]
-        common <- parent & child
-        if (sum(common) == 1) {
-          col_states[common]
-        } else if (sum(child) == 1) {
-          col_states[child]
-        } else if (sum(parent) == 1) {
-          col_states[parent]
-        } else '?'
-      })])
+        ## get the states
+        final_state <- states_matrix$Up2
+        all_states <- -1:max_colour
+        col_states <- c('-', 0:max_colour)
+        ## Get the edge colours
+        colour.edge <- function (edge) {
+            parent <- all_states %in% final_state[[edge[1]]]
+            child <-all_states %in% final_state[[edge[2]]]
+            common <- parent & child
+            if (sum(common) == 1) {
+                col_states[common]
+            } else if (sum(child) == 1) {
+                col_states[child]
+            } else if (sum(parent) == 1) {
+                col_states[parent]
+            } else '?'
+        }
+        edge_col <- as.character(edge_palette[apply(tree$edge, 1, colour.edge)])
     }
 
     ## Plotting the tree
@@ -251,7 +261,7 @@ plot.states.matrix <- function(
     ## Colour the tip states.
     if(col.states) {
         ape::tiplabels(tips_labels, cex = 1, adj = 1,
-                       bg = paste0(state_colours[tips_colours], 'aa'))
+                       bg = paste0(state_colours[tips_colours])) #, 'aa'
     } else {
       ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
     }

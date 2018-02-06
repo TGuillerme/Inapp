@@ -13,14 +13,15 @@ vignette: >
 
 ```{R initialize, message=FALSE, include=FALSE}
 library(knitr); library('Inapp')
-quickPlot <- function (tree, character, na=TRUE) {
+quickPlot <- function (tree, character, na=TRUE, legend.pos='bottomleft') {
   tree$edge.length <- rep(1, dim(tree$edge)[1])
   reconstruction <- apply.reconstruction(tree, character, 
                             method=if(na) "NA" else 'Fitch',
                             match.tip.char=TRUE)
   dev.new(); plot(tree, direction='upwards'); corners <- par('usr'); dev.off()
   plot(reconstruction,
-       passes=if(na) 1:4 else 1:2, counts=1:2, direction='upwards',
+       passes=if(na) 1:4 else 1:2, counts=1:2, 
+       direction='upwards', legend.pos=legend.pos,
        col.states=TRUE, use.edge.length=TRUE, 
        x.lim=c(-3, corners[2]), y.lim=c(-1, corners[4]+0.1))
 }
@@ -211,13 +212,13 @@ quickPlot(worse, col, na=FALSE)
 
 The behaviour only becomes questionable when a tail is secondarily lost, then re-gained, as the loss of a tail seems like it should be a single evolutionary step, but also causes the loss of all contingent characters, which must then "reevolve" as though they had never existed:
 
-```{R loss and gain, echo=FALSE}
-par(mfrow=c(1, 1), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0))
+```{R loss and gain, echo=FALSE, fig.width=4, fig.height=4}
+par(mfrow=c(1, 1), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
 imbal <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, G))))));")
 tail <- "1100011"
 eyespots <- "1100011"
 
-quickPlot(imbal, eyespots, na=FALSE)
+quickPlot(imbal, eyespots, na=FALSE, legend.pos='topleft')
 mtext("Tail eyespots: (0), absent; (1), present", side=1, line=0, outer=TRUE)
 
 
@@ -253,3 +254,5 @@ mtext(side=1, line=0, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0
 Here are some marginal cases where discretion is required.
 Here are some trees that show why we would code things our way
 this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!
+
+## References

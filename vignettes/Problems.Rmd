@@ -149,6 +149,8 @@ Even if these technical limitations could be overcome, however, Sankoff matrices
 
 ### Why Sankoff matrices don't work
 
+#### Gain and loss symmetric
+
 Consider a character with just three ontologically dependent characters:
 
 > Tail: Absent / present
@@ -173,27 +175,30 @@ costs <- matrix(c(
   c(rep('.', 5), 0, rep('.', 2)),
   c(rep('.', 6), 0, rep('.', 1)),
   c(4, 3, 2, 2, dots, 0)) , byrow=TRUE, ncol=length(state))
-colnames(costs) <-  state
-rownames(costs) <- c("(0), absent", 
+costNames <- c("(0), absent", 
                      "(1), present, red, scaly, straight",
-                     "(2) present, red, scaly, curly",
-                     "(3) present, red, hairy, straight",
+                     "(2), present, red, scaly, curly",
+                     "(3), present, red, hairy, straight",
                      dots,
                      "(8), present, blue, hairy, curly")
-knitr::kable(costs, caption="Tail: Cost to go from left to top entry:")
+colnames(costs) <-  state
+rownames(costs) <- costNames
+knitr::kable(costs, caption="Tail: Cost to go from left state to top entry:")
 
 ```
 
-This doesn't work:
-```{R Sankoff is no good, echo=FALSE, fig.height=5, fig.width=8}
+The issue here is that losing a tail, which arguably corresponds to a single evolutionary
+event, is allocated a large cost that only grows with the number of 
+ontogenetically dependant characters.
 
-```
+#### Gain and loss asymmetric
 
-The alternative is to allow loss to cost less than gain:
+At the cost of symmetry, one could argue that the loss of a tail requires a single
+transformation, whereas the gain requires the addition of a tail and the "setting"
+of each ontologically dependent character, rendering an asymmetric Sankoff
+matrix that nevertheless respects triangular inequality:
 
 ```{R Sankoff example 2, echo = FALSE, results='asis'}
-dots <- rep('.', 3)
-state <- c(0:3, dots, 8)
 costs <- matrix(c(
   c(0, 4, 4, 4, dots, 4),
   c(1, 0, 1, 1, dots, 3),
@@ -204,18 +209,13 @@ costs <- matrix(c(
   c(rep('.', 6), 0, rep('.', 1)),
   c(1, 3, 2, 2, dots, 0)) , byrow=TRUE, ncol=length(state))
 colnames(costs) <-  state
-rownames(costs) <- c("(0), absent", 
-                     "(1), present, red, scaly, straight",
-                     "(2) present, red, scaly, curly",
-                     "(3) present, red, hairy, straight",
-                     dots,
-                     "(8), present, blue, hairy, curly")
+rownames(costs) <- costNames
 knitr::kable(costs, caption="Tail: Cost to go from left to top entry:")
 
 ```
 
-This doesn't work either, because reconstructions involving very many losses 
-are preferred to those involving a single gain:
+Here, we encounter a new problem: reconstructions involving very many losses 
+are preferred to those involving a single gain.
 
 ```{R Sankoff is still no good, echo=FALSE, fig.height=7, fig.width=8}
 par(mfrow=c(2, 1), mar=rep(0.2, 4))
@@ -232,7 +232,7 @@ tiplabels(c(1,1,1,0,0,0,0,8,8,8), bg=c(rep(c1, 3),
                                        rep(c8, 3)))
 legend('bottomleft', bty='n', bg = NULL, pch=15, col="#7fbf7be0", pt.cex=1.8,
       legend = "Two gains: cost = 8") 
-nodelabels(c("0→1 (+4)", "0→8 (+4)"), node=c(13, 17), bg="#7fbf7b00", pos=3, frame='no', col="#7fbf7be0", font=2)
+nodelabels(c("0>1 (+4)", "0>8 (+4)"), node=c(13, 17), bg="#7fbf7b00", pos=3, frame='no', col="#7fbf7be0", font=2)
 
 plot(sankTree, show.tip.label=FALSE, direction='upwards', edge.width=2,
      edge.col= c(rep(c1, 7), c0, c0, c8, c0, c8, c0, rep(c8, 5)))
@@ -242,7 +242,7 @@ tiplabels(c(1,1,1,0,0,0,0,8,8,8), bg=c(rep(c1, 3),
                                        rep(c8, 3)))
 legend('bottomleft', bty='n', bg = NULL, pch=15, col="#af8dc3e0", pt.cex=1.8,
       legend = "Four losses: cost = 7") 
-nodelabels(c("1→8 (+3)", rep("1→0 (+1)",  2), rep("8→0 (+1)", 2)), node=c(11:13, 16:17), 
+nodelabels(c("1>8 (+3)", rep("1>0 (+1)",  2), rep("8>0 (+1)", 2)), node=c(11:13, 16:17), 
            bg="#af8dc300", pos=3, frame='no', col="#af8dc3e0", font=2)
 ```
 

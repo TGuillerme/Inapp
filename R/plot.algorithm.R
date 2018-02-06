@@ -157,22 +157,7 @@ plot.states.matrix <- function(
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     if (col.states) {
-        ## Generate the palette list
-        palettes <- list(
-        # http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3
-            c("#fc8d59"),
-            c("#fc8d59", "#91bfdb"),
-            c("#fc8d59", "#e2e2a2", "#91bfdb"),
-            c("#d7191c", "#fdae61", "#abd9e9", "#2c7bb6"),
-            c("#d7191c", "#fdae61", "#e2e2a2", "#abd9e9", "#2c7bb6"),
-            c("#d73027", "#fc8d59", "#fee090", "#e0f3f8", "#91bfdb", "#4575b4"),
-            c("#d73027", "#fc8d59", "#fee090", "#e2e2a2", "#e0f3f8", "#91bfdb", "#4575b4"),
-            c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
-            c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
-            c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695"),
-            c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695")
-        )
-
+        data("palettes")
         ## Matching the states and colours
         tips_colours <- tips_labels
         tips_colours[nchar(tips_labels) > 1] <- "?"

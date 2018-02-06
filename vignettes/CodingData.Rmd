@@ -13,17 +13,16 @@ vignette: >
 
 ```{R initialize, message=FALSE, include=FALSE}
 library(knitr); library('Inapp')
-quickPlot <- function (tree, character, subtitle="", na=TRUE) {
+quickPlot <- function (tree, character, na=TRUE) {
   tree$edge.length <- rep(1, dim(tree$edge)[1])
   reconstruction <- apply.reconstruction(tree, character, 
                             method=if(na) "NA" else 'Fitch',
                             match.tip.char=TRUE)
-  dev.new(); plot(tree); corners <- par('usr'); dev.off()
+  dev.new(); plot(tree, direction='upwards'); corners <- par('usr'); dev.off()
   plot(reconstruction,
-       passes=if(na) 1:4 else 1:2, counts=1:2,
-       col.states=TRUE, use.edge.length=TRUE, x.lim=c(-3, corners[2]))
-
-  text(-2.7, 1, subtitle, pos=4)
+       passes=if(na) 1:4 else 1:2, counts=1:2, direction='upwards',
+       col.states=TRUE, use.edge.length=TRUE, 
+       x.lim=c(-3, corners[2]), y.lim=c(-1, corners[4]+0.1))
 }
 
 ```
@@ -68,22 +67,26 @@ kable(blueTails, capiton="Coding")
 Let's compare two trees.  One groups taxa based on the presence of tails; the other
 groups taxa based on body colour.
 
-```{R invariant yet informative, echo=FALSE, fig.height=6}
-par(mfrow=c(3, 2), mar=c(2, 0.2, 0.2, 0.2), oma=c(1:4))
+```{R invariant yet informative, echo=FALSE, fig.height=3, fig.width=8}
 tailTree <- ape::read.tree(text="((((A:1, B:1):1, C:1):1, D:1):1, (E:1, (F:1, (G:1, H:1):1):1):1);")
 bodyTree <- ape::read.tree(text="((((F, E), C), D), (A, (B, (G, H))));")
 tail <- "00001111"
 col <- "----1111"
 bcol <- "11222211"
 
-quickPlot(tailTree, tail, "Tail presence", FALSE)
-quickPlot(bodyTree, tail, "Tail presence", FALSE)
-quickPlot(tailTree, col, "Tail colour")
-quickPlot(bodyTree, col, "Tail colour")
-quickPlot(tailTree, bcol, "Body colour", FALSE)
-quickPlot(bodyTree, bcol, "Body colour", FALSE)
+par(mfrow=c(1, 2), mar=c(0, 0.2, 0.2, 0.2), oma=c(0, 0, 2, 0), cex=0.8)
+quickPlot(tailTree, tail, FALSE)
+quickPlot(bodyTree, tail, FALSE)
+mtext("Tail presence", outer=TRUE)
 
 
+quickPlot(tailTree, col)
+quickPlot(bodyTree, col)
+mtext("Tail colour", outer=TRUE)
+
+quickPlot(tailTree, bcol, FALSE)
+quickPlot(bodyTree, bcol, FALSE)
+mtext("Body colour", outer=TRUE)
 ```
 
 - So the tree on the left, which reconstructs a single origin of the tail, a single origin of a blue tail colouration, and two changes in body colour, is preferred to the tree on the right, which reconstructs a single change in body colour but two origins of the tail, and two origins of blue colouration on the tail.
@@ -112,16 +115,20 @@ kable(tailEyes, capiton="Coding")
 The presence of tail eyespots obviously contains grouping information, but it is less obvious whether the absence of such complex features should convey grouping information.  This decision ought to be defended for individual characters by individual researchers, but researchers should be aware of the implications of their chosen coding strategy. 
 
 ```{R tail spot alternatives, echo=FALSE, fig.height=8, fig.width=4}
-par(mfrow=c(3, 1), mar=c(0.2, 0.2, 0.2, 0.2))
+par(mfrow=c(3, 1), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,1,1,1))
 splitSpots <- ape::read.tree(text="(((H, C), A), (B, (D, (E, (G, (F, H))))));")
 naysHaveIt <- ape::read.tree(text="((((H, I), C), A), (B, (D, (E, (G, F)))));")
 eyesHaveIt <- ape::read.tree(text="(((((H, I), G), C), A), (B, (D, (E, F))));")
 #tail <- "000111111"
 col <- "---000011"
 
-quickPlot(naysHaveIt, col, "One tail spotted, one not")
-quickPlot(splitSpots, col, "Two spot appearances")
-quickPlot(eyesHaveIt, col, "Two non-spotted appearances")
+
+quickPlot(naysHaveIt, col)
+mtext("One tail spotted, one not", cex=0.8)
+quickPlot(splitSpots, col)
+mtext("Two spot appearances", cex=0.8)
+quickPlot(eyesHaveIt, col)
+mtext("Two non-spotted appearances", cex=0.8)
 
 ```
 
@@ -161,10 +168,10 @@ better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
 col <- "---{01}{01}00"
 
-quickPlot(better, col, "")
+quickPlot(better, col)
 mtext("Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
       side=1, line=0, outer=TRUE)
-quickPlot(worse, col, "")
+quickPlot(worse, col)
 
 ```
 
@@ -195,10 +202,10 @@ better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
 col <- "000{01}{01}00"
 
-quickPlot(better, col, "", na=FALSE)
+quickPlot(better, col, na=FALSE)
 mtext("Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
       side=1, line=0, outer=TRUE)
-quickPlot(worse, col, "", na=FALSE)
+quickPlot(worse, col, na=FALSE)
 
 ```
 
@@ -210,7 +217,7 @@ imbal <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, G))))));")
 tail <- "1100011"
 eyespots <- "1100011"
 
-quickPlot(imbal, eyespots, "", na=FALSE)
+quickPlot(imbal, eyespots, na=FALSE)
 mtext("Tail eyespots: (0), absent; (1), present", side=1, line=0, outer=TRUE)
 
 

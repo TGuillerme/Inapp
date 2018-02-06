@@ -1,0 +1,30 @@
+---
+title: "Index to vignettes"
+author: "Martin R, Smith"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
+vignette: >
+  %\VignetteIndexEntry{4. Our solution}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Inapplicable data in a parsimony setting
+
+This series of vignettes works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
+
+## Contents
+
+- The Fitch Algorithm:
+  - [An introduction](Fitch.html)
+  - [Shortcomings](Problems.html)
+  - [Proposed solutions](FailedSolutions.html)
+  
+- Our algorithm:
+  - [An introduction](OurSolution.html)
+  - [A description](OurAlgorithm.html)
+  - [Implications for character coding](CodingData.html)
+
+## References

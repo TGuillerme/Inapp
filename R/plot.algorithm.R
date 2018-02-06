@@ -12,6 +12,8 @@
 #' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
 #' @param use.edge.length \code{logical} indicating whether to use the edge lengths of the phylogeny to draw the branches or not (default).
 #' @param col.states \code{logical}, whether to colour the states of the tips (\code{TRUE}) or not (\code{FALSE}, default).
+#' @param legend.pos \code{character}, where to position the legend -- e.g. `topleft`.
+#'                   Sent as `x` parameter to \code{\link{legend}}.
 #' @param \dots any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #'
 #' @examples
@@ -45,8 +47,9 @@
 plot.states.matrix <- function(
   x, passes = c(1,2,3,4), show.labels = 0,
   col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
-  counts = 0, use.edge.length = FALSE, col.states = FALSE, ...) {
-    
+  counts = 0, use.edge.length = FALSE, col.states = FALSE,
+  legend.pos='topleft', ...) {
+
     states_matrix <- x
     tree <- states_matrix$tree
     regions <- states_matrix$regions
@@ -254,7 +257,7 @@ plot.states.matrix <- function(
 
 
     ## Adding the legend
-    graphics::legend("topleft", legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,
+    graphics::legend(legend.pos, legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,
                      lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5,
                      bty='n', bg = NULL)
 

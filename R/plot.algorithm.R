@@ -3,7 +3,8 @@
 #' @description Plots an ancestral states reconstruction and tree score
 #'
 #' @param x A \code{states.matrix} list from \code{\link{apply.reconstruction}}
-#' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
+#' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)}).
+#'               Set to 0 to leave nodes unlabelled.
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of up to four colors to be
 #'                       used for displaying respectively the tips, the nodes,
@@ -111,8 +112,12 @@ plot.states.matrix <- function(
     ## tree character done in make.states.matrix
 
     ## Passes
-    if(!(class(passes) %in% c("numeric", "integer")) || any(is.na(match(passes, c(1,2,3,4))))) {
-        stop("passes argument must be any integer(s) between 1 and 4.")
+    if(!(class(passes) %in% c("numeric", "integer"))
+       || any(is.na(match(passes, c(1,2,3,4))))) {
+        passes = integer(0)
+        if (!(passes %in% c(0, NULL, NA))) {
+            warning("passes argument must be NULL, or any integer(s) between 1 and 4.")
+        }
     }
     ## show.labels
     if(!is.null(show.labels)) {

@@ -3,17 +3,21 @@ title: "Counting homologies is the answer"
 author: "Vignette Author"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 vignette: >
-  %\VignetteIndexEntry{4. Our solyution}
+  %\VignetteIndexEntry{4. Our solution}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 # Inapplicable data in a parsimony setting
 
-This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [@ThisStudy].
+This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
 
-We assume that you'll already have read [Fitch.Rmd], [Problems.Rmd] and [FailedSolutions.Rmd].
+We assume that you are already familiar with the [Fitch algorithm](Fitch.html),
+its [shortcomings](Problems.html), and [past attempts](FailedSolutions.html)
+to address them.
 
 ## What we count
 The problem with the Fitch is that it counts steps.
@@ -43,3 +47,5 @@ Here are De Laet's cases and here's why they aren't problematic.
 ## Summary
 
 We can show that this produces the correct behaviour.  But how do we count this in practice?
+
+## References

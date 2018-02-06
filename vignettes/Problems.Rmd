@@ -26,11 +26,17 @@ We assume that you are already familiar with the [Fitch algorithm](Fitch.html).
 
 The Fitch algorithm counts changes in a character.
 It assumes that the character is applicable throughout the tree.
+This assumption does not lead to error if:
+- The character is inapplicable in fewer than three tips; or
+- In the trees being considered, applicable and inapplicable tokens occur
+  in distinct regions of the tree [@Maddison1993].
+
 
 ### Red tails, blue tails
 Maddison [-@Maddison1993] provided the following example to demonstrate
 the problem encountered by the Fitch algorithm when inapplicable
 characters were present.
+
 
 Consider the following tree, each node of which is supported by a number of
 characters.  Tail colour (illustrated; 0 = red, 1 = blue) has not yet been 
@@ -55,35 +61,138 @@ Tail colour should group the red-tailed tips together, and the blue-tailed tips 
 but does not establish whether the ancestor of the left-hand tail-bearing clade 
 had a red or blue tail.
 
-The Fitch algorithm, however, will prefer trees in which the left-hand tail-bearing clade
+### Why Reductive coding doesn't work
+
+Using reductive coding, our character looks like:
+
+> Tail: (0), absent; (1), present.
+>
+> Tail colour: (0), red; (1), blue; (?), inapplicable.
+
+Consider the following two trees, each of which receives a score of two for the first
+character, Tail: absent/present.  The score of the second character, for tail colour,
+is not as desired.
+
+The Fitch algorithm will prefer trees in which the left-hand tail-bearing clade
 has a blue tail, simply because the right-hand tail-bearing clade ancestrally did.
 
-```{R Maddison example 2, echo=FALSE, fig.height=5, fig.width=8}
-par(mar=rep(0.2, 4), mfrow=c(2, 2))
-treeUnresolved <- ape:::read.tree(text="(((((A, B, C, D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
-treeUnresolved$edge.length <- rep(1, dim(treeUnresolved$edge)[1])
-plot(apply.reconstruction(treeUnresolved, '0101------1100',
-                          method='Fitch', match.tip.char=TRUE),
-       passes=0, counts=NULL,
-       direction='upwards', legend.pos='none',
-       col.states=TRUE, use.edge.length=TRUE)
-     
+```{R Maddison example 2ab, echo=FALSE, fig.height=9, fig.width=8}
+par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
+treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
+treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
+vignettePlot(treeA, '0011------1100', na=FALSE)     
+vignettePlot(treeB, '0011------1100', na=FALSE)     
 ```
 
-### Why Reductive coding doesn't work
+Notice the additional step reconstructed at the root node: the Fitch algorithm
+reconstructs a change in tail colour in a taxon that doesn't have a tail!
+
+This reconstruction is not logically consistent.
+
 
 ### Why Extra State doesn't work
 
-### Why all-in-one-character doesn't work
-i.e. tail: (0) absent, (1) present, red; (2), present, blue
+An alternative is to code the inapplicable token as an extra state:
+
+> Tail: (0), absent; (1), present.
+>
+> Tail colour: (0), red; (1), blue; (2), inapplicable.
+
+This seems to resolve the problem case that we encountered with reductive coding:
+
+```{R Maddison example 2cd, echo=FALSE, fig.height=9, fig.width=8}
+par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
+treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
+treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
+vignettePlot(treeA, '00112222221100', na=FALSE)     
+vignettePlot(treeB, '00112222221100', na=FALSE)     
+```
+
+Both trees now receive the same score for the 'tail colour' character, which 
+contributes four steps.  Two of these steps, however, correspond to steps that have
+already been counted in the parent character, reflecting the two gains of a tail.
+
+Although this reconstruction is now logically consistent, the gain (or loss) of the tail
+is now reflected in two characters -- characters are not independent of one another.
+
+The outcome is that each ontologically dependent character serves to increase
+the weight of its parent character.
+
+### Why a single multi-state character doesn't work
+
+An alternative is to use a single character to denote the tail:
+
+> Tail: (0), absent; (1), present, red; (2), present, blue.
+
+This seems to resolve the problem case that we encountered with reductive coding:
+
+```{R Maddison example 2cd, echo=FALSE, fig.height=9, fig.width=8}
+par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
+treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
+treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
+vignettePlot(treeA, '11220000002211', na=FALSE)     
+vignettePlot(treeB, '11220000002211', na=FALSE)     
+```
+
+One problem here is that the gain/loss of a tail is afforded the same weight 
+as a change in tail colour.  It would be possible to establish a Sankoff matrix
+such that a change between absent and red or absent and blue cost more than 
+a change between red and blue, but there's no objective way to set this extra weight [@Maddison1993].
+
+A further problem is that this does not extend well to cases where more than
+one character is contingent on a parent character.  A single transformation
+series with myriad states, and a polynomially larger step matrix, would need to
+be constructed.  
+
+Even if these technical limitations could be overcome, however, Sankoff matrices don't work.
+
 
 ### Why Sankoff matrices don't work
 
-#### Practical reasons
- - Exponentiallt big if lots of dependent characters
- - As soon as they get large, discovering a new state means loads of work
- 
-#### Fundamental reasons
- - The more fundamental reason is that even a Sankoff doesn't work properly!
+Consider a character with just three ontologically dependent characters:
 
+> Tail: Absent / present
+>
+> Tail colour: Red / blue
+>
+> Tail covering: Scaly / hairy
+>
+> Tail shape: Straight / curly
+
+This could be coded as a single transformation series:
+
+> Tail: (0), absent; (1), present, red, scaly, straight; (2), present, red, scaly, curly;
+> (3), present, red, hairy, straight, [....] (8), present, blue, hairy, curly
+
+and a Sankoff matrix constructed:
+
+```{R Sankoff example, echo = FALSE, results='asis'}
+dots <- rep('.', 3)
+state <- c(0:3, dots, 8)
+costs <- matrix(c(
+  c(0, "3*", "3*", "3*", dots, "3*"),
+  c(3, 0, 1, 1, dots, 3),
+  c(3, 1, 0, 2, dots, 2),
+  c(3, 1, 2, 0, dots, 2),
+  c(rep('.', 4), 0, rep('.', 3)),
+  c(rep('.', 5), 0, rep('.', 2)),
+  c(rep('.', 6), 0, rep('.', 1)),
+  c(3, 3, 2, 2, dots, 0)) , byrow=TRUE, ncol=length(state))
+colnames(costs) <-  state
+rownames(costs) <- c("(0), absent", 
+                     "(1), present, red, scaly, straight",
+                     "(2) present, red, scaly, curly",
+                     "(3) present, red, hairy, straight",
+                     dots,
+                     "(8), present, blue, hairy, curly")
+knitr::kable(costs, capiton="Sankoff matrix")
+```
+```
+
+Note that entries denoted `3*` could instead be coded with a cost of 1, if the loss
+of a tail was to be treated separately from the gain of a tail
+
+```{R Sankoff is no good, echo=FALSE, fig.height=5, fig.width=8}
+
+````
 ## References

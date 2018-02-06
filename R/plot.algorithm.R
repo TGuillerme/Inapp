@@ -215,7 +215,11 @@ plot.states.matrix <- function(
             par_col = "white"
         } else {
             if(all(counts == 1)) {
-                legend_text <- c(length_text, paste("applicable region (1 + ", score.from(regions), ")", sep = ""), paste("additional region (", score.from(regions), ")", sep = ""))
+                legend_text <- c(length_text,
+                                 paste("applicable region (1 + ",
+                                       score.from(regions), ")", sep = ""),
+                                 paste("additional region (",
+                                       score.from(regions), ")", sep = ""))
                 par_cex = c(0, 0, 2)
                 par_pch = c(0, 0, 15)
                 par_lty = c(0, 1, 0)
@@ -230,7 +234,7 @@ plot.states.matrix <- function(
                     par_lwd = c(0, 0)
                     par_col = c("white", col.tips.nodes[3])
                 } else {
-                    if(all(counts %in% c(1,2))) {
+                    if(all(counts %in% c(1, 2))) {
                         legend_text <- c(length_text,
                                          paste("applicable region (1 + ", score.from(regions), ")", sep = ""),
                                          paste("additional region (", score.from(regions), ")", sep = ""),

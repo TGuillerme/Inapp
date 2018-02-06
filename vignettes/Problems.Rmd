@@ -1,5 +1,5 @@
 ---
-title: "A four-pass algorithm for inapplicable data"
+title: "Inapplicable data with the Fitch algorithm"
 author: "Martin R. Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -10,13 +10,13 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-```{R setup}
+```{R setup, echo=FALSE}
 library('Inapp')
 library('ape')
 data("brewer")
 ```
 
-# Inapplicable data in a parsimony setting
+[comment]: # Current status: First draft, needs copyediting, contributions welcome!
 
 This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
 
@@ -116,11 +116,15 @@ Although this reconstruction is now logically consistent, the gain (or loss) of 
 is now reflected in two characters -- characters are not independent of one another.
 
 The outcome is that each ontologically dependent character serves to increase
-the weight of its parent character.
+the weight of its parent character.  The loss of a tail, for example, would
+incur a cost of one step in the tail character and one step in each 
+ontologically dependent character, even though it represents a single
+evolutionary event.
 
 ### Why a single multi-state character doesn't work
 
-An alternative is to use a single character to denote the tail:
+A different approach is to use a single character to denote both the 
+presence and the colour of the tail:
 
 > Tail: (0), absent; (1), present, red; (2), present, blue.
 
@@ -134,24 +138,34 @@ vignettePlot(treeA, '11220000002211', na=FALSE)
 vignettePlot(treeB, '11220000002211', na=FALSE)     
 ```
 
-One problem here is that the gain/loss of a tail is afforded the same weight 
-as a change in tail colour.  It would be possible to establish a Sankoff matrix
+However, we now have a situation where the gain/loss of a tail is afforded the same weight 
+as a change in tail colour.  We ought to prefer a tree where the tail evolved once
+(and changed colour) to one where it evolved twice (being a different colour each time).
+
+```{R Gain should cost more than change in colour, echo=FALSE, fig.width=8, fig.height=4.5}
+par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
+simpleTree <- ape::read.tree(text="((((a, b), c), e), (f, g));")
+vignettePlot(simpleTree, "110022", na=FALSE)
+nodelabels("+ Tail\n", c(7, 9), pos=3, bg=NA, frame='no', font=2)
+text(4, 4.1, "Two gains of tail", cex=1.2)
+
+vignettePlot(simpleTree, "112200", na=FALSE)
+nodelabels("+ Tail\n", 8, pos=3, bg=NA, frame='no', font=2)
+text(4, 4.1, "One gain of tail (preferred)", cex=1.2)
+
+```
+
+### Sankoff matrices
+
+It would be possible to establish a Sankoff matrix
 such that a change between absent and red or absent and blue cost more than 
-a change between red and blue, but there's no objective way to set this extra weight [@Maddison1993].
+a change between red and blue, but this effectively up-weights the tail character,
+and it's not clear that this is desirable -- or how much this extra weight
+should be [@Maddison1993].
 
-A further problem is that this does not extend well to cases where more than
-one character is contingent on a parent character.  A single transformation
-series with myriad states, and a polynomially larger step matrix, would need to
-be constructed.  
+#### Symmetric
 
-Even if these technical limitations could be overcome, however, Sankoff matrices don't work.
-
-
-### Why Sankoff matrices don't work
-
-#### Gain and loss symmetric
-
-Consider a character with just three ontologically dependent characters:
+Consider a character with three ontologically dependent characters:
 
 > Tail: Absent / present
 >
@@ -187,7 +201,11 @@ knitr::kable(costs, caption="Tail: Cost to go from left state to top entry:")
 
 ```
 
-The issue here is that losing a tail, which arguably corresponds to a single evolutionary
+The first thing to note is that each additional ontologically depedent character
+generates disproportionately more complexity in the Sankoff matrix.
+
+Even if this additional complexity could be handled, the underlying issue remains
+that losing a tail, which arguably corresponds to a single evolutionary
 event, is allocated a large cost that only grows with the number of 
 ontogenetically dependant characters.
 
@@ -214,7 +232,7 @@ knitr::kable(costs, caption="Tail: Cost to go from left to top entry:")
 
 ```
 
-Here, we encounter a new problem: reconstructions involving very many losses 
+Here, though, we encounter a new problem: reconstructions involving very many losses 
 are preferred to those involving a single gain.
 
 ```{R Sankoff is still no good, echo=FALSE, fig.height=7, fig.width=8}
@@ -245,5 +263,12 @@ legend('bottomleft', bty='n', bg = NULL, pch=15, col="#af8dc3e0", pt.cex=1.8,
 nodelabels(c("1>8 (+3)", rep("1>0 (+1)",  2), rep("8>0 (+1)", 2)), node=c(11:13, 16:17), 
            bg="#af8dc300", pos=3, frame='no', col="#af8dc3e0", font=2)
 ```
+
+
+## Conclusion
+
+No coding mechanism can generate consistent and logically meaningful tree scores
+when employing the Fitch algorithm.  The inapplicable state needs treating 
+differently from other states.  A [new algorithm](OurSolution.html) is needed.
 
 ## References

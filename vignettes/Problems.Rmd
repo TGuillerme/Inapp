@@ -13,7 +13,7 @@ vignette: >
 ```{R setup}
 library('Inapp')
 library('ape')
-data("palettes")
+data("brewer")
 ```
 
 # Inapplicable data in a parsimony setting
@@ -214,11 +214,36 @@ knitr::kable(costs, caption="Tail: Cost to go from left to top entry:")
 
 ```
 
-This doesn't work either:
-```{R Sankoff is still no good, echo=FALSE, fig.height=5, fig.width=8}
+This doesn't work either, because reconstructions involving very many losses 
+are preferred to those involving a single gain:
+
+```{R Sankoff is still no good, echo=FALSE, fig.height=7, fig.width=8}
+par(mfrow=c(2, 1), mar=rep(0.2, 4))
 sankTree <- ape::read.tree(text="(((((a, b), c), dX), eX), (fX, (gX, (p, (q, r)))));")
-vignettePlot(sankTree, '1110000888', na=FALSE, legend='none')
-legend('bottomleft', "Nope")
+#vignettePlot(sankTree, '1110000888', na=FALSE, legend='none', blankNodes=TRUE)
+sankTree$edge.length <- rep(1, dim(sankTree$edge)[1])
+c1 <- brewer[[3]][1]
+c0 <- brewer[[3]][2]
+c8 <- brewer[[3]][3]
+plot(sankTree, show.tip.label=FALSE, direction='upwards', edge.width=2,
+     edge.col= c(c0, c0, c1, c1, c1, c1, c1, rep(c0, 6), rep(c8, 5)))
+tiplabels(c(1,1,1,0,0,0,0,8,8,8), bg=c(rep(c1, 3),
+                                       rep(c0, 4),
+                                       rep(c8, 3)))
+legend('bottomleft', bty='n', bg = NULL, pch=15, col="#7fbf7be0", pt.cex=1.8,
+      legend = "Two gains: cost = 8") 
+nodelabels(c("0→1 (+4)", "0→8 (+4)"), node=c(13, 17), bg="#7fbf7b00", pos=3, frame='no', col="#7fbf7be0", font=2)
+
+plot(sankTree, show.tip.label=FALSE, direction='upwards', edge.width=2,
+     edge.col= c(rep(c1, 7), c0, c0, c8, c0, c8, c0, rep(c8, 5)))
+edgelabels()
+tiplabels(c(1,1,1,0,0,0,0,8,8,8), bg=c(rep(c1, 3),
+                                       rep(c0, 4),
+                                       rep(c8, 3)))
+legend('bottomleft', bty='n', bg = NULL, pch=15, col="#af8dc3e0", pt.cex=1.8,
+      legend = "Four losses: cost = 7") 
+nodelabels(c("1→8 (+3)", rep("1→0 (+1)",  2), rep("8→0 (+1)", 2)), node=c(11:13, 16:17), 
+           bg="#af8dc300", pos=3, frame='no', col="#af8dc3e0", font=2)
 ```
 
 ## References

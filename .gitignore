@@ -1,5 +1,6 @@
 # R garbage
 .Rapp.history
+.Rhistory
 .Rproj.user
 *.Rproj
 

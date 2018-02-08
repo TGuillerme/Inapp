@@ -8,14 +8,14 @@
 #' Do (report)[https://github.org/TGuillerme/Inapp/issues] incorrectly parsed files.
 #'
 #' @param filepath character string specifying location of file
-#' @param character.num Index of character(s) to return
+#' @param character_num Index of character(s) to return
 #'
 #' @return Character data
 #'
 #' @author Martin R. Smith
 #' @export
 #'
-read.characters <- function (filepath, character.num=integer(0)) {
+read.characters <- function (filepath, character_num) {
   lines <- readLines(filepath)
   nexusComment.pattern <- "\\[[^\\]*\\]"
   lines <- gsub(nexusComment.pattern, "", lines)
@@ -37,8 +37,6 @@ read.characters <- function (filepath, character.num=integer(0)) {
     matrixLines <- lines[(matrixStart + 1):matrixEnd]
     taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(w+))\\s+(.*)$"
 
-    matches <- regexpr(taxonLine.pattern, matrixLines, perl=TRUE)
-
     taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl=TRUE)
     taxa <- gsub(" ", "_", taxa, fixed=TRUE)
 
@@ -47,29 +45,43 @@ read.characters <- function (filepath, character.num=integer(0)) {
 
     tokens.pattern <- "\\([^\\)]+\\)|\\{[^\\}]+\\}|."
     matches <- gregexpr(tokens.pattern, tokens, perl=TRUE)
-    tokens <- regmatches(tokens, matches)
-    names(tokens) <- taxa
+    n_char <- length(matches[[1]])
+    if (any(character_num > n_char) || any(character_num < 1)) {
+      warning ("Character number must be between 1 and ", n_char, "; setting to 1")
+      character_num <- 1.
+    }
 
-    allTokens <- unique(unlist(tokens))
-    tokenNumbers <- seq_along(allTokens)
-    names(tokenNumbers) <- allTokens
+    tokens <- t(vapply(regmatches(tokens, matches),
+                     function (x) x[character_num, drop=FALSE],
+                     character(length(character_num))))
+    if (length(character_num) == 1) {
+      tokens <- t(tokens)
+    } else if (length(character_num) == 0) {
+      stop("No characters selected")
+    }
+    rownames(tokens) <- taxa
 
-
-    matches <- gregexpr("[\\d\\-\\w]", allTokens, perl=TRUE)
-    whichTokens <- regmatches(allTokens, matches)
-    levels <- sort(unique(unlist(whichTokens)))
-    whichTokens[allTokens == '?'] <- list(levels)
-    contrast <- 1 * t(vapply(whichTokens, function (x) levels %in% x, logical(length(levels))))
-    rownames(contrast) <- allTokens
-    colnames(contrast) <- levels
-
-    dat <- phyDat(tokens, type='USER', contrast=contrast)
-
+#
+#    allTokens <- unique(as.character(tokens))
+#    tokenNumbers <- seq_along(allTokens)
+#    names(tokenNumbers) <- allTokens
+#
+#    matches <- gregexpr("[\\d\\-\\w]", allTokens, perl=TRUE)
+#    whichTokens <- regmatches(allTokens, matches)
+#    levels <- sort(unique(unlist(whichTokens)))
+#    whichTokens[allTokens == '?'] <- list(levels)
+#    contrast <- 1 * t(vapply(whichTokens, function (x) levels %in% x, logical(length(levels))))
+#    rownames(contrast) <- allTokens
+#    colnames(contrast) <- levels
+#
+#    dat <- phyDat(tokens, type='USER', contrast=contrast)
+#
     labelStart <- which(upperLines == 'CHARLABELS')
     if (length(labelStart) == 1) {
       labelEnd <- semicolons[semicolons > labelStart][1]
       if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
-      attr(dat, 'char.labels') <- lines[(labelStart + 1):labelEnd]
+      #attr(dat, 'char.labels')
+      colnames(tokens) <- lines[labelStart + character_num]
     } else {
       if (length(labelStart) > 1)
         warning("Multiple CharLabels blocks in Nexus file.")
@@ -77,7 +89,7 @@ read.characters <- function (filepath, character.num=integer(0)) {
   }
 
   # Return:
-  dat
+  tokens
 }
 
 #' Rightmost character of string

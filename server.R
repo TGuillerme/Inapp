@@ -143,28 +143,19 @@ get.character <- function(input, tree) {
 
     ## Character input as a nexus
     if(input$character == 3) {
-
-      if(input$character_num < 1 | input$character_num > nrow(data_matrix)) {
-          return(list("Select a character between 1 and ",
-                      nrow(data_matrix), "."))
-        } else {
-          character_num <- input$character_num
-        }
-
         nexus_matrix <- input$nexus_matrix
         if(!is.null(nexus_matrix)) {
             ## Select the right character
-            character <- read.characters(nexus_matrix$datapath, character_num)
-            matrix_taxa <- names(data_matrix)
+            character <- read.characters(nexus_matrix$datapath, input$character_num)
+            matrix_taxa <- rownames(character)
             if (all(tree$tip.label %in% matrix_taxa)) {
-              data_matrix <- vapply(tree$tip.label, function (tip) data_matrix[[tip]], data_matrix[[1]])
+              data_matrix <- character[tree$tip.label, ]
+              #data_matrix <- vapply(tree$tip.label, function (tip) data_matrix[[tip]], data_matrix[[1]])
             } else {
               missingTaxa <- tree$tip.label[!tree$tip.label %in% matrix_taxa]
               return(list("Tree contains taxa [", paste(missingTaxa, collapse=", "),
                    "] not found in Nexus matrix."))
             }
-
-
         } else {
             return(list("Load a matrix in Nexus format."))
         }
@@ -196,9 +187,15 @@ shinyServer(
             if (class(character) == 'list') {
               return(plotError(paste(character, sep='', collapse='')))
             }
+            cat(length(character), "naanso fajos")
+            if (length(character) == 0) {
+              return(plotError("Character of length zero."))
+            }
 
             n_tip <- length(tree$tip.label)
+            cat(class(character))
             if (n_tip != length(character)) {
+              cat(n_tip, length(character))
               return(plotError(paste(n_tip, " tips, but ", length(character),
                                       "rows in data matrix")))
             }
@@ -211,7 +208,7 @@ shinyServer(
 
             ## Check if the character is the same length as the tree
             if(n_tip != length(character)) {
-              stop("The tree and character arguments don't match.")
+              stop(n_tip, "tips in the tree, but ", length(character), "entries in the matrix")
             }
 
 

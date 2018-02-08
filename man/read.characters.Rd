@@ -19,7 +19,7 @@ Parses Nexus file, reading character states and names
 Tested with nexus files downloaded from MorphoBank with the "no notes"
 option, but should also work more generally.
 
-Do (https://github.org/TGuillerme/Inapp/issues)\link{report} incorrectly parsed files.
+Do (report)\link{https://github.org/TGuillerme/Inapp/issues} incorrectly parsed files.
 }
 \author{
 Martin R. Smith

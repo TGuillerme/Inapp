@@ -4,7 +4,8 @@
 \alias{vignettePlot}
 \title{Vignette Plot}
 \usage{
-vignettePlot(tree, character, na = TRUE, legend.pos = "bottomleft", ...)
+vignettePlot(tree, character, na = TRUE, legend.pos = "bottomleft",
+  blankNodes = FALSE, ...)
 }
 \arguments{
 \item{tree}{Tree to plot}

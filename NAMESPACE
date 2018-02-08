@@ -2,6 +2,7 @@
 
 S3method(plot,states.matrix)
 S3method(print,states.matrix)
+S3method(str,right)
 export(apply.reconstruction)
 export(first.downpass)
 export(first.uppass)

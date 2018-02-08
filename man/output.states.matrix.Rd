@@ -24,11 +24,13 @@ Outputs ancestral states reconstruction results
 \details{
 The output contains the for different reconstructions (Dp1, Up1, Dp2, Up2), the potential change or applicable region and the list of tips and nodes
 Specifically, per data output type:
--\code{"newick"} outputs a newick string with annotated nodes as follows: (t1\link{Dp1:X,Up1:X,Dp2:X,Up2:X,Change:X,Applicable:X}).
+-\code{"newick"} outputs a newick string with annotated nodes as follows: (t1[Dp1:X,Up1:X,Dp2:X,Up2:X,Change:X,Applicable:X]).
 -\code{"nexus"} outputs a nexus file with a newick string similar as above but also containing the total tree score, the matrix (one character) and the list of taxa.
 -\code{"csv"} A matrix containing the different state reconstructions and score for each tip and node.
 -\code{"pdf"} A pdf version of the states_matrix plotted with \code{plot.states.matrix}.
 -\code{"C-test"} a text version that can be used for testing in C (for DEBUG).
+
+[Dp1:X,Up1:X,Dp2:X,Up2:X,Change:X,Applicable:X]: R:Dp1:X,Up1:X,Dp2:X,Up2:X,Change:X,Applicable:X%5C
 }
 \examples{
 ## A random 5 taxa tree

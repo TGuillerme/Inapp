@@ -148,14 +148,13 @@ get.character <- function(input, tree) {
           return(list("Select a character between 1 and ",
                       nrow(data_matrix), "."))
         } else {
-          character <- input$character_num
+          character_num <- input$character_num
         }
 
         nexus_matrix <- input$nexus_matrix
         if(!is.null(nexus_matrix)) {
             ## Select the right character
-
-            data_matrix <- read.characters(nexus_matrix$datapath)
+            character <- read.characters(nexus_matrix$datapath, character_num)
             matrix_taxa <- names(data_matrix)
             if (all(tree$tip.label %in% matrix_taxa)) {
               data_matrix <- vapply(tree$tip.label, function (tip) data_matrix[[tip]], data_matrix[[1]])

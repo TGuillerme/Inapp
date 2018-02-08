@@ -143,9 +143,19 @@ get.character <- function(input, tree) {
 
     ## Character input as a nexus
     if(input$character == 3) {
+
+      if(input$character_num < 1 | input$character_num > nrow(data_matrix)) {
+          return(list("Select a character between 1 and ",
+                      nrow(data_matrix), "."))
+        } else {
+          character <- input$character_num
+        }
+
         nexus_matrix <- input$nexus_matrix
         if(!is.null(nexus_matrix)) {
-            data_matrix <- ape::read.nexus.data(nexus_matrix$datapath)
+            ## Select the right character
+
+            data_matrix <- read.characters(nexus_matrix$datapath)
             matrix_taxa <- names(data_matrix)
             if (all(tree$tip.label %in% matrix_taxa)) {
               data_matrix <- vapply(tree$tip.label, function (tip) data_matrix[[tip]], data_matrix[[1]])
@@ -155,13 +165,7 @@ get.character <- function(input, tree) {
                    "] not found in Nexus matrix."))
             }
 
-            ## Select the right character
-            if(input$character_num < 1 | input$character_num > nrow(data_matrix)) {
-                return(list("Select a character between 1 and ",
-                            nrow(data_matrix), "."))
-            } else {
-                character <- data_matrix[input$character_num, ]
-            }
+
         } else {
             return(list("Load a matrix in Nexus format."))
         }
@@ -186,11 +190,31 @@ shinyServer(
             tree <- get.tree(input)
             if (class(tree) == 'character') {
               return(plotError(tree))
+            } else if (class(tree) != 'phylo'){
+              return(plotError("The tree must be of class 'phylo'."))
             }
             character <- get.character(input, tree)
             if (class(character) == 'list') {
               return(plotError(paste(character, sep='', collapse='')))
             }
+
+            n_tip <- length(tree$tip.label)
+            if (n_tip != length(character)) {
+              return(plotError(paste(n_tip, " tips, but ", length(character),
+                                      "rows in data matrix")))
+            }
+
+
+            ## Transform character
+            if(class(character) != "list") {
+              character <- convert.char(character)
+            }
+
+            ## Check if the character is the same length as the tree
+            if(n_tip != length(character)) {
+              stop("The tree and character arguments don't match.")
+            }
+
 
             ## Run the algorithm
             if(as.numeric(input$method) == 1) {
@@ -328,13 +352,17 @@ shinyServer(
         output$plot.ui <- renderUI({
 
             tree <- get.tree(input, simple = TRUE)
-            n_tip <- length(tree$tip.label)
-
-            ## Set the plot window
-            if(n_tip > 10) {
-                plotOutput("plot_out", width ="100%", height = paste(round(n_tip*0.4), "00px", sep = ""))
+            if (class(tree) == "character") {
+              plotOutput("plot_out", width ="100%", height = "40px")
+              plotError(tree)
             } else {
-                plotOutput("plot_out", width ="100%", height = "400px")
+              n_tip <- length(tree$tip.label)
+              ## Set the plot window
+              if(n_tip > 10) {
+                  plotOutput("plot_out", width ="100%", height = paste(round(n_tip*0.4) * 90L, "px", sep = ""))
+              } else {
+                  plotOutput("plot_out", width ="100%", height = "300px")
+              }
             }
         })
     }

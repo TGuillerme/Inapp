@@ -30,6 +30,9 @@ read.newick.tree <- function (newick_text) {
 ## Return a tree, or an error message to be written to output.
 get.tree <- function(input, simple = FALSE) {
 
+    # Initialize to avoid returning unset variable
+    tree <- "No tree specified."
+
     if(!simple) {
         ## Get the not "simple" tree (for operations)
         if(input$tree == 1) {

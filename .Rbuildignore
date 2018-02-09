@@ -1,7 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 Analysis/
-data-raw/
 Writing/
 support/
 ^.*.yml$

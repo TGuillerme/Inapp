@@ -14,7 +14,7 @@ vignette: >
 
 # Inapplicable data in a parsimony setting
 
-This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
+This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
 
 We assume that you'll already have read the vignettes on the [Fitch algorithm](Fitch.html), [Problems with Fitch](Problems.html), [Unsuitable solutions](FailedSolutions.html) and [Our solution](OurSolution.Rmd).
 

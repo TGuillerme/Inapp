@@ -1,5 +1,5 @@
 ---
-title: "Implications for character coding"
+title: "How to code characters"
 author: "Martin R. Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -11,28 +11,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{R initialize, message=FALSE, include=FALSE}
-library(knitr); library('Inapp')
-quickPlot <- function (tree, character, na=TRUE, legend.pos='bottomleft') {
-  tree$edge.length <- rep(1, dim(tree$edge)[1])
-  reconstruction <- apply.reconstruction(tree, character, 
-                            method=if(na) "NA" else 'Fitch',
-                            match.tip.char=TRUE)
-  dev.new(); plot(tree, direction='upwards'); corners <- par('usr'); dev.off()
-  plot(reconstruction,
-       passes=if(na) 1:4 else 1:2, counts=1:2, 
-       direction='upwards', legend.pos=legend.pos,
-       col.states=TRUE, use.edge.length=TRUE, 
-       x.lim=c(-3, corners[2]), y.lim=c(-1, corners[4]+0.1))
-}
-
-```
-
 # Inapplicable data in a parsimony setting
 
-This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
+This is one of a series of vignettes that works through the inapplicable algorithm proposed by Brazeau et al [-@ThisStudy].
 
-We assume that you'll already have read the [description](OurAlgorithm.html) of our algorithm.
+We assume that you'll already have read [OurAlgorithm.Rmd].
 
 ## How this algorithm weights against multiple innovations
 
@@ -50,6 +33,7 @@ We assume that you'll already have read the [description](OurAlgorithm.html) of 
 - All tails are blue.  Let's say that they are all blue for some complex molecular reason, such that it is most parsimonious if "blueness" has a single evolutionary origin.
 
 ```{r tail colour characters, echo = FALSE, results='asis'}
+library(knitr); library('Inapp')
 tail <- c(0, 0, 0, 0, 1, 1, 1, 1)
 col <- c(rep('-', 4), rep(1, 4))
 bcol <- c(1,1, 2,2,2,2, 1,1)
@@ -68,26 +52,32 @@ kable(blueTails, capiton="Coding")
 Let's compare two trees.  One groups taxa based on the presence of tails; the other
 groups taxa based on body colour.
 
-```{R invariant yet informative, echo=FALSE, fig.height=3, fig.width=8}
-tailTree <- ape::read.tree(text="((((A:1, B:1):1, C:1):1, D:1):1, (E:1, (F:1, (G:1, H:1):1):1):1);")
+```{R invariant yet informative, echo=FALSE, fig.height=6}
+par(mfrow=c(3, 2), mar=c(2, 0.2, 0.2, 0.2))
+tailTree <- ape::read.tree(text="((((A, B), C), D), (E, (F, (G, H))));")
 bodyTree <- ape::read.tree(text="((((F, E), C), D), (A, (B, (G, H))));")
 tail <- "00001111"
 col <- "----1111"
 bcol <- "11222211"
 
-par(mfrow=c(1, 2), mar=c(0, 0.2, 0.2, 0.2), oma=c(0, 0, 2, 0), cex=0.8)
-quickPlot(tailTree, tail, FALSE)
-quickPlot(bodyTree, tail, FALSE)
-mtext("Tail presence", outer=TRUE)
+plot(apply.reconstruction(tailTree, tail, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
+text(1, 1, "Tail presence")
+plot(apply.reconstruction(bodyTree, tail, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
+text(1, 1, "Tail presence")
 
 
-quickPlot(tailTree, col)
-quickPlot(bodyTree, col)
-mtext("Tail colour", outer=TRUE)
+plot(apply.reconstruction(tailTree, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
+text(1, 1, "Tail colour")
+plot.states.matrix(apply.reconstruction(bodyTree, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
+text(1, 1, "Tail colour")
 
-quickPlot(tailTree, bcol, FALSE)
-quickPlot(bodyTree, bcol, FALSE)
-mtext("Body colour", outer=TRUE)
+
+plot.states.matrix(apply.reconstruction(tailTree, bcol, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
+text(1, 1, "Body colour")
+plot.states.matrix(apply.reconstruction(bodyTree, bcol, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
+text(1, 1, "Body colour")
+
+
 ```
 
 - So the tree on the left, which reconstructs a single origin of the tail, a single origin of a blue tail colouration, and two changes in body colour, is preferred to the tree on the right, which reconstructs a single change in body colour but two origins of the tail, and two origins of blue colouration on the tail.
@@ -116,20 +106,20 @@ kable(tailEyes, capiton="Coding")
 The presence of tail eyespots obviously contains grouping information, but it is less obvious whether the absence of such complex features should convey grouping information.  This decision ought to be defended for individual characters by individual researchers, but researchers should be aware of the implications of their chosen coding strategy. 
 
 ```{R tail spot alternatives, echo=FALSE, fig.height=8, fig.width=4}
-par(mfrow=c(3, 1), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,1,1,1))
+par(mfrow=c(3, 1), mar=c(0.2, 0.2, 0.2, 0.2))
 splitSpots <- ape::read.tree(text="(((H, C), A), (B, (D, (E, (G, (F, H))))));")
 naysHaveIt <- ape::read.tree(text="((((H, I), C), A), (B, (D, (E, (G, F)))));")
 eyesHaveIt <- ape::read.tree(text="(((((H, I), G), C), A), (B, (D, (E, F))));")
-#tail <- "000111111"
+tail <- "000111111"
 col <- "---000011"
 
+plot.states.matrix(apply.reconstruction(naysHaveIt, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
+text(1, 1, "One tail spotted, one not", pos=4)
+plot.states.matrix(apply.reconstruction(splitSpots, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
+text(1, 1, "Two spot appearances", pos=4)
 
-quickPlot(naysHaveIt, col)
-mtext("One tail spotted, one not", cex=0.8)
-quickPlot(splitSpots, col)
-mtext("Two spot appearances", cex=0.8)
-quickPlot(eyesHaveIt, col)
-mtext("Two non-spotted appearances", cex=0.8)
+plot.states.matrix(apply.reconstruction(eyesHaveIt, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
+text(1, 1, "Two non-spotted appearances", pos=4)
 
 ```
 
@@ -163,16 +153,15 @@ kable(unobserved, capiton="Coding")
 
 Note that each of the unobserved characters provides evidence against independent origins of the tail, preferring instead independent losses:
 
-```{R unobserved character 2, echo=FALSE, fig.height=3.2, fig.width=8}
-par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
+```{R unobserved character 2, echo=FALSE, fig.height=3, fig.width=8}
+par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
 col <- "---{01}{01}00"
 
-quickPlot(better, col)
-mtext("Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
-      side=1, line=0, outer=TRUE)
-quickPlot(worse, col)
+plot.states.matrix(apply.reconstruction(better, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
+text(1, 1, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present", pos=4)
+plot.states.matrix(apply.reconstruction(worse, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
 
 ```
 
@@ -198,29 +187,27 @@ kable(unobserved, capiton="Coding")
 
 This can be handled by the Fitch algorithm, and works well in simple cases:
 ```{R unobserved character 3, echo=FALSE, fig.height=3, fig.width=8}
-par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
+par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
 col <- "000{01}{01}00"
 
-quickPlot(better, col, na=FALSE)
-mtext("Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
-      side=1, line=0, outer=TRUE)
-quickPlot(worse, col, na=FALSE)
+plot.states.matrix(apply.reconstruction(better, col, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
+text(1, 1, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present", pos=4)
+plot.states.matrix(apply.reconstruction(worse, col, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
 
 ```
 
 The behaviour only becomes questionable when a tail is secondarily lost, then re-gained, as the loss of a tail seems like it should be a single evolutionary step, but also causes the loss of all contingent characters, which must then "reevolve" as though they had never existed:
 
-```{R loss and gain, echo=FALSE, fig.width=4, fig.height=4}
-par(mfrow=c(1, 1), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
+```{R loss and gain, echo=FALSE}
+par(mfrow=c(1, 1), mar=c(0.2, 0.2, 0.2, 0.2))
 imbal <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, G))))));")
 tail <- "1100011"
 eyespots <- "1100011"
 
-quickPlot(imbal, eyespots, na=FALSE, legend.pos='topleft')
-mtext("Tail eyespots: (0), absent; (1), present", side=1, line=0, outer=TRUE)
-
+plot.states.matrix(apply.reconstruction(imbal, eyespots, method='Fitch', match.tip.char=TRUE), 1:2, counts=1:2)
+text(1, 1.5, "Tail eyespots: (0), absent; (1), present", pos=4)
 
 ```
 
@@ -236,16 +223,16 @@ Should ? be scored as (01) or (-01)?
 If you're coding a neomorphic character as transformational, then you encounter problems.
 
 ```{R Untitled 4, echo=FALSE, fig.height=3, fig.width=6}
-par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
+par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
 tail <- "0001111"
 col <- "---{01}{01}00"
 
-quickPlot(better, col)
-quickPlot(worse, col)
+plot.states.matrix(apply.reconstruction(better, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
+text(1, 1, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present", pos=4)
+plot.states.matrix(apply.reconstruction(worse, col, method='NA', match.tip.char=TRUE), 1:4, counts=1:2)
 
-mtext(side=1, line=0, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present", cex=0.8, outer=TRUE)
 
 ```
 
@@ -254,5 +241,3 @@ mtext(side=1, line=0, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0
 Here are some marginal cases where discretion is required.
 Here are some trees that show why we would code things our way
 this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!
-
-## References

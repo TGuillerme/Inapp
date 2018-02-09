@@ -6,14 +6,12 @@
 \usage{
 \method{plot}{states.matrix}(x, passes = c(1, 2, 3, 4), show.labels = 0,
   col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
-  counts = 0, use.edge.length = FALSE, col.states = FALSE,
-  legend.pos = "topleft", ...)
+  counts = 0, use.edge.length = FALSE, col.states = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}}
 
-\item{passes}{\code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)}).
-Set to 0 to leave nodes unlabelled.}
+\item{passes}{\code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})}
 
 \item{show.labels}{\code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).}
 
@@ -27,9 +25,6 @@ and the nodes at which regions are counted.}
 \item{use.edge.length}{\code{logical} indicating whether to use the edge lengths of the phylogeny to draw the branches or not (default).}
 
 \item{col.states}{\code{logical}, whether to colour the states of the tips (\code{TRUE}) or not (\code{FALSE}, default).}
-
-\item{legend.pos}{\code{character}, where to position the legend -- e.g. \code{topleft}.
-Sent as \code{x} parameter to \code{\link{legend}}.  Specify \code{none} to hide the legend.`}
 
 \item{\dots}{any optional arguments to be passed to \code{\link[ape]{plot.phylo}}}
 }

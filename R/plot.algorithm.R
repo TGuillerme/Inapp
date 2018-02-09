@@ -3,8 +3,7 @@
 #' @description Plots an ancestral states reconstruction and tree score
 #'
 #' @param x A \code{states.matrix} list from \code{\link{apply.reconstruction}}
-#' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)}).
-#'               Set to 0 to leave nodes unlabelled.
+#' @param passes \code{numeric}, the number of passes to plot (default = \code{c(1,2,3,4)})
 #' @param show.labels \code{numeric}, either \code{1} for showing the tip labels, \code{2} for the node labels or \code{c(1,2)} for both (default = \code{NULL}).
 #' @param col.tips.nodes \code{character}, a vector of up to four colors to be
 #'                       used for displaying respectively the tips, the nodes,
@@ -13,8 +12,6 @@
 #' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
 #' @param use.edge.length \code{logical} indicating whether to use the edge lengths of the phylogeny to draw the branches or not (default).
 #' @param col.states \code{logical}, whether to colour the states of the tips (\code{TRUE}) or not (\code{FALSE}, default).
-#' @param legend.pos \code{character}, where to position the legend -- e.g. `topleft`.
-#'                   Sent as `x` parameter to \code{\link{legend}}.  Specify `none` to hide the legend.`
 #' @param \dots any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #'
 #' @examples
@@ -48,9 +45,8 @@
 plot.states.matrix <- function(
   x, passes = c(1,2,3,4), show.labels = 0,
   col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
-  counts = 0, use.edge.length = FALSE, col.states = FALSE,
-  legend.pos='topleft', ...) {
-
+  counts = 0, use.edge.length = FALSE, col.states = FALSE, ...) {
+    
     states_matrix <- x
     tree <- states_matrix$tree
     regions <- states_matrix$regions
@@ -112,12 +108,8 @@ plot.states.matrix <- function(
     ## tree character done in make.states.matrix
 
     ## Passes
-    if(!(class(passes) %in% c("numeric", "integer"))
-       || any(is.na(match(passes, c(1,2,3,4))))) {
-        if (length(passes) > 1 || !(passes %in% c(0, NULL, NA))) {
-            warning("passes argument must be NULL, or any integer(s) between 1 and 4.")
-        }
-        passes = integer(0)
+    if(!(class(passes) %in% c("numeric", "integer")) || any(is.na(match(passes, c(1,2,3,4))))) {
+        stop("passes argument must be any integer(s) between 1 and 4.")
     }
     ## show.labels
     if(!is.null(show.labels)) {
@@ -157,14 +149,29 @@ plot.states.matrix <- function(
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     if (col.states) {
-        data("brewer")
+        ## Generate the palette list
+        palettes <- list(
+        # http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3
+            c("#fc8d59"),
+            c("#fc8d59", "#91bfdb"),
+            c("#fc8d59", "#e2e2a2", "#91bfdb"),
+            c("#d7191c", "#fdae61", "#abd9e9", "#2c7bb6"),
+            c("#d7191c", "#fdae61", "#e2e2a2", "#abd9e9", "#2c7bb6"),
+            c("#d73027", "#fc8d59", "#fee090", "#e0f3f8", "#91bfdb", "#4575b4"),
+            c("#d73027", "#fc8d59", "#fee090", "#e2e2a2", "#e0f3f8", "#91bfdb", "#4575b4"),
+            c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
+            c("#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"),
+            c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695"),
+            c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695")
+        )
+
         ## Matching the states and colours
         tips_colours <- tips_labels
         tips_colours[nchar(tips_labels) > 1] <- "?"
 
         ## Select the palette
         max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
-        state_colours <- c(brewer[[max_colour + 1]], "lightgrey", "grey")
+        state_colours <- c(palettes[[max_colour + 1]], "lightgrey", "grey")
         names(state_colours) <- c(0:max_colour, "?", "-")
 
         ## Get the edge palette
@@ -178,13 +185,9 @@ plot.states.matrix <- function(
     }
 
     ## Colour the states if the fourth uppass is available
-    if (col.states && !is.null(unlist(states_matrix$Up1))) {
+    if (col.states && !is.null(unlist(states_matrix$Up2))) {
         ## get the states
-        if (!is.null(unlist(states_matrix$Up2))) {
-            final_state <- states_matrix$Up2
-        } else {
-            final_state <- states_matrix$Up1
-        }
+        final_state <- states_matrix$Up2
         all_states <- -1:max_colour
         col_states <- c('-', 0:max_colour)
         ## Get the edge colours
@@ -207,58 +210,54 @@ plot.states.matrix <- function(
     graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = use.edge.length, cex = cex, adj = 0.5, edge.color = edge_col, edge.width = 2, ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
 
-    if (legend.pos != "none") {
-        ## Setting up the legend parameters
-        length_text <-  paste("Tree score is", score.from(regions) + score.from(changes))
-        if(all(counts == 0)) {
-            legend_text <- length_text
-            par_cex = 0
-            par_pch = 0
-            par_lty = 0
-            par_lwd = 0
-            par_col = "white"
+
+    ## Setting up the legend parameters
+    length_text <-  paste("Tree score is", score.from(regions) + score.from(changes))
+    if(all(counts == 0)) {
+        legend_text <- length_text
+        par_cex = 0
+        par_pch = 0
+        par_lty = 0
+        par_lwd = 0
+        par_col = "white"
+    } else {
+        if(all(counts == 1)) {
+            legend_text <- c(length_text, paste("applicable region (1 + ", score.from(regions), ")", sep = ""), paste("additional region (", score.from(regions), ")", sep = ""))
+            par_cex = c(0, 0, 2)
+            par_pch = c(0, 0, 15)
+            par_lty = c(0, 1, 0)
+            par_lwd = c(0, 2, 0)
+            par_col = c("white", "black", col.tips.nodes[4])
         } else {
-            if(all(counts == 1)) {
-                legend_text <- c(length_text,
-                                 paste("applicable region (1 + ",
-                                       score.from(regions), ")", sep = ""),
-                                 paste("additional region (",
-                                       score.from(regions), ")", sep = ""))
-                par_cex = c(0, 0, 2)
-                par_pch = c(0, 0, 15)
-                par_lty = c(0, 1, 0)
-                par_lwd = c(0, 2, 0)
-                par_col = c("white", "black", col.tips.nodes[4])
+            if(all(counts == 2)) {
+                legend_text <- c(length_text, paste("state changes (", score.from(changes), ")", sep = ""))
+                par_cex = c(0, 2)
+                par_pch = c(0, 15)
+                par_lty = c(0, 0)
+                par_lwd = c(0, 0)
+                par_col = c("white", col.tips.nodes[3])
             } else {
-                if(all(counts == 2)) {
-                    legend_text <- c(length_text, paste("state changes (", score.from(changes), ")", sep = ""))
-                    par_cex = c(0, 2)
-                    par_pch = c(0, 15)
-                    par_lty = c(0, 0)
-                    par_lwd = c(0, 0)
-                    par_col = c("white", col.tips.nodes[3])
-                } else {
-                    if(all(counts %in% c(1, 2))) {
-                        legend_text <- c(length_text,
-                                         paste("applicable region (1 + ", score.from(regions), ")", sep = ""),
-                                         paste("additional region (", score.from(regions), ")", sep = ""),
-                                         paste("state changes (", score.from(changes), ")", sep = ""))
-                        par_cex = c(0, 0, 2, 2)
-                        par_pch = c(0, 0, 15, 15)
-                        par_lty = c(0, 1, 0, 0)
-                        par_lwd = c(0, 2, 0, 0)
-                        par_col = c("white", "black", col.tips.nodes[4], col.tips.nodes[3])
-                    }
+                if(all(counts %in% c(1,2))) {
+                    legend_text <- c(length_text,
+                                     paste("applicable region (1 + ", score.from(regions), ")", sep = ""),
+                                     paste("additional region (", score.from(regions), ")", sep = ""),
+                                     paste("state changes (", score.from(changes), ")", sep = ""))
+                    par_cex = c(0, 0, 2, 2)
+                    par_pch = c(0, 0, 15, 15)
+                    par_lty = c(0, 1, 0, 0)
+                    par_lwd = c(0, 2, 0, 0)
+                    par_col = c("white", "black", col.tips.nodes[4], col.tips.nodes[3])
                 }
             }
         }
-
-
-        ## Adding the legend
-        graphics::legend(legend.pos, legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,
-                         lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5,
-                         bty='n', bg = NULL)
     }
+
+
+    ## Adding the legend
+    graphics::legend("topleft", legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,
+                     lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5,
+                     bty='n', bg = NULL)
+
     ## Colour the tip states.
     if(col.states) {
         ape::tiplabels(tips_labels, cex = 1, adj = 1,

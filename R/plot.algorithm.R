@@ -280,10 +280,10 @@ plot.states.matrix <- function(
         } else if (length(state.labels) == length(edge_palette) - 1) {
             state.labels <- c(state.labels, 'Ambiguous')
         }
-        state_labels <- paste(names(edge_palette), state.labels)
+        state_labels <- paste(names(edge_palette), gsub("^['\"]|['\"]$", "", state.labels), sep=": ")
         graphics::legend('bottomright', legend=state_labels, cex=1.2,
                          col=edge_palette, x.intersp=1,
-                         pch=15, pt.cex=2, lty=1, lwd=2,
+                         pch=15, pt.cex=1, lty=1, lwd=2,
                          bty='n', bg=NULL)
     } else {
       ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)

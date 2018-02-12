@@ -192,15 +192,27 @@ shinyServer(
               return(plotError("Character of length zero."))
             }
 
+            n_tip <- length(tree$tip.label)
+            if (class(character) == 'matrix') {
+                state_labels <- attr(character, 'state.labels')[[1]]
+                character_name <- colnames(character)
+
+                if (all(tree$tip.label %in% rownames(character))) {
+                    character <- character[tree$tip.label, ]
+                } else {
+                    return(plotError(paste("No entries in character list correspond to ",
+                                     paste(tree$tip.label[!(tree$tip.label %in% rownames(character))]))))
+                }
+            } else {
+                character_name <- NULL
+            }
+
             ## Transform character
             if(class(character) != "list") {
-                character_name <- if (class(character) == 'matrix') colnames(character) else NULL
-                state_labels <- attr(character, 'state.labels')[[1]]
                 character <- convert.char(character)
             }
 
             ## Check if the character is the same length as the tree
-            n_tip <- length(tree$tip.label)
             if (n_tip != length(character)) {
                 return(plotError(paste(n_tip, " tips in the tree, but ",
                                        length(character), " entries in the data matrix")))
@@ -236,7 +248,7 @@ shinyServer(
                                counts = as.vector(as.numeric(input$counts)),
                                col.states = input$colour_states,
                                state.labels = state_labels)
-            mtext(character_name)
+            mtext(side=c(1, 3), character_name, font=2)
 
             ## Exporting data
             output$downloadData <- downloadHandler(

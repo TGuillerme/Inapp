@@ -170,7 +170,7 @@ plot.states.matrix <- function(
 
         ## Select the palette
         max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
-        state_colours <- c(brewer[[max_colour + 1]], "lightgrey", "grey")
+        state_colours <- c(brewer[[max_colour + 1]], "grey", "lightgrey")
         names(state_colours) <- c(0:max_colour, "?", "-")
 
         ## Get the edge palette

@@ -49,7 +49,7 @@ plot.states.matrix <- function(
   x, passes = c(1,2,3,4), show.labels = 0,
   col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
   counts = 0, use.edge.length = FALSE, col.states = FALSE,
-  legend.pos='topleft', ...) {
+  legend.pos='bottomleft', ...) {
 
     states_matrix <- x
     tree <- states_matrix$tree
@@ -119,6 +119,7 @@ plot.states.matrix <- function(
         }
         passes = integer(0)
     }
+
     ## show.labels
     if(!is.null(show.labels)) {
         if(class(show.labels) != "numeric") {
@@ -204,7 +205,10 @@ plot.states.matrix <- function(
     }
 
     ## Plotting the tree
-    graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = use.edge.length, cex = cex, adj = 0.5, edge.color = edge_col, edge.width = 2, ...)
+    graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram",
+                   use.edge.length = use.edge.length, cex = cex,
+                   adj = 0.5, edge.color = edge_col, edge.width = 2,
+                   y.lim=c(-3, n_tip+0.3), ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
 
     if (legend.pos != "none") {

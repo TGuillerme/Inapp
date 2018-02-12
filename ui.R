@@ -1,9 +1,10 @@
 shinyUI(fluidPage(
+  theme = 'slimline.css',
 
   wellPanel(
 
     titlePanel("Inapplicable data reconstruction"),
-    p("This package accompanies Brazeau, M. D., Guillerme, T., and Smith, M. R. (2017).  Morphological phylogenetic analysis with inapplicable data. Biorxiv. doi:", a(href="https://doi.org/10.1101/209775", "10.1101/209775"), "."),
+    p("Brazeau, M. D., Guillerme, T., and Smith, M. R. (2017).  Morphological phylogenetic analysis with inapplicable data. Biorxiv. doi:", a(href="https://doi.org/10.1101/209775", "10.1101/209775"), "."),
     hr(),
 
     fluidRow(
@@ -42,7 +43,9 @@ shinyUI(fluidPage(
           ),
 
           ## Tips and nodes options
-          checkboxGroupInput("showlabels", label = "Show labels", choices = list("Tips" = 1, "Nodes" = 2), selected = NULL)
+          checkboxGroupInput("showlabels", label = "Label:",
+                             choices = list("Tips" = 1, "Nodes" = 2),
+                             inline=TRUE, selected = NULL)
         ),
 
         ## --------------------
@@ -122,7 +125,10 @@ shinyUI(fluidPage(
           ## Inapplicable algorithm
           conditionalPanel(condition = "input.method == 1",
             ## Which passes to print
-            checkboxGroupInput("showPassInapp", label = h5("Show passes"),  choices = list("1st Downpass" = 1, "1st Uppass" = 2, "2nd Downpass" = 3, "2nd Uppass" = 4), selected = c(1,2,3,4))
+            checkboxGroupInput("showPassInapp", label = "Show passes:",
+                               choices = list("1st Downpass" = 1, "1st Uppass" = 2,
+                                              "2nd Downpass" = 3, "2nd Uppass" = 4),
+                               selected = c(1,2,3,4))
           ),
 
           ## Fitch algorithm
@@ -135,7 +141,7 @@ shinyUI(fluidPage(
           ),
 
           ## Show activations/counts - input$counts
-          checkboxGroupInput("counts", label = h5("Show counts details"),  choices = list("Applicable regions" = 1, "State changes" = 2), selected = c(1, 2)),
+          checkboxGroupInput("counts", label = "Show counts of:",  choices = list("Applicable regions" = 1, "State changes" = 2), selected = c(1, 2)),
 
           hr(),
           ## Refresh button - input$refresh

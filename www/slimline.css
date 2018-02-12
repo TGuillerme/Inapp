@@ -1,0 +1,36 @@
+body {
+    font-size: 12px;
+}
+
+.form-group{
+    margin-bottom: 6px;
+}
+.well {
+    padding: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.progress {
+    margin-bottom: 5px;
+}
+
+h2 {
+
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h1, h2, h3, hr {
+    margin-top: 0;
+    margin-bottom: 9px;
+}
+
+input[type=radio], input[type=checkbox] {
+    margin: 0;
+}
+

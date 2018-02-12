@@ -343,16 +343,13 @@ shinyServer(
 
             tree <- get.tree(input, simple = TRUE)
             if (class(tree) == "character") {
-              plotOutput("plot_out", width ="100%", height = "40px")
-              plotError(tree)
+                plotOutput("plot_out", width ="100%", height = "40px")
+                plotError(tree)
             } else {
-              n_tip <- length(tree$tip.label)
-              ## Set the plot window
-              if(n_tip > 10) {
-                  plotOutput("plot_out", width ="100%", height = paste(round(n_tip*0.4) * 90L, "px", sep = ""))
-              } else {
-                  plotOutput("plot_out", width ="100%", height = "300px")
-              }
+                n_tip <- length(tree$tip.label)
+                ## Set the plot window
+                plotOutput("plot_out", width ="100%", height = paste(round((n_tip + 3.3) * 0.4) * 90L, "px", sep = ""))
+
             }
         })
     }

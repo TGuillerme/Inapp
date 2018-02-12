@@ -8,16 +8,21 @@
 #' Do (report)[https://github.org/TGuillerme/Inapp/issues] incorrectly parsed files.
 #'
 #' @param filepath character string specifying location of file
-#' @param character_num Index of character(s) to return
+#' @param character_num Index of character(s) to return.
+#'                      `NULL`, the default, returns all characters.
 #'
 #' @return A matrix whose row names correspond to tip labels, and column names
 #'         correspond to character labels, with the attribute `state.labels`
 #'         listing the state labels for each character
 #'
 #' @author Martin R. Smith
+#' @references
+#'   Maddison, D. R., Swofford, D. L. and Maddison, W. P. (1997)
+#'   NEXUS: an extensible file format for systematic information.
+#'   Systematic Biology, 46, 590–621.
 #' @export
 #'
-read.characters <- function (filepath, character_num) {
+read.characters <- function (filepath, character_num=NULL) {
   lines <- readLines(filepath)
   nexusComment.pattern <- "\\[[^\\]*\\]"
   lines <- gsub(nexusComment.pattern, "", lines)
@@ -48,7 +53,9 @@ read.characters <- function (filepath, character_num) {
     tokens.pattern <- "\\([^\\)]+\\)|\\{[^\\}]+\\}|."
     matches <- gregexpr(tokens.pattern, tokens, perl=TRUE)
     n_char <- length(matches[[1]])
-    if (!exists("character_num") || any(character_num > n_char) || any(character_num < 1)) {
+    if (!exists("character_num") || is.null(character_num)) {
+        character_num <- seq_len(n_char)
+    } else if (any(character_num > n_char) || any(character_num < 1)) {
       warning ("Character number must be between 1 and ", n_char, "; setting to 1")
       character_num <- 1
     }
@@ -63,21 +70,6 @@ read.characters <- function (filepath, character_num) {
     }
     rownames(tokens) <- taxa
 
-#
-#    allTokens <- unique(as.character(tokens))
-#    tokenNumbers <- seq_along(allTokens)
-#    names(tokenNumbers) <- allTokens
-#
-#    matches <- gregexpr("[\\d\\-\\w]", allTokens, perl=TRUE)
-#    whichTokens <- regmatches(allTokens, matches)
-#    levels <- sort(unique(unlist(whichTokens)))
-#    whichTokens[allTokens == '?'] <- list(levels)
-#    contrast <- 1 * t(vapply(whichTokens, function (x) levels %in% x, logical(length(levels))))
-#    rownames(contrast) <- allTokens
-#    colnames(contrast) <- levels
-#
-#    dat <- phyDat(tokens, type='USER', contrast=contrast)
-#
     labelStart <- which(upperLines == 'CHARLABELS')
     if (length(labelStart) == 1) {
       labelEnd <- semicolons[semicolons > labelStart][1]
@@ -116,6 +108,24 @@ read.characters <- function (filepath, character_num) {
 
   # Return:
   tokens
+}
+
+#' @describeIn read.characters Read characters as phyDat object
+#' @author Martin R. Smith
+#' @export
+read.as.phydat <- function (filepath) {
+    tokens <- read.characters(filepath)
+    allTokens <- unique(as.character(tokens))
+    tokenNumbers <- seq_along(allTokens)
+    names(tokenNumbers) <- allTokens
+    matches <- gregexpr("[\\d\\-\\w]", allTokens, perl=TRUE)
+    whichTokens <- regmatches(allTokens, matches)
+    levels <- sort(unique(unlist(whichTokens)))
+    whichTokens[allTokens == '?'] <- list(levels)
+    contrast <- 1 * t(vapply(whichTokens, function (x) levels %in% x, logical(length(levels))))
+    rownames(contrast) <- allTokens
+    colnames(contrast) <- levels
+    dat <- phangorn::phyDat(tokens, type='USER', contrast=contrast)
 }
 
 #' Rightmost character of string

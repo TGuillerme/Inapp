@@ -235,8 +235,16 @@ print.states.matrix <- function(x, ...) {
 
 
 
-## Converts a character (inapplicable or missing)
-#' @return a list
+#' Convert character
+#'
+#' Converts a character (inapplicable or missing)
+#' @param character List, numeric, character or matrix describing a morphological character
+#'
+#' @return The character as a list, with each entry relating the state of the character
+#'         for the corresponding taxon
+#'
+#' @export
+#' @keywords internal
 convert.char <- function(character) {
 
     ## Character is a list

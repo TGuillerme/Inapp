@@ -2,15 +2,23 @@
 % Please edit documentation in R/parse.nexus.R
 \name{read.characters}
 \alias{read.characters}
+\alias{read.as.phydat}
 \title{Read characters from Nexus file}
 \usage{
-read.characters(filepath)
+read.characters(filepath, character_num = NULL)
+
+read.as.phydat(filepath)
 }
 \arguments{
 \item{filepath}{character string specifying location of file}
+
+\item{character_num}{Index of character(s) to return.
+\code{NULL}, the default, returns all characters.}
 }
 \value{
-Character data
+A matrix whose row names correspond to tip labels, and column names
+correspond to character labels, with the attribute \code{state.labels}
+listing the state labels for each character
 }
 \description{
 Parses Nexus file, reading character states and names
@@ -21,6 +29,18 @@ option, but should also work more generally.
 
 Do (report)\link{https://github.org/TGuillerme/Inapp/issues} incorrectly parsed files.
 }
+\section{Functions}{
+\itemize{
+\item \code{read.as.phydat}: Read characters as phyDat object
+}}
+
+\references{
+Maddison, D. R., Swofford, D. L. and Maddison, W. P. (1997)
+NEXUS: an extensible file format for systematic information.
+Systematic Biology, 46, 590–621.
+}
 \author{
+Martin R. Smith
+
 Martin R. Smith
 }

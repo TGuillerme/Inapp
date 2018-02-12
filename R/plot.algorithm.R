@@ -210,9 +210,10 @@ plot.states.matrix <- function(
     }
 
     ## Plotting the tree
+    tree$tip.label <- paste("_", tree$tip.label) # Prefix with space to avoid the tiplabels() boxes
     graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram",
                    use.edge.length = use.edge.length, cex = cex,
-                   adj = 0.5, edge.color = edge_col, edge.width = 2,
+                   adj = 0, edge.color = edge_col, edge.width = 2,
                    y.lim=c(if(legend.pos=='none' && length(state.labels) == 0) 0 else -3,
                            n_tip+0.3),
                    ...)

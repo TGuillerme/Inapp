@@ -13,8 +13,12 @@
 #' @param counts \code{numeric}, whether to display the activations (\code{1}) or/and the homoplasies (\code{2}) or nothing (\code{0}; default).
 #' @param use.edge.length \code{logical} indicating whether to use the edge lengths of the phylogeny to draw the branches or not (default).
 #' @param col.states \code{logical}, whether to colour the states of the tips (\code{TRUE}) or not (\code{FALSE}, default).
-#' @param legend.pos \code{character}, where to position the legend -- e.g. `topleft`.
-#'                   Sent as `x` parameter to \code{\link{legend}}.  Specify `none` to hide the legend.`
+#' @param state.labels vector of mode \code{character} containing labels for
+#'                     each state of the character, in order, to be plotted if
+#'                     col.states is \code{TRUE}.
+#' @param legend.pos \code{character}, where to position the legend -- e.g. `bottomleft`.
+#'                   Sent as `x` parameter to \code{\link{legend}}.
+#'                   Specify `none` to hide the legend.`
 #' @param \dots any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #'
 #' @examples
@@ -48,7 +52,8 @@
 plot.states.matrix <- function(
   x, passes = c(1,2,3,4), show.labels = 0,
   col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
-  counts = 0, use.edge.length = FALSE, col.states = FALSE,
+  counts = 0, use.edge.length = FALSE,
+  col.states = FALSE, state.labels=character(0),
   legend.pos='bottomleft', ...) {
 
     states_matrix <- x
@@ -208,7 +213,9 @@ plot.states.matrix <- function(
     graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram",
                    use.edge.length = use.edge.length, cex = cex,
                    adj = 0.5, edge.color = edge_col, edge.width = 2,
-                   y.lim=c(-3, n_tip+0.3), ...)
+                   y.lim=c(if(legend.pos=='none' && length(state.labels) == 0) 0 else -3,
+                           n_tip+0.3),
+                   ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
 
     if (legend.pos != "none") {
@@ -259,14 +266,25 @@ plot.states.matrix <- function(
 
 
         ## Adding the legend
-        graphics::legend(legend.pos, legend = legend_text, cex = 1.2, pch = par_pch, lty = par_lty,
-                         lwd = par_lwd, col = par_col, pt.cex = par_cex, x.intersp = 0.5,
+        graphics::legend(legend.pos, legend = legend_text, cex = 1.2, pch = par_pch,
+                         lty = par_lty, lwd = par_lwd, col = par_col,
+                         pt.cex = par_cex, x.intersp = 0.5,
                          bty='n', bg = NULL)
     }
     ## Colour the tip states.
     if(col.states) {
         ape::tiplabels(tips_labels, cex = 1, adj = 1,
                        bg = paste0(state_colours[tips_colours])) #, 'aa'
+        if (length(state.labels) == length(edge_palette) - 2) {
+            state.labels <- c(state.labels, 'Ambiguous', 'Inapplicable')
+        } else if (length(state.labels) == length(edge_palette) - 1) {
+            state.labels <- c(state.labels, 'Ambiguous')
+        }
+        state_labels <- paste(names(edge_palette), state.labels)
+        graphics::legend('bottomright', legend=state_labels, cex=1.2,
+                         col=edge_palette, x.intersp=1,
+                         pch=15, pt.cex=2, lty=1, lwd=2,
+                         bty='n', bg=NULL)
     } else {
       ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
     }

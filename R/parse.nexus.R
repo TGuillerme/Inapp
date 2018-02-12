@@ -10,7 +10,9 @@
 #' @param filepath character string specifying location of file
 #' @param character_num Index of character(s) to return
 #'
-#' @return Character data
+#' @return A matrix whose row names correspond to tip labels, and column names
+#'         correspond to character labels, with the attribute `state.labels`
+#'         listing the state labels for each character
 #'
 #' @author Martin R. Smith
 #' @export
@@ -46,9 +48,9 @@ read.characters <- function (filepath, character_num) {
     tokens.pattern <- "\\([^\\)]+\\)|\\{[^\\}]+\\}|."
     matches <- gregexpr(tokens.pattern, tokens, perl=TRUE)
     n_char <- length(matches[[1]])
-    if (any(character_num > n_char) || any(character_num < 1)) {
+    if (!exists("character_num") || any(character_num > n_char) || any(character_num < 1)) {
       warning ("Character number must be between 1 and ", n_char, "; setting to 1")
-      character_num <- 1.
+      character_num <- 1
     }
 
     tokens <- t(vapply(regmatches(tokens, matches),
@@ -85,6 +87,30 @@ read.characters <- function (filepath, character_num) {
     } else {
       if (length(labelStart) > 1)
         warning("Multiple CharLabels blocks in Nexus file.")
+    }
+
+
+    GetStates <- function (stateLines) {
+        ## Written with MorphoBank format in mind: each label on separate line,
+        ## each character introduced by integer and terminated with comma.
+    }
+    stateStart <- which(upperLines == 'STATELABELS')
+    if (length(stateStart) == 1) {
+        stateEnd <- semicolons[semicolons > stateStart][1]
+        stateLines <- lines[stateStart:stateEnd]
+        stateStarts <- grep("^\\d+", stateLines)
+        stateEnds <- grep("[,;]$", stateLines)
+        if (length(stateStarts) != length(stateEnds)) {
+            warning("Could not parse character states.")
+        } else {
+            attr(tokens, 'state.labels') <-
+            lapply(character_num, function (i)
+                stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)]
+            )
+        }
+    } else {
+        if (length(labelStart) > 1)
+            warning("Multiple StateLabels blocks in Nexus file.")
     }
   }
 

@@ -195,6 +195,7 @@ shinyServer(
             ## Transform character
             if(class(character) != "list") {
                 character_name <- if (class(character) == 'matrix') colnames(character) else NULL
+                state_labels <- attr(character, 'state.labels')[[1]]
                 character <- convert.char(character)
             }
 
@@ -233,7 +234,8 @@ shinyServer(
             plot.states.matrix(states_matrix, passes = show_passes,
                                show.labels = showlabels,
                                counts = as.vector(as.numeric(input$counts)),
-                               col.states = input$colour_states)
+                               col.states = input$colour_states,
+                               state.labels = state_labels)
             mtext(character_name)
 
             ## Exporting data
@@ -349,7 +351,6 @@ shinyServer(
                 n_tip <- length(tree$tip.label)
                 ## Set the plot window
                 plotOutput("plot_out", width ="100%", height = paste(round((n_tip + 3.3) * 0.4) * 90L, "px", sep = ""))
-
             }
         })
     }

@@ -187,30 +187,23 @@ shinyServer(
             if (class(character) == 'list') {
               return(plotError(paste(character, sep='', collapse='')))
             }
-            cat(length(character), "naanso fajos")
+
             if (length(character) == 0) {
               return(plotError("Character of length zero."))
             }
 
-            n_tip <- length(tree$tip.label)
-            cat(class(character))
-            if (n_tip != length(character)) {
-              cat(n_tip, length(character))
-              return(plotError(paste(n_tip, " tips, but ", length(character),
-                                      "rows in data matrix")))
-            }
-
-
             ## Transform character
             if(class(character) != "list") {
-              character <- convert.char(character)
+                character_name <- if (class(character) == 'matrix') colnames(character) else NULL
+                character <- convert.char(character)
             }
 
             ## Check if the character is the same length as the tree
-            if(n_tip != length(character)) {
-              stop(n_tip, "tips in the tree, but ", length(character), "entries in the matrix")
+            n_tip <- length(tree$tip.label)
+            if (n_tip != length(character)) {
+                return(plotError(paste(n_tip, " tips in the tree, but ",
+                                       length(character), " entries in the data matrix")))
             }
-
 
             ## Run the algorithm
             if(as.numeric(input$method) == 1) {
@@ -241,6 +234,7 @@ shinyServer(
                                show.labels = showlabels,
                                counts = as.vector(as.numeric(input$counts)),
                                col.states = input$colour_states)
+            mtext(character_name)
 
             ## Exporting data
             output$downloadData <- downloadHandler(

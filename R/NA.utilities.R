@@ -236,10 +236,11 @@ print.states.matrix <- function(x, ...) {
 
 
 ## Converts a character (inapplicable or missing)
+#' @return a list
 convert.char <- function(character) {
 
     ## Character is a list
-    if(class(character) == "list") {
+    if (class(character) == "list") {
         if(unique(unlist(lapply(character, class))) != "numeric") {
             stop("Character list does not contain only numeric values.")
         } else {
@@ -248,8 +249,13 @@ convert.char <- function(character) {
     }
 
     ## Character is a vector (numeric)
-    if(class(character) == "numeric") {
+    if (class(character) == "numeric") {
         return(as.list(character))
+    }
+
+    ## Character is a matrix (not necessarily numeric)
+    if (class(character) == 'matrix') {
+        character <- character[, 1]
     }
 
     ## Character is not numeric

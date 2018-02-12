@@ -195,6 +195,8 @@ shinyServer(
             n_tip <- length(tree$tip.label)
             if (class(character) == 'matrix') {
                 state_labels <- attr(character, 'state.labels')[[1]]
+                # TODO! If unobserved states are labelled, they should be removed!
+
                 character_name <- colnames(character)
 
                 if (all(tree$tip.label %in% rownames(character))) {

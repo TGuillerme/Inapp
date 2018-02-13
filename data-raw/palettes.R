@@ -1,5 +1,3 @@
-library('devtools')
-
 ## Generate the palette list
 brewer <- list(
   c("#fc8d59"),

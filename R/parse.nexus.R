@@ -42,13 +42,13 @@ read.characters <- function (filepath, character_num=NULL) {
     if (lines[matrixEnd] == ';') matrixEnd <- matrixEnd - 1
 
     matrixLines <- lines[(matrixStart + 1):matrixEnd]
-    taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(w+))\\s+(.*)$"
+    taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\w+))\\s+(.*)$"
 
     taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl=TRUE)
     taxa <- gsub(" ", "_", taxa, fixed=TRUE)
 
     tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl=TRUE)
-    tokens <- sub("\t", "", sub(" ", "", tokens, fixed=TRUE), fixed=TRUE)
+    tokens <- gsub("\t", "", gsub(" ", "", tokens, fixed=TRUE), fixed=TRUE)
 
     tokens.pattern <- "\\([^\\)]+\\)|\\{[^\\}]+\\}|."
     matches <- gregexpr(tokens.pattern, tokens, perl=TRUE)

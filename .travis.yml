@@ -17,8 +17,12 @@ branches:
 
 # Code coverage
 r_binary_packages:
+  - ape
   - covr
   - devtools
+  - knitr
+  - phangorn
+  - shiny
   - testthat
 
 after_success:

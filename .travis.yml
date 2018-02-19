@@ -1,5 +1,7 @@
 language: r
 warnings_are_errors: false
+sudo: false
+cache: packages
 
 # blacklist
 # branches:
@@ -15,6 +17,7 @@ branches:
 # Code coverage
 r_packages:
   - devtools
+
 
 after_success:
 - Rscript -e 'install.packages("covr"); library("covr"); codecov()'

@@ -11,13 +11,15 @@ vignettePlot(tree, character, na = TRUE, legend.pos = "bottomleft",
 \item{tree}{Tree to plot}
 
 \item{character}{\code{character} string listing character states to plot;
-tokens will be matched to labels in alphabetical order}
+tokens will be matched to labels in alphabetical order.}
 
 \item{na}{\code{logical}, should \code{-} be treated as \code{inapplicable}?}
 
 \item{legend.pos}{\code{character} Position to plot legend.}
 
-\item{\dots}{Additional parameters to pass to \code{\link{plot.states.matrix}}}
+\item{blankNodes}{\code{logical} specifying whether to leave nodes unmarked.}
+
+\item{\dots}{Additional parameters to pass to \code{\link{plot.states.matrix}}.}
 }
 \description{
 Creates a plot formatted for inclusion in vignettes

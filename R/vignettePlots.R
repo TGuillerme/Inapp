@@ -4,10 +4,11 @@
 #'
 #' @param tree Tree to plot
 #' @param character \code{character} string listing character states to plot;
-#'                  tokens will be matched to labels in alphabetical order
+#'                  tokens will be matched to labels in alphabetical order.
 #' @param na \code{logical}, should `-` be treated as `inapplicable`?
 #' @param legend.pos \code{character} Position to plot legend.
-#' @param \dots Additional parameters to pass to \code{\link{plot.states.matrix}}
+#' @param blankNodes \code{logical} specifying whether to leave nodes unmarked.
+#' @param \dots Additional parameters to pass to \code{\link{plot.states.matrix}}.
 #'
 #' @author Martin R. Smith
 #' @keywords Internal

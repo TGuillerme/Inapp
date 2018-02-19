@@ -101,17 +101,19 @@ Which would plot on a tree thus:
 
 ```{R Multiple dependencies trees, echo=FALSE, fig.width=8, fig.height=16}
 goodtree <- ape::read.tree(text="(a, (b, (c, ((d, e), ((f, (g, (h, i))), ((j, k), (l, m)))))));")
-badtree <- ape::read.tree(text="(a, (b, (c, ((d, e), ((f, (j, (k, i))), ((g, h), (l, m)))))));")
+badtree <- ape::read.tree(text="(A, (C, (B, ((D, E), ((F, (J, (K, I))), ((G, H), (L, M)))))));")
 par(mfrow=c(4, 2), cex=0.7, mar=c(0, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0))
 
 Contrast <- function (character, char.label, states.labels, y=0, header=FALSE) {
     vignettePlot(goodtree, character, na=!header, 
                  legend.pos='topleft', state.labels=states.labels)
     text(14, y, char.label, pos=2)
+    ape::tiplabels(LETTERS[1:13], frame='none', adj=c(0.5, -1.5))
     if (header) title("An optimal tree")
     vignettePlot(badtree, character, na=!header, 
                  legend.pos='topleft', state.labels=states.labels)
     text(14, y, char.label, pos=2)
+    ape::tiplabels(badtree$tip.label, frame='none', adj=c(0.5, -1.5))
     if (header) title("A suboptimal tree")
     
 }

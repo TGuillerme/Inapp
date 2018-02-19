@@ -7,7 +7,8 @@
 \method{plot}{states.matrix}(x, passes = c(1, 2, 3, 4), show.labels = 0,
   col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
   counts = 0, use.edge.length = FALSE, col.states = FALSE,
-  state.labels = character(0), legend.pos = "bottomleft", ...)
+  state.labels = character(0), legend.pos = "bottomleft", y.lim = NULL,
+  ...)
 }
 \arguments{
 \item{x}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}}
@@ -35,6 +36,10 @@ col.states is \code{TRUE}.}
 \item{legend.pos}{\code{character}, where to position the legend -- e.g. \code{bottomleft}.
 Sent as \code{x} parameter to \code{\link{legend}}.
 Specify \code{none} to hide the legend.`}
+
+\item{y.lim}{\code{numeric} \emph{x} and \emph{y} coordinates for limits of the plot,
+calculated automatically based on presence of legend if set to \code{NULL}
+(the default).}
 
 \item{\dots}{any optional arguments to be passed to \code{\link[ape]{plot.phylo}}}
 }

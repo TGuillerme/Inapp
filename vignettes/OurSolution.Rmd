@@ -37,9 +37,13 @@ Here's an example tree showing that.
 
 Here are some examples of how this fixes the problems that we encountered.
 
+Take the example of two very different tails.  Because they are so different,
+it makes sense that they might have evolved twice.
+
+
 ## Furhter examples
 
-Here are Goloboff's trees as examples of how we would approach them, and why that's preferable to how he woudl approach them
+Here are Goloboff's trees as examples of how we would approach them, and why that's preferable to how he would approach them
 
 Here are De Laet's cases and here's why they aren't problematic.
 

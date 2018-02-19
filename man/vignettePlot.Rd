@@ -5,7 +5,7 @@
 \title{Vignette Plot}
 \usage{
 vignettePlot(tree, character, na = TRUE, legend.pos = "bottomleft",
-  blankNodes = FALSE, ...)
+  passes = integer(0), ...)
 }
 \arguments{
 \item{tree}{Tree to plot}
@@ -17,7 +17,7 @@ tokens will be matched to labels in alphabetical order.}
 
 \item{legend.pos}{\code{character} Position to plot legend.}
 
-\item{blankNodes}{\code{logical} specifying whether to leave nodes unmarked.}
+\item{passes}{\code{integer} specifying which passes to plot; specify 0 for none.}
 
 \item{\dots}{Additional parameters to pass to \code{\link{plot.states.matrix}}.}
 }

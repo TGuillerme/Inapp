@@ -15,7 +15,6 @@ branches:
 # Code coverage
 r_packages:
   - devtools
-  - covr
 
 after_success:
-- Rscript -e 'library("covr"); codecov()'
+- Rscript -e 'install.packages("covr""); library("covr"); codecov()'

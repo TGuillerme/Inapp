@@ -19,6 +19,9 @@
 #' @param legend.pos \code{character}, where to position the legend -- e.g. `bottomleft`.
 #'                   Sent as `x` parameter to \code{\link{legend}}.
 #'                   Specify `none` to hide the legend.`
+#' @param y.lim \code{numeric} _x_ and _y_ coordinates for limits of the plot,
+#'                    calculated automatically based on presence of legend if set to `NULL`
+#'                    (the default).
 #' @param \dots any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #'
 #' @examples
@@ -55,7 +58,7 @@ plot.states.matrix <- function(
   col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
   counts = 0, use.edge.length = FALSE,
   col.states = FALSE, state.labels=character(0),
-  legend.pos='bottomleft', ...) {
+  legend.pos='bottomleft', y.lim=NULL, ...) {
 
     states_matrix <- x
     tree <- states_matrix$tree
@@ -164,14 +167,13 @@ plot.states.matrix <- function(
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     if (col.states) {
-        data("brewer", envir=environment())
         ## Matching the states and colours
         tips_colours <- tips_labels
         tips_colours[nchar(tips_labels) > 1] <- "?"
 
         ## Select the palette
         max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
-        state_colours <- c(brewer[[max_colour + 1]], "grey", "lightgrey")
+        state_colours <- c(Inapp::brewer[[max_colour + 1]], "grey", "lightgrey")
         names(state_colours) <- c(0:max_colour, "?", "-")
 
         ## Get the edge palette
@@ -211,12 +213,13 @@ plot.states.matrix <- function(
     }
 
     ## Plotting the tree
+    if (is.null(y.lim)) y.lim <- c(if(legend.pos=='none' && length(state.labels) == 0) 0 else -3,
+                                   n_tip+0.3)
     tree$tip.label <- paste("_", tree$tip.label) # Prefix with space to avoid the tiplabels() boxes
     graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram",
                    use.edge.length = use.edge.length, cex = cex,
                    adj = 0, edge.color = edge_col, edge.width = 2,
-                   y.lim=c(if(legend.pos=='none' && length(state.labels) == 0) 0 else -3,
-                           n_tip+0.3),
+                   y.lim=y.lim,
                    ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
 

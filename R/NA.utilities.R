@@ -213,7 +213,7 @@ print.states.matrix <- function(x, ...) {
         }
         ## Score
         score <- length(x$regions) + ifelse(length(x$changes) > 0, length(x$changes), 0)
-        cat(paste("Tree score is:", score, "\n"))
+        cat(paste("Character contributes", score, "to tree score\n"))
         ## Details
         if(score != 0) {
             cat(paste(length(x$regions), "additional applicable regions.\n"))

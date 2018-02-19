@@ -112,6 +112,7 @@ read.characters <- function (filepath, character_num=NULL) {
 
 #' @describeIn read.characters Read characters as phyDat object
 #' @author Martin R. Smith
+#' @importFrom phangorn phyDat
 #' @export
 read.as.phydat <- function (filepath) {
     tokens <- read.characters(filepath)

@@ -12,7 +12,7 @@ vignette: >
 ---
 
 ```{R initialize, message=FALSE, include=FALSE}
-library(knitr); library('Inapp')
+library('knitr'); library('Inapp')
 quickPlot <- function (tree, character, na=TRUE, legend.pos='bottomleft') {
   tree$edge.length <- rep(1, dim(tree$edge)[1])
   reconstruction <- apply.reconstruction(tree, character, 
@@ -251,8 +251,9 @@ mtext(side=1, line=0, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0
 
 
 ### Difficulties
-Here are some marginal cases where discretion is required.
-Here are some trees that show why we would code things our way
-this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!
+<mark>Here are some marginal cases where discretion is required.</mark>
+
+<mark>Here are some trees that show why we would code things our way
+this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!</mark>
 
 ## References

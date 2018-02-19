@@ -1,8 +1,12 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+helpers.R
+server.R
+ui.R
 Analysis/
 data-raw/
 Writing/
 support/
+www/
 ^.*.yml$
 ^.*.md$

@@ -173,8 +173,10 @@ plot.states.matrix <- function(
 
         ## Select the palette
         max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
-        state_colours <- c(Inapp::brewer[[max_colour + 1]], "grey", "lightgrey")
-        names(state_colours) <- c(0:max_colour, "?", "-")
+        state_colours <- c(Inapp::brewer[[max_colour + 1]], "grey")
+        names(state_colours) <- c(0:max_colour, "?")
+        if ('-' %in% tips_labels) state_colours <- c(state_colours, '-' = 'lightgrey')
+
 
         ## Get the edge palette
         edge_palette <- state_colours
@@ -186,7 +188,7 @@ plot.states.matrix <- function(
       edge_col <- ifelse(get.NA.edges(states_matrix, tree, pass = 4) == 1, "black", "grey")
     }
 
-    ## Colour the states if the fourth uppass is available
+    ## Colour the states if the relevant uppass is available
     if (col.states && !is.null(unlist(states_matrix$Up1))) {
         ## get the states
         if (!is.null(unlist(states_matrix$Up2))) {
@@ -209,7 +211,8 @@ plot.states.matrix <- function(
                 col_states[parent]
             } else '?'
         }
-        edge_col <- as.character(edge_palette[apply(tree$edge, 1, colour.edge)])
+        edge_final <- apply(tree$edge, 1, colour.edge)
+        edge_col <- as.character(edge_palette[edge_final])
     }
 
     ## Plotting the tree
@@ -280,14 +283,19 @@ plot.states.matrix <- function(
     if(col.states) {
         ape::tiplabels(tips_labels, cex = 1, adj = 1,
                        bg = paste0(state_colours[tips_colours])) #, 'aa'
-        if (length(state.labels) == length(edge_palette) - 2) {
-            state.labels <- c(state.labels, 'Ambiguous', 'Inapplicable')
-        } else if (length(state.labels) == length(edge_palette) - 1) {
-            state.labels <- c(state.labels, 'Ambiguous')
+        if (length(state.labels) == 0) {
+            state_labels <- names(edge_palette)
+        } else {
+            if (length(state.labels) == length(edge_palette) - 2) {
+                state.labels <- c(state.labels, 'Ambiguous', 'Inapplicable')
+            } else if (length(state.labels) == length(edge_palette) - 1) {
+                state.labels <- c(state.labels, 'Ambiguous')
+            }
+            state_labels <- paste(names(edge_palette), gsub("^['\"]|['\"]$", "", state.labels), sep=": ")
         }
-        state_labels <- paste(names(edge_palette), gsub("^['\"]|['\"]$", "", state.labels), sep=": ")
-        graphics::legend('bottomright', legend=state_labels, cex=1.2,
-                         col=edge_palette, x.intersp=1,
+        observed <- names(edge_palette) %in% edge_final
+        graphics::legend('bottomright', legend=state_labels[observed], cex=1.2,
+                         col=edge_palette[observed], x.intersp=1,
                          pch=15, pt.cex=1, lty=1, lwd=2,
                          bty='n', bg=NULL)
     } else {

@@ -228,7 +228,7 @@ plot.states.matrix <- function(
 
     if (legend.pos != "none") {
         ## Setting up the legend parameters
-        length_text <-  paste("Tree score is", score.from(regions) + score.from(changes))
+        length_text <-  paste("Character contributes", score.from(regions) + score.from(changes), "to tree score")
         if(all(counts == 0)) {
             legend_text <- length_text
             par_cex = 0

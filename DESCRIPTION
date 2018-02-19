@@ -1,5 +1,5 @@
 Package: Inapp
-Title: Inapplicable Discrete Characters Reconstruction
+Title: Reconstruction of Inapplicable Discrete Characters on Phylogenetic Trees
 Version: 0.3
 Author: c(person("Thomas", "Guillerme", email = "guillert@tcd.ie", role = c("aut",
     "cre")), person("Martin D.", "Brazeau", role = c("aut")), person("Martin R.",
@@ -13,11 +13,12 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
 Imports:
-	ape,
-	shiny
+    ape,
+    phangorn,
+    shiny
 Suggests: 
-  knitr,
-  rmarkdown,
-  testthat
+    knitr,
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

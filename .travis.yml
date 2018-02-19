@@ -1,7 +1,7 @@
 language: r
-warnings_are_errors: false
 sudo: false
 cache: packages
+warnings_are_errors: false
 
 # blacklist
 # branches:
@@ -12,12 +12,13 @@ cache: packages
 branches:
   only:
     - master
+    - Character-names
     # Change to release once released
 
 # Code coverage
 r_packages:
+  - covr
   - devtools
 
-
 after_success:
-- Rscript -e 'install.packages("covr"); library("covr"); codecov()'
+- Rscript -e 'library("covr"); codecov()'

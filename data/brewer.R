@@ -1,4 +1,3 @@
-## Generate the palette list
 brewer <- list(
   c("#fc8d59"),
   c("#fc8d59", "#91bfdb"),
@@ -12,5 +11,3 @@ brewer <- list(
   c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695"),
   c("#a50026", "#d73027", "#f46d43", "#fdae61", "#fee090", "#e2e2a2", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4", "#313695")
 )
-
-devtools::use_data(brewer, overwrite=TRUE)

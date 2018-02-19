@@ -1,0 +1,137 @@
+---
+title: "Worked examples"
+author: "Martin R. Smith"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
+vignette: >
+  %\VignetteIndexEntry{6. Implications for characters}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Inapplicable data in a parsimony setting
+
+This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
+
+
+```{R initialize, message=FALSE, include=FALSE}
+library('Inapp')
+labelRow <- function(text) text(-3, 9, text, font=2, pos=4, cex=1.2)
+goloPar <- function () par(mfrow=c(1, 2), mar=c(0.5, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0), cex=0.5)
+goloPlot <- function (tai, clr, title, nodeLabels=FALSE) {
+    goloPar()
+    vignettePlot(comb, tai, legend.pos='topleft', FALSE, passes=2)
+    labelRow(title)
+    vignettePlot(comb, clr, legend.pos='topleft', passes=4)
+    if (nodeLabels) {
+        text((1:15) - 1 , 1:15, LETTERS[1:15])
+        text((1:14) + 2.5 , (1:14) - 0.5, 1:14)
+    }
+}
+```
+
+This vignette describes how the algorithm approaches some example trees.
+We follow the example of a tail coded using two characters:
+
+- Tail: (0), absent; (1), present;
+- Tail colour: (0), red; (1), blue.
+
+## Some caterpillars
+
+First we'll address some pectinate "caterpillar" trees, in which eight 
+taxa have tails (and eight do not), four of which are red, four of which are blue.
+
+```{R GoloboffTrees, echo=FALSE}
+comb <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, (G, (H, (I, (J, (K, (L, (M, (N, (O, P)))))))))))))));")
+clr1 <- "--------00001111"
+tai1 <- "0000000011111111"
+clr2 <- "0000--------1111"
+tai2 <- "1111000000001111"
+clrA <- "000011--------11"
+taiA <- "1111110000000011"
+clrB <- "00---00--11---11"
+taiB <- "1100011001100011"
+clrC <- "0-0--00--11---11"
+taiC <- "1010011001100011"
+clrD <- "0-0-0-0-1-1-1-1-"
+taiD <- "1010101010101010"
+clrE <- "00----0011----11"
+taiE <- "1100001111000011"
+```
+
+An optimal tree with this character invokes a single origin of the tail, and a single
+change in tail colour, thus incurring a score of two.  Here is one example:
+
+```{R OptimalCaterpillar, echo = FALSE, fig.height=4, fig.width=8}
+goloPlot(tai1, clr1, 'An optimal tree: Total score 2')
+```
+
+If we insist that the tail evolves twice, then the best score is accomplished
+by reconstructing a different colour of tail in each of the two regions
+in which the tail is present.  On a caterpillar tree, this means the loss of a 
+tail that has one colour, and an independent innovation in a tail-less taxon
+of a tail that has a different colour:
+
+```{R OptimalCaterpillarTwice, echo = FALSE, fig.height=4, fig.width=8}
+goloPlot(tai2, clr2, 'Two tail innovations:\n Total score 2 (best possible)')
+```
+
+Under the parsimony criterion, it is considered less optimal if a tail, when it re-evolves, happens to independently re-evolve a colour that has already been observed --
+"blueness" has evolved twice on the following tree, meaning that 
+the second innovation of "blueness" represents an instance of homoplasy.
+
+```{R GoloA, echo = FALSE, fig.height=4, fig.width=8}
+goloPlot(taiA, clrA, 'Tree A: Total score 4')
+```
+
+### Three equally suboptimal alternatives
+The following three trees differ in the number of innovations of the tail that
+are implied, and the number of changes in tail colour.  All are equally parsimonious.
+
+Under the first, our algorithm reconstructs the tail as ancestrally present, 
+being lost on edge 2, gained on edge 5, lost in tips H and I, lost on edge 11,
+and gained on edge 14 (a total of six homoplasies).  It further reconstructs 
+independent, homoplastic origins of tail redness on edge 5, tail blueness on 
+edge 14, and a change in tail colour from red to blue somewhere between edges 
+7 and 9 (three homoplasies).
+
+```{R GoloB, echo = FALSE, fig.height=4, fig.width=8}
+goloPlot(taiB, clrB, 'Tree B: Total score 9', TRUE)
+```
+
+
+In the second, our algorithm reconstructs the tail as ancestrally present, 
+being lost in tips B, D, E, H, and I, and on edge 11, before being independently
+gained on edge 14 (a total of seven homoplasies).  
+It further reconstructs an independent, homoplastic origins of tail  blueness on 
+edge 14, and a change in tail colour from red to blue somewhere between edges 7 and 9 (two homoplasies).
+
+```{R GoloC, echo = FALSE, fig.height=4, fig.width=8}
+goloPlot(taiC, clrC, 'Tree C: Total score 9', TRUE)
+```
+
+
+The third configuration reconstructs the tail as ancestrally present, 
+being lost in tips B, D, F, H, J, L, N and P (a total of eight homoplastic losses).
+It further reconstructs a single change in tail colour from red to blue 
+on edge 8.
+
+```{R GoloD, echo = FALSE, fig.height=4, fig.width=8}
+goloPlot(taiD, clrD, 'Tree D: Total score 9', TRUE)
+```
+
+
+### A better caterpillar tree
+
+The tree below obtains a better score than any of the previous three: it implies
+a loss of the tail at edge 2, a gain at edge 6, a loss at edge 10, and a gain at
+edge 14; it invokes a homoplastic origin of redness at edge 6, one of blueness
+at edge 14, and a change in colour at edge 8, for a combined score of 7.
+```{R GoloE, echo = FALSE, fig.height=4, fig.width=8}
+goloPlot(taiE, clrE, 'Tree E: Total score 7', TRUE)
+```
+
+
+```

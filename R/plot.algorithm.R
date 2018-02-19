@@ -163,7 +163,7 @@ plot.states.matrix <- function(
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     if (col.states) {
-        data("brewer")
+        data("brewer", envir=environment())
         ## Matching the states and colours
         tips_colours <- tips_labels
         tips_colours[nchar(tips_labels) > 1] <- "?"

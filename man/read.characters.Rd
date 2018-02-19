@@ -27,7 +27,7 @@ Parses Nexus file, reading character states and names
 Tested with nexus files downloaded from MorphoBank with the "no notes"
 option, but should also work more generally.
 
-Do (report)\link{https://github.org/TGuillerme/Inapp/issues} incorrectly parsed files.
+Do \href{https://github.org/TGuillerme/Inapp/issues}{report} incorrectly parsed files.
 }
 \section{Functions}{
 \itemize{

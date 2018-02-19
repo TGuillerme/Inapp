@@ -5,7 +5,7 @@
 #' Tested with nexus files downloaded from MorphoBank with the "no notes"
 #' option, but should also work more generally.
 #'
-#' Do (report)[https://github.org/TGuillerme/Inapp/issues] incorrectly parsed files.
+#' Do [report](https://github.org/TGuillerme/Inapp/issues) incorrectly parsed files.
 #'
 #' @param filepath character string specifying location of file
 #' @param character_num Index of character(s) to return.
@@ -29,7 +29,7 @@ read.characters <- function (filepath, character_num=NULL) {
   lines <- trimws(lines)
   lines <- lines[lines != ""]
 
-  semicolons <- which(str.right(lines) == ';')
+  semicolons <- which(RightmostCharacter(lines) == ';')
   upperLines <- toupper(lines)
 
   matrixStart <- which(upperLines == 'MATRIX')
@@ -134,7 +134,7 @@ read.as.phydat <- function (filepath) {
 #' @author Martin R. Smith
 #' @export
 #' @keywords internal
-str.right <- function (string, len=nchar(string)) {
+RightmostCharacter <- function (string, len=nchar(string)) {
   substr(string, len, len)
 }
 

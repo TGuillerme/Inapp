@@ -5,7 +5,8 @@
 #' Tested with nexus files downloaded from MorphoBank with the "no notes"
 #' option, but should also work more generally.
 #'
-#' Do [report](https://github.org/TGuillerme/Inapp/issues) incorrectly parsed files.
+#' Do [report](https://github.org/TGuillerme/Inapp/issues "New GitHub Issue")
+#' incorrectly parsed files.
 #'
 #' @param filepath character string specifying location of file
 #' @param character_num Index of character(s) to return.

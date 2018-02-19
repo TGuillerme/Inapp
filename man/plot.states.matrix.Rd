@@ -69,5 +69,5 @@ plot(NA_matrix, show.labels = 2, col.tips.nodes = c("red", "pink", "green"),
 \code{\link{apply.reconstruction}}, \code{\link{runInapp}}
 }
 \author{
-Thomas Guillerme
+Thomas Guillerme, Martin R. Smith
 }

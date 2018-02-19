@@ -46,7 +46,8 @@
 #'
 #' @seealso \code{\link{apply.reconstruction}}, \code{\link{runInapp}}
 #'
-#' @author Thomas Guillerme
+#' @author Thomas Guillerme, Martin R. Smith
+#' @importFrom utils data
 #' @export
 
 plot.states.matrix <- function(

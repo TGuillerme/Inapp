@@ -13,6 +13,8 @@
 #' @author Martin R. Smith
 #' @keywords Internal
 #'
+#' @importFrom graphics par
+#' @importFrom grDevices dev.new dev.off
 #' @export
 vignettePlot <- function (tree, character, na=TRUE, legend.pos='bottomleft',
                           blankNodes=FALSE, ...) {

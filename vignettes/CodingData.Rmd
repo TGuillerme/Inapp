@@ -36,14 +36,95 @@ We assume that you'll already have read the [description](OurAlgorithm.html) of 
 
 ## How this algorithm weights against multiple innovations
 
-- We saw in an earlier section that step counts can be avoided by causing multiple innovations
-- Our algorithm counterbalances that by charging a levy for each innoation of the parent character
+We discussed in an [earlier vignette](FailedSolutions.html) that, if we only 
+penalise transformations between states in subsidiary characters, 
+trees that imply multiple origins of the parent character receive much lower scores
+than those in which the parent character evolves once (but its subsidiary characteristics
+change multiple times).
+
+Our algorithm counterbalances this by, in effect, imposing a cost for each additional
+origin of the parent character.  At first blush, this sounds like it is weighting
+against multiple innovations of the parent character -- but this isn't so; it
+weights against multiple independent innovations of the SAME state (i.e. homoplasy),
+but if a red tail evolved here and a blue tail evolved there, then two innovations of the 
+tail imposes a cost of one (additional region) for tail colour, whereas a single innovation of the tail would also impose a cost of one (transformation) for tail colour.
+The additional origin of the tail can
+
 - This has a side-effect that we'll study with an invariant character
 
 ## Multiple dependencies
 
-- It's not a problem to have characters dependent on characters that are dependent on characters.
-- This is our chance to respond to Goloboff's point 6.
+It's not a problem to have characters dependent on characters that are dependent
+on characters.  Consider the following character heirarchy:
+
+  1. Appendages: (0), absent; (1), present.
+  2. Appendage termination: (0), blunt; (1), claw; (2), sucker.
+  3. Claw morphology: (0), smooth; (1), serrated.
+  4. Sucker morphology: (0), round; (1), polygonal.
+
+The included taxa may or may not bear appendages; if they do, then the 
+appendages may end either with either claws or suckers, or neither (but not both).
+Claws come in two flavours, smooth and serrated; suckers come in two shapes,
+rounded and polygonal.
+
+If character 1 (appendages) is absent, then characters 2--4 are inapplicable.
+Otherwise, charcter 2 (appendage termination) must take one of the three applicable values.
+
+If character 2 (termination) has state 0 (blunt), then characters 3 and 4 
+(morphology of claw / sucker) are inapplicable.
+
+If character 2 (termination) has state 1 (claw), then character 3
+(claw morphology) is applicable and character 4 (sucker morphology) is inapplicable.
+
+If character 2 (termination) has state 2 (sucker), then character 3 
+(claw morphology) is inapplicable and character 4 (sucker morphology) is 
+applicable.
+
+A sample character matrix might look like this:
+
+```{R Multiple dependencies, echo=FALSE, asis=TRUE}
+nNone <- 3
+c1 <- c(rep(0, nNone), rep(1, 10))
+c2 <- c(rep('-', nNone), rep(0, 2), rep(1, 4), rep(2, 4))
+c3 <- c(rep('-', nNone + 2), 0, 0, 1, 1, rep('-', 4))
+c4 <- c(rep('-', nNone + 2 + 4), 0, 0, 1, 1)
+mDep <- matrix(c(c1, c2, c3, c4), byrow=TRUE, ncol=length(c1))
+colnames(mDep) <- LETTERS[seq_along(c1)]
+rownames(mDep) <- c("Appendages: (0), absent; (1), present.",
+                    "Appendage termination: (0), blunt; (1), claw; (2), sucker.",
+                    "Claw morphology: (0), smooth; (1), serrated.", 
+                    "Sucker morphology: (0), round; (1), polygonal.")
+kable(mDep, capiton="Coding")
+```
+
+Which would plot on a tree thus:
+
+```{R Multiple dependencies trees, echo=FALSE, fig.width=8, fig.height=16}
+goodtree <- ape::read.tree(text="(a, (b, (c, ((d, e), ((f, (g, (h, i))), ((j, k), (l, m)))))));")
+badtree <- ape::read.tree(text="(a, (b, (c, ((d, e), ((f, (j, (k, i))), ((g, h), (l, m)))))));")
+par(mfrow=c(4, 2), cex=0.7, mar=c(0, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0))
+
+Contrast <- function (character, char.label, states.labels, y=0, header=FALSE) {
+    vignettePlot(goodtree, character, na=!header, 
+                 legend.pos='topleft', state.labels=states.labels)
+    text(14, y, char.label, pos=2)
+    if (header) title("An optimal tree")
+    vignettePlot(badtree, character, na=!header, 
+                 legend.pos='topleft', state.labels=states.labels)
+    text(14, y, char.label, pos=2)
+    if (header) title("A suboptimal tree")
+    
+}
+
+Contrast('0001111111111', "Appendages:", c('absent', 'present'), header=TRUE)
+Contrast('---0011112222', "Appendage termination:", c("blunt", "claw", "sucker"), y=1.5)
+Contrast('-----0011----', "Claw morphology:", c("smooth", "serrated"), y=0.5)
+Contrast('---------0011', "Sucker morphology:", c("round", "polygonal"), y=0.5)
+mtext("Appendage condition", outer=TRUE)
+
+```
+
+
 
 ## A parsimony uninformative character that informs parsimony!
 

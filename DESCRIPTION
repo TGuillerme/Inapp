@@ -17,6 +17,7 @@ Imports:
     phangorn,
     shiny
 Suggests: 
+    devtools,
     knitr,
     rmarkdown,
     testthat

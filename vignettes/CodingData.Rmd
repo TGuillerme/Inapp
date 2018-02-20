@@ -315,42 +315,6 @@ Perhaps there are cases -- as might be seen in phenotypic plasticity -- where a 
 ### Recommendation
 - Neomorphic characters should probably be coded as absent everywhere they are absent, whether this is because there's no tail or because there's a tail without the complex feature.
 
-### Ambiguity
-
-Care must be taken when coding ambiguous data.
-
-#### Ambiguity when parent character ambiguous
-
-If it's not clear whether or not a taxon has a tail, then tail colour should be 
-coded as `?`, denoting that any possible token (including the inapplicable token)
-may be the most parsimonious for the tail.
-
-In trees in which the tail can be reconstructed as present, the ambiguous tip
-will be reconstructed as having a tail of the appropriate colour:
-
-```{R fully amb, echo=FALSE, fig.width=8, fig.height=3}
-setPar()
-hasTail   <- ape::read.tree(text="((a, (b, (c, d))), (e, ((f, (g, X)), (h, i))));")
-lacksTail <- ape::read.tree(text="((a, (b, (X, (c, d)))), (e, ((f, g), (h, i))));")
-tail <- "000001111?"
-col  <- "-----0011?"
-
-vignettePlot(hasTail, tail, legend.pos='topleft', na=FALSE, main="Tail", state.labels = ap)
-vignettePlot(hasTail, col, legend.pos='topleft', main="Tail colour", state.labels = rb)
-
-```
-
-In trees in which the tail cannot be reconstructed as present without inferring
-a homoplasious origin, the tail colour will be reconstructed as inapplicable:
-
-```{R fully amb - absent, echo=FALSE< fig.width=8, fig.height=3}
-setPar()
-vignettePlot(lacksTail, tail, legend.pos='topleft', na=FALSE, main="Tail", state.labels = ap)
-vignettePlot(lacksTail, col, legend.pos='topleft', main="Tail colour", state.labels = rb)
-```
-
-#### Ambiguity when parent character known
-
 
 
 If you're coding a neomorphic character as transformational, then you encounter problems.

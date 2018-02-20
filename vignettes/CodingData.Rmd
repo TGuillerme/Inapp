@@ -25,7 +25,10 @@ quickPlot <- function (tree, character, na=TRUE, legend.pos='bottomleft') {
        col.states=TRUE, use.edge.length=TRUE, 
        x.lim=c(-3, corners[2]), y.lim=c(-1, corners[4]+0.1))
 }
+setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 0.66, 0.2), oma=c(1,0,0,0), cex=0.7)
 
+ap <- c("Absent", "Present")
+rb <- c("Red", "Blue")
 ```
 
 # Inapplicable data in a parsimony setting
@@ -314,19 +317,53 @@ Perhaps there are cases -- as might be seen in phenotypic plasticity -- where a 
 
 ### Ambiguity
 
-Should ? be scored as (01) or (-01)?
+Care must be taken when coding ambiguous data.
+
+#### Ambiguity when parent character ambiguous
+
+If it's not clear whether or not a taxon has a tail, then tail colour should be 
+coded as `?`, denoting that any possible token (including the inapplicable token)
+may be the most parsimonious for the tail.
+
+In trees in which the tail can be reconstructed as present, the ambiguous tip
+will be reconstructed as having a tail of the appropriate colour:
+
+```{R fully amb, echo=FALSE, fig.width=8, fig.height=3}
+setPar()
+hasTail   <- ape::read.tree(text="((a, (b, (c, d))), (e, ((f, (g, X)), (h, i))));")
+lacksTail <- ape::read.tree(text="((a, (b, (X, (c, d)))), (e, ((f, g), (h, i))));")
+tail <- "000001111?"
+col  <- "-----0011?"
+
+vignettePlot(hasTail, tail, legend.pos='topleft', na=FALSE, main="Tail", state.labels = ap)
+vignettePlot(hasTail, col, legend.pos='topleft', main="Tail colour", state.labels = rb)
+
+```
+
+In trees in which the tail cannot be reconstructed as present without inferring
+a homoplasious origin, the tail colour will be reconstructed as inapplicable:
+
+```{R fully amb - absent, echo=FALSE< fig.width=8, fig.height=3}
+setPar()
+vignettePlot(lacksTail, tail, legend.pos='topleft', na=FALSE, main="Tail", state.labels = ap)
+vignettePlot(lacksTail, col, legend.pos='topleft', main="Tail colour", state.labels = rb)
+```
+
+#### Ambiguity when parent character known
+
+
 
 If you're coding a neomorphic character as transformational, then you encounter problems.
 
 ```{R Untitled 4, echo=FALSE, fig.height=3, fig.width=6}
-par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
+setPar()
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
 tail <- "0001111"
 col <- "---{01}{01}00"
 
-quickPlot(better, col)
-quickPlot(worse, col)
+vignettePlot(better, col)
+vignettePlot(worse, col)
 
 mtext(side=1, line=0, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present", cex=0.8, outer=TRUE)
 

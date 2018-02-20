@@ -146,7 +146,12 @@ get.character <- function(input, tree) {
         nexus_matrix <- input$nexus_matrix
         if(!is.null(nexus_matrix)) {
             ## Select the right character
-            character <- read.characters(nexus_matrix$datapath, input$character_num)
+            if (is.na(input$character_num)) {
+                return (list("Character selection must be numeric."))
+            }
+            character_num <- as.numeric(gsub("^.*([0-9]+).*$", "\\1", input$character_num))
+
+            character <- read.characters(nexus_matrix$datapath, character_num)
             matrix_taxa <- rownames(character)
             if (all(tree$tip.label %in% matrix_taxa)) {
               data_matrix <- character[tree$tip.label, ]
@@ -207,6 +212,7 @@ shinyServer(
                 }
             } else {
                 character_name <- NULL
+                state_labels <- NULL
             }
 
             ## Transform character

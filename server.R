@@ -149,9 +149,8 @@ get.character <- function(input, tree) {
             if (is.na(input$character_num)) {
                 return (list("Character selection must be numeric."))
             }
-            character_num <- as.numeric(gsub("^.*([0-9]+).*$", "\\1", input$character_num))
 
-            character <- read.characters(nexus_matrix$datapath, character_num)
+            character <- read.characters(nexus_matrix$datapath, input$character_num)
             matrix_taxa <- rownames(character)
             if (all(tree$tip.label %in% matrix_taxa)) {
               data_matrix <- character[tree$tip.label, ]

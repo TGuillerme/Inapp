@@ -6,7 +6,7 @@ output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 vignette: >
-  %\VignetteIndexEntry{7. Coding ambiguity}
+  %\VignetteIndexEntry{8. Coding ambiguity}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -151,6 +151,6 @@ kable(mDep, capiton="Coding")
 
 ```
 
-[Return to index](Index.html) | [Further coding considerations](CodingData.html)
+[Return to index](Index.html) | [Coding neomorphic characters](Neomorphics.html) | [Further coding considerations](CodingData.html)
 
 ## References

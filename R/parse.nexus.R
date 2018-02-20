@@ -54,11 +54,18 @@ read.characters <- function (filepath, character_num=NULL) {
     tokens.pattern <- "\\([^\\)]+\\)|\\{[^\\}]+\\}|."
     matches <- gregexpr(tokens.pattern, tokens, perl=TRUE)
     n_char <- length(matches[[1]])
+
     if (!exists("character_num") || is.null(character_num)) {
         character_num <- seq_len(n_char)
-    } else if (any(character_num > n_char) || any(character_num < 1)) {
-      warning ("Character number must be between 1 and ", n_char, "; setting to 1")
-      character_num <- 1
+    } else {
+        char.matches <- regexpr("\\d+", character_num, perl=TRUE)
+        character_num <- as.integer(regmatches(character_num, char.matches))
+
+        if (any(character_num > n_char) || any(character_num < 1)) {
+            warning ("Character number must be between 1 and ", n_char, ".")
+            character_num[character_num < 1] <- 1
+            character_num[character_num > n_char] <- n_char
+        }
     }
 
     tokens <- t(vapply(regmatches(tokens, matches),

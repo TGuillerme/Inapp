@@ -15,7 +15,8 @@
 #'        whose maximum should be updated.
 #' @return A matrix whose row names correspond to tip labels, and column names
 #'         correspond to character labels, with the attribute `state.labels`
-#'         listing the state labels for each character
+#'         listing the state labels for each character; or a character string
+#'         explaining why the character cannot be returned.
 #'
 #' @author Martin R. Smith
 #' @references
@@ -26,7 +27,6 @@
 #'
 read.characters <- function (filepath, character_num=NULL, session=NULL) {
 
-    returnError <- if (is.null(session)) function (x) stop(x) else function (x) list(x)
     lines <- readLines(filepath)
     nexusComment.pattern <- "\\[[^\\]*\\]"
     lines <- gsub(nexusComment.pattern, "", lines)
@@ -38,9 +38,9 @@ read.characters <- function (filepath, character_num=NULL, session=NULL) {
 
     matrixStart <- which(upperLines == 'MATRIX')
     if (length(matrixStart) == 0) {
-        return(returnError("MATRIX block not found in Nexus file."))
+        return(list("MATRIX block not found in Nexus file."))
     } else if (length (matrixStart) > 1) {
-        return(returnError("Multiple MATRIX blocks found in Nexus file."))
+        return(list("Multiple MATRIX blocks found in Nexus file."))
     } else {
         matrixEnd <- semicolons[semicolons > matrixStart][1]
         if (lines[matrixEnd] == ';') matrixEnd <- matrixEnd - 1
@@ -65,7 +65,7 @@ read.characters <- function (filepath, character_num=NULL, session=NULL) {
         if (!exists("character_num") || is.null(character_num)) {
             character_num <- seq_len(n_char)
         } else if (any(character_num > n_char) || any(character_num < 1)) {
-            return(returnError ("Character number must be between 1 and ", n_char, "."))
+            return(list("Character number must be between 1 and ", n_char, "."))
             character_num[character_num < 1] <- 1
             character_num[character_num > n_char] <- n_char
         }
@@ -88,7 +88,7 @@ read.characters <- function (filepath, character_num=NULL, session=NULL) {
           colnames(tokens) <- lines[labelStart + character_num]
         } else {
           if (length(labelStart) > 1)
-            return(returnError("Multiple CharLabels blocks in Nexus file."))
+            return(list("Multiple CharLabels blocks in Nexus file."))
         }
 
 
@@ -112,7 +112,7 @@ read.characters <- function (filepath, character_num=NULL, session=NULL) {
             }
         } else {
             if (length(labelStart) > 1) {
-                return(returnError("Multiple StateLabels blocks in Nexus file."))
+                return(list("Multiple StateLabels blocks in Nexus file."))
             }
         }
     }

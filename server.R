@@ -152,6 +152,7 @@ get.character <- function(input, tree, session) {
             }
 
             character <- read.characters(nexus_matrix$datapath, input$character_num, session=session)
+            if (class(character) == 'list') return (character)
             matrix_taxa <- rownames(character)
             if (all(tree$tip.label %in% matrix_taxa)) {
               data_matrix <- character[tree$tip.label, ]

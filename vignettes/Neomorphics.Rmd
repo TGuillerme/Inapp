@@ -10,10 +10,34 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+```{R initialize, message=FALSE, include=FALSE}
+library('knitr'); library('Inapp')
+quickPlot <- function (tree, character, na=TRUE, legend.pos='bottomleft') {
+  tree$edge.length <- rep(1, dim(tree$edge)[1])
+  reconstruction <- apply.reconstruction(tree, character, 
+                            method=if(na) "NA" else 'Fitch',
+                            match.tip.char=TRUE)
+  dev.new(); plot(tree, direction='upwards'); corners <- par('usr'); dev.off()
+  plot(reconstruction,
+       passes=if(na) 1:4 else 1:2, counts=1:2, 
+       direction='upwards', legend.pos=legend.pos,
+       col.states=TRUE, use.edge.length=TRUE, 
+       x.lim=c(-3, corners[2]), y.lim=c(-1, corners[4]+0.1))
+}
+setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 0.66, 0.2), oma=c(1,0,0,0), cex=0.7)
+
+ap <- c("Absent", "Present")
+rb <- c("Red", "Blue")
+ap <- c("Absent", "Present")
+rb <- c("Red", "Blue")
+```
 
 ## Neomorphic and transformational characters
 
-Researchers should be aware that our algorithm treats nemorphic characters as though they are transformational; that is, "absence" of a feature is seen as equally informative as "presence".  In some cases, this may be desirable: For example, it is not difficult to argue that "serrated margin on tail: present / absent" behaves as a transformational character, as a tail must have a margin of some sort, and "serratedness" is a property of the margin.  
+Researchers should be aware that our algorithm treats nemorphic characters as though they are transformational; that is, "absence" of a feature is seen as equally informative as "presence".
+
+In some cases, this may be desirable. One might argue that "Serrations on tail margin: (0), absent; (1), present" behaves as a transformational character, as a tail must have a margin of some sort, and "serratedness" is a property of the margin -- perhaps there is 
+no reason to assume that the tail was primitively simple, or that serrations necesssarily represent a secondary increase in complexity.
 
 In other cases, this may not be desirable.  As an example, consider a complex character, such as the eyespots on the tail of a peacock.  
 
@@ -29,42 +53,53 @@ rownames(tailEyes) <- c("Tail: (0), absent; (1), present",
 kable(tailEyes, capiton="Coding")
 ```
 
-The presence of tail eyespots obviously contains grouping information, but it is less obvious whether the absence of such complex features should convey grouping information.  This decision ought to be defended for individual characters by individual researchers, but researchers should be aware of the implications of their chosen coding strategy. 
+The presence of tail eyespots obviously contains grouping information -- we
+should prefer reconstructions that attribute the presence of tail eyespots to 
+common ancestry to those that imply independent gains of this complex characteristic.
 
-```{R tail spot alternatives, echo=FALSE, fig.height=8, fig.width=4}
-par(mfrow=c(3, 1), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,1,1,1))
+It is less obvious whether the _absence_ of such complex features should convey grouping information.  This decision ought to be defended for individual characters by individual researchers, but researchers should be aware of the implications of their chosen coding strategy.
+
+### Three trees
+
+Consider the following three scenarios:
+
+```{R tail spot alternatives, echo=FALSE, fig.height=8, fig.width=6}
+setPar(c(3, 1))
+par(mar=c(1, 0.2, 2, 0.2), oma=c(0,1,1,1))
+eap <- c("Eyespots absent", "Eyespots present")
 splitSpots <- ape::read.tree(text="(((H, C), A), (B, (D, (E, (G, (F, H))))));")
-naysHaveIt <- ape::read.tree(text="((((H, I), C), A), (B, (D, (E, (G, F)))));")
+naysHaveIt <- ape::read.tree(text="((((H, I), C), A), (B, (D, (E, (G, F)))));", legend.pos='topleft')
 eyesHaveIt <- ape::read.tree(text="(((((H, I), G), C), A), (B, (D, (E, F))));")
 #tail <- "000111111"
 col <- "---000011"
 
 
-quickPlot(naysHaveIt, col)
-mtext("One tail spotted, one not", cex=0.8)
-quickPlot(splitSpots, col)
-mtext("Two spot appearances", cex=0.8)
-quickPlot(eyesHaveIt, col)
-mtext("Two non-spotted appearances", cex=0.8)
+vignettePlot(naysHaveIt, col, state.labels = eap, passes=4, main="One tail spotted, one not")
+vignettePlot(splitSpots, col, state.labels = eap, passes=4, main="Two spot appearances")
+vignettePlot(eyesHaveIt, col, state.labels = eap, passes=4, main="Two non-spotted appearances")
 
 ```
 
-All of these trees imply two independent origins of the tail.  Their score differs only with respect to the eyespots character.
+Each of these trees implies two independent origins of the tail.  Their score differs only with respect to the eyespots character.
 
+#### One tail spotted, one not
+The first tree has the minimum possible score for the eyespots character.  (A score of one would also be obtained if the tail evolved once, and a single transformation occurred between 0 and 1 -- but we are only considering trees where the tail evolved twice.)  
 
-The fisrt tree has the minimum possible score for the eyespots character.  (A score of one would also be obtained if the tail evolved once, and a single transformation occurred between 0 and 1 -- but we are only considering trees where the tail evolved twice.)  
-
+#### Two spot appearances
 The next tree has a score of two for the eyespots character, which is obviously correct: Eye spots, a complex character, have evolved twice independently, which is not as parsimonious.
 
+#### Two non-spotted appearances
 The final tree also has a score of two for the eyespots character: even though eyespots have only evolved once, just as in the first tree.  The score of two occurs because the "absence of eyespots" has evolved twice.  
 
+#### Evaluation
 It is possible that a researcher might feel uncomfortable grouping taxa on the basis of the non-occurrence of a complex feature that did not occur in their common ancestor.  Putting this another way, it is not clear that the fact that a feature has not evolved in two instances represents a homoplasy.  The absence of eyespots in a tail is not an evolutionary innovation -- it is an inheritance from a common ancestor that did not have eyespots (and did not have a tail).
 
-A researcher that argues that the absence of a feature contains phylogenetic information must surely include all properties of a tail that are only observed in a single taxon (because the absence of that feature in other taxa also contains grouping information).  A researcher may also include all properties of a tail that do not occur in any of the taxon in interest, for these too will influence tree topology.
+#### Implications
+A researcher that argues that the absence of a feature contains phylogenetic information must surely include all properties of a tail that are only observed in a single taxon (because the absence of that feature in other taxa also contains grouping information).  A researcher may also include all properties of a tail that do not occur in any of the taxa of interest, for these too will influence tree topology: [parsimony uninformative characters inform
+parsimony](CodingData.html).
 
 
 ```{r Glowing in the dark 2, echo = FALSE, results='asis'}
-
 tail <- c(0, 0, 0, 1, 1, 1, 1)
 gitd <- c("-", "-", "-", "{01}","{01}",0,0)
 elec <- c("-", "-", "-", "{01}","{01}",0,0)
@@ -80,23 +115,24 @@ kable(unobserved, capiton="Coding")
 Note that each of the unobserved characters provides evidence against independent origins of the tail, preferring instead independent losses:
 
 ```{R unobserved character 2, echo=FALSE, fig.height=3.2, fig.width=8}
-par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
+setPar(c(1, 2))
+par(oma=c(1,1,3,1))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
 col <- "---{01}{01}00"
 
-quickPlot(better, col)
+vignettePlot(better, col, legend.pos='topleft')
 mtext("Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
-      side=1, line=0, outer=TRUE)
-quickPlot(worse, col)
+      side=3, line=0, outer=TRUE)
+vignettePlot(worse, col, legend.pos='topleft')
 
 ```
 
-Thus the simple matrix presented above sees both of these trees as equally parsimonious -- three losses of a single-origin tail that lacks two unlikely attributes is considered as likely as one independent gain of a similar tail.  
+<mark>Thus the simple matrix presented above sees both of these trees as equally parsimonious -- three losses of a single-origin tail that lacks two unlikely attributes is considered as likely as one independent gain of a similar tail.</mark> <!-- I may need to tweak these trees-->
 
 This behaviour is desired if the similarity between the tails requires an evoltuionary explanation.  But the absence of these features does not seem any more difficult to explain if the tails do not have a common ancestor.
 
-The solution here is to deploy a different character coding strategy, coding absences as absences.  That way, absence CAN be inherited from a common ancestor, in whcih the a compelx-feature-of-the-tail (eyespots, glow-inthe-dark pigment) was absent (and the tail was absent too).
+The solution here is to deploy a different character coding strategy, coding absences as absences.  That way, absence CAN be inherited from a common ancestor, in which a complex-feature-of-the-tail (eyespots, glow-inthe-dark pigment) was absent (and the tail was absent too).
 
 ```{r Glowing in the dark 3, echo = FALSE, results='asis'}
 

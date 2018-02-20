@@ -78,7 +78,8 @@ shinyUI(fluidPage(
             ## Nexus matrix input - input$nexus_matrix
             fileInput("nexus_matrix", label = h5("Select a newick format matrix")),
             ## Character number input - input$character_num
-            numericInput("character_num", label = h5("Selected character:"), value = 1)
+            numericInput("character_num", label = h5("Selected character:"),
+                         value = 1, min = 1)
           ),
 
           ## Colour states

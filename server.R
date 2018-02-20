@@ -119,11 +119,12 @@ get.tree <- function(input, simple = FALSE) {
     return(tree)
 }
 
-## Getting the character details
-## Return a character string if character extracted correctly,
-## a list (detailing the error message to be displayed) if there's an error.
-get.character <- function(input, tree) {
-    n_tip = ape::Ntip(tree)
+#' Getting the character details
+#' @param session Shiny session (to allow updating of character selection)
+#' @return a character string if character extracted correctly,
+#'  a list (detailing the error message to be displayed) if there's an error.
+get.character <- function(input, tree, session) {
+    n_tip <- ape::Ntip(tree)
     ## Generate a random character
     if(input$character == 1) {
         character <- paste(sample(c("0", "1", "2", "-", "?"), n_tip, prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
@@ -150,7 +151,7 @@ get.character <- function(input, tree) {
                 return (list("Character selection must be numeric."))
             }
 
-            character <- read.characters(nexus_matrix$datapath, input$character_num)
+            character <- read.characters(nexus_matrix$datapath, input$character_num, session=session)
             matrix_taxa <- rownames(character)
             if (all(tree$tip.label %in% matrix_taxa)) {
               data_matrix <- character[tree$tip.label, ]
@@ -187,7 +188,7 @@ shinyServer(
             } else if (class(tree) != 'phylo'){
               return(plotError("The tree must be of class 'phylo'."))
             }
-            character <- get.character(input, tree)
+            character <- get.character(input, tree, session)
             if (class(character) == 'list') {
               return(plotError(paste(character, sep='', collapse='')))
             }

@@ -183,9 +183,13 @@ plot.states.matrix <- function(
         edge_palette["?"] <- "darkgrey"
     }
 
-    if(any(counts == 1) && !is.null(unlist(states_matrix$Up2))) {
+    if (any(counts == 1) && !is.null(unlist(states_matrix$Up2))) {
       ## Change the colors of the edges' if activations exist (and if the algorithm is NA)
-      edge_col <- ifelse(get.NA.edges(states_matrix, tree, pass = 4) == 1, "black", "grey")
+        na_edges <- get.NA.edges(states_matrix, tree, pass = 4) == 1
+        edge_final <- ifelse(na_edges, "0", "-")
+        edge_col <- ifelse(na_edges, "black", "grey")
+    } else {
+        edge_final = 0
     }
 
     ## Colour the states if the relevant uppass is available
@@ -222,7 +226,7 @@ plot.states.matrix <- function(
     graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram",
                    use.edge.length = use.edge.length, cex = cex,
                    adj = 0, edge.color = edge_col, edge.width = 2,
-                   y.lim=y.lim,
+                   y.lim=y.lim, edge.lty=ifelse(edge_final == '-', 'twodash', 'solid'),
                    ...)
     # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
 

@@ -13,19 +13,7 @@ vignette: >
 
 ```{R initialize, message=FALSE, include=FALSE}
 library('knitr'); library('Inapp')
-quickPlot <- function (tree, character, na=TRUE, legend.pos='bottomleft') {
-  tree$edge.length <- rep(1, dim(tree$edge)[1])
-  reconstruction <- apply.reconstruction(tree, character, 
-                            method=if(na) "NA" else 'Fitch',
-                            match.tip.char=TRUE)
-  dev.new(); plot(tree, direction='upwards'); corners <- par('usr'); dev.off()
-  plot(reconstruction,
-       passes=if(na) 1:4 else 1:2, counts=1:2, 
-       direction='upwards', legend.pos=legend.pos,
-       col.states=TRUE, use.edge.length=TRUE, 
-       x.lim=c(-3, corners[2]), y.lim=c(-1, corners[4]+0.1))
-}
-setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 0.66, 0.2), oma=c(1,0,0,0), cex=0.7)
+setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 1, 0.2), oma=c(0,0,0,0), cex=0.7)
 
 ap <- c("Absent", "Present")
 rb <- c("Red", "Blue")
@@ -37,11 +25,12 @@ This is one of a [series](Index.html) of vignettes that works through the inappl
 
 We assume that you'll already have read the [description](OurAlgorithm.html) of our algorithm.
 
-### Ambiguity
+## Ambiguity
 
-Care must be taken when coding ambiguous data.
+Ambiguous data does not pose a problem for the algorithm, but the nature of the
+ambiguity must be considered when scoring a character.
 
-#### Ambiguity when parent character ambiguous
+### Ambiguity when parent character ambiguous
 
 If it's not clear whether or not a taxon has a tail, then tail colour should be 
 coded as `?`, denoting that any possible token (including the inapplicable token)
@@ -50,7 +39,7 @@ may be the most parsimonious for the tail.
 In trees in which the tail can be reconstructed as present, the ambiguous tip
 will be reconstructed as having a tail of the appropriate colour:
 
-```{R fully amb, echo=FALSE, fig.width=8, fig.height=3}
+```{R fully amb, echo=FALSE, fig.width=8, fig.height=4}
 setPar()
 hasTail   <- ape::read.tree(text="((a, (b, (c, d))), (e, ((f, (g, X)), (h, i))));")
 lacksTail <- ape::read.tree(text="((a, (b, (X, (c, d)))), (e, ((f, g), (h, i))));")
@@ -65,17 +54,18 @@ vignettePlot(hasTail, col, legend.pos='topleft', main="Tail colour", state.label
 In trees in which the tail cannot be reconstructed as present without inferring
 a homoplasious origin, the tail colour will be reconstructed as inapplicable:
 
-```{R fully amb - absent, echo=FALSE< fig.width=8, fig.height=3}
+```{R fully amb - absent, echo=FALSE, fig.width=8, fig.height=4}
 setPar()
 vignettePlot(lacksTail, tail, legend.pos='topleft', na=FALSE, main="Tail", state.labels = ap)
 vignettePlot(lacksTail, col, legend.pos='topleft', main="Tail colour", state.labels = rb)
 ```
 
-#### Ambiguity when parent character known
+### Ambiguity when parent character known
 
-If a taxon is known to have a tail, there are two scenarios:
+If a taxon is known to have a tail, there are two scenarios for ontologically
+dependent transformational characters:
 
-##### Subordinate character has finite states
+#### Subordinate character has finite states
 
 If the subordinate character must take one of a finite set of values, then the
 unobserved property of the tail is known to belong to these values and should be 
@@ -91,7 +81,7 @@ reason to assume that either state is ancestral (i.e. the character is strictly
 transformational).  Tail margin should then be coded as `{01}`: i.e. the tail
 is known to have taken one of the two states 0 or 1.
 
-##### Subordinate character may have unobserved states
+#### Subordinate character may have unobserved states
 
 A more complicated situation arises where a subordinate character may have 
 unobserved states, as with 
@@ -106,10 +96,10 @@ known to certainly be homologous with other tails in the dataset, in which case
 it would be most parsimonious to assume that the tail colour is the same colour
 as the ancestor of the tip, which was necessarily either red or blue.
 
-```{R certain homology, echo=FALSE}
+```{R certain homology, echo=FALSE, fig.width=4, fig.height=4}
 setPar(c(1, 1))
 vignettePlot(ape::read.tree(text="(a, (b, (c, (d, (e, (f, (g, (h, (i1, i2)))))))));"),
-             '---00011{01}{01}', legend.pos='topleft', state.labels = rb)
+             '---00011{01}{01}', legend.pos='topleft', state.labels = rb, passes=4)
 ```
 
 But if, as will more often be the case, homology of the tails is not known 
@@ -121,10 +111,10 @@ colour as a tail that has already been observed.  This means that the independen
 origin of the tail also represents an independent
 origin of this particular colour -- and hence an instance of homoplasy.
 
-```{R certain homology, echo=FALSE}
+```{R uncertain homology, echo=FALSE, fig.width=4, fig.height=4}
 setPar(c(1, 1))
 vignettePlot(ape::read.tree(text="((a, (i1, i2)), (b, (c, (d, (e, (f, (g, h)))))));"),
-             '---00011{01}{01}', legend.pos='topleft', state.labels = rb)
+             '---00011{01}{01}', legend.pos='topleft', state.labels = rb, passes=4)
 ```
 
 Coding the tail colour as `?` allows the possibility that the independently-
@@ -137,11 +127,13 @@ character formulation -- which only provides tokens for red and blue tails --
 cannot be applied and is thus inapplicable.  Our algorithm will thus reconstruct
 tail colour as being inapplicable in such a taxon.
 
-```{R possible homoplasy in parent character, echo=FALSE}
+```{R possible homoplasy in parent character, echo=FALSE, fig.width=4, fig.height=4}
 setPar(c(1, 1))
 vignettePlot(ape::read.tree(text="((a, (i1, i2)), (b, (c, (d, (e, (f, (g, h)))))));"),
-             '---00011??', legend.pos='topleft', state.labels = rb)
+             '---00011??', legend.pos='topleft', state.labels = rb, passes=4)
 ```
+
+## Recommendation 
 
 We therefore recommend the following coding schema for ambiguous tips where the
 tail is (A) known to be present; (B) ambiguous; (C) known to be absent:
@@ -159,3 +151,6 @@ kable(mDep, capiton="Coding")
 
 ```
 
+[Return to index](Index.html) | [Further coding considerations](CodingData.html)
+
+## References

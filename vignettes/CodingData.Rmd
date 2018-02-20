@@ -340,4 +340,6 @@ mtext(side=1, line=0, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0
 <mark>Here are some trees that show why we would code things our way
 this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!</mark>
 
+[Return to index](Index.html) | [Coding ambiguous data](AmbiguousData.html)
+
 ## References

@@ -6,24 +6,24 @@ source("helpers.R")
 
 ## Sanitise input text to check that newick tree can be extracted
 read.newick.tree <- function (newick_text) {
-  if (is.null(newick_text)) {
-    stop("Enter a tree in newick format.")
-  }
+    if (is.null(newick_text)) {
+        stop("Enter a tree in newick format.")
+    }
 
-  newick_text <- trimws(newick_text)
-  chars_to_count <- c("\\(", "\\)", ",")
-  char_counts <- vapply(chars_to_count, function (char)
-     lengths(regmatches(newick_text, gregexpr(char, newick_text))), 0)
-  if (length(unique(char_counts)) > 1) {
-    stop("Braces and commas in input tree must balance: ", char_counts[1], " (s; ", char_counts[2], " )s; ", char_counts[3], " commas.")
-  }
+    newick_text <- trimws(newick_text)
+    chars_to_count <- c("\\(", "\\)", ",")
+    char_counts <- vapply(chars_to_count, function (char)
+    lengths(regmatches(newick_text, gregexpr(char, newick_text))), 0)
+    if (length(unique(char_counts)) > 1) {
+        stop("Braces and commas in input tree must balance: ", char_counts[1], " (s; ", char_counts[2], " )s; ", char_counts[3], " commas.")
+    }
 
-  # Add trailing semicolon, if missing
-  if (substr(newick_text, nchar(newick_text), nchar(newick_text)) != ";") {
-    newick_text <- paste0(newick_text, ';')
-  }
+    # Add trailing semicolon, if missing
+    if (substr(newick_text, nchar(newick_text), nchar(newick_text)) != ";") {
+        newick_text <- paste0(newick_text, ';')
+    }
 
-  return (ape::read.tree(text = newick_text))
+    return (ape::read.tree(text = newick_text))
 }
 
 ## Get the tree details

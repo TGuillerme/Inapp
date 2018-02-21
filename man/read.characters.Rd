@@ -5,7 +5,7 @@
 \alias{read.as.phydat}
 \title{Read characters from Nexus file}
 \usage{
-read.characters(filepath, character_num = NULL)
+read.characters(filepath, character_num = NULL, session = NULL)
 
 read.as.phydat(filepath)
 }
@@ -14,11 +14,15 @@ read.as.phydat(filepath)
 
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
+
+\item{session}{(optionally) a Shiny session with a numericInput named character_num
+whose maximum should be updated.}
 }
 \value{
 A matrix whose row names correspond to tip labels, and column names
 correspond to character labels, with the attribute \code{state.labels}
-listing the state labels for each character
+listing the state labels for each character; or a character string
+explaining why the character cannot be returned.
 }
 \description{
 Parses Nexus file, reading character states and names

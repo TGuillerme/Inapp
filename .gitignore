@@ -8,7 +8,7 @@
 *.tre
 *.score
 *.nex
-*.nex*
+*.nex.*
 tmp
 *.count
 

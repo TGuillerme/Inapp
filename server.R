@@ -30,6 +30,9 @@ read.newick.tree <- function (newick_text) {
 ## Return a tree, or an error message to be written to output.
 get.tree <- function(input, simple = FALSE) {
 
+    # Initialize to avoid returning unset variable
+    tree <- "No tree specified."
+
     if(!simple) {
         ## Get the not "simple" tree (for operations)
         if(input$tree == 1) {
@@ -116,11 +119,12 @@ get.tree <- function(input, simple = FALSE) {
     return(tree)
 }
 
-## Getting the character details
-## Return a character string if character extracted correctly,
-## a list (detailing the error message to be displayed) if there's an error.
-get.character <- function(input, tree) {
-    n_tip = ape::Ntip(tree)
+#' Getting the character details
+#' @param session Shiny session (to allow updating of character selection)
+#' @return a character string if character extracted correctly,
+#'  a list (detailing the error message to be displayed) if there's an error.
+get.character <- function(input, tree, session) {
+    n_tip <- ape::Ntip(tree)
     ## Generate a random character
     if(input$character == 1) {
         character <- paste(sample(c("0", "1", "2", "-", "?"), n_tip, prob = c(0.2, 0.2, 0.1, 0.15, 0.1), replace = TRUE))
@@ -142,22 +146,21 @@ get.character <- function(input, tree) {
     if(input$character == 3) {
         nexus_matrix <- input$nexus_matrix
         if(!is.null(nexus_matrix)) {
-            data_matrix <- ape::read.nexus.data(nexus_matrix$datapath)
-            matrix_taxa <- names(data_matrix)
+            ## Select the right character
+            if (is.na(input$character_num)) {
+                return (list("Character selection must be numeric."))
+            }
+
+            character <- read.characters(nexus_matrix$datapath, input$character_num, session=session)
+            if (class(character) == 'list') return (character)
+            matrix_taxa <- rownames(character)
             if (all(tree$tip.label %in% matrix_taxa)) {
-              data_matrix <- vapply(tree$tip.label, function (tip) data_matrix[[tip]], data_matrix[[1]])
+              data_matrix <- character[tree$tip.label, ]
+              #data_matrix <- vapply(tree$tip.label, function (tip) data_matrix[[tip]], data_matrix[[1]])
             } else {
               missingTaxa <- tree$tip.label[!tree$tip.label %in% matrix_taxa]
               return(list("Tree contains taxa [", paste(missingTaxa, collapse=", "),
                    "] not found in Nexus matrix."))
-            }
-
-            ## Select the right character
-            if(input$character_num < 1 | input$character_num > nrow(data_matrix)) {
-                return(list("Select a character between 1 and ",
-                            nrow(data_matrix), "."))
-            } else {
-                character <- data_matrix[input$character_num, ]
             }
         } else {
             return(list("Load a matrix in Nexus format."))
@@ -183,10 +186,45 @@ shinyServer(
             tree <- get.tree(input)
             if (class(tree) == 'character') {
               return(plotError(tree))
+            } else if (class(tree) != 'phylo'){
+              return(plotError("The tree must be of class 'phylo'."))
             }
-            character <- get.character(input, tree)
+            character <- get.character(input, tree, session)
             if (class(character) == 'list') {
               return(plotError(paste(character, sep='', collapse='')))
+            }
+
+            if (length(character) == 0) {
+              return(plotError("Character of length zero."))
+            }
+
+            n_tip <- length(tree$tip.label)
+            if (class(character) == 'matrix') {
+                state_labels <- attr(character, 'state.labels')[[1]]
+                # TODO! If unobserved states are labelled, they should be removed!
+
+                character_name <- colnames(character)
+
+                if (all(tree$tip.label %in% rownames(character))) {
+                    character <- character[tree$tip.label, ]
+                } else {
+                    return(plotError(paste("No entries in character list correspond to ",
+                                     paste(tree$tip.label[!(tree$tip.label %in% rownames(character))]))))
+                }
+            } else {
+                character_name <- NULL
+                state_labels <- NULL
+            }
+
+            ## Transform character
+            if(class(character) != "list") {
+                character <- convert.char(character)
+            }
+
+            ## Check if the character is the same length as the tree
+            if (n_tip != length(character)) {
+                return(plotError(paste(n_tip, " tips in the tree, but ",
+                                       length(character), " entries in the data matrix")))
             }
 
             ## Run the algorithm
@@ -217,7 +255,9 @@ shinyServer(
             plot.states.matrix(states_matrix, passes = show_passes,
                                show.labels = showlabels,
                                counts = as.vector(as.numeric(input$counts)),
-                               col.states = input$colour_states)
+                               col.states = input$colour_states,
+                               state.labels = state_labels)
+            mtext(side=c(1, 3), character_name, font=2)
 
             ## Exporting data
             output$downloadData <- downloadHandler(
@@ -325,13 +365,13 @@ shinyServer(
         output$plot.ui <- renderUI({
 
             tree <- get.tree(input, simple = TRUE)
-            n_tip <- length(tree$tip.label)
-
-            ## Set the plot window
-            if(n_tip > 10) {
-                plotOutput("plot_out", width ="100%", height = paste(round(n_tip*0.4), "00px", sep = ""))
+            if (class(tree) == "character") {
+                plotOutput("plot_out", width ="100%", height = "40px")
+                plotError(tree)
             } else {
-                plotOutput("plot_out", width ="100%", height = "400px")
+                n_tip <- length(tree$tip.label)
+                ## Set the plot window
+                plotOutput("plot_out", width ="100%", height = paste(round((n_tip + 3.3) * 0.4) * 90L, "px", sep = ""))
             }
         })
     }

@@ -4,29 +4,29 @@
 #'
 #' @param states_matrix A \code{states.matrix} list from \code{\link{apply.reconstruction}}.
 #' @param output The type of output, can be either \code{NULL} (default) or \code{"newick"}, \code{"nexus"}, \code{"csv"}, \code{"pdf"} or \code{"C-test"} (see details).
-#' @param file The name of the output file(code{"character"}). 
+#' @param file The name of the output file(code{"character"}).
 #' @param path The path where to save the output file (code{"character"}).
 #' @param ... If \code{output = "pdf"}, additional arguments to be passed to \code{plot.states.matrix}.
 #'
 #' @details
 #' The output contains the for different reconstructions (Dp1, Up1, Dp2, Up2), the potential change or applicable region and the list of tips and nodes
 #' Specifically, per data output type:
-#' -\code{"newick"} outputs a newick string with annotated nodes as follows: (t1[Dp1:X,Up1:X,Dp2:X,Up2:X,Change:X,Applicable:X]).
+#' -\code{"newick"} outputs a newick string with annotated nodes as follows: (t1\[Dp1:X,Up1:X,Dp2:X,Up2:X,Change:X,Applicable:X\]).
 #' -\code{"nexus"} outputs a nexus file with a newick string similar as above but also containing the total tree score, the matrix (one character) and the list of taxa.
 #' -\code{"csv"} A matrix containing the different state reconstructions and score for each tip and node.
 #' -\code{"pdf"} A pdf version of the states_matrix plotted with \code{plot.states.matrix}.
 #' -\code{"C-test"} a text version that can be used for testing in C (for DEBUG).
-#' 
+#'
 #' @examples
 #' ## A random 5 taxa tree
 #' set.seed(1)
 #' tree <- ape::rtree(5, br = NULL)
 #' ## A character with inapplicable data
 #' character <- "01-?1"
-#' 
+#'
 #' ## NA algorithm
 #' NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
-#' 
+#'
 #' \dontrun{
 #' ## Exporting the results as an annotated newick tree
 #' output.states.matrix(NA_matrix, output = "newick")
@@ -40,9 +40,9 @@
 #' ## Exporting the plot as a pdf
 #' output.states.matrix(NA_matrix, output = "pdf")
 #' }
-#' 
+#'
 #' @seealso \code{\link{apply.reconstruction}}, \code{\link{plot.states.matrix}}
-#' 
+#'
 #' @author Thomas Guillerme
 #' @export
 
@@ -86,7 +86,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         if(class(path) != "character" || length(path) != 1) {
             stop(paste(match_call$path, "must be a single character string."))
         } else {
-            
+
             if(output != "txt") {
                 ## Default output name
                 full_path <- paste(path, paste(file, output, sep = "."), sep = "/")
@@ -113,7 +113,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         ## Create the data frame containing all nodes
         states_dataframe <- make.output.data.frame(states_matrix)
 
-        ## Create the list of notes and ordering them to match 
+        ## Create the list of notes and ordering them to match
         # node_notes <- lapply(as.list(states_matrix$tree$edge[,2]), create.note, states_dataframe)
         node_notes <- lapply(as.list(1:(ape::Ntip(states_matrix$tree) + ape::Nnode(states_matrix$tree))), create.note, states_dataframe)
 
@@ -201,7 +201,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         writeLines(txt_out, full_path)
 
         return(invisible())
-    }   
+    }
 
 }
 
@@ -214,19 +214,19 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 # '
 # ' @return
 # ' A \code{states.matrix} object.
-# ' 
+# '
 # ' @examples
 # ' ## A balanced 12 taxon tree
 # ' tree <- ape::read.tree(
 # '                  text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 # ' ## A character with inapplicable data
 # ' character <- "23--1??--032"
-# ' 
+# '
 # ' ## NA algorithm
 # ' NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
-# ' 
+# '
 # ' @seealso \code{\link{apply.reconstruction}}, \code{\link{plot.states.matrix}}
-# ' 
+# '
 # ' @author Thomas Guillerme
 # ' @export
 

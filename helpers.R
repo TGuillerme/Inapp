@@ -8,7 +8,7 @@ sourceDir <- function(path, ...) {
     }
 }
 
-plotError <- function(text, col='#cc6644', font=1, cex=1.6, ...) {
+plotError <- function(text, col='#cc6644', font=1, cex=1.2, ...) {
   plot(-1, -1, xlim=c(0, 1), ylim=c(0,1), axes=F, xlab='', ylab='')
   text(0, 1, pos=4, paste("Cannot plot tree.", text), col=col, font=font, cex=cex, ...)
 }

@@ -1,4 +1,6 @@
 language: r
+cache: packages
+sudo: required
 warnings_are_errors: false
 
 # blacklist
@@ -10,12 +12,19 @@ warnings_are_errors: false
 branches:
   only:
     - master
+    - Character-names
     # Change to release once released
 
 # Code coverage
-r_packages:
+r_binary_packages:
+  - ape
   - covr
   - devtools
+  - knitr
+  - phangorn
+  - roxygen2
+  - shiny
+  - testthat
 
 after_success:
-- Rscript -e 'library(covr); codecov()'
+- Rscript -e 'library("covr"); codecov()'

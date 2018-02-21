@@ -213,7 +213,7 @@ print.states.matrix <- function(x, ...) {
         }
         ## Score
         score <- length(x$regions) + ifelse(length(x$changes) > 0, length(x$changes), 0)
-        cat(paste("Tree score is:", score, "\n"))
+        cat(paste("Character adds", score, "to tree score\n"))
         ## Details
         if(score != 0) {
             cat(paste(length(x$regions), "additional applicable regions.\n"))
@@ -235,11 +235,20 @@ print.states.matrix <- function(x, ...) {
 
 
 
-## Converts a character (inapplicable or missing)
+#' Convert character
+#'
+#' Converts a character (inapplicable or missing)
+#' @param character List, numeric, character or matrix describing a morphological character
+#'
+#' @return The character as a list, with each entry relating the state of the character
+#'         for the corresponding taxon
+#'
+#' @export
+#' @keywords internal
 convert.char <- function(character) {
 
     ## Character is a list
-    if(class(character) == "list") {
+    if (class(character) == "list") {
         if(unique(unlist(lapply(character, class))) != "numeric") {
             stop("Character list does not contain only numeric values.")
         } else {
@@ -248,8 +257,13 @@ convert.char <- function(character) {
     }
 
     ## Character is a vector (numeric)
-    if(class(character) == "numeric") {
+    if (class(character) == "numeric") {
         return(as.list(character))
+    }
+
+    ## Character is a matrix (not necessarily numeric)
+    if (class(character) == 'matrix') {
+        character <- character[, 1]
     }
 
     ## Character is not numeric

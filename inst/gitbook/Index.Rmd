@@ -1,0 +1,81 @@
+--- 
+title: "Inapplicable data"
+author: "Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [References.bib, packages.bib]
+link-citations: yes
+github-repo: TGuillerme/Inapp
+description: "Inapplicable data in a parsimony setting"
+---
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Inapplicable data in a parsimony setting
+
+This series of vignettes works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
+
+## The packages
+
+Illustration of the inapplicable algorithm is based on the [Inapp](https://github.com/TGuillerme/Inapp) `R` package.
+This package allows to visualise how the algorithm is counting the score of a tree for a given character with different algorithms treating inapplicable data differently.
+It allows users to input any tree and character.
+
+<!-- badges out start -->
+[![Build Status](https://travis-ci.org/TGuillerme/Inapp.svg?branch=master)](https://travis-ci.org/TGuillerme/Inapp)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![codecov](https://codecov.io/gh/TGuillerme/Inapp/branch/master/graph/badge.svg)](https://codecov.io/gh/TGuillerme/Inapp)
+<!-- badges out end   -->
+
+To actually perform tree search, pleas have a look at the [inapplicable](https://github.com/ms609/inapplicable) `R` package.
+This package is currently in development but allows some heuristic searches on reasonable sized matrices.
+
+<!-- badges out start -->
+[![Build Status](https://travis-ci.org/ms609/inapplicable.svg?branch=master)](https://travis-ci.org/ms609/inapplicable)
+[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+[![codecov](https://codecov.io/gh/ms609/inapplicable/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/inapplicable)
+<!-- badges out end   -->
+
+Both these `R` packages are based on the [morphylib](https://github.com/mbrazeau/morphylib) `C` library that allows to score characters with inapplicable using our new algorithm.
+This library will be eventually implemented in [Morphy](http://www.morphyproject.org/), a fully functional `C` based API for phylogenetic searches.
+
+<!-- badges out start -->
+[![Build Status](https://travis-ci.org/mbrazeau/morphylib.svg?branch=master)](https://travis-ci.org/mbrazeau/morphylib)
+[![Coverage Status](https://coveralls.io/repos/github/mbrazeau/MorphyLib/badge.svg?branch=development)](https://coveralls.io/github/mbrazeau/MorphyLib?branch=development)
+[![DOI](https://zenodo.org/badge/90367119.svg)](https://zenodo.org/badge/latestdoi/90367119)
+<!-- badges out end   -->
+
+
+
+
+<!-- ## Contents
+
+- The Fitch Algorithm:
+  - [An introduction](Fitch.html)
+    - Status: In progress (TG)
+  - [Shortcomings](Problems.html)
+    - Status: In progress (MS)
+  - [Proposed solutions](FailedSolutions.html)
+    - Status: Not allocated
+  
+- Our algorithm:
+  - [An introduction](OurSolution.html)
+    - Status: Not allocated
+  - [A description](OurAlgorithm.html)
+    - Status: Draft complete? (TG)
+  - [Implications for character coding](CodingData.html)
+    - Status: In progress (MS)
+  - [Coding neomorphic characters](Neomorphics.html)
+    - Status: In progress (MS)
+  - [Coding ambiguity](AmbiguousData.html)
+    - Status: Draft complete (MS)
+  - [Some worked examples](Examples.html)
+    - Status: Complete? (MS)
+
+## References
+ -->

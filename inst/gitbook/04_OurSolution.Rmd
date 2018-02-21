@@ -1,0 +1,51 @@
+---
+title: "Counting homologies is the answer"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+bibliography: [References.bib, packages.bib]
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+# Our solution
+
+## Counting homologies is the answer
+
+### What we count
+The problem with the Fitch is that it counts steps.
+
+We get around this by counting homoplasies.
+See De Laet's work on this.
+
+The total score = steps + (additional) regions.
+
+Here's an example tree showing that.
+
+#### What does it take to denote separate regions?
+- Three inapplicable tips, arranged just so.
+(Addresses Goloboff's comment.)
+
+## How this fixes the problem
+
+Here are some examples of how this fixes the problems that we encountered.
+
+Take the example of two very different tails.  Because they are so different,
+it makes sense that they might have evolved twice.
+
+
+### Furhter examples
+
+Here are Goloboff's trees as examples of how we would approach them, and why that's preferable to how he would approach them
+
+Here are De Laet's cases and here's why they aren't problematic.
+
+
+### Summary
+
+We can show that this produces the correct behaviour.  But how do we count this in practice?
+<!-- 
+## References
+ -->

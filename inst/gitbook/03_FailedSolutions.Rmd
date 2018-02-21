@@ -1,0 +1,29 @@
+---
+title: "Counting steps will never work"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+bibliography: [References.bib, packages.bib]
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+<!-- # Inapplicable data in a parsimony setting
+
+This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
+
+We assume that you are already familiar with the [Fitch algorithm](Fitch.html)
+and its [shortcomings](Problems.html). -->
+
+## Counting steps is doomed
+
+Plenty of people informally have attempted to solve the problem by counting steps. (E.g. that U of Texas PhD that we found; goloboff pers. comm.?)
+
+It'll never work. here's why.
+
+One example: multiple independent gains are preferred because they avoid adding steps.
+<!-- 
+## References
+ -->

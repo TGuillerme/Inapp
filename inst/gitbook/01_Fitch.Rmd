@@ -1,0 +1,200 @@
+---
+title: "The Fitch Algorithm"
+author: "Thomas Guillerme"
+date: "`r Sys.Date()`"
+bibliography: [References.bib, packages.bib]
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+<!-- # Inapplicable data in a parsimony setting
+
+This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
+ -->
+# The Fitch algorithm
+
+This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [@swofford2001paup,@goloboff2016tnt] or probabilistic methods [@Ronquist2012mrbayes,@Stamatakis21012014].
+The procedure is rather simple and elegant and consist in going down the tree to count the number of transformation and then go up the tree again to finalise the ancestral states reconstructions.
+
+The way the algorithms goes up and down depends on the software but often uses a _traversal_: a recursive function that can visit all tips and nodes in a logical fashion.
+For example, consider the following tree:
+
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+library('Inapp'); library('ape')
+tree <- ape::read.tree(text = "(((a, b), (c, d)), e);")
+tree$node.label <- c("n4", "n3", "n1", "n2")
+plot(tree)
+nodelabels(tree$node.label)
+```
+
+A downpass traversal will first apply the algorithm to the first cherry (or pair of taxa) (`A` below), then save the results in `n1` and move to the second pair of tips/nodes (`B`), apply the algorithm and save the results in `n2`, etc. until all the nodes/tips are visited.
+
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+plot(tree, main = "downpass traversal")
+nodelabels(tree$node.label)
+
+## a
+a <- c(4, 1.2)
+## b
+b <- c(4, 1.8)
+## c
+c <- c(4, 3.2)
+## d
+d <- c(4, 3.8)
+## e
+e <- c(4, 4.8)
+## n2
+n2_1 <- c(3.2, 3.5)
+n2_2 <- c(2.8, 3.3)
+## n1
+n1_1 <- c(3.2, 1.5)
+n1_2 <- c(2.8, 1.7)
+## n3
+n3_1 <- c(1.2, 2.5)
+n3_2 <- c(0.8, 2.7)
+## n4
+n4 <- c(0.2, 3.75)
+
+## First cherry
+arrows(a[1], a[2], n1_1[1], n1_1[2]-0.025, length = 0.05)
+arrows(b[1], b[2], n1_1[1], n1_1[2]+0.025, length = 0.05)
+points(3.8, 1.5, cex = 3)
+text(3.8, 1.5, "A", cex = 1)
+## Second cherry
+arrows(d[1], d[2], n2_1[1], n2_1[2]+0.025, length = 0.05)
+arrows(c[1], c[2], n2_1[1], n2_1[2]-0.025, length = 0.05)
+points(3.8, 3.5, cex = 3)
+text(3.8, 3.5, "B", cex = 1)
+## Third
+arrows(n1_2[1], n1_2[2], n3_1[1], n3_1[2]-0.025, length = 0.05)
+arrows(n2_2[1], n2_2[2], n3_1[1], n3_1[2]+0.025, length = 0.05)
+points(2.5, 2.5, cex = 3)
+text(2.5, 2.5, "C", cex = 1)
+## Fourth
+arrows(n3_2[1], n3_2[2], n4[1], n4[2]-0.025, length = 0.05)
+arrows(e[1], e[2], n4[1], n4[2]+0.025, length = 0.05)
+points(0.7, 3.5, cex = 3)
+text(0.7, 3.5, "D", cex = 1)
+```
+
+An uppass traversal works identically but in the other way, going from the nodes to towards the tips.
+
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+plot(tree, main = "uppass traversal")
+nodelabels(tree$node.label)
+
+## First cherry
+arrows(n1_1[1], n1_1[2]-0.025, a[1], a[2], length = 0.05)
+arrows(n1_1[1], n1_1[2]+0.025, b[1], b[2], length = 0.05)
+points(3.8, 1.5, cex = 3)
+text(3.8, 1.5, "D", cex = 1)
+## Second cherry
+arrows(n2_1[1], n2_1[2]+0.025, d[1], d[2], length = 0.05)
+arrows(n2_1[1], n2_1[2]-0.025, c[1], c[2], length = 0.05)
+points(3.8, 3.5, cex = 3)
+text(3.8, 3.5, "C", cex = 1)
+## Third
+arrows(n3_1[1], n3_1[2]-0.025, n1_2[1], n1_2[2], length = 0.05)
+arrows(n3_1[1], n3_1[2]+0.025, n2_2[1], n2_2[2], length = 0.05)
+points(2.5, 2.5, cex = 3)
+text(2.5, 2.5, "B", cex = 1)
+## Fourth
+arrows(n4[1], n4[2]-0.025, n3_2[1], n3_2[2], length = 0.05)
+arrows(n4[1], n4[2]+0.025, e[1], e[2], length = 0.05)
+points(0.7, 3.5, cex = 3)
+text(0.7, 3.5, "A", cex = 1)
+```
+
+In both traversals, the direction (i.e. which cherry to pick first in a downpass traversal or whether to continue left or right in an uppass traversal) can be arbitrary as long as all tips and nodes are always visited.
+
+Now let's consider a more complex tree `((((a, b), c), d), (e, (f, (g, h))));` with a binary character distributed for the tips `10011001` respectively to the tips alphabetical order.
+
+
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+tree <- ape::read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
+
+## Plotting the tree and characters,
+plot(tree, adj = 0.5)
+tiplabels(c(1,0,0,1,1,0,0,1), cex = 1, bg = "orange", adj = 1)
+nodelabels(paste0("n", 9:15), bg = "bisque")
+
+```
+
+We can use the `Inapp` package to apply the Fitch algorithm for this character on this tree.
+
+```{r}
+## Loading the Inapp package
+library(Inapp)
+
+## The tree
+tree <- read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
+
+## The character
+character <- "10011001"
+
+## Applying the Fitch algorithm
+matrix <- apply.reconstruction(tree, character, method = "Fitch", passes = 2)
+```
+
+## Downpass
+
+The downpass is quite simple and follows the following rules for the two possible cases in the traversal:
+
+ 1. If the two considered tips or nodes have _at least one state in common_, set the node to be these states in *common*.
+ 2. Else, if there is _nothing in common_ between the to tips or nodes, set the node to be the *union* of the two states.
+
+For example, node `n15` is case 2 because there is _nothing in common_ between the tips `h` and `g` (respectively states `1` and `0`). Node `n14` is case 1 because there is _at least one state in common_ between the tip `f` and the node `n15` (state `0`).
+
+> Important: when the case 2 is encountered, a transformation is implied in the descendants of the considered node. The score of the tree is incremented by +1.
+
+In the following example, nodes that are in case one are in light orange and nodes that imply a transformation (i.e. that add to the tree score) are in blue.
+
+
+```{r, fig.width = 7.1, fig.height = 7.1}
+## Plotting the first downpass
+plot.states.matrix(matrix, passes = 1, counts = 2, show.labels = c(1,2))
+```
+
+## Uppass
+
+The downpass is sufficient for calculating the score of the tree, but some nodes might node yet be properly resolved.
+For example, it seems clear that the sate of node `n14` could not be `0` since both its ancestor and one of its descendants has an ambiguous state of `01`.
+It would less parsimonious for this node to be also ambiguous (rather than implying the loss and the subsequent gain of the state `1` on the branch fron `n13` to `h`).
+
+Similarly to the downpass, it is possible to run a traversal with the following rules:
+
+ 1. If the current node and its ancestor have _all states in common_, the node is resolved.
+ 2. If there is _at least one state in common_ between both left and right tips or nodes directly descending from the current node, resolve the node as being _the states in common_ between its ancestor and both his descendants.
+ 3. If there is _there are no states in common_ between its descendants, resolve the node as being _the states in common_ between the ancestor and the current node.
+
+
+For example, node `n13` is already resolved (it has all its states in common with the ancestor - case 1).
+Node `n14` has not all its states in common with its ancestor but its two descendants (`n15` and `f`) have at least one state in common (`0`).
+This node is thus solved to be the states in common between both descendants (`01`) and its ancestor (`01` as well).
+
+```{r, fig.width = 7.1, fig.height = 7.1}
+## Plotting the first downpass
+plot.states.matrix(matrix, passes = c(1,2), counts = 2, show.labels = c(1,2))
+```
+
+More complex cases can be studied in the Inapp App (running in your favourite web browser) by switching the **`Reconstruction method`** to **`Normal Fitch`**.
+
+```{r, eval = FALSE}
+## Running the Inapp App
+runInapp()
+```
+
+## Discussion: How to optimise characters
+
+- Acctran vs Deltran: Neither is guaranteed to always maximise homology
+- With transformational characters, there's no way to decide.
+- With neomorphic characters though, we want to assume the minimum number of innovations of the innovation.
+- This is what we mean by maximising homology: always assume a neomorphic character is present if you can
+- Here's how we'd resolve the ambiguous trees from [@Agnarsson2008].
+
+<!-- 
+## References
+ -->

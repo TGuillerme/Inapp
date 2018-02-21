@@ -1,16 +1,16 @@
 ---
-title: "Inapplicable data with the Fitch algorithm"
+title: "Problems"
 author: "Martin R. Smith"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-bibliography: ../inst/REFERENCES.bib
+bibliography: [References.bib, packages.bib]
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
-vignette: >
-  %\VignetteIndexEntry{2. Problems with Fitch}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  html_document: default
+  pdf_document: default
 ---
-```{R setup, echo=FALSE}
+
+
+```{r, echo=FALSE}
 library('Inapp')
 library('ape')
 data("brewer")
@@ -42,7 +42,7 @@ Consider the following tree, each node of which is supported by a number of
 characters.  Tail colour (illustrated; 0 = red, 1 = blue) has not yet been 
 considered, but has the potential to resolve the polytomy on the left hand side (bold).
 
-```{R Maddison example, echo=FALSE, fig.height=5, fig.width=8}
+```{r, echo=FALSE, fig.height=5, fig.width=8}
 par(mar=rep(0.2, 4))
 treeUnresolved <- ape:::read.tree(text="(((((A, B, C, D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeUnresolved$edge.length <- rep(1, dim(treeUnresolved$edge)[1])
@@ -76,7 +76,7 @@ is not as desired.
 The Fitch algorithm will prefer trees in which the left-hand tail-bearing clade
 has a blue tail, simply because the right-hand tail-bearing clade ancestrally did.
 
-```{R Maddison example 2ab, echo=FALSE, fig.height=9, fig.width=8}
+```{r, echo=FALSE, fig.height=9, fig.width=8}
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
@@ -100,7 +100,7 @@ An alternative is to code the inapplicable token as an extra state:
 
 This seems to resolve the problem case that we encountered with reductive coding:
 
-```{R Extra state no good, echo=FALSE, fig.height=9, fig.width=8}
+```{r, echo=FALSE, fig.height=9, fig.width=8}
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
@@ -130,7 +130,7 @@ presence and the colour of the tail:
 
 This seems to resolve the problem case that we encountered with reductive coding:
 
-```{R Maddison example 2cd, echo=FALSE, fig.height=9, fig.width=8}
+```{r, echo=FALSE, fig.height=9, fig.width=8}
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
@@ -142,7 +142,7 @@ However, we now have a situation where the gain/loss of a tail is afforded the s
 as a change in tail colour.  We ought to prefer a tree where the tail evolved once
 (and changed colour) to one where it evolved twice (being a different colour each time).
 
-```{R Gain should cost more than change in colour, echo=FALSE, fig.width=8, fig.height=4.5}
+```{r, echo=FALSE, fig.width=8, fig.height=4.5}
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 simpleTree <- ape::read.tree(text="((((a, b), c), e), (f, g));")
 vignettePlot(simpleTree, "110022", na=FALSE)
@@ -177,7 +177,7 @@ Consider a character with three ontologically dependent characters:
 
 This could be coded as a single transformation series using a Sankoff matrix:
 
-```{R Sankoff example, echo = FALSE, results='asis'}
+```{r, echo = FALSE, results='asis'}
 dots <- rep('.', 3)
 state <- c(0:3, dots, 8)
 costs <- matrix(c(
@@ -216,7 +216,7 @@ transformation, whereas the gain requires the addition of a tail and the "settin
 of each ontologically dependent character, rendering an asymmetric Sankoff
 matrix that nevertheless respects triangular inequality:
 
-```{R Sankoff example 2, echo = FALSE, results='asis'}
+```{r, echo = FALSE, results='asis'}
 costs <- matrix(c(
   c(0, 4, 4, 4, dots, 4),
   c(1, 0, 1, 1, dots, 3),
@@ -235,7 +235,7 @@ knitr::kable(costs, caption="Tail: Cost to go from left to top entry:")
 Here, though, we encounter a new problem: reconstructions involving very many losses 
 are preferred to those involving a single gain.
 
-```{R Sankoff is still no good, echo=FALSE, fig.height=7, fig.width=8}
+```{r, echo=FALSE, fig.height=7, fig.width=8}
 par(mfrow=c(2, 1), mar=rep(0.2, 4))
 sankTree <- ape::read.tree(text="(((((a, b), c), dX), eX), (fX, (gX, (p, (q, r)))));")
 #vignettePlot(sankTree, '1110000888', na=FALSE, legend='none', blankNodes=TRUE)
@@ -270,5 +270,6 @@ nodelabels(c("1>8 (+3)", rep("1>0 (+1)",  2), rep("8>0 (+1)", 2)), node=c(11:13,
 No coding mechanism can generate consistent and logically meaningful tree scores
 when employing the Fitch algorithm.  The inapplicable state needs treating 
 differently from other states.  A [new algorithm](OurSolution.html) is needed.
-
+<!-- 
 ## References
+ -->

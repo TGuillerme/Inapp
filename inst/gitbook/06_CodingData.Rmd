@@ -2,16 +2,16 @@
 title: "Implications for character coding"
 author: "Martin R. Smith"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-bibliography: ../inst/REFERENCES.bib
+bibliography: [References.bib, packages.bib]
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
-vignette: >
-  %\VignetteIndexEntry{6. Implications for characters}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  html_document: default
+  pdf_document: default
 ---
 
-```{R initialize, message=FALSE, include=FALSE}
+
+
+```{r, message=FALSE, include=FALSE}
 library('knitr'); library('Inapp')
 quickPlot <- function (tree, character, na=TRUE, legend.pos='bottomleft') {
   tree$edge.length <- rep(1, dim(tree$edge)[1])
@@ -31,13 +31,13 @@ ap <- c("Absent", "Present")
 rb <- c("Red", "Blue")
 ```
 
-# Inapplicable data in a parsimony setting
+## Inapplicable data in a parsimony setting
 
 This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
 
 We assume that you'll already have read the [description](OurAlgorithm.html) of our algorithm.
 
-## How this algorithm weights against multiple innovations
+### How this algorithm weights against multiple innovations
 
 We discussed in an [earlier vignette](FailedSolutions.html) that, if we only 
 penalise transformations between states in subsidiary characters, 
@@ -55,7 +55,7 @@ The additional origin of the tail can
 
 - This has a side-effect that we'll study with an invariant character
 
-## Multiple dependencies
+### Multiple dependencies
 
 It's not a problem to have characters dependent on characters that are dependent
 on characters.  Consider the following character heirarchy:
@@ -85,7 +85,7 @@ applicable.
 
 A sample character matrix might look like this:
 
-```{R Multiple dependencies, echo=FALSE, asis=TRUE}
+```{r, echo=FALSE, asis=TRUE}
 nNone <- 3
 c1 <- c(rep(0, nNone), rep(1, 10))
 c2 <- c(rep('-', nNone), rep(0, 2), rep(1, 4), rep(2, 4))
@@ -102,7 +102,7 @@ kable(mDep, capiton="Coding")
 
 Which would plot on a tree thus:
 
-```{R Multiple dependencies trees, echo=FALSE, fig.width=8, fig.height=16}
+```{r, echo=FALSE, fig.width=8, fig.height=16}
 goodtree <- ape::read.tree(text="(a, (b, (c, ((d, e), ((f, (g, (h, i))), ((j, k), (l, m)))))));")
 badtree <- ape::read.tree(text="(A, (C, (B, ((D, E), ((F, (J, (K, I))), ((G, H), (L, M)))))));")
 par(mfrow=c(4, 2), cex=0.7, mar=c(0, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0))
@@ -131,7 +131,7 @@ mtext("Appendage condition", outer=TRUE)
 
 
 
-## A parsimony uninformative character that informs parsimony!
+### A parsimony uninformative character that informs parsimony!
 
 - All tails are blue.  Let's say that they are all blue for some complex molecular reason, such that it is most parsimonious if "blueness" has a single evolutionary origin.
 
@@ -154,7 +154,7 @@ kable(blueTails, capiton="Coding")
 Let's compare two trees.  One groups taxa based on the presence of tails; the other
 groups taxa based on body colour.
 
-```{R invariant yet informative, echo=FALSE, fig.height=3, fig.width=8}
+```{r, echo=FALSE, fig.height=3, fig.width=8}
 tailTree <- ape::read.tree(text="((((A:1, B:1):1, C:1):1, D:1):1, (E:1, (F:1, (G:1, H:1):1):1):1);")
 bodyTree <- ape::read.tree(text="((((F, E), C), D), (A, (B, (G, H))));")
 tail <- "00001111"
@@ -181,12 +181,8 @@ mtext("Body colour", outer=TRUE)
 - We should include this character if it's meaningful.  But not if it's not (e.g. number of base pairs in a tail).
 
 
-### Difficulties
+#### Difficulties
 <mark>Here are some marginal cases where discretion is required.</mark>
 
 <mark>Here are some trees that show why we would code things our way
 this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!</mark>
-
-[Return to index](Index.html) | [Coding neomorphic characters](Neomorphics.html) | [Coding ambiguous data](AmbiguousData.html)
-
-## References

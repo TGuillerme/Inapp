@@ -1,21 +1,26 @@
----
+--- 
 title: "Inapplicable data"
-author: "Martin D Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin R Smith (martin.smith@durham.ac.uk)""
+author: "Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-bibliography: ../inst/REFERENCES.bib
-csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
-vignette: >
-  %\VignetteIndexEntry{Index}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [References.bib, packages.bib]
+link-citations: yes
+github-repo: TGuillerme/Inapp
+description: "Inapplicable data in a parsimony setting"
 ---
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 # Inapplicable data in a parsimony setting
 
 This series of vignettes works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
 
-## Contents
+<!-- ## Contents
 
 - The Fitch Algorithm:
   - [An introduction](Fitch.html)
@@ -40,3 +45,4 @@ This series of vignettes works through the inapplicable algorithm proposed by Br
     - Status: Complete? (MS)
 
 ## References
+ -->

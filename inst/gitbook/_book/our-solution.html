@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Inapplicable data</title>
+  <meta name="description" content="Inapplicable data in a parsimony setting">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Inapplicable data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Inapplicable data in a parsimony setting" />
+  <meta name="github-repo" content="TGuillerme/Inapp" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Inapplicable data" />
+  
+  <meta name="twitter:description" content="Inapplicable data in a parsimony setting" />
+  
+
+<meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
+
+
+<meta name="date" content="2018-02-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="the-fitch-algorithm.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Inapplicable data in a parsimony setting</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Inapplicable data in a parsimony setting</a></li>
+<li class="chapter" data-level="2" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html"><i class="fa fa-check"></i><b>2</b> The Fitch algorithm</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#downpass"><i class="fa fa-check"></i><b>2.1</b> Downpass</a></li>
+<li class="chapter" data-level="2.2" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#uppass"><i class="fa fa-check"></i><b>2.2</b> Uppass</a></li>
+<li class="chapter" data-level="2.3" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#discussion-how-to-optimise-characters"><i class="fa fa-check"></i><b>2.3</b> Discussion: How to optimise characters</a></li>
+<li class="chapter" data-level="2.4" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#problems-with-the-fitch-algorithm"><i class="fa fa-check"></i><b>2.4</b> Problems with the Fitch algorithm</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#red-tails-blue-tails"><i class="fa fa-check"></i><b>2.4.1</b> Red tails, blue tails</a></li>
+<li class="chapter" data-level="2.4.2" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#why-reductive-coding-doesnt-work"><i class="fa fa-check"></i><b>2.4.2</b> Why Reductive coding doesn’t work</a></li>
+<li class="chapter" data-level="2.4.3" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#why-extra-state-doesnt-work"><i class="fa fa-check"></i><b>2.4.3</b> Why Extra State doesn’t work</a></li>
+<li class="chapter" data-level="2.4.4" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#why-a-single-multi-state-character-doesnt-work"><i class="fa fa-check"></i><b>2.4.4</b> Why a single multi-state character doesn’t work</a></li>
+<li class="chapter" data-level="2.4.5" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#sankoff-matrices"><i class="fa fa-check"></i><b>2.4.5</b> Sankoff matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#conclusion"><i class="fa fa-check"></i><b>2.5</b> Conclusion</a></li>
+<li class="chapter" data-level="2.6" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#counting-steps-is-doomed"><i class="fa fa-check"></i><b>2.6</b> Counting steps is doomed</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="our-solution.html"><a href="our-solution.html"><i class="fa fa-check"></i><b>3</b> Our solution</a><ul>
+<li class="chapter" data-level="3.1" data-path="our-solution.html"><a href="our-solution.html#counting-homologies-is-the-answer"><i class="fa fa-check"></i><b>3.1</b> Counting homologies is the answer</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="our-solution.html"><a href="our-solution.html#what-we-count"><i class="fa fa-check"></i><b>3.1.1</b> What we count</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="our-solution.html"><a href="our-solution.html#how-this-fixes-the-problem"><i class="fa fa-check"></i><b>3.2</b> How this fixes the problem</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="our-solution.html"><a href="our-solution.html#furhter-examples"><i class="fa fa-check"></i><b>3.2.1</b> Furhter examples</a></li>
+<li class="chapter" data-level="3.2.2" data-path="our-solution.html"><a href="our-solution.html#summary"><i class="fa fa-check"></i><b>3.2.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="our-solution.html"><a href="our-solution.html#implementation"><i class="fa fa-check"></i><b>3.3</b> Implementation</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="our-solution.html"><a href="our-solution.html#passes-1-2"><i class="fa fa-check"></i><b>3.3.1</b> Passes 1 &amp; 2</a></li>
+<li class="chapter" data-level="3.3.2" data-path="our-solution.html"><a href="our-solution.html#pass-3"><i class="fa fa-check"></i><b>3.3.2</b> Pass 3</a></li>
+<li class="chapter" data-level="3.3.3" data-path="our-solution.html"><a href="our-solution.html#pass-4"><i class="fa fa-check"></i><b>3.3.3</b> Pass 4</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="our-solution.html"><a href="our-solution.html#inapplicable-data-in-a-parsimony-setting-1"><i class="fa fa-check"></i><b>3.4</b> Inapplicable data in a parsimony setting</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="our-solution.html"><a href="our-solution.html#how-this-algorithm-weights-against-multiple-innovations"><i class="fa fa-check"></i><b>3.4.1</b> How this algorithm weights against multiple innovations</a></li>
+<li class="chapter" data-level="3.4.2" data-path="our-solution.html"><a href="our-solution.html#multiple-dependencies"><i class="fa fa-check"></i><b>3.4.2</b> Multiple dependencies</a></li>
+<li class="chapter" data-level="3.4.3" data-path="our-solution.html"><a href="our-solution.html#a-parsimony-uninformative-character-that-informs-parsimony"><i class="fa fa-check"></i><b>3.4.3</b> A parsimony uninformative character that informs parsimony!</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="our-solution.html"><a href="our-solution.html#coding-ontologically-dependent-neomorphic-characters"><i class="fa fa-check"></i><b>3.5</b> Coding ontologically dependent neomorphic characters</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="our-solution.html"><a href="our-solution.html#neomorphic-and-transformational-characters"><i class="fa fa-check"></i><b>3.5.1</b> Neomorphic and transformational characters</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="our-solution.html"><a href="our-solution.html#coding-ambiguous-taxa"><i class="fa fa-check"></i><b>3.6</b> Coding ambiguous taxa</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="our-solution.html"><a href="our-solution.html#ambiguity-when-parent-character-ambiguous"><i class="fa fa-check"></i><b>3.6.1</b> Ambiguity when parent character ambiguous</a></li>
+<li class="chapter" data-level="3.6.2" data-path="our-solution.html"><a href="our-solution.html#ambiguity-when-parent-character-known"><i class="fa fa-check"></i><b>3.6.2</b> Ambiguity when parent character known</a></li>
+<li class="chapter" data-level="3.6.3" data-path="our-solution.html"><a href="our-solution.html#recommendation-1"><i class="fa fa-check"></i><b>3.6.3</b> Recommendation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="our-solution.html"><a href="our-solution.html#examples"><i class="fa fa-check"></i><b>3.7</b> Examples</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="our-solution.html"><a href="our-solution.html#some-caterpillars"><i class="fa fa-check"></i><b>3.7.1</b> Some caterpillars</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Inapplicable data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="our-solution" class="section level1">
+<h1><span class="header-section-number">3</span> Our solution</h1>
+<div id="counting-homologies-is-the-answer" class="section level2">
+<h2><span class="header-section-number">3.1</span> Counting homologies is the answer</h2>
+<div id="what-we-count" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> What we count</h3>
+<p>The problem with the Fitch is that it counts steps.</p>
+<p>We get around this by counting homoplasies. See De Laet’s work on this.</p>
+<p>The total score = steps + (additional) regions.</p>
+<p>Here’s an example tree showing that.</p>
+<div id="what-does-it-take-to-denote-separate-regions" class="section level4">
+<h4><span class="header-section-number">3.1.1.1</span> What does it take to denote separate regions?</h4>
+<ul>
+<li>Three inapplicable tips, arranged just so. (Addresses Goloboff’s comment.)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="how-this-fixes-the-problem" class="section level2">
+<h2><span class="header-section-number">3.2</span> How this fixes the problem</h2>
+<p>Here are some examples of how this fixes the problems that we encountered.</p>
+<p>Take the example of two very different tails. Because they are so different, it makes sense that they might have evolved twice.</p>
+<div id="furhter-examples" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Furhter examples</h3>
+<p>Here are Goloboff’s trees as examples of how we would approach them, and why that’s preferable to how he would approach them</p>
+<p>Here are De Laet’s cases and here’s why they aren’t problematic.</p>
+</div>
+<div id="summary" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Summary</h3>
+<p>We can show that this produces the correct behaviour. But how do we count this in practice? <!-- 
+## References
+ --></p>
+
+</div>
+</div>
+<div id="implementation" class="section level2">
+<h2><span class="header-section-number">3.3</span> Implementation</h2>
+<p>Consider a tree with 12 taxa and the following multi-state characters with inapplicable data <code>23--1??--032</code>; say the character is “colour of the tail” ranging from 0 to 3 (four colours). Four taxa in our example have no tail (hence the inapplicable data <code>-</code>) and for two taxa, the data is missing (<code>?</code>- we don’t known the colour of the tail or even whether the taxa have a tail or not).</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-19-1.png" width="681.6" /></p>
+<p>We can use the <code>Inapp</code> package to apply our four passes inapplicable algorithm for this character on this tree.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Loading the Inapp package
+<span class="kw">library</span>(Inapp)
+
+## The tree
+tree &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="dt">text =</span> <span class="st">&quot;((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));&quot;</span>)
+
+## The character
+character &lt;-<span class="st"> &quot;23--1??--032&quot;</span>
+
+## Applying the NA algorithm
+matrix &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span>(tree, character, <span class="dt">method =</span> <span class="st">&quot;NA&quot;</span>, <span class="dt">passes =</span> <span class="dv">4</span>)</code></pre></div>
+<p>Here is what is happening:</p>
+<div id="passes-1-2" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Passes 1 &amp; 2</h3>
+<p>The first two passes are a standard Fitch algorithm applied the the parent character of the studied character (see [Fitch.Rmd]) with a special rule for the inapplicable state (<code>-</code>).</p>
+<p>For the first pass (first downpass):</p>
+<ul>
+<li>If state in common between the two descendants is the inapplicable state, but that both have also applicable states, set the node’s state to be the union between the descendants states (rather than their state in common).</li>
+<li>If there is no state in common between the descendants and both descendants have applicable states, remove the inapplicable state from their union (rather than simply setting the nodal state to their union).</li>
+</ul>
+<p>For the second pass (first uppass):</p>
+<ul>
+<li>If the focal node has both applicable and inapplicable states, set it to be the inapplicable state only if its ancestor has also only the inapplicable state, else remove the inapplicable state.</li>
+<li>If the focal node has only an inapplicable state and it’s ancestor has not only the inapplicable state, set it to be the union between it’s descendants states if their are both applicable, else, leave it as the inapplicable state.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
+<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">counts =</span> <span class="dv">0</span>, <span class="dt">main =</span> <span class="st">&quot;Inapplicable reconstruction&quot;</span>)</code></pre></div>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-21-1.png" width="681.6" /></p>
+<p>The parent character can be considered as a binary character “presence (<code>1</code>) or absence (<code>0</code>) of a tail” that would be <code>11001??00111</code>. The character would be reconstructed as:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## The parent character
+parent_character &lt;-<span class="st"> &quot;11001??00111&quot;</span>
+
+## Applying the Fitch algorithm
+matrix_parent &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span>(tree, parent_character, <span class="dt">method =</span> <span class="st">&quot;Fitch&quot;</span>, <span class="dt">passes =</span> <span class="dv">2</span>)
+<span class="kw">plot</span>(matrix_parent, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">counts =</span> <span class="dv">0</span>, <span class="dt">main =</span> <span class="st">&quot;Fitch reconstruction of the parent character&quot;</span>)</code></pre></div>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-22-1.png" width="681.6" /></p>
+<p>As you can see, both reconstructions are identical: nodes with no tail are denoted as <code>0</code> in the case of the “parent character” and as <code>-</code> for our current character. Note however that contrary to the Fitch algorithm, there is no tree score counting in our algorithm for the two first passes. Indeed, in the case of the Fitch reconstruction of the “parent character”, the gain or losses of a tail are counted but not the changes in states for the subtending character (the tree score is 3 in Fitch, 5 in our case).</p>
+</div>
+<div id="pass-3" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Pass 3</h3>
+<p>The third pass further resolves ambiguities at nodal states. If the node is applicable, the standard Fitch downpass comparisons between the descendants are applied (see [Fitch.Rmd]) but with the rules relative to the inapplicable state described for the first downpass above.</p>
+<p>During this pass, we can also count the tree score. This score is composed of both:</p>
+<ul>
+<li>the change in states (e.g. the change in the colour of the tail)</li>
+<li>the change between applicable and inapplicable regions (e.g. the change in the parent character: a gain or a loss of the tail)</li>
+</ul>
+<p>The changes of states are calculated the same way as Fitch <strong>for the applicable states only</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>If there is no state in common between both node’s descendants and that the node and its descendant have a least one applicable state, increment the tree score.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
+<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">counts =</span> <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;State changes&quot;</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-23-1.png" width="681.6" /></p>
+<p>For example, for node <code>n23</code>, there is no state in common between the tip <code>12</code> (<code>2</code>) and <code>11</code> (<code>3</code>), the tree score is incremented at this node (case <code>1</code> above). Note, however, that for node <code>n21</code>, there is no state in common between node <code>n22</code> (<code>023</code>) and tip <code>9</code> (<code>-</code>) but the score is not incremented since it does not concern applicable states only. In other words, there is no change in state at the node <code>n21</code> from the tail having a colour 0, 2 or 3 to the tail not being present (<code>-</code>) but rather a change in the parent character between presence and absence of the tail (present is <code>023</code> and absent is <code>-</code>).</p>
+<div id="tracking-applicable-regions" class="section level5">
+<h5><span class="header-section-number">3.3.2.0.1</span> Tracking applicable regions</h5>
+<p>To know whether any node leads to a region of applicable states we can use a “tracker” for each node that tells us at any moment whether descendants of a node contain applicable data or not. Doing so, we can know, when a node is inapplicable and its descendant lead to applicable regions that extra applicable regions are implied by the tree. In other words and following our “colour of the tail” character, extra applicable regions imply independent appearances of the tail somewhere in the node’s descendants.</p>
+<p>The tracker is initialised during the <em>second pass</em> (first uppass) and is updated during the <em>third pass</em> (second downpass). The tracker works as follows for each node’s left and right descendants:</p>
+<ul>
+<li>If the descendant state was resolved as applicable, the node leads to an applicable region, else, it leads to an inapplicable one.</li>
+</ul>
+<p>The trackers are initialised for each node during the first uppass and then propagated back down the tree during the second downpass.</p>
+<p>Using these trackers, we can then increments the tree score for all changes that imply a new applicable region. The switch to or from an inapplicable and applicable region are counted as follow:</p>
+<ol start="2" style="list-style-type: decimal">
+<li>If the node is inapplicable and both descendants lead to regions of applicable states, increment the region count.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
+<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">counts =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;Applicable regions&quot;</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-24-1.png" width="681.6" /></p>
+<p>For example, node <code>n15</code> is solved as inapplicable but both his descendants lead to two independent applicable regions (tip <code>5</code> with the state <code>1</code> and node <code>n18</code> with the states <code>1</code> and <code>2</code>). This implies an independent change in the parent character (in our example, tail is absent at node <code>n15</code> but evolves independently at tip <code>5</code> and node <code>n18</code>). Conversely, node <code>n21</code> is solved as inapplicable but not both his descendants lead to independent applicable regions. This node does thus not imply an independent change in the parent character.</p>
+<blockquote>
+<p>Note that the number of applicable regions for a character is always at least 1 (unless every taxa has the inapplicable state) and therefore, we only count the <em>additional</em> regions.</p>
+</blockquote>
+<p>Combining both scores - the number of changes in character states and the number of additional applicable regions - we get indeed a total tree score of 5 for this tree and character</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
+<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">counts =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-25-1.png" width="681.6" /></p>
+<p>Using these tree passes is enough to get the tree score (while taking into account inapplicable data!) but does not solve all ancestral reconstructions. A fourth pass (second uppass) might be necessary to finalise the node states reconstructions.</p>
+</div>
+</div>
+<div id="pass-4" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> Pass 4</h3>
+<p>In the example above, the node <code>n23</code> is still not correctly solved after the third pass. In fact, considering its ancestor’s states (<code>023</code>) and its descendants’ states (<code>2</code> and <code>3</code>), it should be resolved as <code>023</code> under a delayed transition model (DELTRAN). In order to do so, we can apply a extra pass similar to the second pass (first uppass), as described above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
+<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="dt">counts =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-26-1.png" width="681.6" /> <!-- 
+## References
+ --></p>
+
+</div>
+</div>
+<div id="inapplicable-data-in-a-parsimony-setting-1" class="section level2">
+<h2><span class="header-section-number">3.4</span> Inapplicable data in a parsimony setting</h2>
+<p>This is one of a <a href="Index.html">series</a> of vignettes that works through the inapplicable algorithm proposed by Brazeau <em>et al.</em> <span class="citation">(<a href="#ref-ThisStudy">2017</a>)</span>.</p>
+<p>We assume that you’ll already have read the <a href="OurAlgorithm.html">description</a> of our algorithm.</p>
+<div id="how-this-algorithm-weights-against-multiple-innovations" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> How this algorithm weights against multiple innovations</h3>
+<p>We discussed in an <a href="FailedSolutions.html">earlier vignette</a> that, if we only penalise transformations between states in subsidiary characters, trees that imply multiple origins of the parent character receive much lower scores than those in which the parent character evolves once (but its subsidiary characteristics change multiple times).</p>
+<p>Our algorithm counterbalances this by, in effect, imposing a cost for each additional origin of the parent character. At first blush, this sounds like it is weighting against multiple innovations of the parent character – but this isn’t so; it weights against multiple independent innovations of the SAME state (i.e. homoplasy), but if a red tail evolved here and a blue tail evolved there, then two innovations of the tail imposes a cost of one (additional region) for tail colour, whereas a single innovation of the tail would also impose a cost of one (transformation) for tail colour. The additional origin of the tail can</p>
+<ul>
+<li>This has a side-effect that we’ll study with an invariant character</li>
+</ul>
+</div>
+<div id="multiple-dependencies" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> Multiple dependencies</h3>
+<p>It’s not a problem to have characters dependent on characters that are dependent on characters. Consider the following character heirarchy:</p>
+<ol style="list-style-type: decimal">
+<li>Appendages: (0), absent; (1), present.</li>
+<li>Appendage termination: (0), blunt; (1), claw; (2), sucker.</li>
+<li>Claw morphology: (0), smooth; (1), serrated.</li>
+<li>Sucker morphology: (0), round; (1), polygonal.</li>
+</ol>
+<p>The included taxa may or may not bear appendages; if they do, then the appendages may end either with either claws or suckers, or neither (but not both). Claws come in two flavours, smooth and serrated; suckers come in two shapes, rounded and polygonal.</p>
+<p>If character 1 (appendages) is absent, then characters 2–4 are inapplicable. Otherwise, charcter 2 (appendage termination) must take one of the three applicable values.</p>
+<p>If character 2 (termination) has state 0 (blunt), then characters 3 and 4 (morphology of claw / sucker) are inapplicable.</p>
+<p>If character 2 (termination) has state 1 (claw), then character 3 (claw morphology) is applicable and character 4 (sucker morphology) is inapplicable.</p>
+<p>If character 2 (termination) has state 2 (sucker), then character 3 (claw morphology) is inapplicable and character 4 (sucker morphology) is applicable.</p>
+<p>A sample character matrix might look like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+<th align="left">D</th>
+<th align="left">E</th>
+<th align="left">F</th>
+<th align="left">G</th>
+<th align="left">H</th>
+<th align="left">I</th>
+<th align="left">J</th>
+<th align="left">K</th>
+<th align="left">L</th>
+<th align="left">M</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Appendages: (0), absent; (1), present.</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td>Appendage termination: (0), blunt; (1), claw; (2), sucker.</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td>Claw morphology: (0), smooth; (1), serrated.</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td>Sucker morphology: (0), round; (1), polygonal.</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+<p>Which would plot on a tree thus:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-29-1.png" width="768" /></p>
+</div>
+<div id="a-parsimony-uninformative-character-that-informs-parsimony" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> A parsimony uninformative character that informs parsimony!</h3>
+<ul>
+<li><p>All tails are blue. Let’s say that they are all blue for some complex molecular reason, such that it is most parsimonious if “blueness” has a single evolutionary origin.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+<th align="center">D</th>
+<th align="center">E</th>
+<th align="center">F</th>
+<th align="center">G</th>
+<th align="center">H</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Tail: (0), absent; (1), present</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td align="center">Tail colour: (-), inapplicable; (1), blue</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td align="center">Body colour: (1), black; (2), white</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></li>
+<li>This complex molecular reason is grounds to suspect that the tails have a common ancestor</li>
+<li>More formally, we wish to attribute this complex molecular reason to common ancestry, rather than homoplasy</li>
+<li><p>Thus “blueness” represents a separate character that has the same distribution as tails (or a sbuset thereof, if some tails are of uncertain colour)</p></li>
+</ul>
+<p>Let’s compare two trees. One groups taxa based on the presence of tails; the other groups taxa based on body colour.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-30-1.png" width="768" /><img src="Inapplicable_data_files/figure-html/unnamed-chunk-30-2.png" width="768" /><img src="Inapplicable_data_files/figure-html/unnamed-chunk-30-3.png" width="768" /></p>
+<ul>
+<li><p>So the tree on the left, which reconstructs a single origin of the tail, a single origin of a blue tail colouration, and two changes in body colour, is preferred to the tree on the right, which reconstructs a single change in body colour but two origins of the tail, and two origins of blue colouration on the tail.</p></li>
+<li><p>We should include this character if it’s meaningful. But not if it’s not (e.g. number of base pairs in a tail).</p></li>
+</ul>
+<div id="difficulties" class="section level4">
+<h4><span class="header-section-number">3.4.3.1</span> Difficulties</h4>
+<p><mark>Here are some marginal cases where discretion is required.</mark></p>
+<p><mark>Here are some trees that show why we would code things our way this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!</mark></p>
+
+</div>
+</div>
+</div>
+<div id="coding-ontologically-dependent-neomorphic-characters" class="section level2">
+<h2><span class="header-section-number">3.5</span> Coding ontologically dependent neomorphic characters</h2>
+<div id="neomorphic-and-transformational-characters" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> Neomorphic and transformational characters</h3>
+<p>Researchers should be aware that our algorithm treats nemorphic characters as though they are transformational; that is, “absence” of a feature is seen as equally informative as “presence”.</p>
+<p>In some cases, this may be desirable. One might argue that “Serrations on tail margin: (0), absent; (1), present” behaves as a transformational character, as a tail must have a margin of some sort, and “serratedness” is a property of the margin – perhaps there is no reason to assume that the tail was primitively simple, or that serrations necesssarily represent a secondary increase in complexity.</p>
+<p>In other cases, this may not be desirable. As an example, consider a complex character, such as the eyespots on the tail of a peacock.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+<th align="left">D</th>
+<th align="left">E</th>
+<th align="left">F</th>
+<th align="left">G</th>
+<th align="left">H</th>
+<th align="left">I</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tail: (0), absent; (1), present</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td>Tail eyespots: (-), inapplicable; (0), absent; (1), present</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+<p>The presence of tail eyespots obviously contains grouping information – we should prefer reconstructions that attribute the presence of tail eyespots to common ancestry to those that imply independent gains of this complex characteristic.</p>
+<p>It is less obvious whether the <em>absence</em> of such complex features should convey grouping information. This decision ought to be defended for individual characters by individual researchers, but researchers should be aware of the implications of their chosen coding strategy.</p>
+<div id="three-trees" class="section level4">
+<h4><span class="header-section-number">3.5.1.1</span> Three trees</h4>
+<p>Consider the following three scenarios:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-33-1.png" width="576" /></p>
+<p>Each of these trees implies two independent origins of the tail. Their score differs only with respect to the eyespots character.</p>
+<div id="one-tail-spotted-one-not" class="section level5">
+<h5><span class="header-section-number">3.5.1.1.1</span> One tail spotted, one not</h5>
+<p>The first tree has the minimum possible score for the eyespots character. (A score of one would also be obtained if the tail evolved once, and a single transformation occurred between 0 and 1 – but we are only considering trees where the tail evolved twice.)</p>
+</div>
+<div id="two-spot-appearances" class="section level5">
+<h5><span class="header-section-number">3.5.1.1.2</span> Two spot appearances</h5>
+<p>The next tree has a score of two for the eyespots character, which is obviously correct: Eye spots, a complex character, have evolved twice independently, which is not as parsimonious.</p>
+</div>
+<div id="two-non-spotted-appearances" class="section level5">
+<h5><span class="header-section-number">3.5.1.1.3</span> Two non-spotted appearances</h5>
+<p>The final tree also has a score of two for the eyespots character: even though eyespots have only evolved once, just as in the first tree. The score of two occurs because the “absence of eyespots” has evolved twice.</p>
+</div>
+<div id="evaluation" class="section level5">
+<h5><span class="header-section-number">3.5.1.1.4</span> Evaluation</h5>
+<p>It is possible that a researcher might feel uncomfortable grouping taxa on the basis of the non-occurrence of a complex feature that did not occur in their common ancestor. Putting this another way, it is not clear that the fact that a feature has not evolved in two instances represents a homoplasy. The absence of eyespots in a tail is not an evolutionary innovation – it is an inheritance from a common ancestor that did not have eyespots (and did not have a tail).</p>
+</div>
+<div id="implications" class="section level5">
+<h5><span class="header-section-number">3.5.1.1.5</span> Implications</h5>
+<p>A researcher that argues that the absence of a feature contains phylogenetic information must surely include all properties of a tail that are only observed in a single taxon (because the absence of that feature in other taxa also contains grouping information). A researcher may also include all properties of a tail that do not occur in any of the taxa of interest, for these too will influence tree topology: <a href="CodingData.html">parsimony uninformative characters inform parsimony</a>.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+<th align="left">D</th>
+<th align="left">E</th>
+<th align="left">F</th>
+<th align="left">G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tail: (0), absent; (1), present</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td>Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">{01}</td>
+<td align="left">{01}</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td>Tail with ability to generate electricity: (-), inapplicable; (0), absent; (1), present</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">{01}</td>
+<td align="left">{01}</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+<p>Note that each of the unobserved characters provides evidence against independent origins of the tail, preferring instead independent losses:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-35-1.png" width="768" /></p>
+<p><mark>Thus the simple matrix presented above sees both of these trees as equally parsimonious – three losses of a single-origin tail that lacks two unlikely attributes is considered as likely as one independent gain of a similar tail.</mark> <!-- I may need to tweak these trees--></p>
+<p>This behaviour is desired if the similarity between the tails requires an evoltuionary explanation. But the absence of these features does not seem any more difficult to explain if the tails do not have a common ancestor.</p>
+<p>The solution here is to deploy a different character coding strategy, coding absences as absences. That way, absence CAN be inherited from a common ancestor, in which a complex-feature-of-the-tail (eyespots, glow-inthe-dark pigment) was absent (and the tail was absent too).</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+<th align="left">D</th>
+<th align="left">E</th>
+<th align="left">F</th>
+<th align="left">G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tail: (0), absent; (1), present</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td>Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">{01}</td>
+<td align="left">{01}</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td>Tail with ability to generate electricity: (-), inapplicable; (0), absent; (1), present</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">{01}</td>
+<td align="left">{01}</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+<p>This can be handled by the Fitch algorithm, and works well in simple cases:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-36-1.png" width="768" /></p>
+<p>The behaviour only becomes questionable when a tail is secondarily lost, then re-gained, as the loss of a tail seems like it should be a single evolutionary step, but also causes the loss of all contingent characters, which must then “reevolve” as though they had never existed:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-37-1.png" width="384" /></p>
+<p>Perhaps there are cases – as might be seen in phenotypic plasticity – where a tail might be lost, and then re-activate preexisting genes when it evolves again? This starts to require an explicit model of evolution, however, which is somewhat beyond the remit of parsimony.</p>
+</div>
+</div>
+<div id="recommendation" class="section level4">
+<h4><span class="header-section-number">3.5.1.2</span> Recommendation</h4>
+<ul>
+<li>Neomorphic characters should probably be coded as absent everywhere they are absent, whether this is because there’s no tail or because there’s a tail without the complex feature.</li>
+</ul>
+<p>If you’re coding a neomorphic character as transformational, then you encounter problems.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-38-1.png" width="576" /></p>
+
+</div>
+</div>
+</div>
+<div id="coding-ambiguous-taxa" class="section level2">
+<h2><span class="header-section-number">3.6</span> Coding ambiguous taxa</h2>
+<p>Ambiguous data does not pose a problem for the algorithm, but the nature of the ambiguity must be considered when scoring a character.</p>
+<div id="ambiguity-when-parent-character-ambiguous" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Ambiguity when parent character ambiguous</h3>
+<p>If it’s not clear whether or not a taxon has a tail, then tail colour should be coded as <code>?</code>, denoting that any possible token (including the inapplicable token) may be the most parsimonious for the tail.</p>
+<p>In trees in which the tail can be reconstructed as present, the ambiguous tip will be reconstructed as having a tail of the appropriate colour:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-40-1.png" width="768" /></p>
+<p>In trees in which the tail cannot be reconstructed as present without inferring a homoplasious origin, the tail colour will be reconstructed as inapplicable:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-41-1.png" width="768" /></p>
+</div>
+<div id="ambiguity-when-parent-character-known" class="section level3">
+<h3><span class="header-section-number">3.6.2</span> Ambiguity when parent character known</h3>
+<p>If a taxon is known to have a tail, there are two scenarios for ontologically dependent transformational characters:</p>
+<div id="subordinate-character-has-finite-states" class="section level4">
+<h4><span class="header-section-number">3.6.2.1</span> Subordinate character has finite states</h4>
+<p>If the subordinate character must take one of a finite set of values, then the unobserved property of the tail is known to belong to these values and should be coded accordingly.</p>
+<p>For example:</p>
+<ul>
+<li>Tail: (0), absent; (1), present</li>
+<li>Tail margin: (0), smooth; (1), serrated.</li>
+</ul>
+<p>Assume that the tail margin must either be smooth or serrated, and there is no reason to assume that either state is ancestral (i.e. the character is strictly transformational). Tail margin should then be coded as <code>{01}</code>: i.e. the tail is known to have taken one of the two states 0 or 1.</p>
+</div>
+<div id="subordinate-character-may-have-unobserved-states" class="section level4">
+<h4><span class="header-section-number">3.6.2.2</span> Subordinate character may have unobserved states</h4>
+<p>A more complicated situation arises where a subordinate character may have unobserved states, as with</p>
+<ul>
+<li>Tail colour: (0), red; (1), blue.</li>
+</ul>
+<p>A taxon that is known to have a tail, but whose tail colour is uncertain, should generally be coded as <code>?</code>.</p>
+<p>Coding it as <code>{01}</code> would be appropriate if the tail was known to certainly be homologous with other tails in the dataset, in which case it would be most parsimonious to assume that the tail colour is the same colour as the ancestor of the tip, which was necessarily either red or blue.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-42-1.png" width="384" /></p>
+<p>But if, as will more often be the case, homology of the tails is not known <em>a priori</em>, then it is possible that this taxon has a tail that is not homologous with any other tail whose colour has been observed.</p>
+<p>In this case, coding the tail colour as <code>{01}</code> states that the tail is the same colour as a tail that has already been observed. This means that the independent origin of the tail also represents an independent origin of this particular colour – and hence an instance of homoplasy.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-43-1.png" width="384" /></p>
+<p>Coding the tail colour as <code>?</code> allows the possibility that the independently- evolved tail has a different colour to the tails already observed – green, perhaps. Reconstructing the tail colour as a colour that has not already been observed avoids an instance of homoplasy, and is therefore more parsimonious.</p>
+<p>In the case that the unknown tail evolved independently and was green, the original character formulation – which only provides tokens for red and blue tails – cannot be applied and is thus inapplicable. Our algorithm will thus reconstruct tail colour as being inapplicable in such a taxon.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-44-1.png" width="384" /></p>
+</div>
+</div>
+<div id="recommendation-1" class="section level3">
+<h3><span class="header-section-number">3.6.3</span> Recommendation</h3>
+<p>We therefore recommend the following coding schema for ambiguous tips where the tail is (A) known to be present; (B) ambiguous; (C) known to be absent:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tail: (0), absent; (1), present.</td>
+<td align="left">1</td>
+<td align="left">?</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td>Tail margin: (0), smooth; (1), serrated.</td>
+<td align="left">{01}</td>
+<td align="left">?</td>
+<td align="left">-</td>
+</tr>
+<tr class="odd">
+<td>Tail colour: (0), red; (1), blue.</td>
+<td align="left">?</td>
+<td align="left">?</td>
+<td align="left">-</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div id="examples" class="section level2">
+<h2><span class="header-section-number">3.7</span> Examples</h2>
+<p>This vignette describes how the algorithm approaches some example trees. We follow the example of a tail coded using two characters:</p>
+<ul>
+<li>Tail: (0), absent; (1), present;</li>
+<li>Tail colour: (0), red; (1), blue.</li>
+</ul>
+<div id="some-caterpillars" class="section level3">
+<h3><span class="header-section-number">3.7.1</span> Some caterpillars</h3>
+<p>First we’ll address some pectinate “caterpillar” trees, in which eight taxa have tails (and eight do not), four of which are red, four of which are blue.</p>
+<p>An optimal tree with this character invokes a single origin of the tail, and a single change in tail colour, thus incurring a score of two. Here is one example:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-48-1.png" width="768" /></p>
+<p>If we insist that the tail evolves twice, then the best score is accomplished by reconstructing a different colour of tail in each of the two regions in which the tail is present. On a caterpillar tree, this means the loss of a tail that has one colour, and an independent innovation in a tail-less taxon of a tail that has a different colour:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-49-1.png" width="768" /></p>
+<p>Under the parsimony criterion, it is considered less optimal if a tail, when it re-evolves, happens to independently re-evolve a colour that has already been observed – “blueness” has evolved twice on the following tree, meaning that the second innovation of “blueness” represents an instance of homoplasy.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-50-1.png" width="768" /></p>
+<div id="three-equally-suboptimal-alternatives" class="section level4">
+<h4><span class="header-section-number">3.7.1.1</span> Three equally suboptimal alternatives</h4>
+<p>The following three trees differ in the number of innovations of the tail that are implied, and the number of changes in tail colour. All are equally parsimonious.</p>
+<p>Under the first, our algorithm reconstructs the tail as ancestrally present, being lost on edge 2, gained on edge 5, lost in tips H and I, lost on edge 11, and gained on edge 14 (a total of six homoplasies). It further reconstructs independent, homoplastic origins of tail redness on edge 5, tail blueness on edge 14, and a change in tail colour from red to blue somewhere between edges 7 and 9 (three homoplasies).</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-51-1.png" width="768" /></p>
+<p>In the second, our algorithm reconstructs the tail as ancestrally present, being lost in tips B, D, E, H, and I, and on edge 11, before being independently gained on edge 14 (a total of seven homoplasies).<br />
+It further reconstructs an independent, homoplastic origins of tail blueness on edge 14, and a change in tail colour from red to blue somewhere between edges 7 and 9 (two homoplasies).</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-52-1.png" width="768" /></p>
+<p>The third configuration reconstructs the tail as ancestrally present, being lost in tips B, D, F, H, J, L, N and P (a total of eight homoplastic losses). It further reconstructs a single change in tail colour from red to blue on edge 8.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-53-1.png" width="768" /></p>
+</div>
+<div id="a-better-caterpillar-tree" class="section level4">
+<h4><span class="header-section-number">3.7.1.2</span> A better caterpillar tree</h4>
+<p>The tree below obtains a better score than any of the previous three: it implies a loss of the tail at edge 2, a gain at edge 6, a loss at edge 10, and a gain at edge 14; it invokes a homoplastic origin of redness at edge 6, one of blueness at edge 14, and a change in colour at edge 8, for a combined score of 7.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-54-1.png" width="768" /></p>
+
+</div>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-ThisStudy">
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2017). Morphological phylogenetic analysis with inapplicable data. <em>bioR<span class="math inline">\(\chi\)</span>iv</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-fitch-algorithm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/04_OurSolution.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

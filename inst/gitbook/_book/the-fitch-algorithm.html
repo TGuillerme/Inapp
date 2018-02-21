@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Inapplicable data</title>
+  <meta name="description" content="Inapplicable data in a parsimony setting">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Inapplicable data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Inapplicable data in a parsimony setting" />
+  <meta name="github-repo" content="TGuillerme/Inapp" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Inapplicable data" />
+  
+  <meta name="twitter:description" content="Inapplicable data in a parsimony setting" />
+  
+
+<meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
+
+
+<meta name="date" content="2018-02-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="our-solution.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Inapplicable data in a parsimony setting</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Inapplicable data in a parsimony setting</a></li>
+<li class="chapter" data-level="2" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html"><i class="fa fa-check"></i><b>2</b> The Fitch algorithm</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#downpass"><i class="fa fa-check"></i><b>2.1</b> Downpass</a></li>
+<li class="chapter" data-level="2.2" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#uppass"><i class="fa fa-check"></i><b>2.2</b> Uppass</a></li>
+<li class="chapter" data-level="2.3" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#discussion-how-to-optimise-characters"><i class="fa fa-check"></i><b>2.3</b> Discussion: How to optimise characters</a></li>
+<li class="chapter" data-level="2.4" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#problems-with-the-fitch-algorithm"><i class="fa fa-check"></i><b>2.4</b> Problems with the Fitch algorithm</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#red-tails-blue-tails"><i class="fa fa-check"></i><b>2.4.1</b> Red tails, blue tails</a></li>
+<li class="chapter" data-level="2.4.2" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#why-reductive-coding-doesnt-work"><i class="fa fa-check"></i><b>2.4.2</b> Why Reductive coding doesn’t work</a></li>
+<li class="chapter" data-level="2.4.3" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#why-extra-state-doesnt-work"><i class="fa fa-check"></i><b>2.4.3</b> Why Extra State doesn’t work</a></li>
+<li class="chapter" data-level="2.4.4" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#why-a-single-multi-state-character-doesnt-work"><i class="fa fa-check"></i><b>2.4.4</b> Why a single multi-state character doesn’t work</a></li>
+<li class="chapter" data-level="2.4.5" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#sankoff-matrices"><i class="fa fa-check"></i><b>2.4.5</b> Sankoff matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#conclusion"><i class="fa fa-check"></i><b>2.5</b> Conclusion</a></li>
+<li class="chapter" data-level="2.6" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#counting-steps-is-doomed"><i class="fa fa-check"></i><b>2.6</b> Counting steps is doomed</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="our-solution.html"><a href="our-solution.html"><i class="fa fa-check"></i><b>3</b> Our solution</a><ul>
+<li class="chapter" data-level="3.1" data-path="our-solution.html"><a href="our-solution.html#counting-homologies-is-the-answer"><i class="fa fa-check"></i><b>3.1</b> Counting homologies is the answer</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="our-solution.html"><a href="our-solution.html#what-we-count"><i class="fa fa-check"></i><b>3.1.1</b> What we count</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="our-solution.html"><a href="our-solution.html#how-this-fixes-the-problem"><i class="fa fa-check"></i><b>3.2</b> How this fixes the problem</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="our-solution.html"><a href="our-solution.html#furhter-examples"><i class="fa fa-check"></i><b>3.2.1</b> Furhter examples</a></li>
+<li class="chapter" data-level="3.2.2" data-path="our-solution.html"><a href="our-solution.html#summary"><i class="fa fa-check"></i><b>3.2.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="our-solution.html"><a href="our-solution.html#implementation"><i class="fa fa-check"></i><b>3.3</b> Implementation</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="our-solution.html"><a href="our-solution.html#passes-1-2"><i class="fa fa-check"></i><b>3.3.1</b> Passes 1 &amp; 2</a></li>
+<li class="chapter" data-level="3.3.2" data-path="our-solution.html"><a href="our-solution.html#pass-3"><i class="fa fa-check"></i><b>3.3.2</b> Pass 3</a></li>
+<li class="chapter" data-level="3.3.3" data-path="our-solution.html"><a href="our-solution.html#pass-4"><i class="fa fa-check"></i><b>3.3.3</b> Pass 4</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="our-solution.html"><a href="our-solution.html#inapplicable-data-in-a-parsimony-setting-1"><i class="fa fa-check"></i><b>3.4</b> Inapplicable data in a parsimony setting</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="our-solution.html"><a href="our-solution.html#how-this-algorithm-weights-against-multiple-innovations"><i class="fa fa-check"></i><b>3.4.1</b> How this algorithm weights against multiple innovations</a></li>
+<li class="chapter" data-level="3.4.2" data-path="our-solution.html"><a href="our-solution.html#multiple-dependencies"><i class="fa fa-check"></i><b>3.4.2</b> Multiple dependencies</a></li>
+<li class="chapter" data-level="3.4.3" data-path="our-solution.html"><a href="our-solution.html#a-parsimony-uninformative-character-that-informs-parsimony"><i class="fa fa-check"></i><b>3.4.3</b> A parsimony uninformative character that informs parsimony!</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="our-solution.html"><a href="our-solution.html#coding-ontologically-dependent-neomorphic-characters"><i class="fa fa-check"></i><b>3.5</b> Coding ontologically dependent neomorphic characters</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="our-solution.html"><a href="our-solution.html#neomorphic-and-transformational-characters"><i class="fa fa-check"></i><b>3.5.1</b> Neomorphic and transformational characters</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="our-solution.html"><a href="our-solution.html#coding-ambiguous-taxa"><i class="fa fa-check"></i><b>3.6</b> Coding ambiguous taxa</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="our-solution.html"><a href="our-solution.html#ambiguity-when-parent-character-ambiguous"><i class="fa fa-check"></i><b>3.6.1</b> Ambiguity when parent character ambiguous</a></li>
+<li class="chapter" data-level="3.6.2" data-path="our-solution.html"><a href="our-solution.html#ambiguity-when-parent-character-known"><i class="fa fa-check"></i><b>3.6.2</b> Ambiguity when parent character known</a></li>
+<li class="chapter" data-level="3.6.3" data-path="our-solution.html"><a href="our-solution.html#recommendation-1"><i class="fa fa-check"></i><b>3.6.3</b> Recommendation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="our-solution.html"><a href="our-solution.html#examples"><i class="fa fa-check"></i><b>3.7</b> Examples</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="our-solution.html"><a href="our-solution.html#some-caterpillars"><i class="fa fa-check"></i><b>3.7.1</b> Some caterpillars</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Inapplicable data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-fitch-algorithm" class="section level1">
+<h1><span class="header-section-number">2</span> The Fitch algorithm</h1>
+<p>This algorithm was proposed by Fitch <span class="citation">(<a href="#ref-Fitch1971">1971</a>)</span> and is implemented in many phylogenetic softwares based on maximum parsimony [TODO: citeTNT and citePAUP] or probabilistic methods [TODO: citeRAxML and citeMrBayes]. The procedure is rather simple and elegant and consist in going down the tree to count the number of transformation and then go up the tree again to finalise the ancestral states reconstructions.</p>
+<p>The way the algorithms goes up and down depends on the software but often uses a <em>traversal</em>: a recursive function that can visit all tips and nodes in a logical fashion. For example, consider the following tree:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-2-1.png" width="681.6" /></p>
+<p>A downpass traversal will first apply the algorithm to the first cherry (or pair of taxa) (<code>A</code> below), then save the results in <code>n1</code> and move to the second pair of tips/nodes (<code>B</code>), apply the algorithm and save the results in <code>n2</code>, etc. until all the nodes/tips are visited.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-3-1.png" width="681.6" /></p>
+<p>An uppass traversal works identically but in the other way, going from the nodes to towards the tips.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-4-1.png" width="681.6" /></p>
+<p>In both traversals, the direction (i.e. which cherry to pick first in a downpass traversal or whether to continue left or right in an uppass traversal) can be arbitrary as long as all tips and nodes are always visited.</p>
+<p>Now let’s consider a more complex tree <code>((((a, b), c), d), (e, (f, (g, h))));</code> with a binary character distributed for the tips <code>10011001</code> respectively to the tips alphabetical order.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-5-1.png" width="681.6" /></p>
+<p>We can use the <code>Inapp</code> package to apply the Fitch algorithm for this character on this tree.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Loading the Inapp package
+<span class="kw">library</span>(Inapp)
+
+## The tree
+tree &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="dt">text =</span> <span class="st">&quot;((((a, b), c), d), (e, (f, (g, h))));&quot;</span>)
+
+## The character
+character &lt;-<span class="st"> &quot;10011001&quot;</span>
+
+## Applying the Fitch algorithm
+matrix &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span>(tree, character, <span class="dt">method =</span> <span class="st">&quot;Fitch&quot;</span>, <span class="dt">passes =</span> <span class="dv">2</span>)</code></pre></div>
+<div id="downpass" class="section level2">
+<h2><span class="header-section-number">2.1</span> Downpass</h2>
+<p>The downpass is quite simple and follows the following rules for the two possible cases in the traversal:</p>
+<ol style="list-style-type: decimal">
+<li>If the two considered tips or nodes have <em>at least one state in common</em>, set the node to be these states in <em>common</em>.</li>
+<li>Else, if there is <em>nothing in common</em> between the to tips or nodes, set the node to be the <em>union</em> of the two states.</li>
+</ol>
+<p>For example, node <code>n15</code> is case 2 because there is <em>nothing in common</em> between the tips <code>h</code> and <code>g</code> (respectively states <code>1</code> and <code>0</code>). Node <code>n14</code> is case 1 because there is <em>at least one state in common</em> between the tip <code>f</code> and the node <code>n15</code> (state <code>0</code>).</p>
+<blockquote>
+<p>Important: when the case 2 is encountered, a transformation is implied in the descendants of the considered node. The score of the tree is incremented by +1.</p>
+</blockquote>
+<p>In the following example, nodes that are in case one are in light orange and nodes that imply a transformation (i.e. that add to the tree score) are in blue.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the first downpass
+<span class="kw">plot.states.matrix</span>(matrix, <span class="dt">passes =</span> <span class="dv">1</span>, <span class="dt">counts =</span> <span class="dv">2</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-7-1.png" width="681.6" /></p>
+</div>
+<div id="uppass" class="section level2">
+<h2><span class="header-section-number">2.2</span> Uppass</h2>
+<p>The downpass is sufficient for calculating the score of the tree, but some nodes might node yet be properly resolved. For example, it seems clear that the sate of node <code>n14</code> could not be <code>0</code> since both its ancestor and one of its descendants has an ambiguous state of <code>01</code>. It would less parsimonious for this node to be also ambiguous (rather than implying the loss and the subsequent gain of the state <code>1</code> on the branch fron <code>n13</code> to <code>h</code>).</p>
+<p>Similarly to the downpass, it is possible to run a traversal with the following rules:</p>
+<ol style="list-style-type: decimal">
+<li>If the current node and its ancestor have <em>all states in common</em>, the node is resolved.</li>
+<li>If there is <em>at least one state in common</em> between both left and right tips or nodes directly descending from the current node, resolve the node as being <em>the states in common</em> between its ancestor and both his descendants.</li>
+<li>If there is <em>there are no states in common</em> between its descendants, resolve the node as being <em>the states in common</em> between the ancestor and the current node.</li>
+</ol>
+<p>For example, node <code>n13</code> is already resolved (it has all its states in common with the ancestor - case 1). Node <code>n14</code> has not all its states in common with its ancestor but its two descendants (<code>n15</code> and <code>f</code>) have at least one state in common (<code>0</code>). This node is thus solved to be the states in common between both descendants (<code>01</code>) and its ancestor (<code>01</code> as well).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the first downpass
+<span class="kw">plot.states.matrix</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">counts =</span> <span class="dv">2</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-8-1.png" width="681.6" /></p>
+<p>More complex cases can be studied in the Inapp App (running in your favourite web browser) by switching the <strong><code>Reconstruction method</code></strong> to <strong><code>Normal Fitch</code></strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Running the Inapp App
+<span class="kw">runInapp</span>()</code></pre></div>
+</div>
+<div id="discussion-how-to-optimise-characters" class="section level2">
+<h2><span class="header-section-number">2.3</span> Discussion: How to optimise characters</h2>
+<ul>
+<li>Acctran vs Deltran: Neither is guaranteed to always maximise homology</li>
+<li>With transformational characters, there’s no way to decide.</li>
+<li>With neomorphic characters though, we want to assume the minimum number of innovations of the innovation.</li>
+<li>This is what we mean by maximising homology: always assume a neomorphic character is present if you can</li>
+<li>Here’s how we’d resolve the ambiguous trees from <span class="citation">(Agnarsson &amp; Miller, <a href="#ref-Agnarsson2008">2008</a>)</span>.</li>
+</ul>
+<!-- 
+## References
+ -->
+
+<p>This is one of a <a href="Index.html">series</a> of vignettes that works through the inapplicable algorithm proposed by Brazeau <em>et al.</em> <span class="citation">(<a href="#ref-ThisStudy">2017</a>)</span>.</p>
+<p>We assume that you are already familiar with the <a href="Fitch.html">Fitch algorithm</a>.</p>
+</div>
+<div id="problems-with-the-fitch-algorithm" class="section level2">
+<h2><span class="header-section-number">2.4</span> Problems with the Fitch algorithm</h2>
+<p>The Fitch algorithm counts changes in a character. It assumes that the character is applicable throughout the tree. This assumption does not lead to error if: - The character is inapplicable in fewer than three tips; or - In the trees being considered, applicable and inapplicable tokens occur in distinct regions of the tree <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>.</p>
+<div id="red-tails-blue-tails" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Red tails, blue tails</h3>
+<p>Maddison <span class="citation">(<a href="#ref-Maddison1993">1993</a>)</span> provided the following example to demonstrate the problem encountered by the Fitch algorithm when inapplicable characters were present.</p>
+<p>Consider the following tree, each node of which is supported by a number of characters. Tail colour (illustrated; 0 = red, 1 = blue) has not yet been considered, but has the potential to resolve the polytomy on the left hand side (bold).</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
+<p>Tail colour should group the red-tailed tips together, and the blue-tailed tips together, but does not establish whether the ancestor of the left-hand tail-bearing clade had a red or blue tail.</p>
+</div>
+<div id="why-reductive-coding-doesnt-work" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Why Reductive coding doesn’t work</h3>
+<p>Using reductive coding, our character looks like:</p>
+<blockquote>
+<p>Tail: (0), absent; (1), present.</p>
+<p>Tail colour: (0), red; (1), blue; (?), inapplicable.</p>
+</blockquote>
+<p>Consider the following two trees, each of which receives a score of two for the first character, Tail: absent/present. The score of the second character, for tail colour, is not as desired.</p>
+<p>The Fitch algorithm will prefer trees in which the left-hand tail-bearing clade has a blue tail, simply because the right-hand tail-bearing clade ancestrally did.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-12-1.png" width="768" /></p>
+<p>Notice the additional step reconstructed at the root node: the Fitch algorithm reconstructs a change in tail colour in a taxon that doesn’t have a tail!</p>
+<p>This reconstruction is not logically consistent.</p>
+</div>
+<div id="why-extra-state-doesnt-work" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Why Extra State doesn’t work</h3>
+<p>An alternative is to code the inapplicable token as an extra state:</p>
+<blockquote>
+<p>Tail: (0), absent; (1), present.</p>
+<p>Tail colour: (0), red; (1), blue; (2), inapplicable.</p>
+</blockquote>
+<p>This seems to resolve the problem case that we encountered with reductive coding:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-13-1.png" width="768" /></p>
+<p>Both trees now receive the same score for the ‘tail colour’ character, which contributes four steps. Two of these steps, however, correspond to steps that have already been counted in the parent character, reflecting the two gains of a tail.</p>
+<p>Although this reconstruction is now logically consistent, the gain (or loss) of the tail is now reflected in two characters – characters are not independent of one another.</p>
+<p>The outcome is that each ontologically dependent character serves to increase the weight of its parent character. The loss of a tail, for example, would incur a cost of one step in the tail character and one step in each ontologically dependent character, even though it represents a single evolutionary event.</p>
+</div>
+<div id="why-a-single-multi-state-character-doesnt-work" class="section level3">
+<h3><span class="header-section-number">2.4.4</span> Why a single multi-state character doesn’t work</h3>
+<p>A different approach is to use a single character to denote both the presence and the colour of the tail:</p>
+<blockquote>
+<p>Tail: (0), absent; (1), present, red; (2), present, blue.</p>
+</blockquote>
+<p>This seems to resolve the problem case that we encountered with reductive coding:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-14-1.png" width="768" /></p>
+<p>However, we now have a situation where the gain/loss of a tail is afforded the same weight as a change in tail colour. We ought to prefer a tree where the tail evolved once (and changed colour) to one where it evolved twice (being a different colour each time).</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-15-1.png" width="768" /></p>
+</div>
+<div id="sankoff-matrices" class="section level3">
+<h3><span class="header-section-number">2.4.5</span> Sankoff matrices</h3>
+<p>It would be possible to establish a Sankoff matrix such that a change between absent and red or absent and blue cost more than a change between red and blue, but this effectively up-weights the tail character, and it’s not clear that this is desirable – or how much this extra weight should be <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>.</p>
+<div id="symmetric" class="section level4">
+<h4><span class="header-section-number">2.4.5.1</span> Symmetric</h4>
+<p>Consider a character with three ontologically dependent characters:</p>
+<blockquote>
+<p>Tail: Absent / present</p>
+<p>Tail colour: Red / blue</p>
+<p>Tail covering: Scaly / hairy</p>
+<p>Tail shape: Straight / curly</p>
+</blockquote>
+<p>This could be coded as a single transformation series using a Sankoff matrix:</p>
+<table>
+<caption><span id="tab:unnamed-chunk-16">Table 2.1: </span>Tail: Cost to go from left state to top entry:</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">.</th>
+<th align="left">.</th>
+<th align="left">.</th>
+<th align="left">8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(0), absent</td>
+<td align="left">0</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td>(1), present, red, scaly, straight</td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td>(2), present, red, scaly, curly</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">2</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td>(3), present, red, hairy, straight</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">0</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td>.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">0</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+</tr>
+<tr class="even">
+<td>.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">0</td>
+<td align="left">.</td>
+<td align="left">.</td>
+</tr>
+<tr class="odd">
+<td>.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">0</td>
+<td align="left">.</td>
+</tr>
+<tr class="even">
+<td>(8), present, blue, hairy, curly</td>
+<td align="left">4</td>
+<td align="left">3</td>
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+<p>The first thing to note is that each additional ontologically depedent character generates disproportionately more complexity in the Sankoff matrix.</p>
+<p>Even if this additional complexity could be handled, the underlying issue remains that losing a tail, which arguably corresponds to a single evolutionary event, is allocated a large cost that only grows with the number of ontogenetically dependant characters.</p>
+</div>
+<div id="gain-and-loss-asymmetric" class="section level4">
+<h4><span class="header-section-number">2.4.5.2</span> Gain and loss asymmetric</h4>
+<p>At the cost of symmetry, one could argue that the loss of a tail requires a single transformation, whereas the gain requires the addition of a tail and the “setting” of each ontologically dependent character, rendering an asymmetric Sankoff matrix that nevertheless respects triangular inequality:</p>
+<table>
+<caption><span id="tab:unnamed-chunk-17">Table 2.2: </span>Tail: Cost to go from left to top entry:</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">.</th>
+<th align="left">.</th>
+<th align="left">.</th>
+<th align="left">8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(0), absent</td>
+<td align="left">0</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td>(1), present, red, scaly, straight</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td>(2), present, red, scaly, curly</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">2</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td>(3), present, red, hairy, straight</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">0</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td>.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">0</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+</tr>
+<tr class="even">
+<td>.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">0</td>
+<td align="left">.</td>
+<td align="left">.</td>
+</tr>
+<tr class="odd">
+<td>.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">0</td>
+<td align="left">.</td>
+</tr>
+<tr class="even">
+<td>(8), present, blue, hairy, curly</td>
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+<p>Here, though, we encounter a new problem: reconstructions involving very many losses are preferred to those involving a single gain.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-18-1.png" width="768" /></p>
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2><span class="header-section-number">2.5</span> Conclusion</h2>
+<p>No coding mechanism can generate consistent and logically meaningful tree scores when employing the Fitch algorithm. The inapplicable state needs treating differently from other states. A <a href="OurSolution.html">new algorithm</a> is needed. <!-- 
+## References
+ --></p>
+
+<!-- # Inapplicable data in a parsimony setting
+
+This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
+
+We assume that you are already familiar with the [Fitch algorithm](Fitch.html)
+and its [shortcomings](Problems.html). -->
+</div>
+<div id="counting-steps-is-doomed" class="section level2">
+<h2><span class="header-section-number">2.6</span> Counting steps is doomed</h2>
+<p>Plenty of people informally have attempted to solve the problem by counting steps. (E.g. that U of Texas PhD that we found; goloboff pers. comm.?)</p>
+<p>It’ll never work. here’s why.</p>
+<p>One example: multiple independent gains are preferred because they avoid adding steps. <!-- 
+## References
+ --></p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Fitch1971">
+<p>Fitch, W. M. (1971). Toward defining the course of evolution: minimum change for a specific tree topology. <em>Systematic Biology</em>, <em>20</em>(4), 406–416. doi:<a href="https://doi.org/10.1093/sysbio/20.4.406">10.1093/sysbio/20.4.406</a></p>
+</div>
+<div id="ref-Agnarsson2008">
+<p>Agnarsson, I., &amp; Miller, J. A. (2008). Is ACCTRAN better than DELTRAN? <em>Cladistics</em>, <em>24</em>(6), 1032–1038. doi:<a href="https://doi.org/10.1111/j.1096-0031.2008.00229.x">10.1111/j.1096-0031.2008.00229.x</a></p>
+</div>
+<div id="ref-ThisStudy">
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2017). Morphological phylogenetic analysis with inapplicable data. <em>bioR<span class="math inline">\(\chi\)</span>iv</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+</div>
+<div id="ref-Maddison1993">
+<p>Maddison, W. P. (1993). Missing data versus missing characters in phylogenetic analysis. <em>Systematic Biology</em>, <em>42</em>(4), 576–581. doi:<a href="https://doi.org/10.1093/sysbio/42.4.576">10.1093/sysbio/42.4.576</a></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="our-solution.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/01_Fitch.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

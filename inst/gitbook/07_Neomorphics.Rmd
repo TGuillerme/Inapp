@@ -2,15 +2,15 @@
 title: "Coding ontologically dependent neomorphic characters"
 author: "Martin R. Smith"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-bibliography: ../inst/REFERENCES.bib
+bibliography: [References.bib, packages.bib]
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
-vignette: >
-  %\VignetteIndexEntry{7. Neomorphic characters}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  html_document: default
+  pdf_document: default
 ---
-```{R initialize, message=FALSE, include=FALSE}
+
+
+```{r, message=FALSE, include=FALSE}
 library('knitr'); library('Inapp')
 quickPlot <- function (tree, character, na=TRUE, legend.pos='bottomleft') {
   tree$edge.length <- rep(1, dim(tree$edge)[1])
@@ -32,7 +32,9 @@ ap <- c("Absent", "Present")
 rb <- c("Red", "Blue")
 ```
 
-## Neomorphic and transformational characters
+## Coding ontologically dependent neomorphic characters
+
+### Neomorphic and transformational characters
 
 Researchers should be aware that our algorithm treats nemorphic characters as though they are transformational; that is, "absence" of a feature is seen as equally informative as "presence".
 
@@ -41,7 +43,7 @@ no reason to assume that the tail was primitively simple, or that serrations nec
 
 In other cases, this may not be desirable.  As an example, consider a complex character, such as the eyespots on the tail of a peacock.  
 
-```{r tail eyespot characters, echo = FALSE, results='asis'}
+```{r, echo = FALSE, results='asis'}
 
 tail <- c(0, 0, 0, 1, 1, 1, 1, 1, 1)
 eyespot <- c("-", "-", "-", 0,0,0,0,1,1)
@@ -59,11 +61,11 @@ common ancestry to those that imply independent gains of this complex characteri
 
 It is less obvious whether the _absence_ of such complex features should convey grouping information.  This decision ought to be defended for individual characters by individual researchers, but researchers should be aware of the implications of their chosen coding strategy.
 
-### Three trees
+#### Three trees
 
 Consider the following three scenarios:
 
-```{R tail spot alternatives, echo=FALSE, fig.height=8, fig.width=6}
+```{r, echo=FALSE, fig.height=8, fig.width=6}
 setPar(c(3, 1))
 par(mar=c(1, 0.2, 2, 0.2), oma=c(0,1,1,1))
 eap <- c("Eyespots absent", "Eyespots present")
@@ -82,24 +84,24 @@ vignettePlot(eyesHaveIt, col, state.labels = eap, passes=4, main="Two non-spotte
 
 Each of these trees implies two independent origins of the tail.  Their score differs only with respect to the eyespots character.
 
-#### One tail spotted, one not
+##### One tail spotted, one not
 The first tree has the minimum possible score for the eyespots character.  (A score of one would also be obtained if the tail evolved once, and a single transformation occurred between 0 and 1 -- but we are only considering trees where the tail evolved twice.)  
 
-#### Two spot appearances
+##### Two spot appearances
 The next tree has a score of two for the eyespots character, which is obviously correct: Eye spots, a complex character, have evolved twice independently, which is not as parsimonious.
 
-#### Two non-spotted appearances
+##### Two non-spotted appearances
 The final tree also has a score of two for the eyespots character: even though eyespots have only evolved once, just as in the first tree.  The score of two occurs because the "absence of eyespots" has evolved twice.  
 
-#### Evaluation
+##### Evaluation
 It is possible that a researcher might feel uncomfortable grouping taxa on the basis of the non-occurrence of a complex feature that did not occur in their common ancestor.  Putting this another way, it is not clear that the fact that a feature has not evolved in two instances represents a homoplasy.  The absence of eyespots in a tail is not an evolutionary innovation -- it is an inheritance from a common ancestor that did not have eyespots (and did not have a tail).
 
-#### Implications
+##### Implications
 A researcher that argues that the absence of a feature contains phylogenetic information must surely include all properties of a tail that are only observed in a single taxon (because the absence of that feature in other taxa also contains grouping information).  A researcher may also include all properties of a tail that do not occur in any of the taxa of interest, for these too will influence tree topology: [parsimony uninformative characters inform
 parsimony](CodingData.html).
 
 
-```{r Glowing in the dark 2, echo = FALSE, results='asis'}
+```{r, echo = FALSE, results='asis'}
 tail <- c(0, 0, 0, 1, 1, 1, 1)
 gitd <- c("-", "-", "-", "{01}","{01}",0,0)
 elec <- c("-", "-", "-", "{01}","{01}",0,0)
@@ -114,7 +116,7 @@ kable(unobserved, capiton="Coding")
 
 Note that each of the unobserved characters provides evidence against independent origins of the tail, preferring instead independent losses:
 
-```{R unobserved character 2, echo=FALSE, fig.height=3.2, fig.width=8}
+```{r, echo=FALSE, fig.height=3.2, fig.width=8}
 setPar(c(1, 2))
 par(oma=c(1,1,3,1))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
@@ -150,7 +152,7 @@ kable(unobserved, capiton="Coding")
 
 This can be handled by the Fitch algorithm, and works well in simple cases:
 
-```{R unobserved character 3, echo=FALSE, fig.height=3, fig.width=8}
+```{r, echo=FALSE, fig.height=3, fig.width=8}
 par(mfrow=c(1, 2), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
@@ -165,7 +167,7 @@ quickPlot(worse, col, na=FALSE)
 
 The behaviour only becomes questionable when a tail is secondarily lost, then re-gained, as the loss of a tail seems like it should be a single evolutionary step, but also causes the loss of all contingent characters, which must then "reevolve" as though they had never existed:
 
-```{R loss and gain, echo=FALSE, fig.width=4, fig.height=4}
+```{r, echo=FALSE, fig.width=4, fig.height=4}
 par(mfrow=c(1, 1), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
 imbal <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, G))))));")
 tail <- "1100011"
@@ -179,14 +181,14 @@ mtext("Tail eyespots: (0), absent; (1), present", side=1, line=0, outer=TRUE)
 
 Perhaps there are cases -- as might be seen in phenotypic plasticity -- where a tail might be lost, and then re-activate preexisting genes when it evolves again?  This starts to require an explicit model of evolution, however, which is somewhat beyond the remit of parsimony.
 
-### Recommendation
+#### Recommendation
 - Neomorphic characters should probably be coded as absent everywhere they are absent, whether this is because there's no tail or because there's a tail without the complex feature.
 
 
 
 If you're coding a neomorphic character as transformational, then you encounter problems.
 
-```{R Untitled 4, echo=FALSE, fig.height=3, fig.width=6}
+```{r, echo=FALSE, fig.height=3, fig.width=6}
 setPar()
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")

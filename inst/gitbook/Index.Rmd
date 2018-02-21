@@ -1,12 +1,12 @@
 ---
-title: "Index to vignettes"
-author: "Martin R, Smith"
+title: "Inapplicable data"
+author: "Martin D Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin R Smith (martin.smith@durham.ac.uk)""
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 vignette: >
-  %\VignetteIndexEntry{4. Our solution}
+  %\VignetteIndexEntry{Index}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

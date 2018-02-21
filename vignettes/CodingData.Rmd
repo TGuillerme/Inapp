@@ -39,7 +39,7 @@ We assume that you'll already have read the [description](OurAlgorithm.html) of 
 
 ## How this algorithm weights against multiple innovations
 
-We discussed in an [earlier vignette](FailedSolutions.html) that, if we only 
+We discussed in an [earlier chapter](FailedSolutions.html) that, if we only 
 penalise transformations between states in subsidiary characters, 
 trees that imply multiple origins of the parent character receive much lower scores
 than those in which the parent character evolves once (but its subsidiary characteristics
@@ -131,9 +131,16 @@ mtext("Appendage condition", outer=TRUE)
 
 
 
-## A parsimony uninformative character that informs parsimony!
+## "Parsimony uninformative" characters can inform parsimony (!)
 
-- All tails are blue.  Let's say that they are all blue for some complex molecular reason, such that it is most parsimonious if "blueness" has a single evolutionary origin.
+Consider a situation in which every tail in the observed taxa is blue  -- but
+the same complex molecular machinery is responsible for this blue colouration in 
+every taxon.
+
+If its underlying mechanism is considered biologically and evolutionarily meaningful, then 
+a systematist might opt to include tail colour as an additional character, even
+though it is invariant in the taxa of interest.  Reconstructions that attribute this
+common colouration to common ancestry will be more parsimonious than those that do not.
 
 ```{r tail colour characters, echo = FALSE, results='asis'}
 tail <- c(0, 0, 0, 0, 1, 1, 1, 1)
@@ -142,17 +149,14 @@ bcol <- c(1,1, 2,2,2,2, 1,1)
 blueTails <- matrix(c(tail, col, bcol), byrow=TRUE, ncol=length(tail))
 colnames(blueTails) <- LETTERS[seq_along(tail)]
 rownames(blueTails) <- c("Tail: (0), absent; (1), present",
-                         "Tail colour: (-), inapplicable; (1), blue",
+                         "Tail colour: (1), blue; (-), inapplicable",
                          "Body colour: (1), black; (2), white")
 kable(blueTails, capiton="Coding")
 ```
 
-- This complex molecular reason is grounds to suspect that the tails have a common ancestor
-- More formally, we wish to attribute this complex molecular reason to common ancestry, rather than homoplasy
-- Thus "blueness" represents a separate character that has the same distribution as tails (or a sbuset thereof, if some tails are of uncertain colour)
+Let's compare two trees.  The first groups taxa based on the presence of tails; the other
+groups taxa based on body colour.  
 
-Let's compare two trees.  One groups taxa based on the presence of tails; the other
-groups taxa based on body colour.
 
 ```{R invariant yet informative, echo=FALSE, fig.height=3, fig.width=8}
 tailTree <- ape::read.tree(text="((((A:1, B:1):1, C:1):1, D:1):1, (E:1, (F:1, (G:1, H:1):1):1):1);")
@@ -161,24 +165,25 @@ tail <- "00001111"
 col <- "----1111"
 bcol <- "11222211"
 
-par(mfrow=c(1, 2), mar=c(0, 0.2, 0.2, 0.2), oma=c(0, 0, 2, 0), cex=0.8)
-quickPlot(tailTree, tail, FALSE)
-quickPlot(bodyTree, tail, FALSE)
+par(mfrow=c(1, 2), mar=c(0, 0.2, 1.2, 0.2), oma=c(0, 0, 2, 0), cex=0.8)
+vignettePlot(tailTree, tail, FALSE, main="Single tail gain\nTotal score: 3")
+vignettePlot(bodyTree, tail, FALSE, main="Single body colour change\nTotal score: 4")
 mtext("Tail presence", outer=TRUE)
 
 
-quickPlot(tailTree, col)
-quickPlot(bodyTree, col)
+vignettePlot(tailTree, col)
+vignettePlot(bodyTree, col)
 mtext("Tail colour", outer=TRUE)
 
-quickPlot(tailTree, bcol, FALSE)
-quickPlot(bodyTree, bcol, FALSE)
+vignettePlot(tailTree, bcol, FALSE)
+vignettePlot(bodyTree, bcol, FALSE)
 mtext("Body colour", outer=TRUE)
 ```
 
-- So the tree on the left, which reconstructs a single origin of the tail, a single origin of a blue tail colouration, and two changes in body colour, is preferred to the tree on the right, which reconstructs a single change in body colour but two origins of the tail, and two origins of blue colouration on the tail.
+In trees in which the tail has a single origin, blue colouration also evolves once -- even though So the tree on the left, which reconstructs a single origin of the tail, a single origin of a blue tail colouration, and two changes in body colour, is preferred to the tree on the right, which reconstructs a single change in body colour but two origins of the tail, and two origins of blue colouration on the tail.
 
 - We should include this character if it's meaningful.  But not if it's not (e.g. number of base pairs in a tail).
+
 
 
 ### Difficulties

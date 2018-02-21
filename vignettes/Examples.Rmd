@@ -134,3 +134,8 @@ goloPlot(taiE, clrE, 'Tree E: Total score 7', TRUE)
 ```
 
 
+### Difficulties
+<mark>Here are some marginal cases where discretion is required.</mark>
+
+<mark>Here are some trees that show why we would code things our way
+this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!</mark>

@@ -184,12 +184,6 @@ Where the tail has a single origin (one step), blue colouration also evolves onc
 
 If the invariant tail colour character had not been included, both trees would have the same score, and there would be nothing to choose between them.  As such, the inclusion or exclusion of invariant characters must be carefully evaluated: if there is a case that an invariant (ontologically dependent) character implies an exclusive common ancestry between those taxa that share it, then it should be included; if not, then it should be excluded.
 
-### Difficulties
-<mark>Here are some marginal cases where discretion is required.</mark>
-
-<mark>Here are some trees that show why we would code things our way
-this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!</mark>
-
 [Return to index](Index.html) | [Coding neomorphic characters](Neomorphics.html) | [Coding ambiguous data](AmbiguousData.html)
 
 ## References

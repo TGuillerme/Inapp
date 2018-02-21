@@ -2,7 +2,7 @@
 title: "A four-pass algorithm for inapplicable data"
 author: "Thomas Guillerme"
 date: "`r Sys.Date()`"
-bibliography: [References.bib, packages.bib]
+bibliography: [../References.bib, packages.bib]
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 output:
   html_document: default

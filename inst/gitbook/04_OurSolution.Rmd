@@ -2,7 +2,7 @@
 title: "Counting homologies is the answer"
 author: "Vignette Author"
 date: "`r Sys.Date()`"
-bibliography: [References.bib, packages.bib]
+bibliography: [../References.bib, packages.bib]
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 output:
   html_document: default

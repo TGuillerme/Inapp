@@ -166,8 +166,8 @@ col <- "----1111"
 bcol <- "11222211"
 
 par(mfrow=c(1, 2), mar=c(0, 0.2, 1.2, 0.2), oma=c(0, 0, 2, 0), cex=0.8)
-vignettePlot(tailTree, tail, FALSE, main="Single tail gain\nTotal score: 3")
-vignettePlot(bodyTree, tail, FALSE, main="Single body colour change\nTotal score: 4")
+vignettePlot(tailTree, tail, FALSE, main="Single tail gain\nTotal score: 3", cex.main=0.8)
+vignettePlot(bodyTree, tail, FALSE, main="Single body colour change\nTotal score: 4", cex.main=0.8)
 mtext("Tail presence", outer=TRUE)
 
 
@@ -180,11 +180,9 @@ vignettePlot(bodyTree, bcol, FALSE)
 mtext("Body colour", outer=TRUE)
 ```
 
-In trees in which the tail has a single origin, blue colouration also evolves once -- even though So the tree on the left, which reconstructs a single origin of the tail, a single origin of a blue tail colouration, and two changes in body colour, is preferred to the tree on the right, which reconstructs a single change in body colour but two origins of the tail, and two origins of blue colouration on the tail.
+Where the tail has a single origin (one step), blue colouration also evolves once (zero steps), but body colour must change twice (two steps; total score = three).  But where body colour changes only once (one step), the tail necessarily arises twice (two steps), meaning two independent origins of its distinctive blue colouration (one extra homoplasy; total score = four)
 
-- We should include this character if it's meaningful.  But not if it's not (e.g. number of base pairs in a tail).
-
-
+If the invariant tail colour character had not been included, both trees would have the same score, and there would be nothing to choose between them.  As such, the inclusion or exclusion of invariant characters must be carefully evaluated: if there is a case that an invariant (ontologically dependent) character implies an exclusive common ancestry between those taxa that share it, then it should be included; if not, then it should be excluded.
 
 ### Difficulties
 <mark>Here are some marginal cases where discretion is required.</mark>

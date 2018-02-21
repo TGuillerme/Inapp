@@ -18,10 +18,6 @@ data("brewer")
 
 [comment]: # Current status: First draft, needs copyediting, contributions welcome!
 
-This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
-
-We assume that you are already familiar with the [Fitch algorithm](Fitch.html).
-
 ## Problems with the Fitch algorithm
 
 The Fitch algorithm counts changes in a character.
@@ -269,7 +265,7 @@ nodelabels(c("1>8 (+3)", rep("1>0 (+1)",  2), rep("8>0 (+1)", 2)), node=c(11:13,
 
 No coding mechanism can generate consistent and logically meaningful tree scores
 when employing the Fitch algorithm.  The inapplicable state needs treating 
-differently from other states.  A [new algorithm](OurSolution.html) is needed.
+differently from other states.  A new algorithm is needed.
 <!-- 
 ## References
  -->

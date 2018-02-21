@@ -103,7 +103,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">Inapplicable data in a parsimony setting</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Inapplicable data in a parsimony setting</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Inapplicable data in a parsimony setting</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#the-packages"><i class="fa fa-check"></i><b>1.1</b> The packages</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html"><i class="fa fa-check"></i><b>2</b> The Fitch algorithm</a><ul>
 <li class="chapter" data-level="2.1" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#downpass"><i class="fa fa-check"></i><b>2.1</b> Downpass</a></li>
 <li class="chapter" data-level="2.2" data-path="the-fitch-algorithm.html"><a href="the-fitch-algorithm.html#uppass"><i class="fa fa-check"></i><b>2.2</b> Uppass</a></li>
@@ -131,10 +133,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.3.2" data-path="our-solution.html"><a href="our-solution.html#pass-3"><i class="fa fa-check"></i><b>3.3.2</b> Pass 3</a></li>
 <li class="chapter" data-level="3.3.3" data-path="our-solution.html"><a href="our-solution.html#pass-4"><i class="fa fa-check"></i><b>3.3.3</b> Pass 4</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="our-solution.html"><a href="our-solution.html#inapplicable-data-in-a-parsimony-setting-1"><i class="fa fa-check"></i><b>3.4</b> Inapplicable data in a parsimony setting</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="our-solution.html"><a href="our-solution.html#how-this-algorithm-weights-against-multiple-innovations"><i class="fa fa-check"></i><b>3.4.1</b> How this algorithm weights against multiple innovations</a></li>
-<li class="chapter" data-level="3.4.2" data-path="our-solution.html"><a href="our-solution.html#multiple-dependencies"><i class="fa fa-check"></i><b>3.4.2</b> Multiple dependencies</a></li>
-<li class="chapter" data-level="3.4.3" data-path="our-solution.html"><a href="our-solution.html#a-parsimony-uninformative-character-that-informs-parsimony"><i class="fa fa-check"></i><b>3.4.3</b> A parsimony uninformative character that informs parsimony!</a></li>
+<li class="chapter" data-level="3.4" data-path="our-solution.html"><a href="our-solution.html#how-this-algorithm-weights-against-multiple-innovations"><i class="fa fa-check"></i><b>3.4</b> How this algorithm weights against multiple innovations</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="our-solution.html"><a href="our-solution.html#a-parsimony-uninformative-character-that-informs-parsimony"><i class="fa fa-check"></i><b>3.4.1</b> A parsimony uninformative character that informs parsimony!</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="our-solution.html"><a href="our-solution.html#coding-ontologically-dependent-neomorphic-characters"><i class="fa fa-check"></i><b>3.5</b> Coding ontologically dependent neomorphic characters</a><ul>
 <li class="chapter" data-level="3.5.1" data-path="our-solution.html"><a href="our-solution.html#neomorphic-and-transformational-characters"><i class="fa fa-check"></i><b>3.5.1</b> Neomorphic and transformational characters</a></li>
@@ -177,6 +177,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="inapplicable-data-in-a-parsimony-setting" class="section level1">
 <h1><span class="header-section-number">1</span> Inapplicable data in a parsimony setting</h1>
 <p>This series of vignettes works through the inapplicable algorithm proposed by Brazeau <em>et al.</em> <span class="citation">(<a href="#ref-ThisStudy">2017</a>)</span>.</p>
+<div id="the-packages" class="section level2">
+<h2><span class="header-section-number">1.1</span> The packages</h2>
+<p>Illustration of the inapplicable algorithm is based on the <a href="https://github.com/TGuillerme/Inapp">Inapp</a> <code>R</code> package. This package allows to visualise how the algorithm is counting the score of a tree for a given character with different algorithms treating inapplicable data differently. It allows users to input any tree and character.</p>
+<!-- badges out start -->
+<p><a href="https://travis-ci.org/TGuillerme/Inapp"><img src="https://travis-ci.org/TGuillerme/Inapp.svg?branch=master" alt="Build Status" /></a> <a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed." /></a> <a href="https://codecov.io/gh/TGuillerme/Inapp"><img src="https://codecov.io/gh/TGuillerme/Inapp/branch/master/graph/badge.svg" alt="codecov" /></a> <!-- badges out end   --></p>
+<p>To actually perform tree search, pleas have a look at the <a href="https://github.com/ms609/inapplicable">inapplicable</a> <code>R</code> package. This package is currently in development but allows some heuristic searches on reasonable sized matrices.</p>
+<!-- badges out start -->
+<p><a href="https://travis-ci.org/ms609/inapplicable"><img src="https://travis-ci.org/ms609/inapplicable.svg?branch=master" alt="Build Status" /></a> <a href="http://www.repostatus.org/#wip"><img src="http://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a> <a href="https://codecov.io/gh/ms609/inapplicable"><img src="https://codecov.io/gh/ms609/inapplicable/branch/master/graph/badge.svg" alt="codecov" /></a> <!-- badges out end   --></p>
+<p>Both these <code>R</code> packages are based on the <a href="https://github.com/mbrazeau/morphylib">morphylib</a> <code>C</code> library that allows to score characters with inapplicable using our new algorithm. This library will be eventually implemented in <a href="http://www.morphyproject.org/">Morphy</a>, a fully functional <code>C</code> based API for phylogenetic searches.</p>
+<!-- badges out start -->
+<p><a href="https://travis-ci.org/mbrazeau/morphylib"><img src="https://travis-ci.org/mbrazeau/morphylib.svg?branch=master" alt="Build Status" /></a> <a href="https://coveralls.io/github/mbrazeau/MorphyLib?branch=development"><img src="https://coveralls.io/repos/github/mbrazeau/MorphyLib/badge.svg?branch=development" alt="Coverage Status" /></a> <a href="https://zenodo.org/badge/latestdoi/90367119"><img src="https://zenodo.org/badge/90367119.svg" alt="DOI" /></a> <!-- badges out end   --></p>
 <!-- ## Contents
 
 - The Fitch Algorithm:
@@ -208,6 +219,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
  -->
+</div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">

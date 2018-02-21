@@ -281,8 +281,14 @@ vignettePlot(eyesHaveIt, '000000011', state.labels = eap, passes=4, main="Tail w
 #### Evaluation
 It is possible that a researcher might feel uncomfortable grouping taxa on the basis of the non-occurrence of a complex feature that did not occur in their common ancestor.  Putting this another way, it is not clear that the fact that a feature has not evolved in two instances represents a homoplasy.  The absence of eyespots in a tail is not an evolutionary innovation -- it is an inheritance from a common ancestor that did not have eyespots (and did not have a tail).-->
 
-#### Implications
-A researcher that argues that the absence of a feature contains phylogenetic information must surely include all properties of a tail that are only observed in a single taxon (because the absence of that feature in other taxa also contains grouping information).  A researcher may also include all properties of a tail that do not occur in any of the taxa of interest, for these too will influence tree topology: [parsimony uninformative characters inform
+One implication of this coding strategy is that the loss of a tail (a single evolutionary event) causes the loss of all contintent characters -- characters are not independent.  Whether or not this is desirable could be a matter for debate -- is a reconstruction that invokes the loss of a complex tail more parsimonious than one that invokes the loss of a simple tail?
+
+It would be straightforwards to construct an algorithm that does not penalise losses arising from the loss of a parent character, but perhaps more valuable to think carefully about how existing models of evolution might be adapted to take account of character non-independence.
+
+
+### Does absence contain phylogenetic information?
+
+In some cases, the absence of a feature (e.g. serrations) may represent a transformational character and should thus be coded as such.  But this decision is an important one and merits careful thought.  A researcher may or may not be justified in including properties of a tail that occur in only one, or even in none, of the taxa of interest, for if absence is informative for parsimony, then such characters will influence tree topology: [parsimony uninformative characters inform
 parsimony](CodingData.html).
 
 

@@ -18,14 +18,15 @@
 #' @importFrom grDevices dev.new dev.off
 #' @export
 vignettePlot <- function (tree, character, na=TRUE, legend.pos='bottomleft',
-                          passes=integer(0), state.labels = character(0), ...) {
+                          passes=if(na) 1:4 else 1:2, state.labels = character(0),
+                          counts=if(na) 1:2 else 2, ...) {
   tree$edge.length <- rep(1, dim(tree$edge)[1])
   reconstruction <- apply.reconstruction(tree, character,
                                          method=if(na) "NA" else 'Fitch',
                                          match.tip.char=TRUE)
   dev.new(); plot(tree, direction='upwards', ...); corners <- par('usr'); dev.off()
   plot(reconstruction,
-       passes=if(length(passes) > 0) passes else if(na) 1:4 else 1:2, counts=if(na) 1:2 else 2,
+       passes=passes, counts=counts,
        direction='upwards', legend.pos=legend.pos, state.labels=state.labels,
        col.states=TRUE, use.edge.length=TRUE,
        x.lim=c(-3, corners[2]), y.lim=c(-1, corners[4]+0.1), ...)

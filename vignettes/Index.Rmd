@@ -31,7 +31,7 @@ This series of vignettes works through the inapplicable algorithm proposed by Br
   - [A description](OurAlgorithm.html)
     - Status: Draft complete? (TG)
   - [Implications for character coding](CodingData.html)
-    - Status: In progress (MS)
+    - Status: Draft complete (MS)
   - [Coding ambiguity](AmbiguousData.html)
     - Status: Draft complete (MS)
   - [Some worked examples](Examples.html)

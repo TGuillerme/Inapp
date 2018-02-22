@@ -72,9 +72,9 @@ A sample character matrix might look like this:
 ```{R Multiple dependencies, echo=FALSE, asis=TRUE}
 nNone <- 3
 c1 <- c(rep(0, nNone), rep(1, 10))
-c2 <- c(rep('-', nNone), rep(0, 2), rep(1, 4), rep(2, 4))
-c3 <- c(rep('-', nNone + 2), 0, 0, 1, 1, rep('-', 4))
-c4 <- c(rep('-', nNone + 2 + 4), 0, 0, 1, 1)
+c2 <- c(rep('-', nNone), rep(1, 2), rep(2, 4), rep(3, 4))
+c3 <- c(rep('-', nNone + 2), 1, 1, 2, 2, rep('-', 4))
+c4 <- c(rep('-', nNone + 2 + 4), 1, 1, 2, 2)
 mDep <- matrix(c(c1, c2, c3, c4), byrow=TRUE, ncol=length(c1))
 colnames(mDep) <- LETTERS[seq_along(c1)]
 rownames(mDep) <- c("Appendages: (0), absent; (1), present.",

@@ -11,19 +11,78 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Inapplicable data in a parsimony setting
+```{R setup, echo=FALSE, message=FALSE}
+library('Inapp')
+library('knitr')
+library('ape')
 
-This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
+ap <- c("Absent", "Present")
+rb <- c("Red", "Blue")
+orb <- c('', rb)
 
-We assume that you are already familiar with the [Fitch algorithm](Fitch.html)
-and its [shortcomings](Problems.html).
+yesCol <- "#7fbf7be0"
+noCol <- "#fc8d5960"
 
-## Counting steps is doomed
+setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 1, 0.2), oma=c(0,0,0,0), cex=0.7)
+```
 
-Plenty of people informally have attempted to solve the problem by counting steps. (E.g. that U of Texas PhD that we found; goloboff pers. comm.?)
+# The problem with counting steps
 
-It'll never work. here's why.
+If a new algorithm is called for, how should it work?
 
-One example: multiple independent gains are preferred because they avoid adding steps.
+One promising approach is to count transitions between applicable states, but not transitions from the applicable state to the inapplicable state:
 
-## References
+```{R, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
+tree <- ape::read.tree(text="((((a, b), c), d), (e, (f, ((g, h), (i, j)))));")
+vignettePlot(tree, '11----1122', passes=1:2, legend.pos='none',
+             main="Tail colour", state.labels=orb, counts=2)
+
+nodelabels(node=c(13, 16), pch=15, col=noCol, cex=7)
+
+legend('bottomleft', bty='n',
+       c('State change: +1 step', 'Change from inapplicable to applicable: +0 steps'),
+       pch=15, pt.cex=1.5, col=c(yesCol, noCol))
+```
+
+The problem here is that the way to minimise the number of steps is to maximise the number of independent gains of a parent character.
+
+```{R, echo=FALSE, fig.width=8, fig.height=16}
+comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
+comb5i <- ape::read.tree(text="(((((vv, c), d), ww), f), (g, (xx, (j, (k, (yy, (m, (n, zz))))))));")
+
+char <- '0000000011111'
+sub1 <- '--------12222'
+sub2 <- '--------11222'
+sub3 <- '--------11122'
+sub4 <- '--------11122'
+sub5 <- '--------11112'
+
+setPar(c(6, 2))
+Compare <- function (char.states, char.label, states.labels, na=TRUE) {
+    vignettePlot(comb15, char.states, na=na, 
+                 counts=2, passes=4 - (2 * na),
+                 legend.pos='none', state.labels=states.labels)
+    legend('topleft', char.label, bty='n')
+    legend('bottomleft', pch=15, pt.cex=1.5, col=yesCol, bty='n', "+1 step")
+    if (!na) title('Single gain of tail (total score = 6)')
+    
+    vignettePlot(comb5i, char.states, na=na, 
+                 counts=2,  passes=4 - (2 * na),
+                 legend.pos='none', state.labels=states.labels)
+    if (na)  legend('bottomleft', pch=1 , pt.cex=1.5, col=yesCol, bty='n', "+0 steps") 
+    if (!na) legend('bottomleft', pch=15, pt.cex=1.5, col=yesCol, bty='n', "+5 steps") 
+    if (!na) title('Five gains of tail (total score = 5)')
+        
+}
+
+Compare(char, 'Tail, presence', ap, FALSE)
+Compare(sub1, 'Tail, colour', orb)
+Compare(sub2, 'Tail, covering', c("", "scaly", "hairy"))
+Compare(sub3, 'Tail, shape', c("", "straight", "curly"))
+Compare(sub4, 'Tail, margin', c("", "smooth", "serrated"))
+Compare(sub5, 'Tail, poison barbs', c("", "absent", "present"))
+
+
+```
+

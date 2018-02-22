@@ -67,13 +67,13 @@ apply.reconstruction <- function(tree, character, method = "NA", inapplicable = 
 
     ## Setting the list of passes
     if(method == "NA") {
-        passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
+        pass_functions <- list(first.downpass, first.uppass, second.downpass, second.uppass)
     } else {
-        passes <- list(fitch.downpass, fitch.uppass)
+        pass_functions <- list(fitch.downpass, fitch.uppass)
     }
 
     ## Applying the passes for each node
-    for (pass in passes) {
+    for (pass in pass_functions) {
         states_matrix <- pass(states_matrix)
     }
 

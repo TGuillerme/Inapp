@@ -88,6 +88,9 @@ reconstructs a change in tail colour in a taxon that doesn't have a tail!
 
 This reconstruction is not logically consistent.
 
+### An exception
+
+If the parent character can parsimoniously be reconstructed as present at every internal node in a single unbroken region of a tree, and nowhere else, then reductive coding does work successfully.  Reductive coding may therefore be appropriate if only a subset of all possible trees are under consideration.  It is always appropriate (i.e. for all trees) if there are fewer than three inapplicable tokens within a character.
 
 ## Why Extra State doesn't work
 
@@ -262,6 +265,7 @@ legend('bottomleft', bty='n', bg = NULL, pch=15, col="#af8dc3e0", pt.cex=1.8,
 nodelabels(c("1>8 (+3)", rep("1>0 (+1)",  2), rep("8>0 (+1)", 2)), node=c(11:13, 16:17), 
            bg="#af8dc300", pos=3, frame='no', col="#af8dc3e0", font=2)
 ```
+
 
 ## Conclusion
 

@@ -93,12 +93,12 @@ par(mfrow=c(4, 2), cex=0.7, mar=c(0, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0))
 
 Contrast <- function (character, char.label, states.labels, y=0, header=FALSE) {
     vignettePlot(goodtree, character, na=!header, 
-                 legend.pos='topleft', state.labels=states.labels)
+                 legend.pos='topleft', state.labels=states.labels, passes = 4 - (2 * header))
     text(14, y, char.label, pos=2)
     ape::tiplabels(LETTERS[1:13], frame='none', adj=c(0.5, -1.5))
     if (header) title("An optimal tree")
     vignettePlot(badtree, character, na=!header, 
-                 legend.pos='topleft', state.labels=states.labels)
+                 legend.pos='topleft', state.labels=states.labels, passes = 4 - (2 * header))
     text(14, y, char.label, pos=2)
     ape::tiplabels(badtree$tip.label, frame='none', adj=c(0.5, -1.5))
     if (header) title("A suboptimal tree")
@@ -124,7 +124,7 @@ setPar(c(1, 2))
 Contrast('-------11----', "Serration spacing:", c('', "Regular", "Irregular"), y=0.5)
 ```
 
-If you are surprised that the two trees receive a different score for this invariant character, read on...
+To readers familiar with standard Fitch parsimony, it will be surprising to notice that the two trees receive a different score for this invariant character.  When our algorithm is employed, invariant characters that contain inapplicable tokens can inform parsimony.
 
 ## Invariant characters can inform parsimony
 
@@ -154,7 +154,7 @@ groups taxa based on body colour.
 
 
 ```{R, echo=FALSE, fig.height=3, fig.width=8}
-tailTree <- ape::read.tree(text="((((A:1, B:1):1, C:1):1, D:1):1, (E:1, (F:1, (G:1, H:1):1):1):1);")
+tailTree <- ape::read.tree(text="((((A:1, B:1), C), D:1):1, (E:1, (F:1, (G, H))));")
 bodyTree <- ape::read.tree(text="((((F, E), C), D), (A, (B, (G, H))));")
 tail <- "00001111"
 col <- "----1111"
@@ -185,12 +185,12 @@ The same effect of course follows if a character has an additional state that is
 
 ```{R, echo = FALSE, results='asis'}
 tail <- c(0, 0, 0, 0, 1, 1, 1, 1, 1)
-col <- c(rep('-', 4), rep(1, 4), 2)
+col <- c(rep('-', 4), rep(1, 4), '**2**')
 bcol <- c(1,1, 2,2,2,2, 1,1, 1)
 blueTails <- matrix(c(tail, col, bcol), byrow=TRUE, ncol=length(tail))
 colnames(blueTails) <- LETTERS[seq_along(tail)]
 rownames(blueTails) <- c("Tail: (0), absent; (1), present",
-                         "Tail colour: (1), blue; (2), red; (-), inapplicable",
+                         "Tail colour: (1), red; (2), blue; (-), inapplicable",
                          "Body colour: (1), black; (2), white")
 kable(blueTails, capiton="Coding")
 ```
@@ -218,7 +218,7 @@ independently, in an ontologically dependent character will incur a penalty rela
 
 With transformational characters, this is often a desideratum -- as discussed above.
 
-In particular neomorphic characters, however, it will not be desirable to penalise trees in which the absence of a character arises multiple times.
+In particular neomorphic characters, however, it may not be desirable to penalise trees in which the _absence_ of a character arises multiple times.
 
 Let us imagine that there is a biological reason to believe that tails in a particular
 group lacked poisoned barbs when they first evolved: that is, poisoned barbs are an 
@@ -231,7 +231,7 @@ eyespot <- c("-", "-", "-", 0,0,0,0,1,1)
 tailEyes <- matrix(c(tail, eyespot), byrow=TRUE, ncol=length(tail))
 colnames(tailEyes) <- LETTERS[seq_along(tail)]
 rownames(tailEyes) <- c("Tail: (0), absent; (1), present",
-                        "Tail barbs: (-), inapplicable; (0), absent; (1), present")
+                        "Tail, poison barbs: (-), inapplicable; (0), absent; (1), present")
 kable(tailEyes, capiton="Coding")
 ```
 
@@ -261,25 +261,22 @@ scenPar()
 vignettePlot(splitSpots, col, state.labels = eap, passes=4, main="Two barb appearances")
 ```
 
-But what about a situation in which a tail evolved twice, and lacked barbs each time it evolved?  Coding this character as transformational penalises the duplicate origin of the state "no poison barbs", making this reconstruction less parsimonious.  If we expect a tail, when it evolves, to lack barbs, then the second origin of "no barbs" does not represent a homoplasy: it's not a feature that has evolved twice.  Rather, the absence of poison barbs in the two ancestral tail-bearers has been inherited from a common ancestor that did not itself bear tail barbs (by virtue, as it happens, of not bearing a tail).  This second non-origination should not, therefore, be penalized in this situation.
+But what about a situation in which a tail evolved twice, and lacked barbs each time it evolved?  Coding this character as transformational penalises the duplicate origin of the state "no poison barbs", making this reconstruction less parsimonious.
+
+If we expect a tail, when it evolves, to lack barbs, then the second origin of "no barbs" does not represent a homoplasy: it's not a feature that has evolved twice, but rather an observation that something has _not_ evolved twice.
+
+The absence of poison barbs in the two ancestral tail-bearers has been inherited from a common ancestor that did not itself bear tail barbs (by virtue, in this instance, of not bearing a tail).  This second non-origination should not, therefore, be penalized in this situation.
 
 ```{R, echo=FALSE, fig.width=6, fig.height=3}
 scenPar()
-vignettePlot(eyesHaveIt, col, state.labels = eap, passes=4, main="Two barbless appearances")
+vignettePlot(eyesHaveIt, col, state.labels = eap, passes=4, main="Two barbless appearances: second absence is penalized")
+ape::nodelabels(node=10, cex=7, pch=1, col='#ee4444')
 ```
 
-This problem has arisen because the inapplicable token has been used in a character that is, in fact, applicable.  It makes logical sense to refer to tail poison barbs as absent when the tail is absent, in a way that it does not make logical sense to refer to a tail as being red when a tail is absent.  As such, the 'absence' token should be employed instead of the inapplicable:
+This problem has arisen because the inapplicable token has been used in a character that is, in fact, applicable.  
 
-```{R, echo = FALSE, results='asis'}
-tail <- c(0, 0, 0, 1, 1, 1, 1, 1, 1)
-eyespot <- c(0,0,0, 0,0,0,0,1,1)
+The statement "A tail is absent; the tail is red" is not logically consistent, which is why the inapplicable token is necessary.  In contrast, the statement "A tail is absent; tail barbs are absent" _is_ logically consistent, and the inapplicable token is not necessary.  Instead, the 'absence' token should be employed instead of the inapplicable:
 
-tailEyes <- matrix(c(tail, eyespot), byrow=TRUE, ncol=length(tail))
-colnames(tailEyes) <- LETTERS[seq_along(tail)]
-rownames(tailEyes) <- c("Tail: (0), absent; (1), present",
-                        "Tail barbs: (0), absent (whether tail present or absent); (1), present")
-kable(tailEyes, capiton="Coding")
-```
 
 ```{R, echo=FALSE, fig.width=6, fig.height=3}
 setPar()
@@ -289,13 +286,46 @@ mtext("Two barbless appearances", outer=TRUE)
 vignettePlot(eyesHaveIt, '000000011', state.labels = eap, passes=4, main="Tail with poison barbs")
 ```
 
+One way to emphasize this distinction in character matrices is to reserve the `0` token to denote absence, using higher integers to refer to states of transformational characters:
+
+
+```{R, echo = FALSE, results='asis'}
+tail <- c(0, 0, 0, 1, 1, 1, 1, 1, 1)
+eyespot <- c(0,0,0, 0,0,0,0,1,1)
+colour <- c(rep('-', 3), rep(1, 3), rep(2, 3))
+
+tailEyes <- matrix(c(tail, eyespot, colour), byrow=TRUE, ncol=length(tail))
+colnames(tailEyes) <- LETTERS[seq_along(tail)]
+rownames(tailEyes) <- c("Tail: (0), absent; (1), present",
+                        "Tail, poison barbs: (0), absent; (1), present",
+                        "Tail, colour: (-), inapplicable; (1), red; (2), blue")
+kable(tailEyes, capiton="Coding")
+```
+
 <!--
 #### Evaluation
 It is possible that a researcher might feel uncomfortable grouping taxa on the basis of the non-occurrence of a complex feature that did not occur in their common ancestor.  Putting this another way, it is not clear that the fact that a feature has not evolved in two instances represents a homoplasy.  The absence of eyespots in a tail is not an evolutionary innovation -- it is an inheritance from a common ancestor that did not have eyespots (and did not have a tail).-->
 
-One implication of this coding strategy is that the loss of a tail (a single evolutionary event) causes the loss of all contintent characters -- characters are not independent.  Whether or not this is desirable could be a matter for debate -- is a reconstruction that invokes the loss of a complex tail more parsimonious than one that invokes the loss of a simple tail?
+One implication of this coding strategy is that the loss of a tail (a single evolutionary event) causes the loss of all contintent characters -- characters are not independent.
 
-It would be straightforwards to construct an algorithm that does not penalise losses arising from the loss of a parent character, but perhaps more valuable to think carefully about how existing models of evolution might be adapted to take account of character non-independence.
+```{R, echo=FALSE, fig.width=4, fig.height=4}
+par(mfrow=c(1, 1), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
+imbal <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, G))))));")
+tail <- "1100011"
+eyespots <- "1100011"
+
+vignettePlot(imbal, eyespots, na=FALSE, legend.pos='topleft', state.labels = ap)
+mtext("Tail, poison barbs", side=1, line=0, outer=TRUE)
+
+
+```
+
+If a poisoned tail was present in a lineage, then lost, then re-gained, would one expect the re-gained tail to also re-gain its poisoned barbs?  One could spend some time evaluating whether this behaviour has a biological underpinning, or whether it is desirable -- is a reconstruction that invokes the loss of a complex tail more parsimonious than one that invokes the loss of a simple tail?
+
+Indeed, it would be straightforwards to construct an algorithm that does not penalise losses where the loss corresponds to the inferred loss of a parent character.
+
+The underlying issue, however, is that both parsimony and the Mk model assume character independence; it is perhaps more fruitful to focus effort on developing models of evolution that take proper account of character non-independence.
+
 
 
 ### Does absence contain phylogenetic information?
@@ -304,40 +334,45 @@ In some cases, the absence of a feature (e.g. serrations) may represent a transf
 parsimony](CodingData.html).
 
 
-```{r Glowing in the dark 2, echo = FALSE, results='asis'}
+```{R, echo = FALSE, results='asis'}
 tail <- c(0, 0, 0, 1, 1, 1, 1)
-gitd <- c("-", "-", "-", "{01}","{01}",0,0)
-elec <- c("-", "-", "-", "{01}","{01}",0,0)
+serr <- c("-", "-", "-", "{12}","{12}", 1, 1)
+gitd <- c("-", "-", "-", "{12}","{12}", 1, 1)
+elec <- c("-", "-", "-", "{12}","{12}", 1, 1)
 
-unobserved <- matrix(c(tail, gitd, elec), byrow=TRUE, ncol=length(tail))
+unobserved <- matrix(c(tail, serr, gitd,  elec), byrow=TRUE, ncol=length(tail))
 colnames(unobserved) <- LETTERS[seq_along(tail)]
 rownames(unobserved) <- c("Tail: (0), absent; (1), present",
-                        "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
-                        "Tail with ability to generate electricity: (-), inapplicable; (0), absent; (1), present")
+                          "Tail, margin: (-), inapplicable; (1), smooth; (2), serrated",
+                        "Tail, glow-in-the-dark pigment: (-), inapplicable; (1), absent; (2), present",
+                        "Tail, ability to generate electricity: (-), inapplicable; (1), absent; (2), present")
 kable(unobserved, capiton="Coding")
 ```
 
 Note that each of the unobserved characters provides evidence against independent origins of the tail, preferring instead independent losses:
 
-```{R unobserved character 2, echo=FALSE, fig.height=3.2, fig.width=8}
+```{R, echo=FALSE, fig.height=3.2, fig.width=8}
 setPar(c(1, 2))
 par(oma=c(1,1,3,1))
 better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
-col <- "---{01}{01}00"
+col <- "---{12}{12}11"
 
-vignettePlot(better, col, legend.pos='topleft')
-mtext("Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
+vignettePlot(better, col, legend.pos='topleft', state.labels = c(0, ap),
+             passes=4, main='Two tail origins', cex.main=0.8)
+mtext("Tail, glow-in-the-dark pigment: (-), inapplicable; (1), absent; (2), present",
       side=3, line=0, outer=TRUE)
-vignettePlot(worse, col, legend.pos='topleft')
+vignettePlot(worse, col, legend.pos='topleft', state.labels = c(0, ap), 
+             passes=4, main='Three tail losses', cex.main=0.8)
 
 ```
 
-<mark>Thus the simple matrix presented above sees both of these trees as equally parsimonious -- three losses of a single-origin tail that lacks two unlikely attributes is considered as likely as one independent gain of a similar tail.</mark> <!-- I may need to tweak these trees-->
+Under the simple matrix presented above, the left-hand tree receives a score of five (two independent gains of the tail, plus the three ontologically dependent characters with an additional step each), whereas the right-hand tree scores but three (three independent losses of the tail; no steps in the ontologically dependent characters), making it more parsimonious. 
 
-This behaviour is desired if the similarity between the tails requires an evoltuionary explanation.  But the absence of these features does not seem any more difficult to explain if the tails do not have a common ancestor.
+If the three ontologically-dependent characters were coded as 'absent' (instead of inapplicable) when the tail was absent, then the left-hand tree would be preferred (with a score of 2 vs. 3).
 
-The solution here is to deploy a different character coding strategy, coding absences as absences.  That way, absence CAN be inherited from a common ancestor, in which a complex-feature-of-the-tail (eyespots, glow-inthe-dark pigment) was absent (and the tail was absent too).
+The two trees are equally parsimonious (both scoring three) if tail margin is treated as a trasnformational character (inapplicable when tail absent) and the other characters are treated as neomorphic (absent when tail absent).
+
 
 ```{r Glowing in the dark 3, echo = FALSE, results='asis'}
 
@@ -345,11 +380,12 @@ tail <- c(0, 0, 0, 1, 1, 1, 1)
 gitd <- c(0, 0,0, "{01}","{01}",0,0)
 elec <- c(0,0,0, "{01}","{01}",0,0)
 
-unobserved <- matrix(c(tail, gitd, elec), byrow=TRUE, ncol=length(tail))
+unobserved <- matrix(c(tail, serr, gitd, elec), byrow=TRUE, ncol=length(tail))
 colnames(unobserved) <- LETTERS[seq_along(tail)]
 rownames(unobserved) <- c("Tail: (0), absent; (1), present",
-                        "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
-                        "Tail with ability to generate electricity: (-), inapplicable; (0), absent; (1), present")
+                          "Tail, margin: (1), smooth; (2), serrated",
+                        "Tail, glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
+                        "Tail, ability to generate electricity: (-), inapplicable; (0), absent; (1), present")
 kable(unobserved, capiton="Coding")
 ```
 
@@ -361,59 +397,17 @@ better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
 worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
 col <- "000{01}{01}00"
 
-quickPlot(better, col, na=FALSE)
-mtext("Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
+vignettePlot(better, col, na=FALSE, legend.pos = 'topleft')
+mtext("Tail, glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
       side=1, line=0, outer=TRUE)
-quickPlot(worse, col, na=FALSE)
+vignettePlot(worse, col, na=FALSE, legend.pos = 'topleft')
 
 ```
 
-The behaviour only becomes questionable when a tail is secondarily lost, then re-gained, as the loss of a tail seems like it should be a single evolutionary step, but also causes the loss of all contingent characters, which must then "reevolve" as though they had never existed:
-
-```{R loss and gain, echo=FALSE, fig.width=4, fig.height=4}
-par(mfrow=c(1, 1), mar=c(0.2, 0.2, 0.2, 0.2), oma=c(1,0,0,0), cex=0.8)
-imbal <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, G))))));")
-tail <- "1100011"
-eyespots <- "1100011"
-
-quickPlot(imbal, eyespots, na=FALSE, legend.pos='topleft')
-mtext("Tail eyespots: (0), absent; (1), present", side=1, line=0, outer=TRUE)
-
-
-```
-
-Perhaps there are cases -- as might be seen in phenotypic plasticity -- where a tail might be lost, and then re-activate preexisting genes when it evolves again?  This starts to require an explicit model of evolution, however, which is somewhat beyond the remit of parsimony.
-
-### Recommendation
-- Neomorphic characters should probably be coded as absent everywhere they are absent, whether this is because there's no tail or because there's a tail without the complex feature.
-
-
-
-If you're coding a neomorphic character as transformational, then you encounter problems.
-
-```{R Untitled 4, echo=FALSE, fig.height=3, fig.width=6}
-setPar()
-better <- ape::read.tree(text="(((F, G), C), (A, (B, (D, E))));")
-worse  <- ape::read.tree(text="(((F, C), G), (A, (B, (D, E))));")
-tail <- "0001111"
-col <- "---{01}{01}00"
-
-vignettePlot(better, col)
-vignettePlot(worse, col)
-
-mtext(side=1, line=0, "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present", cex=0.8, outer=TRUE)
-
-```
-
-
-
-
-
-- <mark> Link to neomorphics </mark>
 
 ## How this algorithm weights against multiple innovations
 
-We discussed in an [earlier chapter](FailedSolutions.html) that, if we only 
+<mark>We discussed in an [earlier chapter](FailedSolutions.html) that, if we only 
 penalise transformations between states in subsidiary characters, 
 trees that imply multiple origins of the parent character receive much lower scores
 than those in which the parent character evolves once (but its subsidiary characteristics
@@ -427,7 +421,7 @@ but if a red tail evolved here and a blue tail evolved there, then two innovatio
 tail imposes a cost of one (additional region) for tail colour, whereas a single innovation of the tail would also impose a cost of one (transformation) for tail colour.
 The additional origin of the tail can
 
-- This has a side-effect that we'll study with an invariant character
+- This has a side-effect that we'll study with an invariant character</mark>
 
 [Return to index](Index.html) | [Coding neomorphic characters](Neomorphics.html) | [Coding ambiguous data](AmbiguousData.html)
 

@@ -168,22 +168,35 @@ rownames(mDep) <- c("Tail: (0), absent; (1), present.",
 knitr::kable(mDep, capiton="Coding")
 ```
 
-Here is our optimization for tail olour:
+Here is our optimization for tail colour:
 
 ```{R, echo=FALSE, fig.width=8, fig.height=4}
 goloPar()
 vignettePlot(combH, tail, legend.pos='topleft', FALSE, passes=2,
              main='Tail', state.labels = ap)
 edgelabels(cex=1.6, frame='none')
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
 vignettePlot(combH, clr2, legend.pos='topleft', passes=4,
              main='Tail colour', state.labels=c('', 'Red', 'Yellow', 'Blue', 'Navy'))
 
 ```
 
-When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11).  This gives a total tree score of 6.  In De Laet's parlance, three similarities (tail presences) are attributed to common ancestry (they share their origin with the fourth present tail)
+When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11).  This gives a total tree score of 6.  In De Laet's parlance, three similarities (tail presences) are attributed to common ancestry (they share their origin with the fourth present tail).  
 
-### Difficulties
-<mark>Here are some marginal cases where discretion is required.</mark>
+The Fitch algorithm identifies other reconstructions as equally parsimonious: for example, a tail may have been lost on edge 6 and re-gained on edge 12.  This also incurs three steps for the tail character, and (in De Laet's parlance) attributes three similarities to common ancestry: the presence of a tail in tips B and C, the absence of the tail in tips E and F, and the presence of a tail in tips G and H.
 
-<mark>Here are some trees that show why we would code things our way
-this is why you need to look at your data carefully and see whether you like what your mode of coding is implying!</mark>
+We prefer reconstructions that attribute the presence of a feature to common ancestry where possible -- a philosophy that shares something with Dollo's contention that it is easier to lose a feature than to gain it.  On a pragmatic level, this maximises the opportunity for subsidiary traits of the tail to be attributed to common ancestry.
+
+
+```{R, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+vignettePlot(combH, "011?0011", legend.pos='topleft', FALSE, passes=2,
+             main='Tail', state.labels = ap)
+edgelabels(cex=1.6, frame='none')
+
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+vignettePlot(combH, "-12?--24", legend.pos='topleft', passes=4,
+             main='Tail colour', state.labels=c('', 'Red', 'Yellow', 'Blue', 'Navy'))
+
+```
+

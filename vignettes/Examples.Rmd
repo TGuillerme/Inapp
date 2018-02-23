@@ -13,6 +13,7 @@ vignette: >
 
 ```{R initialize, message=FALSE, include=FALSE}
 library('Inapp')
+library('ape')
 labelRow <- function(text) text(-3, 9, text, font=2, pos=4, cex=1.2)
 goloPar <- function () par(mfrow=c(1, 2), mar=c(0.5, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0), cex=0.5)
 goloPlot <- function (tai, clr, title, nodeLabels=FALSE) {
@@ -134,9 +135,13 @@ goloPlot(taiE, clrE, 'Tree E: Total score 7', TRUE)
 
 ## De Laet's caterpillars
 
-De Laet [-@DeLaet2017] correctly identifies a corner case in which our algorithm will not reconstruct every equally-parsimonious character reconstruction.  Below is a simplified version of his example:
-
 ```{R, echo=FALSE}
+combH <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, (G, H)))))));")
+```
+
+De Laet [-@DeLaet2017] identifies a corner case in which our algorithm will not reconstruct every equally-parsimonious character reconstruction.  Below is a simplified version of his example:
+
+```{R, echo=FALSE, asis=TRUE}
 tail <- "011?0011"
 clr2 <- "-11?--22"
 mDep <- matrix(strsplit(paste0(tail, clr2, collapse=''), '')[[1]], byrow=TRUE, nrow=2)
@@ -146,7 +151,7 @@ rownames(mDep) <- c("Tail: (0), absent; (1), present.",
 knitr::kable(mDep, capiton="Coding")
 ```
 
-Here is our optimization for tail colour:
+When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11). 
 
 ```{R, echo=FALSE, fig.width=8, fig.height=4}
 goloPar()
@@ -159,8 +164,6 @@ vignettePlot(combH, clr2, legend.pos='topleft', passes=4,
 
 ```
 
-When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11). 
-
 The Fitch algorithm identifies other reconstructions as equally parsimonious: for example, a tail may have been lost on edge 6 and re-gained on edge 12.  This also incurs three steps for the tail character, and (in De Laet's parlance) attributes three similarities to common ancestry: the presence of a tail in tips B and C, the absence of the tail in tips E and F, and the presence of a tail in tips G and H.
 
 We prefer reconstructions that attribute the presence of a feature to common ancestry where possible -- a philosophy that shares something with Dollo's contention that it is easier to lose a feature than to gain it.  On a pragmatic level, this maximises the opportunity for subsidiary traits of the tail to be attributed to common ancestry.
@@ -169,6 +172,7 @@ In this particular case, there is an equally-parsimonious character reconstructi
 
 ```{R, echo=FALSE, fig.width=8, fig.height=4}
 goloPar()
+
 vignettePlot(combH, "011?0011", legend.pos='topleft', FALSE, passes=0,
              main='Tail', state.labels = ap)
 edgelabels(cex=1.6, frame='none')
@@ -183,4 +187,4 @@ nodelabels(c("-1", "1", 1, '-1', rep("-", 2), 2), cex=1.6, frame='none')
 
 ```
 
-This has no effect on tree scoring, but may be relevant if internal nodal reconstructions are significant.
+This has no effect on tree scoring, but may be relevant if complete internal nodal reconstructions are desired.

@@ -25,6 +25,8 @@ goloPlot <- function (tai, clr, title, nodeLabels=FALSE) {
         text((1:14) + 2.5 , (1:14) - 0.5, 1:14)
     }
 }
+ap <- c('Absent', 'Present')
+oap <- c('', ap)
 ```
 
 This vignette describes how the algorithm approaches some example trees.
@@ -132,23 +134,53 @@ goloPlot(taiE, clrE, 'Tree E: Total score 7', TRUE)
 
 De Laet contends that "Tail: absent/present" is inapplicable in an angiosperm.  We disagree.  Angiosperms do not have tails.  "Tail"" should be coded as absent in angiosperms.
 
-Nevertheless, his criticism remains the same with different characters.
+Nevertheless, the mechanics of his example case can be reproduced with different character definitions -- for example:
 
 > Tail: (0), absent; (1), present.
 >
 > Tail, margin: (1), smooth; (2), serrated.
 >
-> Tail serrations: (1), red; (2), yellow; (3), blue; (4), navy
+> Tail, marginal serrations, colour: (1), red; (2), yellow; (3), blue; (4), navy
 
+Following De Laet's example, terminal D represents an incompletely preserved fossil in which the presence of a tail is ambiguous. 
 
-
-```{R GoloboffTrees, echo=FALSE}
+```{R, echo=FALSE}
 combH <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, (G, H)))))));")
-tail <- "101?0011"
-clr1 <- "212-1122"
-clr2 <- "1-2---34"
+tail <- "011?0011"
+clr1 <- "122?1122"
+clr2 <- "-12?--34"
+
+mDep <- matrix(strsplit(paste0(tail, clr1, clr2, collapse=''), '')[[1]], byrow=TRUE, nrow=3)
+colnames(mDep) <- LETTERS[1:ncol(mDep)]
+rownames(mDep) <- c("Tail: (0), absent; (1), present.",
+                    "Tail, margin: (1), smooth; (2), serrated.",
+                    "Tail, serrations, colour: (1), red; (2), yellow; (3), blue; (4), navy.")
+knitr::kable(mDep, capiton="Coding")
 ```
 
+Let's forget the serrations for now, and go back to a tail and its colour.
+
+```{R, echo=FALSE}
+mDep <- matrix(strsplit(paste0(tail, clr2, collapse=''), '')[[1]], byrow=TRUE, nrow=2)
+colnames(mDep) <- LETTERS[1:ncol(mDep)]
+rownames(mDep) <- c("Tail: (0), absent; (1), present.",
+                    "Tail, colour: (1), red; (2), yellow; (3), blue; (4), navy.")
+knitr::kable(mDep, capiton="Coding")
+```
+
+Here is our optimization for tail olour:
+
+```{R, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+vignettePlot(combH, tail, legend.pos='topleft', FALSE, passes=2,
+             main='Tail', state.labels = ap)
+edgelabels(cex=1.6, frame='none')
+vignettePlot(combH, clr2, legend.pos='topleft', passes=4,
+             main='Tail colour', state.labels=c('', 'Red', 'Yellow', 'Blue', 'Navy'))
+
+```
+
+When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11).  This gives a total tree score of 6.  In De Laet's parlance, three similarities (tail presences) are attributed to common ancestry (they share their origin with the fourth present tail)
 
 ### Difficulties
 <mark>Here are some marginal cases where discretion is required.</mark>

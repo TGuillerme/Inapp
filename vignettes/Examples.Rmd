@@ -26,7 +26,9 @@ goloPlot <- function (tai, clr, title, nodeLabels=FALSE) {
     }
 }
 ap <- c('Absent', 'Present')
+rb <- c('Red', 'Blue')
 oap <- c('', ap)
+orb <- c('', rb)
 ```
 
 This vignette describes how the algorithm approaches some example trees.
@@ -132,39 +134,15 @@ goloPlot(taiE, clrE, 'Tree E: Total score 7', TRUE)
 
 ## De Laet's caterpillars
 
-De Laet contends that "Tail: absent/present" is inapplicable in an angiosperm.  We disagree.  Angiosperms do not have tails.  "Tail"" should be coded as absent in angiosperms.
-
-Nevertheless, the mechanics of his example case can be reproduced with different character definitions -- for example:
-
-> Tail: (0), absent; (1), present.
->
-> Tail, margin: (1), smooth; (2), serrated.
->
-> Tail, marginal serrations, colour: (1), red; (2), yellow; (3), blue; (4), navy
-
-Following De Laet's example, terminal D represents an incompletely preserved fossil in which the presence of a tail is ambiguous. 
+De Laet [-@DeLaet2017] correctly identifies a corner case in which our algorithm will not reconstruct every equally-parsimonious character reconstruction.  Below is a simplified version of his example:
 
 ```{R, echo=FALSE}
-combH <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, (G, H)))))));")
 tail <- "011?0011"
-clr1 <- "122?1122"
-clr2 <- "-12?--34"
-
-mDep <- matrix(strsplit(paste0(tail, clr1, clr2, collapse=''), '')[[1]], byrow=TRUE, nrow=3)
-colnames(mDep) <- LETTERS[1:ncol(mDep)]
-rownames(mDep) <- c("Tail: (0), absent; (1), present.",
-                    "Tail, margin: (1), smooth; (2), serrated.",
-                    "Tail, serrations, colour: (1), red; (2), yellow; (3), blue; (4), navy.")
-knitr::kable(mDep, capiton="Coding")
-```
-
-Let's forget the serrations for now, and go back to a tail and its colour.
-
-```{R, echo=FALSE}
+clr2 <- "-11?--22"
 mDep <- matrix(strsplit(paste0(tail, clr2, collapse=''), '')[[1]], byrow=TRUE, nrow=2)
 colnames(mDep) <- LETTERS[1:ncol(mDep)]
 rownames(mDep) <- c("Tail: (0), absent; (1), present.",
-                    "Tail, colour: (1), red; (2), yellow; (3), blue; (4), navy.")
+                    "Tail, colour: (1), red; (2),blue.")
 knitr::kable(mDep, capiton="Coding")
 ```
 
@@ -177,26 +155,32 @@ vignettePlot(combH, tail, legend.pos='topleft', FALSE, passes=2,
 edgelabels(cex=1.6, frame='none')
 tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
 vignettePlot(combH, clr2, legend.pos='topleft', passes=4,
-             main='Tail colour', state.labels=c('', 'Red', 'Yellow', 'Blue', 'Navy'))
+             main='Tail colour', state.labels=orb)
 
 ```
 
-When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11).  This gives a total tree score of 6.  In De Laet's parlance, three similarities (tail presences) are attributed to common ancestry (they share their origin with the fourth present tail).  
+When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11). 
 
 The Fitch algorithm identifies other reconstructions as equally parsimonious: for example, a tail may have been lost on edge 6 and re-gained on edge 12.  This also incurs three steps for the tail character, and (in De Laet's parlance) attributes three similarities to common ancestry: the presence of a tail in tips B and C, the absence of the tail in tips E and F, and the presence of a tail in tips G and H.
 
 We prefer reconstructions that attribute the presence of a feature to common ancestry where possible -- a philosophy that shares something with Dollo's contention that it is easier to lose a feature than to gain it.  On a pragmatic level, this maximises the opportunity for subsidiary traits of the tail to be attributed to common ancestry.
 
+In this particular case, there is an equally-parsimonious character reconstruction that our algorithm excludes, which invokes two gains (and one loss) of the tail:
 
 ```{R, echo=FALSE, fig.width=8, fig.height=4}
 goloPar()
-vignettePlot(combH, "011?0011", legend.pos='topleft', FALSE, passes=2,
+vignettePlot(combH, "011?0011", legend.pos='topleft', FALSE, passes=0,
              main='Tail', state.labels = ap)
 edgelabels(cex=1.6, frame='none')
+nodelabels(pch=16, cex=6, col='#58a691a7')
+nodelabels(c('01', 1, 1,'01',0, 0, 1), cex=1.6, frame='none')
 
 tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
-vignettePlot(combH, "-12?--24", legend.pos='topleft', passes=4,
-             main='Tail colour', state.labels=c('', 'Red', 'Yellow', 'Blue', 'Navy'))
+vignettePlot(combH, "-11?--22", legend.pos='topleft', passes=0,
+             main='Tail colour', state.labels=orb)
+nodelabels(pch=16, cex=6, col='#58a691a7')
+nodelabels(c("-1", "1", 1, '-1', rep("-", 2), 2), cex=1.6, frame='none')
 
 ```
 
+This has no effect on tree scoring, but may be relevant if internal nodal reconstructions are significant.

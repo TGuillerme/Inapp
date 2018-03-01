@@ -1,5 +1,5 @@
 ---
-title: "Counting homologies is the answer"
+title: "The solution: Count homologies"
 author: "Vignette Author"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -10,14 +10,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-# Inapplicable data in a parsimony setting
-
-This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
-
-We assume that you are already familiar with the [Fitch algorithm](Fitch.html),
-its [shortcomings](Problems.html), and [past attempts](FailedSolutions.html)
-to address them.
 
 ## What we count
 The problem with the Fitch is that it counts steps.
@@ -50,6 +42,11 @@ Here are De Laet's cases and here's why they aren't problematic.
 
 ## Summary
 
+<!--
+For the first process, denote for each tip whether it has an applicable token, an inapplicable token, or both, and use the standard Fitch algorithm to reconstruct the state of each internal node, reconstructing ambiguous nodes on the uppass as applicable".  (It might not take more than another sentence or two to put this clearly enough that a non-initiated reader could understand it.)
+-->
+
 We can show that this produces the correct behaviour.  But how do we count this in practice?
+
 
 ## References

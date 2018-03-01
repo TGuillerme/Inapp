@@ -13,20 +13,20 @@ vignette: >
 ```{R, echo=FALSE, message=FALSE}
 library('Inapp')
 library('ape')
+ap <- c('Absent', 'Present')
+rb <- c('Red', 'Blue')
 ```
 
 [comment]: # Current status: First draft, needs copyediting, contributions welcome!
-
-This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
-
-We assume that you are already familiar with the [Fitch algorithm](Fitch.html).
 
 # Problems with the Fitch algorithm
 
 The Fitch algorithm counts changes in a character.
 It assumes that the character is applicable throughout the tree.
 This assumption does not lead to error if:
+
 - The character is inapplicable in fewer than three tips; or
+
 - In the trees being considered, applicable and inapplicable tokens occur
   in distinct regions of the tree [@Maddison1993].
 
@@ -62,14 +62,14 @@ had a red or blue tail.
 
 ## Why Reductive coding doesn't work
 
-Using reductive coding, our character looks like:
+Under reductive coding, the tail and its colour are described in two character statements:
 
 > Tail: (0), absent; (1), present.
 >
 > Tail, colour: (0), red; (1), blue; (?), inapplicable.
 
 Consider the following two trees, each of which receives a score of two for the first
-character, Tail: absent/present.  The score of the second character, for tail colour,
+character (presence of tail).  The score of the second character (tail colour)
 is not as desired.
 
 The Fitch algorithm will prefer trees in which the left-hand tail-bearing clade
@@ -79,8 +79,8 @@ has a blue tail, simply because the right-hand tail-bearing clade ancestrally di
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
-vignettePlot(treeA, '0011------1100', na=FALSE)     
-vignettePlot(treeB, '0011------1100', na=FALSE)     
+vignettePlot(treeA, '0011------1100', na=FALSE, state.labels=rb)     
+vignettePlot(treeB, '0011------1100', na=FALSE, state.labels=rb)
 ```
 
 Notice the additional step reconstructed at the root node: the Fitch algorithm
@@ -90,9 +90,9 @@ This reconstruction is not logically consistent.
 
 ### An exception
 
-If the parent character can parsimoniously be reconstructed as present at every internal node in a single unbroken region of a tree, and nowhere else, then reductive coding does work successfully.  Reductive coding may therefore be appropriate if only a subset of all possible trees are under consideration.  It is always appropriate (i.e. for all trees) if there are fewer than three inapplicable tokens within a character.
+If the parent character can parsimoniously be reconstructed as present at every internal node in a single unbroken region of a tree, and nowhere else, then reductive coding does work successfully.  Reductive coding may therefore be appropriate if only a subset of all possible trees are under consideration, and is always (i.e. for all trees) appropriate if a character exhibits fewer than three inapplicable tokens.
 
-## Why Extra State doesn't work
+## Why Extra State coding doesn't work
 
 An alternative is to code the inapplicable token as an extra state:
 
@@ -106,15 +106,15 @@ This seems to resolve the problem case that we encountered with reductive coding
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
-vignettePlot(treeA, '00112222221100', na=FALSE)     
-vignettePlot(treeB, '00112222221100', na=FALSE)     
+vignettePlot(treeA, '00112222221100', na=FALSE, state.labels=c(rb, 'Inapplicable'))     
+vignettePlot(treeB, '00112222221100', na=FALSE, state.labels=c(rb, 'Inapplicable'))     
 ```
 
 Both trees now receive the same score for the 'tail colour' character, which 
 contributes four steps.  Two of these steps, however, correspond to steps that have
 already been counted in the parent character, reflecting the two gains of a tail.
 
-Although this reconstruction is now logically consistent, the gain (or loss) of the tail
+Although this reconstruction is logically consistent, the gain (or loss) of the tail
 is now reflected in two characters -- characters are not independent of one another.
 
 The outcome is that each ontologically dependent character serves to increase
@@ -136,8 +136,8 @@ This seems to resolve the problem case that we encountered with reductive coding
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
-vignettePlot(treeA, '11220000002211', na=FALSE)     
-vignettePlot(treeB, '11220000002211', na=FALSE)     
+vignettePlot(treeA, '11220000002211', na=FALSE, state.labels=c('Absent', 'Present, red', 'Present, blue'))     
+vignettePlot(treeB, '11220000002211', na=FALSE, state.labels=c('Absent', 'Present, red', 'Present, blue'))     
 ```
 
 However, we now have a situation where the gain/loss of a tail is afforded the same weight 
@@ -208,7 +208,7 @@ generates disproportionately more complexity in the Sankoff matrix.
 
 Even if this additional complexity could be handled, the underlying issue remains
 that losing a tail, which arguably corresponds to a single evolutionary
-event, is allocated a large cost that only grows with the number of 
+event, is allocated a large cost (here, 4) that grows in line with the number of 
 ontogenetically dependant characters.
 
 ### Gain and loss asymmetric

@@ -11,27 +11,163 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## What we count
-The problem with the Fitch is that it counts steps.
+```{R, echo=FALSE, message=FALSE}
+library('ape')
+library('Inapp')
+ap<-c('Absent', 'Present')
+rb <- c('Red', 'Blue')
+ia <- c('Inapplicable', 'Applicable')
+leafy <- '#7fbf7be0'
+lilac <- '#af8dc3e0'
 
-We get around this by counting homoplasies.
-See De Laet's work on this.
+tree12 <- ape::read.tree(text='((((((a, b), c), d), E), F), (G, (H, (i, (j, (k, l))))));')
+```
 
-The total score = steps + (additional) regions.
+# Minimising homoplasy
 
-Here's an example tree showing that.
+A solution can be found if the goal of parsimony is recast not in terms of minimising the number of steps, but instead of minimising the amount of homoplasy in a tree.
+
+De Laet has made this point before [@DeLaet2005,@DeLaet2017], suggesting that a tree's score should be calculated as 
+
+> Total score = Number of steps + Number of (additional) regions.
+
+Practically, because the number of unavoidable regions is a function of a dataset and not of a tree, one could also count 
+
+> Total score = Number of steps + Number of regions
+
+which would be a constant number larger than the total score generated just counting additional regions; the absolute value of the score is not meaningful in itself and is not comparable between datasets, so the calculation method does not affect tree search.
+
+The tree below gives an example of a tree in which a character in applicable in two regions (one more than the minimum possible, one) and one state change. 
+
+```{R, echo=FALSE, fig.width=8}
+
+vignettePlot(tree12, '1100----0000', na=TRUE, passes=0, state.labels=rb)
+#nodelabels(node=17, pch=15, col='#7fbf7be0', cex=2.5)
+#nodelabels(node=c(16, 21), pch=15, col='#af8dc3e0', cex=2.5)
+
+edgelabels(edge=5, pch=15, col=leafy, cex=2.5)
+edgelabels(edge=c(3, 16), pch=15, col=lilac, cex=2.5)
+
+```
+
+This score denotes two evolutionary observations that cannot be attributed to inheritance from a common ancestor: the blueness of tail in the blue tailed taxa (as the common ancestor inherited a red tail), and the redness of tail in the second region of the tree (as the common ancestor of all tail-bearing taxa did not itself have a tail, so tail colour could no be inherited).
+
 
 ### What does it take to denote separate regions?
-- Three inapplicable tips, arranged just so.
-(Addresses Goloboff's comment.)
+
+It takes three inapplicable nodes (including tips) to force two regions of the tree to be separrated by an inapplicable region.
+
+This can be estabilshed by imagining the Fitch optimisation of a separate character
+
+> Applicability of the character of interest: (0), inapplicable; (1), applicable
+
+In the case of tail colour, this applicability character has the same distribution as the presence / absence of the tail, but this is not necessarily the case (there may be a range of reasons to code a character as inapplicable).
+
+In the tree shown above, the Fitch algorithm identifies two regions where the applicability character is unambiguously 'applicable':
+
+```{R, echo=FALSE, fig.width=8}
+vignettePlot(tree12, '111100001111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
+```
+
+If one of the inapplicable tips had instead been ambiguous, then the same distribution would arise:
+
+```{R, echo=FALSE, fig.width=8}
+vignettePlot(tree12, '111100?01111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
+```
+
+But if two were ambiguous, then the 'inapplicable' region could equally be interpreted, under the Fitch algorithm, as 'applicable' -- with the two inapplicable tips becoming inapplicable in the branches that led to them:
+
+```{R, echo=FALSE, fig.width=8}
+vignettePlot(tree12, '1111?0?01111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
+```
+
+The ambiguous region of this tree may parsimoniously be interpreted as applicable, and doing so increases the opportunity to attribute shared colours in the tail to common ancestry, this our algorithm chooses to interpret the region as applicable whereever it is parsimonious to do so.
+
+Note that the three inapplicable tips necessary to define an inapplicable region must be in a contiguous region of the tree, separated from one another only by taxa whose applicability is ambiguous, in order for two applicable regions to be reconstructed as separate.
 
 ## How this fixes the problem
 
-Here are some examples of how this fixes the problems that we encountered.
+This overcomes the problem where steps cancould be avoided by inferring multiple innovations of a character:
 
-Take the example of two very different tails.  Because they are so different,
-it makes sense that they might have evolved twice.
+```{R, echo=FALSE, fig.width=8, fig.height=8}
+comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
+comb5i <- ape::read.tree(text="(((((vv, c), d), yy), f), (g, (xx, (j, (k, (ww, (m, (n, zz))))))));")
 
+char <- '0000000011111'
+sub1 <- '--------12222'
+sub2 <- '--------11222'
+sub3 <- '--------11122'
+sub4 <- '--------11122'
+sub5 <- '--------11112'
+
+setPar(c(3, 2))
+par(oma=c(3,0,0,0))
+Compare <- function (char.states, char.label, states.labels, top=FALSE) {
+    vignettePlot(comb15, char.states, na=!top, 
+                 passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    legend('topleft', char.label, bty='n')
+    legend('bottomleft', pch=15, pt.cex=1.5, col=leafy, bty='n', "+1 step")
+    if (top) title('Single gain of tail (total score = 6)')
+    
+    vignettePlot(comb5i, char.states, na=!top, 
+                 passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    if (!top)legend('bottomleft', pch=15, pt.cex=1.5, col=lilac, bty='n', "+4 regions") 
+    if (top) legend('bottomleft', pch=15, pt.cex=1.5, col=leafy, bty='n', "+5 steps") 
+    if (top) title('Five gains of tail (total score = 25)')
+        
+}
+
+Compare(char, 'Tail, presence', ap, TRUE)
+Compare(sub1, 'Tail, colour', orb)
+Compare(sub2, 'Tail, covering', c("", "Scaly", "Hairy"))
+mtext("\n... and for three more characters", outer=TRUE, side=1)
+#Compare(sub3, 'Tail, shape', c("", "straight", "curly"))
+#Compare(sub4, 'Tail, margin', c("", "smooth", "serrated"))
+#Compare(sub5, 'Tail, poison barbs', c("", "absent", "present"))
+
+
+```
+
+On the other hand, if taxa either have a blue, scaly, straight tail or a red, smooth, curly tail, then the fact that the tails have so little in common means that it wouldn't be entirely surprising if the two different tail types evolved twice.  This scenario thus incurs a cost of only one step (for the additional origin of the tail) more than if the tail evolved once, and change all its attributes:
+
+```{R, echo=FALSE, fig.width=8, fig.height=8}
+comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
+comb5i <- ape::read.tree(text="(((((xx, yy), zz), a), b), (c, (d, (e, (f, (g, (h, (vv, ww))))))));")
+
+char <- '0000000011111'
+sub1 <- '--------11222'
+
+setPar(c(3, 2))
+par(oma=c(3,0,0,0))
+Compare <- function (char.states, char.label, states.labels, top=FALSE) {
+    vignettePlot(comb15, char.states, na=!top, 
+                 passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    legend('topleft', char.label, bty='n')
+    legend('bottomleft', pch=15, pt.cex=1.5, col=leafy, bty='n', "+1 step")
+    if (top) title('Single gain of tail (total score = 6)')
+    
+    vignettePlot(comb5i, char.states, na=!top, 
+                 passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    if (!top)legend('bottomleft', pch=15, pt.cex=1.5, col=lilac, bty='n', "+1 region") 
+    if (top) legend('bottomleft', pch=15, pt.cex=1.5, col=leafy, bty='n', "+2 steps") 
+    if (top) title('Two gains of tail (total score = 25)')
+        
+}
+
+Compare(char, 'Tail, presence', ap, TRUE)
+Compare(sub1, 'Tail, colour', orb)
+Compare(sub2, 'Tail, covering', c("", "Scaly", "Hairy"))
+mtext("\n... and for n more characters", outer=TRUE, side=1)
+#Compare(sub3, 'Tail, shape', c("", "straight", "curly"))
+#Compare(sub4, 'Tail, margin', c("", "smooth", "serrated"))
+#Compare(sub5, 'Tail, poison barbs', c("", "absent", "present"))
+
+
+```
 
 ## Furhter examples
 

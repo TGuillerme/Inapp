@@ -1,6 +1,6 @@
 ---
 title: "Counting steps will never work"
-author: "Vignette Author"
+author: "Martin R. Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
@@ -45,11 +45,11 @@ legend('bottomleft', bty='n',
        pch=15, pt.cex=1.5, col=c(yesCol, noCol))
 ```
 
-The problem here is that the way to minimise the number of steps is to maximise the number of independent gains of a parent character.
+The problem here is that the number of steps can be minimized by maximizing the number of independent gains of a parent character.
 
 ```{R, echo=FALSE, fig.width=8, fig.height=16}
 comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
-comb5i <- ape::read.tree(text="(((((vv, c), d), ww), f), (g, (xx, (j, (k, (yy, (m, (n, zz))))))));")
+comb5i <- ape::read.tree(text="(((((vv, c), d), yy), f), (g, (xx, (j, (k, (ww, (m, (n, zz))))))));")
 
 char <- '0000000011111'
 sub1 <- '--------12222'
@@ -59,30 +59,32 @@ sub4 <- '--------11122'
 sub5 <- '--------11112'
 
 setPar(c(6, 2))
-Compare <- function (char.states, char.label, states.labels, na=TRUE) {
-    vignettePlot(comb15, char.states, na=na, 
-                 counts=2, passes=4 - (2 * na),
+Compare <- function (char.states, char.label, states.labels, top=FALSE) {
+    vignettePlot(comb15, char.states, na=!top, 
+                 counts=2, passes=4 - (2 * top),
                  legend.pos='none', state.labels=states.labels)
     legend('topleft', char.label, bty='n')
     legend('bottomleft', pch=15, pt.cex=1.5, col=yesCol, bty='n', "+1 step")
-    if (!na) title('Single gain of tail (total score = 6)')
+    if (top) title('Single gain of tail (total score = 6)')
     
-    vignettePlot(comb5i, char.states, na=na, 
-                 counts=2,  passes=4 - (2 * na),
+    vignettePlot(comb5i, char.states, na=!top, 
+                 counts=2,  passes=4 - (2 * top),
                  legend.pos='none', state.labels=states.labels)
-    if (na)  legend('bottomleft', pch=1 , pt.cex=1.5, col=yesCol, bty='n', "+0 steps") 
-    if (!na) legend('bottomleft', pch=15, pt.cex=1.5, col=yesCol, bty='n', "+5 steps") 
-    if (!na) title('Five gains of tail (total score = 5)')
+    if (!top)  legend('bottomleft', pch=1 , pt.cex=1.5, col=yesCol, bty='n', "+0 steps") 
+    if (top) legend('bottomleft', pch=15, pt.cex=1.5, col=yesCol, bty='n', "+5 steps") 
+    if (top) title('Five gains of tail (total score = 5)')
         
 }
 
-Compare(char, 'Tail, presence', ap, FALSE)
+Compare(char, 'Tail, presence', ap, TRUE)
 Compare(sub1, 'Tail, colour', orb)
-Compare(sub2, 'Tail, covering', c("", "scaly", "hairy"))
-Compare(sub3, 'Tail, shape', c("", "straight", "curly"))
-Compare(sub4, 'Tail, margin', c("", "smooth", "serrated"))
-Compare(sub5, 'Tail, poison barbs', c("", "absent", "present"))
+Compare(sub2, 'Tail, covering', c("", "Scaly", "Hairy"))
+Compare(sub3, 'Tail, shape', c("", "Straight", "Curly"))
+Compare(sub4, 'Tail, margin', c("", "Smooth", "Serrated"))
+Compare(sub5, 'Tail, poison barbs', c("", "Absent", "Present"))
 
 
 ```
+
+Algorithms that count steps will always be afflicted by a form of this issue.  The solution is to count not steps, but homoplasies.
 

@@ -27,7 +27,7 @@ This series of vignettes works through the inapplicable algorithm proposed by Br
   
 - Our algorithm:
   - [An introduction](OurSolution.html)
-    - Status: Not allocated
+    - Status: Draft complete (MS)
   - [A description](OurAlgorithm.html)
     - Status: Draft complete? (TG)
   - [Implications for character coding](CodingData.html)

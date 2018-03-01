@@ -1,6 +1,6 @@
 ---
 title: "The solution: Count homologies"
-author: "Vignette Author"
+author: "Martin R. Smith"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
@@ -178,11 +178,8 @@ mtext("\n... and for n more characters", outer=TRUE, side=1)
 
 ## Summary
 
-<!--
-For the first process, denote for each tip whether it has an applicable token, an inapplicable token, or both, and use the standard Fitch algorithm to reconstruct the state of each internal node, reconstructing ambiguous nodes on the uppass as applicable".  (It might not take more than another sentence or two to put this clearly enough that a non-initiated reader could understand it.)
--->
+This is the desired behaviour.  But how do we count this in practice?
 
-We can show that this produces the correct behaviour.  But how do we count this in practice?
+In brief, we evaluate for each tip whether the character in question is applicable, inapplicable, or ambiguous (could be either), and use the standard Fitch algorithm on this applicability data to reconstruct the state of each internal node, reconstructing ambiguous nodes on the uppass as applicable.
 
-
-## References
+This done, we conduct a second Fitch-like pass on the tree, in which we count transformations if they occur at nodes in which the character has been reconstructed as applicable.  Additional regions are also counted on this downpass, by counting nodes that are ancestral to an inapplicable region of the tree that itself leads to an as-yet-uncounted applicable region.

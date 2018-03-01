@@ -43,8 +43,8 @@ which would be a constant number larger than the total score generated just coun
 
 The tree below gives an example of a tree in which a character in applicable in two regions (one more than the minimum possible, one) and one state change. 
 
-```{R, echo=FALSE, fig.width=8}
-
+```{R, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
 vignettePlot(tree12, '1100----0000', na=TRUE, passes=0, state.labels=rb)
 #nodelabels(node=17, pch=15, col='#7fbf7be0', cex=2.5)
 #nodelabels(node=c(16, 21), pch=15, col='#af8dc3e0', cex=2.5)
@@ -69,19 +69,22 @@ In the case of tail colour, this applicability character has the same distributi
 
 In the tree shown above, the Fitch algorithm identifies two regions where the applicability character is unambiguously 'applicable':
 
-```{R, echo=FALSE, fig.width=8}
+```{R, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
 vignettePlot(tree12, '111100001111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
 ```
 
 If one of the inapplicable tips had instead been ambiguous, then the same distribution would arise:
 
-```{R, echo=FALSE, fig.width=8}
+```{R, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
 vignettePlot(tree12, '111100?01111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
 ```
 
 But if two were ambiguous, then the 'inapplicable' region could equally be interpreted, under the Fitch algorithm, as 'applicable' -- with the two inapplicable tips becoming inapplicable in the branches that led to them:
 
-```{R, echo=FALSE, fig.width=8}
+```{R, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
 vignettePlot(tree12, '1111?0?01111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
 ```
 
@@ -158,7 +161,7 @@ Compare <- function (char.states, char.label, states.labels, top=FALSE) {
                  legend.pos='none', state.labels=states.labels)
     if (!top)legend('bottomleft', pch=15, pt.cex=1.5, col=lilac, bty='n', "+1 region") 
     if (top) legend('bottomleft', pch=15, pt.cex=1.5, col=leafy, bty='n', "+2 steps") 
-    if (top) title('Two gains of tail (total score = 25)')
+    if (top) title('Two gains of tail (total score = 7)')
         
 }
 

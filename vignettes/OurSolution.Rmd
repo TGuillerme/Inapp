@@ -17,6 +17,9 @@ library('Inapp')
 ap<-c('Absent', 'Present')
 rb <- c('Red', 'Blue')
 ia <- c('Inapplicable', 'Applicable')
+
+setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 1, 0.2), oma=c(0,0,0,0), cex=0.7)
+
 leafy <- '#7fbf7be0'
 lilac <- '#af8dc3e0'
 
@@ -168,13 +171,6 @@ mtext("\n... and for n more characters", outer=TRUE, side=1)
 
 
 ```
-
-## Furhter examples
-
-Here are Goloboff's trees as examples of how we would approach them, and why that's preferable to how he would approach them
-
-Here are De Laet's cases and here's why they aren't problematic.
-
 
 ## Summary
 

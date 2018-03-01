@@ -16,6 +16,7 @@ library('ape')
 library('Inapp')
 ap<-c('Absent', 'Present')
 rb <- c('Red', 'Blue')
+orb <- c('', rb)
 ia <- c('Inapplicable', 'Applicable')
 
 setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 1, 0.2), oma=c(0,0,0,0), cex=0.7)

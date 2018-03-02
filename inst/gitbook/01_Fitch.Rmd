@@ -2,7 +2,7 @@
 title: "The Fitch Algorithm"
 author: "Thomas Guillerme"
 date: "`r Sys.Date()`"
-bibliography: [References.bib, packages.bib]
+bibliography: [../References.bib, packages.bib]
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 output:
   html_document: default
@@ -16,7 +16,7 @@ This is one of a [series](Index.html) of vignettes that works through the inappl
  -->
 # The Fitch algorithm
 
-This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [@swofford2001paup,@goloboff2016tnt] or probabilistic methods [@Ronquist2012mrbayes,@Stamatakis21012014].
+This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [@swofford2001paup,@Goloboff2016] or probabilistic methods [@Ronquist2012mrbayes,@Stamatakis21012014].
 The procedure is rather simple and elegant and consist in going down the tree to count the number of transformation and then go up the tree again to finalise the ancestral states reconstructions.
 
 The way the algorithms goes up and down depends on the software but often uses a _traversal_: a recursive function that can visit all tips and nodes in a logical fashion.

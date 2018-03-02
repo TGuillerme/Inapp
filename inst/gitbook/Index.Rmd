@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-bibliography: [References.bib, packages.bib]
+bibliography: [../References.bib, packages.bib]
 link-citations: yes
 github-repo: TGuillerme/Inapp
 description: "Inapplicable data in a parsimony setting"
@@ -32,13 +32,14 @@ It allows users to input any tree and character.
 [![codecov](https://codecov.io/gh/TGuillerme/Inapp/branch/master/graph/badge.svg)](https://codecov.io/gh/TGuillerme/Inapp)
 <!-- badges out end   -->
 
-To actually perform tree search, pleas have a look at the [inapplicable](https://github.com/ms609/inapplicable) `R` package.
-This package is currently in development but allows some heuristic searches on reasonable sized matrices.
+To actually perform tree search, please have a look at the [inapplicable](https://github.com/ms609/TreeSearch) `R` package.
+This package allows some heuristic searches on reasonable sized matrices.
 
 <!-- badges out start -->
-[![Build Status](https://travis-ci.org/ms609/inapplicable.svg?branch=master)](https://travis-ci.org/ms609/inapplicable)
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
-[![codecov](https://codecov.io/gh/ms609/inapplicable/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/inapplicable)
+[![Build Status](https://travis-ci.org/ms609/TreeSearch.svg?branch=master)](https://travis-ci.org/ms609/TreeSearch)
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/TreeSearch)](https://cran.r-project.org/package=TreeSearch)
+[![Project Status: Active – – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![codecov](https://codecov.io/gh/ms609/TreeSearch/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/TreeSearch)
 <!-- badges out end   -->
 
 Both these `R` packages are based on the [morphylib](https://github.com/mbrazeau/morphylib) `C` library that allows to score characters with inapplicable using our new algorithm.

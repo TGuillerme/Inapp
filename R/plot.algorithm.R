@@ -74,7 +74,9 @@ plot.states.matrix <- function(
         }
 
         plot.convert.missing <- function(X, all_states) {
-            if(length(X) == length(all_states) && all(sort(X) == sort(all_states))) {
+            if(length(all_states) > 1
+               && length(X) == length(all_states)
+               && all(sort(X) == sort(all_states))) {
                 return("?")
             } else {
                 return(X)

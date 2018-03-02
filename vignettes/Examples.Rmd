@@ -11,13 +11,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Inapplicable data in a parsimony setting
-
-This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
-
-
 ```{R initialize, message=FALSE, include=FALSE}
 library('Inapp')
+library('ape')
 labelRow <- function(text) text(-3, 9, text, font=2, pos=4, cex=1.2)
 goloPar <- function () par(mfrow=c(1, 2), mar=c(0.5, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0), cex=0.5)
 goloPlot <- function (tai, clr, title, nodeLabels=FALSE) {
@@ -30,6 +26,10 @@ goloPlot <- function (tai, clr, title, nodeLabels=FALSE) {
         text((1:14) + 2.5 , (1:14) - 0.5, 1:14)
     }
 }
+ap <- c('Absent', 'Present')
+rb <- c('Red', 'Blue')
+oap <- c('', ap)
+orb <- c('', rb)
 ```
 
 This vignette describes how the algorithm approaches some example trees.
@@ -43,7 +43,7 @@ We follow the example of a tail coded using two characters:
 First we'll address some pectinate "caterpillar" trees, in which eight 
 taxa have tails (and eight do not), four of which are red, four of which are blue.
 
-```{R GoloboffTrees, echo=FALSE}
+```{R, echo=FALSE}
 comb <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, (G, (H, (I, (J, (K, (L, (M, (N, (O, P)))))))))))))));")
 clr1 <- "--------00001111"
 tai1 <- "0000000011111111"
@@ -64,7 +64,7 @@ taiE <- "1100001111000011"
 An optimal tree with this character invokes a single origin of the tail, and a single
 change in tail colour, thus incurring a score of two.  Here is one example:
 
-```{R OptimalCaterpillar, echo = FALSE, fig.height=4, fig.width=8}
+```{R, echo = FALSE, fig.height=4, fig.width=8}
 goloPlot(tai1, clr1, 'An optimal tree: Total score 2')
 ```
 
@@ -74,7 +74,7 @@ in which the tail is present.  On a caterpillar tree, this means the loss of a
 tail that has one colour, and an independent innovation in a tail-less taxon
 of a tail that has a different colour:
 
-```{R OptimalCaterpillarTwice, echo = FALSE, fig.height=4, fig.width=8}
+```{R, echo = FALSE, fig.height=4, fig.width=8}
 goloPlot(tai2, clr2, 'Two tail innovations:\n Total score 2 (best possible)')
 ```
 
@@ -82,7 +82,7 @@ Under the parsimony criterion, it is considered less optimal if a tail, when it 
 "blueness" has evolved twice on the following tree, meaning that 
 the second innovation of "blueness" represents an instance of homoplasy.
 
-```{R GoloA, echo = FALSE, fig.height=4, fig.width=8}
+```{R, echo = FALSE, fig.height=4, fig.width=8}
 goloPlot(taiA, clrA, 'Tree A: Total score 4')
 ```
 
@@ -97,7 +97,7 @@ independent, homoplastic origins of tail redness on edge 5, tail blueness on
 edge 14, and a change in tail colour from red to blue somewhere between edges 
 7 and 9 (three homoplasies).
 
-```{R GoloB, echo = FALSE, fig.height=4, fig.width=8}
+```{R, echo = FALSE, fig.height=4, fig.width=8}
 goloPlot(taiB, clrB, 'Tree B: Total score 9', TRUE)
 ```
 
@@ -108,7 +108,7 @@ gained on edge 14 (a total of seven homoplasies).
 It further reconstructs an independent, homoplastic origins of tail  blueness on 
 edge 14, and a change in tail colour from red to blue somewhere between edges 7 and 9 (two homoplasies).
 
-```{R GoloC, echo = FALSE, fig.height=4, fig.width=8}
+```{R, echo = FALSE, fig.height=4, fig.width=8}
 goloPlot(taiC, clrC, 'Tree C: Total score 9', TRUE)
 ```
 
@@ -118,7 +118,7 @@ being lost in tips B, D, F, H, J, L, N and P (a total of eight homoplastic losse
 It further reconstructs a single change in tail colour from red to blue 
 on edge 8.
 
-```{R GoloD, echo = FALSE, fig.height=4, fig.width=8}
+```{R, echo = FALSE, fig.height=4, fig.width=8}
 goloPlot(taiD, clrD, 'Tree D: Total score 9', TRUE)
 ```
 
@@ -133,4 +133,58 @@ at edge 14, and a change in colour at edge 8, for a combined score of 7.
 goloPlot(taiE, clrE, 'Tree E: Total score 7', TRUE)
 ```
 
+## De Laet's caterpillars
 
+```{R, echo=FALSE}
+combH <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, (G, H)))))));")
+```
+
+De Laet [-@DeLaet2017] identifies a corner case in which our algorithm will not reconstruct every equally-parsimonious character reconstruction.  Below is a simplified version of his example:
+
+```{R, echo=FALSE, asis=TRUE}
+tail <- "011?0011"
+clr2 <- "-11?--22"
+mDep <- matrix(strsplit(paste0(tail, clr2, collapse=''), '')[[1]], byrow=TRUE, nrow=2)
+colnames(mDep) <- LETTERS[1:ncol(mDep)]
+rownames(mDep) <- c("Tail: (0), absent; (1), present.",
+                    "Tail, colour: (1), red; (2),blue.")
+knitr::kable(mDep, capiton="Coding")
+```
+
+When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11). 
+
+```{R, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+vignettePlot(combH, tail, legend.pos='topleft', FALSE, passes=2,
+             main='Tail', state.labels = ap)
+edgelabels(cex=1.6, frame='none')
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+vignettePlot(combH, clr2, legend.pos='topleft', passes=4,
+             main='Tail colour', state.labels=orb)
+
+```
+
+The Fitch algorithm identifies other reconstructions as equally parsimonious: for example, a tail may have been lost on edge 6 and re-gained on edge 12.  This also incurs three steps for the tail character, and (in De Laet's parlance) attributes three similarities to common ancestry: the presence of a tail in tips B and C, the absence of the tail in tips E and F, and the presence of a tail in tips G and H.
+
+We prefer reconstructions that attribute the presence of a feature to common ancestry where possible -- a philosophy that shares something with Dollo's contention that it is easier to lose a feature than to gain it.  On a pragmatic level, this maximises the opportunity for subsidiary traits of the tail to be attributed to common ancestry.
+
+In this particular case, there is an equally-parsimonious character reconstruction that our algorithm excludes, which invokes two gains (and one loss) of the tail:
+
+```{R, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+
+vignettePlot(combH, "011?0011", legend.pos='topleft', FALSE, passes=0,
+             main='Tail', state.labels = ap)
+edgelabels(cex=1.6, frame='none')
+nodelabels(pch=16, cex=6, col='#58a691a7')
+nodelabels(c('01', 1, 1,'01',0, 0, 1), cex=1.6, frame='none')
+
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+vignettePlot(combH, "-11?--22", legend.pos='topleft', passes=0,
+             main='Tail colour', state.labels=orb)
+nodelabels(pch=16, cex=6, col='#58a691a7')
+nodelabels(c("-1", "1", 1, '-1', rep("-", 2), 2), cex=1.6, frame='none')
+
+```
+
+This has no effect on tree scoring, but may be relevant if complete internal nodal reconstructions are desired.

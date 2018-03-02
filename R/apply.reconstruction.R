@@ -46,7 +46,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-apply.reconstruction <- function(tree, character, method = "NA", inapplicable = 1, match.tip.char = FALSE) {
+apply.reconstruction <- function(tree, character, passes = 4, method = "NA", inapplicable = 1, match.tip.char = FALSE) {
 
     ## Method
     if(!(method %in% c("NA","Fitch"))) {
@@ -67,13 +67,13 @@ apply.reconstruction <- function(tree, character, method = "NA", inapplicable = 
 
     ## Setting the list of passes
     if(method == "NA") {
-        pass_functions <- list(first.downpass, first.uppass, second.downpass, second.uppass)
+        passes <- list(first.downpass, first.uppass, second.downpass, second.uppass)
     } else {
-        pass_functions <- list(fitch.downpass, fitch.uppass)
+        passes <- list(fitch.downpass, fitch.uppass)
     }
 
     ## Applying the passes for each node
-    for (pass in pass_functions) {
+    for (pass in passes) {
         states_matrix <- pass(states_matrix)
     }
 

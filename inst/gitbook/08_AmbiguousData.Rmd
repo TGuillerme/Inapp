@@ -17,7 +17,7 @@ ap <- c("Absent", "Present")
 rb <- c("Red", "Blue")
 ```
 
-## Coding ambiguous taxa
+## Ambiguity
 
 Ambiguous data does not pose a problem for the algorithm, but the nature of the
 ambiguity must be considered when scoring a character.
@@ -131,7 +131,6 @@ We therefore recommend the following coding schema for ambiguous tips where the
 tail is (A) known to be present; (B) ambiguous; (C) known to be absent:
 
 ```{r, echo=FALSE, asis=TRUE}
-
 mDep <- matrix(c("1", "?", "0",
                  "{01}", "?", "-",
                  "?", "?", "-"), byrow=TRUE, ncol=3)
@@ -139,6 +138,5 @@ colnames(mDep) <- LETTERS[1:3]
 rownames(mDep) <- c("Tail: (0), absent; (1), present.",
                     "Tail margin: (0), smooth; (1), serrated.",
                     "Tail colour: (0), red; (1), blue.")
-kable(mDep, capiton="Coding")
-
+knitr::kable(mDep, capiton="Coding")
 ```

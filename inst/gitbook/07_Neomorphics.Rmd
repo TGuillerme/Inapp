@@ -61,7 +61,7 @@ common ancestry to those that imply independent gains of this complex characteri
 
 It is less obvious whether the _absence_ of such complex features should convey grouping information.  This decision ought to be defended for individual characters by individual researchers, but researchers should be aware of the implications of their chosen coding strategy.
 
-#### Three trees
+### Three trees
 
 Consider the following three scenarios:
 
@@ -84,19 +84,19 @@ vignettePlot(eyesHaveIt, col, state.labels = eap, passes=4, main="Two non-spotte
 
 Each of these trees implies two independent origins of the tail.  Their score differs only with respect to the eyespots character.
 
-##### One tail spotted, one not
+#### One tail spotted, one not
 The first tree has the minimum possible score for the eyespots character.  (A score of one would also be obtained if the tail evolved once, and a single transformation occurred between 0 and 1 -- but we are only considering trees where the tail evolved twice.)  
 
-##### Two spot appearances
+#### Two spot appearances
 The next tree has a score of two for the eyespots character, which is obviously correct: Eye spots, a complex character, have evolved twice independently, which is not as parsimonious.
 
-##### Two non-spotted appearances
+#### Two non-spotted appearances
 The final tree also has a score of two for the eyespots character: even though eyespots have only evolved once, just as in the first tree.  The score of two occurs because the "absence of eyespots" has evolved twice.  
 
-##### Evaluation
+#### Evaluation
 It is possible that a researcher might feel uncomfortable grouping taxa on the basis of the non-occurrence of a complex feature that did not occur in their common ancestor.  Putting this another way, it is not clear that the fact that a feature has not evolved in two instances represents a homoplasy.  The absence of eyespots in a tail is not an evolutionary innovation -- it is an inheritance from a common ancestor that did not have eyespots (and did not have a tail).
 
-##### Implications
+#### Implications
 A researcher that argues that the absence of a feature contains phylogenetic information must surely include all properties of a tail that are only observed in a single taxon (because the absence of that feature in other taxa also contains grouping information).  A researcher may also include all properties of a tail that do not occur in any of the taxa of interest, for these too will influence tree topology: [parsimony uninformative characters inform
 parsimony](CodingData.html).
 
@@ -181,7 +181,7 @@ mtext("Tail eyespots: (0), absent; (1), present", side=1, line=0, outer=TRUE)
 
 Perhaps there are cases -- as might be seen in phenotypic plasticity -- where a tail might be lost, and then re-activate preexisting genes when it evolves again?  This starts to require an explicit model of evolution, however, which is somewhat beyond the remit of parsimony.
 
-#### Recommendation
+### Recommendation
 - Neomorphic characters should probably be coded as absent everywhere they are absent, whether this is because there's no tail or because there's a tail without the complex feature.
 
 

@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="minimising-homoplasy.html">
-<link rel="next" href="inapplicable-data-in-a-parsimony-setting-2.html">
+<link rel="prev" href="the-problem-with-counting-steps.html">
+<link rel="next" href="inapplicable-data-in-a-parsimony-setting-1.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -185,109 +185,60 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="inapplicable-data-in-a-parsimony-setting-1" class="section level1">
-<h1><span class="header-section-number">5</span> Inapplicable data in a parsimony setting</h1>
-<p>This is one of a <a href="Index.html">series</a> of vignettes that works through the inapplicable algorithm proposed by Brazeau <em>et al.</em> <span class="citation">(<a href="#ref-ThisStudy">2017</a>)</span>.</p>
-<p>We assume that you’ll already have read the vignettes on the <a href="Fitch.html">Fitch algorithm</a>, <a href="Problems.html">Problems with Fitch</a>, <a href="FailedSolutions.html">Unsuitable solutions</a> and <a href="OurSolution.Rmd">Our solution</a>.</p>
-<div id="implementation" class="section level2">
-<h2><span class="header-section-number">5.1</span> Implementation</h2>
-<p>Consider a tree with 12 taxa and the following multi-state characters with inapplicable data <code>23--1??--032</code>; say the character is “colour of the tail” ranging from 0 to 3 (four colours). Four taxa in our example have no tail (hence the inapplicable data <code>-</code>) and for two taxa, the data is missing (<code>?</code>- we don’t known the colour of the tail or even whether the taxa have a tail or not).</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-28-1.png" width="681.6" /></p>
-<p>We can use the <code>Inapp</code> package to apply our four passes inapplicable algorithm for this character on this tree.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Loading the Inapp package
-<span class="kw">library</span>(Inapp)
-
-## The tree
-tree &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="dt">text =</span> <span class="st">&quot;((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));&quot;</span>)
-
-## The character
-character &lt;-<span class="st"> &quot;23--1??--032&quot;</span>
-
-## Applying the NA algorithm
-matrix &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span>(tree, character, <span class="dt">method =</span> <span class="st">&quot;NA&quot;</span>, <span class="dt">passes =</span> <span class="dv">4</span>)</code></pre></div>
-<p>Here is what is happening:</p>
-<div id="passes-1-2" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Passes 1 &amp; 2</h3>
-<p>The first two passes are a standard Fitch algorithm applied the the parent character of the studied character (see [Fitch.Rmd]) with a special rule for the inapplicable state (<code>-</code>).</p>
-<p>For the first pass (first downpass):</p>
-<ul>
-<li>If state in common between the two descendants is the inapplicable state, but that both have also applicable states, set the node’s state to be the union between the descendants states (rather than their state in common).</li>
-<li>If there is no state in common between the descendants and both descendants have applicable states, remove the inapplicable state from their union (rather than simply setting the nodal state to their union).</li>
-</ul>
-<p>For the second pass (first uppass):</p>
-<ul>
-<li>If the focal node has both applicable and inapplicable states, set it to be the inapplicable state only if its ancestor has also only the inapplicable state, else remove the inapplicable state.</li>
-<li>If the focal node has only an inapplicable state and it’s ancestor has not only the inapplicable state, set it to be the union between it’s descendants states if their are both applicable, else, leave it as the inapplicable state.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
-<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">counts =</span> <span class="dv">0</span>, <span class="dt">main =</span> <span class="st">&quot;Inapplicable reconstruction&quot;</span>)</code></pre></div>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-30-1.png" width="681.6" /></p>
-<p>The parent character can be considered as a binary character “presence (<code>1</code>) or absence (<code>0</code>) of a tail” that would be <code>11001??00111</code>. The character would be reconstructed as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## The parent character
-parent_character &lt;-<span class="st"> &quot;11001??00111&quot;</span>
-
-## Applying the Fitch algorithm
-matrix_parent &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span>(tree, parent_character, <span class="dt">method =</span> <span class="st">&quot;Fitch&quot;</span>, <span class="dt">passes =</span> <span class="dv">2</span>)
-<span class="kw">plot</span>(matrix_parent, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">counts =</span> <span class="dv">0</span>, <span class="dt">main =</span> <span class="st">&quot;Fitch reconstruction of the parent character&quot;</span>)</code></pre></div>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-31-1.png" width="681.6" /></p>
-<p>As you can see, both reconstructions are identical: nodes with no tail are denoted as <code>0</code> in the case of the “parent character” and as <code>-</code> for our current character. Note however that contrary to the Fitch algorithm, there is no tree score counting in our algorithm for the two first passes. Indeed, in the case of the Fitch reconstruction of the “parent character”, the gain or losses of a tail are counted but not the changes in states for the subtending character (the tree score is 3 in Fitch, 5 in our case).</p>
-</div>
-<div id="pass-3" class="section level3">
-<h3><span class="header-section-number">5.1.2</span> Pass 3</h3>
-<p>The third pass further resolves ambiguities at nodal states. If the node is applicable, the standard Fitch downpass comparisons between the descendants are applied (see [Fitch.Rmd]) but with the rules relative to the inapplicable state described for the first downpass above.</p>
-<p>During this pass, we can also count the tree score. This score is composed of both:</p>
-<ul>
-<li>the change in states (e.g. the change in the colour of the tail)</li>
-<li>the change between applicable and inapplicable regions (e.g. the change in the parent character: a gain or a loss of the tail)</li>
-</ul>
-<p>The changes of states are calculated the same way as Fitch <strong>for the applicable states only</strong>:</p>
-<ol style="list-style-type: decimal">
-<li>If there is no state in common between both node’s descendants and that the node and its descendant have a least one applicable state, increment the tree score.</li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
-<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">counts =</span> <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;State changes&quot;</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-32-1.png" width="681.6" /></p>
-<p>For example, for node <code>n23</code>, there is no state in common between the tip <code>12</code> (<code>2</code>) and <code>11</code> (<code>3</code>), the tree score is incremented at this node (case <code>1</code> above). Note, however, that for node <code>n21</code>, there is no state in common between node <code>n22</code> (<code>023</code>) and tip <code>9</code> (<code>-</code>) but the score is not incremented since it does not concern applicable states only. In other words, there is no change in state at the node <code>n21</code> from the tail having a colour 0, 2 or 3 to the tail not being present (<code>-</code>) but rather a change in the parent character between presence and absence of the tail (present is <code>023</code> and absent is <code>-</code>).</p>
-<div id="tracking-applicable-regions" class="section level5">
-<h5><span class="header-section-number">5.1.2.0.1</span> Tracking applicable regions</h5>
-<p>To know whether any node leads to a region of applicable states we can use a “tracker” for each node that tells us at any moment whether descendants of a node contain applicable data or not. Doing so, we can know, when a node is inapplicable and its descendant lead to applicable regions that extra applicable regions are implied by the tree. In other words and following our “colour of the tail” character, extra applicable regions imply independent appearances of the tail somewhere in the node’s descendants.</p>
-<p>The tracker is initialised during the <em>second pass</em> (first uppass) and is updated during the <em>third pass</em> (second downpass). The tracker works as follows for each node’s left and right descendants:</p>
-<ul>
-<li>If the descendant state was resolved as applicable, the node leads to an applicable region, else, it leads to an inapplicable one.</li>
-</ul>
-<p>The trackers are initialised for each node during the first uppass and then propagated back down the tree during the second downpass.</p>
-<p>Using these trackers, we can then increments the tree score for all changes that imply a new applicable region. The switch to or from an inapplicable and applicable region are counted as follow:</p>
-<ol start="2" style="list-style-type: decimal">
-<li>If the node is inapplicable and both descendants lead to regions of applicable states, increment the region count.</li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
-<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">counts =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;Applicable regions&quot;</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-33-1.png" width="681.6" /></p>
-<p>For example, node <code>n15</code> is solved as inapplicable but both his descendants lead to two independent applicable regions (tip <code>5</code> with the state <code>1</code> and node <code>n18</code> with the states <code>1</code> and <code>2</code>). This implies an independent change in the parent character (in our example, tail is absent at node <code>n15</code> but evolves independently at tip <code>5</code> and node <code>n18</code>). Conversely, node <code>n21</code> is solved as inapplicable but not both his descendants lead to independent applicable regions. This node does thus not imply an independent change in the parent character.</p>
+<div id="minimising-homoplasy" class="section level1">
+<h1><span class="header-section-number">4</span> Minimising homoplasy</h1>
+<p>A solution can be found if the goal of parsimony is recast not in terms of minimising the number of steps, but instead of minimising the amount of homoplasy in a tree.</p>
+<p>De Laet has made this point before <span class="citation">(De Laet, <a href="#ref-DeLaet2005">2005</a>,<span class="citation">De Laet (<a href="#ref-DeLaet2017">2017</a>)</span>)</span>, suggesting that a tree’s score should be calculated as</p>
 <blockquote>
-<p>Note that the number of applicable regions for a character is always at least 1 (unless every taxa has the inapplicable state) and therefore, we only count the <em>additional</em> regions.</p>
+<p>Total score = Number of steps + Number of (additional) regions.</p>
 </blockquote>
-<p>Combining both scores - the number of changes in character states and the number of additional applicable regions - we get indeed a total tree score of 5 for this tree and character</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
-<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">counts =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-34-1.png" width="681.6" /></p>
-<p>Using these tree passes is enough to get the tree score (while taking into account inapplicable data!) but does not solve all ancestral reconstructions. A fourth pass (second uppass) might be necessary to finalise the node states reconstructions.</p>
+<p>Practically, because the number of unavoidable regions is a function of a dataset and not of a tree, one could also count</p>
+<blockquote>
+<p>Total score = Number of steps + Number of regions</p>
+</blockquote>
+<p>which would be a constant number larger than the total score generated just counting additional regions; the absolute value of the score is not meaningful in itself and is not comparable between datasets, so the calculation method does not affect tree search.</p>
+<p>The tree below gives an example of a tree in which a character in applicable in two regions (one more than the minimum possible, one) and one state change.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-22-1.png" width="576" /></p>
+<p>This score denotes two evolutionary observations that cannot be attributed to inheritance from a common ancestor: the blueness of tail in the blue tailed taxa (as the common ancestor inherited a red tail), and the redness of tail in the second region of the tree (as the common ancestor of all tail-bearing taxa did not itself have a tail, so tail colour could no be inherited).</p>
+<div id="what-does-it-take-to-denote-separate-regions" class="section level3">
+<h3><span class="header-section-number">4.0.1</span> What does it take to denote separate regions?</h3>
+<p>It takes three inapplicable nodes (including tips) to force two regions of the tree to be separrated by an inapplicable region.</p>
+<p>This can be estabilshed by imagining the Fitch optimisation of a separate character</p>
+<blockquote>
+<p>Applicability of the character of interest: (0), inapplicable; (1), applicable</p>
+</blockquote>
+<p>In the case of tail colour, this applicability character has the same distribution as the presence / absence of the tail, but this is not necessarily the case (there may be a range of reasons to code a character as inapplicable).</p>
+<p>In the tree shown above, the Fitch algorithm identifies two regions where the applicability character is unambiguously ‘applicable’:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-23-1.png" width="576" /></p>
+<p>If one of the inapplicable tips had instead been ambiguous, then the same distribution would arise:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-24-1.png" width="576" /></p>
+<p>But if two were ambiguous, then the ‘inapplicable’ region could equally be interpreted, under the Fitch algorithm, as ‘applicable’ – with the two inapplicable tips becoming inapplicable in the branches that led to them:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-25-1.png" width="576" /></p>
+<p>The ambiguous region of this tree may parsimoniously be interpreted as applicable, and doing so increases the opportunity to attribute shared colours in the tail to common ancestry, this our algorithm chooses to interpret the region as applicable whereever it is parsimonious to do so.</p>
+<p>Note that the three inapplicable tips necessary to define an inapplicable region must be in a contiguous region of the tree, separated from one another only by taxa whose applicability is ambiguous, in order for two applicable regions to be reconstructed as separate.</p>
 </div>
+<div id="how-this-fixes-the-problem" class="section level2">
+<h2><span class="header-section-number">4.1</span> How this fixes the problem</h2>
+<p>This overcomes the problem where steps cancould be avoided by inferring multiple innovations of a character:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-26-1.png" width="768" /></p>
+<p>On the other hand, if taxa either have a blue, scaly, straight tail or a red, smooth, curly tail, then the fact that the tails have so little in common means that it wouldn’t be entirely surprising if the two different tail types evolved twice. This scenario thus incurs a cost of only one step (for the additional origin of the tail) more than if the tail evolved once, and change all its attributes:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-27-1.png" width="768" /></p>
 </div>
-<div id="pass-4" class="section level3">
-<h3><span class="header-section-number">5.1.3</span> Pass 4</h3>
-<p>In the example above, the node <code>n23</code> is still not correctly solved after the third pass. In fact, considering its ancestor’s states (<code>023</code>) and its descendants’ states (<code>2</code> and <code>3</code>), it should be resolved as <code>023</code> under a delayed transition model (DELTRAN). In order to do so, we can apply a extra pass similar to the second pass (first uppass), as described above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
-<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="dt">counts =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-35-1.png" width="681.6" /></p>
+<div id="summary" class="section level2">
+<h2><span class="header-section-number">4.2</span> Summary</h2>
+<p>This is the desired behaviour. But how do we count this in practice?</p>
+<p>In brief, we evaluate for each tip whether the character in question is applicable, inapplicable, or ambiguous (could be either), and use the standard Fitch algorithm on this applicability data to reconstruct the state of each internal node, reconstructing ambiguous nodes on the uppass as applicable.</p>
+<p>This done, we conduct a second Fitch-like pass on the tree, in which we count transformations if they occur at nodes in which the character has been reconstructed as applicable. Additional regions are also counted on this downpass, by counting nodes that are ancestral to an inapplicable region of the tree that itself leads to an as-yet-uncounted applicable region.</p>
 
-</div>
 </div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-ThisStudy">
-<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2017). Morphological phylogenetic analysis with inapplicable data. <em>bioR<span class="math inline">\(\chi\)</span>iv</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+<div id="ref-DeLaet2005">
+<p>De Laet, J. (2005). Parsimony, phylogeny and genomics. In V. Albert (Ed.) (pp. 81–116). Oxford University Press.</p>
+</div>
+<div id="ref-DeLaet2017">
+<p>De Laet, J. (2017). A note on brazeau et al.’s (2017) algorithm for characters with inapplicable data, illustrated with an analysis of their fig. 3d using anagallis, a program for parsimony analysis of character hierarchies. doi:<a href="https://doi.org/10.13140/RG.2.2.31309.54245">10.13140/RG.2.2.31309.54245</a></p>
 </div>
 </div>
             </section>
@@ -295,8 +246,8 @@ matrix_parent &lt;-<span class="st"> </span><span class="kw">apply.reconstructio
           </div>
         </div>
       </div>
-<a href="minimising-homoplasy.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="inapplicable-data-in-a-parsimony-setting-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="the-problem-with-counting-steps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="inapplicable-data-in-a-parsimony-setting-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -325,7 +276,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/05_OurAlgorithm.Rmd",
+"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/04_OurSolution.Rmd",
 "text": "Edit"
 },
 "download": null,

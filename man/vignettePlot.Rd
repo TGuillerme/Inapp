@@ -5,7 +5,8 @@
 \title{Vignette Plot}
 \usage{
 vignettePlot(tree, character, na = TRUE, legend.pos = "bottomleft",
-  passes = integer(0), state.labels = character(0), ...)
+  passes = if (na) 1:4 else 1:2, state.labels = character(0), counts = if
+  (na) 1:2 else 2, ...)
 }
 \arguments{
 \item{tree}{Tree to plot}

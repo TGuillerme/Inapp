@@ -9,14 +9,13 @@ output:
   pdf_document: default
 ---
 
-
 <!-- # Inapplicable data in a parsimony setting
 
 This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
  -->
 # The Fitch algorithm
 
-This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [@swofford2001paup,@Goloboff2016] or probabilistic methods [@Ronquist2012mrbayes,@Stamatakis21012014].
+This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [TODO: citeTNT and citePAUP] or probabilistic methods [TODO: citeRAxML and citeMrBayes].
 The procedure is rather simple and elegant and consist in going down the tree to count the number of transformation and then go up the tree again to finalise the ancestral states reconstructions.
 
 The way the algorithms goes up and down depends on the software but often uses a _traversal_: a recursive function that can visit all tips and nodes in a logical fashion.
@@ -194,7 +193,3 @@ runInapp()
 - With neomorphic characters though, we want to assume the minimum number of innovations of the innovation.
 - This is what we mean by maximising homology: always assume a neomorphic character is present if you can
 - Here's how we'd resolve the ambiguous trees from [@Agnarsson2008].
-
-<!-- 
-## References
- -->

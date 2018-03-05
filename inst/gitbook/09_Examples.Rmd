@@ -11,6 +11,7 @@ output:
 
 ```{r, message=FALSE, include=FALSE}
 library('Inapp')
+library('ape')
 labelRow <- function(text) text(-3, 9, text, font=2, pos=4, cex=1.2)
 goloPar <- function () par(mfrow=c(1, 2), mar=c(0.5, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0), cex=0.5)
 goloPlot <- function (tai, clr, title, nodeLabels=FALSE) {
@@ -23,6 +24,10 @@ goloPlot <- function (tai, clr, title, nodeLabels=FALSE) {
         text((1:14) + 2.5 , (1:14) - 0.5, 1:14)
     }
 }
+ap <- c('Absent', 'Present')
+rb <- c('Red', 'Blue')
+oap <- c('', ap)
+orb <- c('', rb)
 ```
 
 ## Examples
@@ -81,7 +86,7 @@ the second innovation of "blueness" represents an instance of homoplasy.
 goloPlot(taiA, clrA, 'Tree A: Total score 4')
 ```
 
-#### Three equally suboptimal alternatives
+### Three equally suboptimal alternatives
 The following three trees differ in the number of innovations of the tail that
 are implied, and the number of changes in tail colour.  All are equally parsimonious.
 
@@ -118,7 +123,7 @@ goloPlot(taiD, clrD, 'Tree D: Total score 9', TRUE)
 ```
 
 
-#### A better caterpillar tree
+### A better caterpillar tree
 
 The tree below obtains a better score than any of the previous three: it implies
 a loss of the tail at edge 2, a gain at edge 6, a loss at edge 10, and a gain at
@@ -129,4 +134,58 @@ at edge 14, and a change in colour at edge 8, for a combined score of 7.
 goloPlot(taiE, clrE, 'Tree E: Total score 7', TRUE)
 ```
 
+### De Laet's caterpillars
 
+```{r, echo=FALSE}
+combH <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, (G, H)))))));")
+```
+
+De Laet [-@DeLaet2017] identifies a corner case in which our algorithm will not reconstruct every equally-parsimonious character reconstruction.  Below is a simplified version of his example:
+
+```{r, echo=FALSE, asis=TRUE}
+tail <- "011?0011"
+clr2 <- "-11?--22"
+mDep <- matrix(strsplit(paste0(tail, clr2, collapse=''), '')[[1]], byrow=TRUE, nrow=2)
+colnames(mDep) <- LETTERS[1:ncol(mDep)]
+rownames(mDep) <- c("Tail: (0), absent; (1), present.",
+                    "Tail, colour: (1), red; (2),blue.")
+knitr::kable(mDep, capiton="Coding")
+```
+
+When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11). 
+
+```{r, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+vignettePlot(combH, tail, legend.pos='topleft', FALSE, passes=2,
+             main='Tail', state.labels = ap)
+edgelabels(cex=1.6, frame='none')
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+vignettePlot(combH, clr2, legend.pos='topleft', passes=4,
+             main='Tail colour', state.labels=orb)
+
+```
+
+The Fitch algorithm identifies other reconstructions as equally parsimonious: for example, a tail may have been lost on edge 6 and re-gained on edge 12.  This also incurs three steps for the tail character, and (in De Laet's parlance) attributes three similarities to common ancestry: the presence of a tail in tips B and C, the absence of the tail in tips E and F, and the presence of a tail in tips G and H.
+
+We prefer reconstructions that attribute the presence of a feature to common ancestry where possible -- a philosophy that shares something with Dollo's contention that it is easier to lose a feature than to gain it.  On a pragmatic level, this maximises the opportunity for subsidiary traits of the tail to be attributed to common ancestry.
+
+In this particular case, there is an equally-parsimonious character reconstruction that our algorithm excludes, which invokes two gains (and one loss) of the tail:
+
+```{r, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+
+vignettePlot(combH, "011?0011", legend.pos='topleft', FALSE, passes=0,
+             main='Tail', state.labels = ap)
+edgelabels(cex=1.6, frame='none')
+nodelabels(pch=16, cex=6, col='#58a691a7')
+nodelabels(c('01', 1, 1,'01',0, 0, 1), cex=1.6, frame='none')
+
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+vignettePlot(combH, "-11?--22", legend.pos='topleft', passes=0,
+             main='Tail colour', state.labels=orb)
+nodelabels(pch=16, cex=6, col='#58a691a7')
+nodelabels(c("-1", "1", 1, '-1', rep("-", 2), 2), cex=1.6, frame='none')
+
+```
+
+This has no effect on tree scoring, but may be relevant if complete internal nodal reconstructions are desired.

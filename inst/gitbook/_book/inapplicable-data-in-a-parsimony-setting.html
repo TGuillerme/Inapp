@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="a-solution.html">
-<link rel="next" href="inapplicable-data-in-a-parsimony-setting.html">
+<link rel="prev" href="references.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -175,17 +175,85 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="inapplicable-data-in-a-parsimony-setting" class="section level1">
+<h1><span class="header-section-number">3</span> Inapplicable data in a parsimony setting</h1>
+<p>This series of vignettes works through the inapplicable algorithm proposed by Brazeau <em>et al.</em> <span class="citation">(<a href="#ref-ThisStudy">2017</a>)</span>.</p>
+<div id="the-packages" class="section level2">
+<h2><span class="header-section-number">3.1</span> The packages</h2>
+<p>Illustration of the inapplicable algorithm is based on the <a href="https://github.com/TGuillerme/Inapp">Inapp</a> <code>R</code> package. This package allows to visualise how the algorithm is counting the score of a tree for a given character with different algorithms treating inapplicable data differently. It allows users to input any tree and character.</p>
+<!-- badges out start -->
+<p><a href="https://travis-ci.org/TGuillerme/Inapp"><img src="https://travis-ci.org/TGuillerme/Inapp.svg?branch=master" alt="Build Status" /></a> <a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed." /></a> <a href="https://codecov.io/gh/TGuillerme/Inapp"><img src="https://codecov.io/gh/TGuillerme/Inapp/branch/master/graph/badge.svg" alt="codecov" /></a> <!-- badges out end   --></p>
+<p>To actually perform tree search, please have a look at the <a href="https://github.com/ms609/TreeSearch">inapplicable</a> <code>R</code> package. This package allows some heuristic searches on reasonable sized matrices.</p>
+<!-- badges out start -->
+<p><a href="https://travis-ci.org/ms609/TreeSearch"><img src="https://travis-ci.org/ms609/TreeSearch.svg?branch=master" alt="Build Status" /></a> <a href="https://cran.r-project.org/package=TreeSearch"><img src="http://www.r-pkg.org/badges/version/TreeSearch" alt="CRAN Status Badge" /></a> <a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – – The project has reached a stable, usable state and is being actively developed." /></a> <a href="https://codecov.io/gh/ms609/TreeSearch"><img src="https://codecov.io/gh/ms609/TreeSearch/branch/master/graph/badge.svg" alt="codecov" /></a> <!-- badges out end   --></p>
+<p>Both these <code>R</code> packages are based on the <a href="https://github.com/mbrazeau/morphylib">morphylib</a> <code>C</code> library that allows to score characters with inapplicable using our new algorithm. This library will be eventually implemented in <a href="http://www.morphyproject.org/">Morphy</a>, a fully functional <code>C</code> based API for phylogenetic searches.</p>
+<!-- badges out start -->
+<p><a href="https://travis-ci.org/mbrazeau/morphylib"><img src="https://travis-ci.org/mbrazeau/morphylib.svg?branch=master" alt="Build Status" /></a> <a href="https://coveralls.io/github/mbrazeau/MorphyLib?branch=development"><img src="https://coveralls.io/repos/github/mbrazeau/MorphyLib/badge.svg?branch=development" alt="Coverage Status" /></a> <a href="https://zenodo.org/badge/latestdoi/90367119"><img src="https://zenodo.org/badge/90367119.svg" alt="DOI" /></a> <!-- badges out end   --></p>
+<!-- ## Contents
 
+- The Fitch Algorithm:
+  - [An introduction](Fitch.html)
+    - Status: In progress (TG)
+  - [Shortcomings](Problems.html)
+    - Status: In progress (MS)
+  - [Proposed solutions](FailedSolutions.html)
+    - Status: Not allocated
+  
+- Our algorithm:
+  - [An introduction](OurSolution.html)
+    - Status: Not allocated
+  - [A description](OurAlgorithm.html)
+    - Status: Draft complete? (TG)
+  - [Implications for character coding](CodingData.html)
+    - Status: In progress (MS)
+  - [Coding neomorphic characters](Neomorphics.html)
+    - Status: In progress (MS)
+  - [Coding ambiguity](AmbiguousData.html)
+    - Status: Draft complete (MS)
+  - [Some worked examples](Examples.html)
+    - Status: Complete? (MS)
+
+## References
+ -->
+
+<div id="refs" class="references">
+<div>
+<p>Agnarsson, I., &amp; Miller, J. A. (2008). Is ACCTRAN better than DELTRAN? <em>Cladistics</em>, <em>24</em>(6), 1032–1038. doi:<a href="https://doi.org/10.1111/j.1096-0031.2008.00229.x">10.1111/j.1096-0031.2008.00229.x</a></p>
+</div>
+<div>
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2017). Morphological phylogenetic analysis with inapplicable data. <em>bioR<span class="math inline">\(\chi\)</span>iv</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+</div>
+<div>
+<p>De Laet, J. (2005). Parsimony, phylogeny and genomics. In V. Albert (Ed.) (pp. 81–116). Oxford University Press.</p>
+</div>
+<div>
+<p>De Laet, J. (2017). A note on brazeau et al.’s (2017) algorithm for characters with inapplicable data, illustrated with an analysis of their fig. 3d using anagallis, a program for parsimony analysis of character hierarchies. doi:<a href="https://doi.org/10.13140/RG.2.2.31309.54245">10.13140/RG.2.2.31309.54245</a></p>
+</div>
+<div>
+<p>Fitch, W. M. (1971). Toward defining the course of evolution: minimum change for a specific tree topology. <em>Systematic Biology</em>, <em>20</em>(4), 406–416. doi:<a href="https://doi.org/10.1093/sysbio/20.4.406">10.1093/sysbio/20.4.406</a></p>
+</div>
+<div>
+<p>Maddison, W. P. (1993). Missing data versus missing characters in phylogenetic analysis. <em>Systematic Biology</em>, <em>42</em>(4), 576–581. doi:<a href="https://doi.org/10.1093/sysbio/42.4.576">10.1093/sysbio/42.4.576</a></p>
+</div>
+<div>
+<p>Sereno, P. C. (2007). Logical basis for morphological characters in phylogenetics. <em>Cladistics</em>, <em>23</em>(6), 565–587. doi:<a href="https://doi.org/10.1111/j.1096-0031.2007.00161.x">10.1111/j.1096-0031.2007.00161.x</a></p>
+</div>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-ThisStudy">
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2017). Morphological phylogenetic analysis with inapplicable data. <em>bioR<span class="math inline">\(\chi\)</span>iv</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="a-solution.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="inapplicable-data-in-a-parsimony-setting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -214,7 +282,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/10_references.Rmd",
+"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/Index.Rmd",
 "text": "Edit"
 },
 "download": null,

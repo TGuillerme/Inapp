@@ -46,16 +46,28 @@ read.characters <- function (filepath, character_num=NULL, session=NULL) {
         if (lines[matrixEnd] == ';') matrixEnd <- matrixEnd - 1
 
         matrixLines <- lines[(matrixStart + 1):matrixEnd]
-        taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\w+))\\s+(.*)$"
+        taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\S+))\\s+(.+)$"
+
+        taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl=TRUE) > -1
+        # If a line does not start with a taxon name, join it to the preceding line
+        taxonLineNumber <- which(taxonLines)
+        previousTaxon <- vapply(which(!taxonLines), function (x) {
+            max(taxonLineNumber[taxonLineNumber < x])
+        }, integer(1))
+
 
         taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl=TRUE)
         taxa <- gsub(" ", "_", taxa, fixed=TRUE)
+        taxa[!taxonLines] <- taxa[previousTaxon]
+        uniqueTaxa <- unique(taxa)
 
         tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl=TRUE)
         tokens <- gsub("\t", "", gsub(" ", "", tokens, fixed=TRUE), fixed=TRUE)
+        tokens <- vapply(uniqueTaxa, function (taxon) paste0(tokens[taxa==taxon], collapse=''), character(1))
 
         tokens.pattern <- "\\([^\\)]+\\)|\\{[^\\}]+\\}|."
         matches <- gregexpr(tokens.pattern, tokens, perl=TRUE)
+
         n_char <- length(matches[[1]])
 
         if (!is.null(session)) {
@@ -78,7 +90,7 @@ read.characters <- function (filepath, character_num=NULL, session=NULL) {
         } else if (length(character_num) == 0) {
           stop("No characters selected")
         }
-        rownames(tokens) <- taxa
+        rownames(tokens) <- uniqueTaxa
 
         labelStart <- which(upperLines == 'CHARLABELS')
         if (length(labelStart) == 1) {
@@ -112,7 +124,7 @@ read.characters <- function (filepath, character_num=NULL, session=NULL) {
             }
         } else {
             if (length(labelStart) > 1) {
-                return(list("Multiple StateLabels blocks in Nexus file."))
+                eturn(list("Multiple StateLabels blocks in Nexus file."))
             }
         }
     }

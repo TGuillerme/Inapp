@@ -31,7 +31,7 @@ tree12 <- ape::read.tree(text='((((((a, b), c), d), E), F), (G, (H, (i, (j, (k, 
 
 A solution can be found if the goal of parsimony is recast not in terms of minimising the number of steps, but instead of minimising the amount of homoplasy in a tree.
 
-De Laet has made this point before [@DeLaet2005,@DeLaet2017], suggesting that a tree's score should be calculated as 
+De Laet has made this point before [@DeLaet2005,-@DeLaet2015], suggesting that a tree's score should be calculated as 
 
 > Total score = Number of steps + Number of (additional) regions.
 

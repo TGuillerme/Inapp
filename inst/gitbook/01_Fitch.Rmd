@@ -183,11 +183,3 @@ More complex cases can be studied in the Inapp App (running in your favourite we
 ## Running the Inapp App
 runInapp()
 ```
-
-## Discussion: How to optimise characters
-
-- Acctran vs Deltran: Neither is guaranteed to always maximise homology
-- With transformational characters, there's no way to decide.
-- With neomorphic characters though, we want to assume the minimum number of innovations of the innovation.
-- This is what we mean by maximising homology: always assume a neomorphic character is present if you can
-- Here's how we'd resolve the ambiguous trees from [@Agnarsson2008].

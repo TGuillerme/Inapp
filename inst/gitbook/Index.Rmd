@@ -32,7 +32,7 @@ It allows users to input any tree and character.
 [![codecov](https://codecov.io/gh/TGuillerme/Inapp/branch/master/graph/badge.svg)](https://codecov.io/gh/TGuillerme/Inapp)
 <!-- badges out end   -->
 
-To actually perform tree search, please have a look at the [inapplicable](https://github.com/ms609/TreeSearch) `R` package.
+To actually perform tree search, please have a look at the [TreeSearch](https://github.com/ms609/TreeSearch) `R` package.
 This package allows some heuristic searches on reasonable sized matrices.
 
 <!-- badges out start -->

@@ -9,10 +9,6 @@ output:
   pdf_document: default
 ---
 
-<!-- # Inapplicable data in a parsimony setting
-
-This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
- -->
 # The Fitch algorithm
 
 This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [TODO: citeTNT and citePAUP] or probabilistic methods [TODO: citeRAxML and citeMrBayes].

@@ -33,12 +33,6 @@ bw <- c('', 'Black', 'White')
 
 ## Coding data
 
-<!-- # Inapplicable data in a parsimony setting
-
-This is one of a [series](Index.html) of vignettes that works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
-
-We assume that you'll already have read the [description](OurAlgorithm.html) of our algorithm.
- -->
 ### Multiple dependencies
 
 It's not a problem to have characters dependent on characters that are dependent

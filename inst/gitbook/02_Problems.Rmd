@@ -16,8 +16,6 @@ ap <- c('Absent', 'Present')
 rb <- c('Red', 'Blue')
 ```
 
-[comment]: # Current status: First draft, needs copyediting, contributions welcome!
-
 ## Problems with the Fitch algorithm
 
 The Fitch algorithm counts changes in a character.

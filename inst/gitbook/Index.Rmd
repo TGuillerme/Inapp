@@ -51,32 +51,3 @@ This library will be eventually implemented in [Morphy](http://www.morphyproject
 [![DOI](https://zenodo.org/badge/90367119.svg)](https://zenodo.org/badge/latestdoi/90367119)
 <!-- badges out end   -->
 
-
-
-
-<!-- ## Contents
-
-- The Fitch Algorithm:
-  - [An introduction](Fitch.html)
-    - Status: In progress (TG)
-  - [Shortcomings](Problems.html)
-    - Status: In progress (MS)
-  - [Proposed solutions](FailedSolutions.html)
-    - Status: Not allocated
-  
-- Our algorithm:
-  - [An introduction](OurSolution.html)
-    - Status: Not allocated
-  - [A description](OurAlgorithm.html)
-    - Status: Draft complete? (TG)
-  - [Implications for character coding](CodingData.html)
-    - Status: In progress (MS)
-  - [Coding neomorphic characters](Neomorphics.html)
-    - Status: In progress (MS)
-  - [Coding ambiguity](AmbiguousData.html)
-    - Status: Draft complete (MS)
-  - [Some worked examples](Examples.html)
-    - Status: Complete? (MS)
-
-## References
- -->

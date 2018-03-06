@@ -9,6 +9,14 @@ output:
   pdf_document: default
 ---
 
+```{r, echo = FALSE}
+library('Inapp'); library('ape')
+col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0")
+colours <- Inapp::brewer[[2]]
+```
+
+# [Comment:] Incomplete; MS to work on this tomorrow.
+
 ## Optimizing ambiguous characters characters
 
 A number of approaches have been proposed concerning which resolution of ambiguous
@@ -18,8 +26,94 @@ The two most familiar approaches to resolving ambiguous node are the Accelerated
 (<span style="font-variant:small-caps;">AccTran</span>) and Delayed Transformation 
 (<span style="font-variant:small-caps;">DelTran</span>) approaches.
 
-- Acctran vs Deltran: Neither is guaranteed to always maximise homology
-- With transformational characters, there's no way to decide.
-- With neomorphic characters though, we want to assume the minimum number of innovations of the innovation.
-- This is what we mean by maximising homology: always assume a neomorphic character is present if you can
+The <span style="font-variant:small-caps;">AccTran</span> approach reconstructs transformations as occurring as close to the root as possible; the <span style="font-variant:small-caps;">DelTran</span>, as far from the root as possible.
+
+In this case, the ambiguous resolution of the root leaves two options for the latter:
+
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+par(mfrow=c(2, 2), mar=rep(1, 4))
+
+tree <- read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
+tree$tip.label <- paste("_", tree$tip.label)
+char <- c(1,0,0,1,1,0,0,1)
+
+edge_col <- Inapp::brewer[[2]][c(2,2,1,1,  1,1,2,
+                                 2,2,2,1,  1,1,2)]
+
+graphics::plot(tree, show.tip.label = TRUE, main='AccTran',
+               type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
+               edge.color = edge_col, edge.width = 2)
+
+node_labels <- paste(paste("Acc:", sep = ""), c(1,1,0,0,1,0,0))
+node_labels <- paste(paste("n", 9:15, "\n", sep = ""), node_labels, sep = "")
+
+ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,3,3,2,3)])
+
+tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
+edgelabels(frame='none', edge=c(2, 4, 10, 14), "X", col=col.tips.nodes[3])
+
+edge_col <- Inapp::brewer[[2]][2]
+
+graphics::plot(tree, show.tip.label = TRUE, main='DelTran',
+               type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
+               edge.color = edge_col, edge.width = 2)
+
+node_labels <- paste(paste("Del:", sep = ""), rep(1, 7))
+node_labels <- paste(paste("n", 9:15, "\n", sep = ""), node_labels, sep = "")
+
+ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,3,3,2,3)])
+
+tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
+edgelabels(frame='none', edge=c(5, 6, 11, 13), "X", col=col.tips.nodes[3])
+
+plot(1, type="n", axes=F, xlab="", ylab="")
+#edge_col <- Inapp::brewer[[2]][3-c(2,2,1,1,  1,1,2,
+#                                 2,2,2,1,  1,1,2)]
+#
+#graphics::plot(tree, show.tip.label = TRUE, main='AccTran',
+#               type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
+#               edge.color = edge_col, edge.width = 2)
+#
+#node_labels <- paste(paste("Acc:", sep = ""), 1-c(1,1,0,0,1,0,0))
+#node_labels <- paste(paste("n", 9:15, "\n", sep = ""), node_labels, sep = "")
+#
+#ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,3,3,2,3)])
+#
+#tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
+#edgelabels(frame='none', edge=c(2, 4, 10, 14), "X", col=col.tips.nodes[3])
+
+
+edge_col <- Inapp::brewer[[2]][1]
+
+graphics::plot(tree, show.tip.label = TRUE, main='DelTran',
+               type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
+               edge.color = edge_col, edge.width = 2)
+
+node_labels <- paste(paste("Del:", sep = ""), rep(0, 7))
+node_labels <- paste(paste("n", 9:15, "\n", sep = ""), node_labels, sep = "")
+
+ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,3,3,2,3)])
+
+tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
+edgelabels(frame='none', edge=c(4, 7, 9, 14), "X", col=col.tips.nodes[3])
+
+```
+
+If state 0 stands for the absence of a character, and state 1 its presence, then in
+this particular case the <span style="font-variant:small-caps;">DelTran</span> reconstruction maximises homology: it explains the absence of the character in `b`, `c`, `f` and `g` as a product of four independent losses, meaning that the characters prsent in `a`, `d`, `e` and `h` are homologous with one another.  The <span style="font-variant:small-caps;">AccTran</span> 
+reconstruction, in contrast, identifies a loss of the character at nodes 11 and 14, with
+ independent innovations of the character in tips `a` and `h`. 
+(The alternative DelTran approach, which could arguably be described as AccTran too,
+invokes four independent origins of the character and clearly does not maximise its homology.)
+
+Neither AccTran nor DelTran is guaranteed to maximise homology. 
+The homology-maximising reconstruction of a neomrophic character minimises the number of 
+times that it arises; this is equivalent to reconstructing nodes as present for
+the character whereever parsimony allows it.
+
+With transformational characters, however, origins of state `0` infer no less homoplasy than origins of state `1`, and no one (equally-parsimonious) reconstruction implies more homoplasy
+than any other.
+
+
+
 - Here's how we'd resolve the ambiguous trees from [@Agnarsson2008].

@@ -11,10 +11,10 @@ output:
 
 # The Fitch algorithm
 
-This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [TODO: citeTNT and citePAUP] or probabilistic methods [TODO: citeRAxML and citeMrBayes].
-The procedure is rather simple and elegant and consist in going down the tree to count the number of transformation and then go up the tree again to finalise the ancestral states reconstructions.
+This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [@swofford2001paup; @Goloboff2016] or probabilistic methods [@@Ronquist2012mrbayes; @Stamatakis2014].
+The procedure is simple and elegant and entails going down the tree to count the number of transformations, and then going back up the tree to finalise the ancestral state reconstructions.
 
-The way the algorithms goes up and down depends on the software but often uses a _traversal_: a recursive function that can visit all tips and nodes in a logical fashion.
+The way the algorithm goes up and down depends on the software, but often employs a _traversal_: a recursive function that can visit all tips and nodes in a logical fashion.
 For example, consider the following tree:
 
 ```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
@@ -25,10 +25,10 @@ plot(tree)
 nodelabels(tree$node.label)
 ```
 
-A downpass traversal will first apply the algorithm to the first cherry (or pair of taxa) (`A` below), then save the results in `n1` and move to the second pair of tips/nodes (`B`), apply the algorithm and save the results in `n2`, etc. until all the nodes/tips are visited.
+A downpass traversal will first evaluate the first cherry (or pair of taxa) (`A` below), then save the results in `n1` and evaluate the second pair of tips/nodes (`B`), saving the results in `n2`, proceeding until all the nodes/tips are visited.
 
 ```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
-plot(tree, main = "downpass traversal")
+plot(tree, main = "Downpass traversal")
 nodelabels(tree$node.label)
 
 ## a

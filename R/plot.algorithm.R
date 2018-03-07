@@ -83,7 +83,7 @@ plot.states.matrix <- function(
             }
         }
 
-        if(missing) {
+        if (missing) {
             ## Getting all states
             all_states <- unique(unlist(character))
             ## Convert the missing states
@@ -123,7 +123,7 @@ plot.states.matrix <- function(
     ## tree character done in make.states.matrix
 
     ## Passes
-    if(!(class(passes) %in% c("numeric", "integer"))
+    if (!(class(passes) %in% c("numeric", "integer"))
        || any(is.na(match(passes, c(1,2,3,4))))) {
         if (length(passes) > 1 || !(passes %in% c(0, NULL, NA))) {
             warning("passes argument must be NULL, or any integer(s) between 1 and 4.")
@@ -132,7 +132,7 @@ plot.states.matrix <- function(
     }
 
     ## show.labels
-    if(!is.null(show.labels)) {
+    if (!is.null(show.labels)) {
         if(!(all(show.labels %in% c(FALSE, 0:2)))) {
             stop("show.labels argument, ", show.labels, class(show.labels), " must be 0 (none), 1 (tips), 2 (nodes), c(1, 2) (both)")
         }
@@ -144,7 +144,7 @@ plot.states.matrix <- function(
     }
 
     ## col.tips.nodes
-    if(length(col.tips.nodes) == 1) {
+    if (length(col.tips.nodes) == 1) {
         col.tips.nodes <- rep(col.tips.nodes, 4)
     } else {
         if(length(col.tips.nodes) > 4) {
@@ -154,7 +154,7 @@ plot.states.matrix <- function(
     }
 
     ## counts
-    if(any(counts != 0) && !(counts %in% c(1,2))) {
+    if (any(counts != 0) && !(counts %in% c(1,2))) {
         stop("counts argument must be either 1 for displaying activations and/or 2 for homoplasies.")
     }
 
@@ -204,6 +204,7 @@ plot.states.matrix <- function(
         }
         all_states <- -1:max_colour
         col_states <- c('-', 0:max_colour)
+
         ## Get the edge colours
         colour.edge <- function (edge) {
             parent <- all_states %in% final_state[[edge[1]]]
@@ -213,7 +214,8 @@ plot.states.matrix <- function(
                 col_states[common]
             } else if (sum(child) == 1) {
                 col_states[child]
-            } else if (sum(parent) == 1) {
+            } else if (sum(parent) == 1
+                       && !identical(parent, (col_states == '-'))) {
                 col_states[parent]
             } else '?'
         }
@@ -286,7 +288,7 @@ plot.states.matrix <- function(
                          bty='n', bg = NULL)
     }
     ## Colour the tip states.
-    if(col.states) {
+    if (col.states) {
         ape::tiplabels(tips_labels, cex = 1, adj = 1,
                        bg = paste0(state_colours[tips_colours])) #, 'aa'
         if (length(state.labels) == 0) {

@@ -81,7 +81,7 @@ rownames(mDep) <- c("Appendages: (0), absent; (1), present.",
                     "Appendage termination: (1), blunt; (2), sucker; (3), claw.",
                     "Sucker morphology: (1), smooth; (2), serrated.", 
                     "Claw morphology: (1), round; (2), polygonal.")
-knitr::kable(mDep, caption="Coding")
+knitr::kable(mDep, caption="Heirarchichal characters")
 ```
 
 Which would plot on a tree thus:
@@ -146,7 +146,7 @@ colnames(blueTails) <- LETTERS[seq_along(tail)]
 rownames(blueTails) <- c("Tail: (0), absent; (1), present",
                          "Tail colour: (1), blue; (-), inapplicable",
                          "Body colour: (1), black; (2), white")
-kable(blueTails, caption="Coding")
+kable(blueTails, caption="An invariant character, tail colour, contributes as much to tree score as a variable one, body colour.")
 ```
 
 Let's compare two trees.  The first groups taxa based on the presence of tails; the other
@@ -232,7 +232,7 @@ tailEyes <- matrix(c(tail, eyespot), byrow=TRUE, ncol=length(tail))
 colnames(tailEyes) <- LETTERS[seq_along(tail)]
 rownames(tailEyes) <- c("Tail: (0), absent; (1), present",
                         "Tail, poison barbs: (-), inapplicable; (0), absent; (1), present")
-kable(tailEyes, caption="Coding")
+kable(tailEyes, caption="A neomorphic character, poison barbs, present in some but not all tails")
 ```
 
 ### Three scenarios
@@ -301,7 +301,7 @@ colnames(tailEyes) <- LETTERS[seq_along(tail)]
 rownames(tailEyes) <- c("Tail: (0), absent; (1), present",
                         "Tail, poison barbs: (0), absent; (1), present",
                         "Tail, colour: (-), inapplicable; (1), red; (2), blue")
-kable(tailEyes, caption="Coding")
+kable(tailEyes, caption="Recommended coding: state 0 reserved for absence; states 1 and 2 used for (transformational) tail colour character.")
 ```
 
 <!--
@@ -346,7 +346,7 @@ rownames(unobserved) <- c("Tail: (0), absent; (1), present",
                           "Tail, margin: (-), inapplicable; (1), smooth; (2), serrated",
                         "Tail, glow-in-the-dark pigment: (-), inapplicable; (1), absent; (2), present",
                         "Tail, ability to generate electricity: (-), inapplicable; (1), absent; (2), present")
-kable(unobserved, caption="Unsurprising absences")
+kable(unobserved, caption="Absences treated as transformational characters")
 ```
 
 Note that each of the unobserved (i.e. always-absent) characters provides evidence against independent origins of the tail, in favour of independent losses:
@@ -386,5 +386,5 @@ rownames(unobserved) <- c("Tail: (0), absent; (1), present",
                           "Tail, margin: (1), smooth; (2), serrated",
                         "Tail, glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
                         "Tail, ability to generate electricity: (-), inapplicable; (0), absent; (1), present")
-kable(unobserved, caption="Coding")
+kable(unobserved, caption="Recommended coding: Absences treated as neomorphic characters were appropriate")
 ```

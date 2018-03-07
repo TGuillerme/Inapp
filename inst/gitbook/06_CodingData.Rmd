@@ -31,7 +31,10 @@ rb <- c("Red", "Blue")
 bw <- c('', 'Black', 'White')
 ```
 
-# Coding data
+# Coding data {#coding}
+
+The availability of our algorithm has some implications for how investigators
+might choose to code characters. 
 
 ## Multiple dependencies
 

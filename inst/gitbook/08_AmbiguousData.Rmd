@@ -17,12 +17,12 @@ ap <- c("Absent", "Present")
 rb <- c("Red", "Blue")
 ```
 
-# Ambiguity
+# Coding ambiguity {#ambiguity}
 
 Ambiguous data does not pose a problem for the algorithm, but the nature of the
 ambiguity must be considered when scoring a character.
 
-## Ambiguity when parent character ambiguous
+## Principal character ambiguous
 
 If it's not clear whether or not a taxon has a tail, then tail colour should be 
 coded as `?`, denoting that any possible token (including the inapplicable token)
@@ -52,7 +52,7 @@ vignettePlot(lacksTail, tail, legend.pos='topleft', na=FALSE, main="Tail", state
 vignettePlot(lacksTail, col, legend.pos='topleft', main="Tail colour", state.labels = rb)
 ```
 
-## Ambiguity when parent character known
+## Principal character known
 
 If a taxon is known to have a tail, there are two scenarios for ontologically
 dependent transformational characters:

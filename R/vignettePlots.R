@@ -25,7 +25,7 @@ vignettePlot <- function (tree, character, na=TRUE, legend.pos='bottomleft',
                                          method=if(na) "NA" else 'Fitch',
                                          match.tip.char=TRUE)
   dev.new(); plot(tree, direction='upwards', ...); corners <- par('usr'); dev.off()
-  plot(reconstruction,
+  plot.states.matrix(reconstruction,
        passes=passes, counts=counts,
        direction='upwards', legend.pos=legend.pos, state.labels=state.labels,
        col.states=TRUE, use.edge.length=TRUE,

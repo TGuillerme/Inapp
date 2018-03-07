@@ -65,8 +65,9 @@ coded accordingly.
 
 For example:
 
-  - Tail: (0), absent; (1), present
-  - Tail margin: (0), smooth; (1), serrated.
+> Tail: (0), absent; (1), present
+>
+> Tail margin: (0), smooth; (1), serrated.
   
 Assume that the tail margin must either be smooth or serrated, and there is no 
 reason to assume that either state is ancestral (i.e. the character is strictly
@@ -78,7 +79,7 @@ is known to have taken one of the two states 0 or 1.
 A more complicated situation arises where a subordinate character may have 
 unobserved states, as with 
 
-  - Tail colour: (0), red; (1), blue.
+> Tail colour: (0), red; (1), blue.
   
 A taxon that is known to have a tail, but whose tail colour is uncertain, should 
 generally be coded as `?`.
@@ -98,7 +99,7 @@ But if, as will more often be the case, homology of the tails is not known
 _a priori_, then it is possible that this taxon has a tail 
 that is not homologous with any other tail whose colour has been observed.
 
-In this case, coding the tail colour as `{01}` states that the tail is the same 
+In this case, coding the tail colour as `{01}` denotes that the tail is the same 
 colour as a tail that has already been observed.  This means that the independent
 origin of the tail also represents an independent
 origin of this particular colour -- and hence an instance of homoplasy.
@@ -109,8 +110,8 @@ vignettePlot(ape::read.tree(text="((a, (i1, i2)), (b, (c, (d, (e, (f, (g, h)))))
              '---00011{01}{01}', legend.pos='topleft', state.labels = rb, passes=4)
 ```
 
-Coding the tail colour as `?` allows the possibility that the independently-
-evolved tail has a different colour to the tails already observed -- green, perhaps.
+Coding the tail colour as `?` allows the possibility that the independently-evolved
+tail has a different colour to the tails already observed -- green, perhaps.
 Reconstructing the tail colour as a colour that has not already been observed 
 avoids an instance of homoplasy, and is therefore more parsimonious.
 
@@ -128,7 +129,7 @@ vignettePlot(ape::read.tree(text="((a, (i1, i2)), (b, (c, (d, (e, (f, (g, h)))))
 ## Recommendation 
 
 We therefore recommend the following coding schema for ambiguous tips where the
-tail is (A) known to be present; (B) ambiguous; (C) known to be absent:
+tail is known to be present, ambiguous, or known to be absent:
 
 ```{r, echo=FALSE, asis=TRUE}
 mDep <- matrix(c("1", "?", "0",
@@ -138,5 +139,7 @@ colnames(mDep) <- c('Present', 'Unknown', 'Absent')
 rownames(mDep) <- c("Tail: (0), absent; (1), present.",
                     "Tail margin: (0), smooth; (1), serrated.",
                     "Tail colour: (0), red; (1), blue.")
-knitr::kable(mDep, caption="Recommended coding for unknown states")
+knitr::kable(mDep, caption="Recommended coding for unknown contingent characters")
 ```
+
+"Tail margin" represents a character that can only take the states observed (smooth or serrated), whereas tail colour represents a character that may take an unobserved state (e.g. green).

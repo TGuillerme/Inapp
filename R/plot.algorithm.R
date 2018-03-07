@@ -133,7 +133,7 @@ plot.states.matrix <- function(
 
     ## show.labels
     if(!is.null(show.labels)) {
-        if(class(show.labels) != "numeric") {
+        if(!(all(c(length(show.labels), show.labels) %in% 1:2))) {
             stop("show.labels argument must be either 1 for tips, 2 for nodes or c(1,2) for both")
         }
         ## Setting up the labels options

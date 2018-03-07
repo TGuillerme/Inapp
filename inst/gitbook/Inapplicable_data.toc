@@ -1,0 +1,47 @@
+\contentsline {chapter}{Inapplicable data in a parsimony setting}{5}{chapter*.2}
+\contentsline {chapter}{\numberline {1}The Fitch algorithm}{7}{chapter.1}
+\contentsline {section}{\numberline {1.1}Downpass}{10}{section.1.1}
+\contentsline {section}{\numberline {1.2}Uppass}{10}{section.1.2}
+\contentsline {section}{\numberline {1.3}Resolving ambiguous resolutions}{12}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Maximising homology}{12}{subsection.1.3.1}
+\contentsline {chapter}{\numberline {2}Problems with the Fitch algorithm}{17}{chapter.2}
+\contentsline {section}{\numberline {2.1}Red tails, blue tails}{17}{section.2.1}
+\contentsline {section}{\numberline {2.2}Reductive coding}{18}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}An exception}{20}{subsection.2.2.1}
+\contentsline {section}{\numberline {2.3}Inapplicable as an extra state}{20}{section.2.3}
+\contentsline {section}{\numberline {2.4}A single multi-state character}{22}{section.2.4}
+\contentsline {section}{\numberline {2.5}Sankoff matrices}{24}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Symmetric}{24}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Gain and loss asymmetric}{25}{subsection.2.5.2}
+\contentsline {section}{\numberline {2.6}Why counting steps cannot work}{26}{section.2.6}
+\contentsline {section}{\numberline {2.7}Conclusion}{29}{section.2.7}
+\contentsline {chapter}{\numberline {3}A solution}{31}{chapter.3}
+\contentsline {section}{\numberline {3.1}Minimising homoplasy}{31}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}What does it take to denote separate regions?}{32}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}How this fixes the problem}{35}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Summary}{38}{subsection.3.1.3}
+\contentsline {section}{\numberline {3.2}Algorithmic implementation}{38}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Passes 1 \& 2}{40}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Pass 3}{40}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}Tracking applicable regions}{43}{subsubsection.3.2.2.1}
+\contentsline {subsection}{\numberline {3.2.3}Pass 4}{46}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Software implementation}{47}{section.3.3}
+\contentsline {chapter}{\numberline {4}Coding data}{49}{chapter.4}
+\contentsline {section}{\numberline {4.1}Multiple dependencies}{49}{section.4.1}
+\contentsline {section}{\numberline {4.2}Invariant characters can inform parsimony}{52}{section.4.2}
+\contentsline {section}{\numberline {4.3}Variable but `parsimony uninformative' characters can inform parsimony}{54}{section.4.3}
+\contentsline {section}{\numberline {4.4}This may not be desirable in neomorphic characters}{54}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Three scenarios}{55}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Does absence contain phylogenetic information?}{58}{subsection.4.4.2}
+\contentsline {chapter}{\numberline {5}Coding ambiguity}{61}{chapter.5}
+\contentsline {section}{\numberline {5.1}Principal character ambiguous}{61}{section.5.1}
+\contentsline {section}{\numberline {5.2}Principal character known}{62}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Subordinate character has finite states}{62}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Subordinate character may have unobserved states}{62}{subsection.5.2.2}
+\contentsline {section}{\numberline {5.3}Recommendation}{65}{section.5.3}
+\contentsline {chapter}{\numberline {6}Examples}{67}{chapter.6}
+\contentsline {section}{\numberline {6.1}Some caterpillars}{67}{section.6.1}
+\contentsline {section}{\numberline {6.2}Three equally suboptimal alternatives}{67}{section.6.2}
+\contentsline {section}{\numberline {6.3}A better caterpillar tree}{70}{section.6.3}
+\contentsline {section}{\numberline {6.4}De Laet's caterpillars}{70}{section.6.4}
+\contentsline {chapter}{References}{73}{chapter*.3}

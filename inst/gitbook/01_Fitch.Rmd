@@ -10,6 +10,7 @@ output:
 ---
 ```{r, echo = FALSE, message=FALSE}
 library('Inapp'); library('ape')
+setMargins <- function () par(mar=rep(0.2, 4))
 markChanges <- function (edges, labels='X') edgelabels(frame='none', edge=edges, labels, font=2)
 col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0")
 redBlue <- colours <- c(Inapp::brewer[[2]], 'grey')
@@ -20,13 +21,14 @@ choose1 <- "[01]=>1"
 
 # The Fitch algorithm {#fitch}
 
-This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [@swofford2001paup; @Goloboff2016] or probabilistic methods [@@Ronquist2012mrbayes; @Stamatakis2014].
+This algorithm was proposed by Fitch [-@Fitch1971] and is implemented in many phylogenetic softwares based on maximum parsimony [@swofford2001paup; @Goloboff2016] or probabilistic methods [@Ronquist2012mrbayes; @Stamatakis2014].
 The procedure is simple and elegant and entails going down the tree to count the number of transformations, and then going back up the tree to finalise the ancestral state reconstructions.
 
 The way the algorithm goes up and down depends on the software, but often employs a _traversal_: a recursive function that can visit all tips and nodes in a logical fashion.
 For example, consider the following tree:
 
-```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+```{r, echo = FALSE, fig.width=5, fig.height=4, fig.cap="A five-tip tree"}
+setMargins()
 tree <- ape::read.tree(text = "(((a, b), (c, d)), e);")
 tree$node.label <- c("n4", "n3", "n1", "n2")
 plot(tree)
@@ -35,8 +37,9 @@ nodelabels(tree$node.label)
 
 A downpass traversal will first evaluate the first cherry (or pair of taxa) (`A` below), then save the results in `n1` and evaluate the second pair of tips/nodes (`B`), saving the results in `n2`, proceeding until all the nodes/tips are visited.
 
-```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
-plot(tree, main = "Downpass traversal")
+```{r, echo = FALSE, fig.width=5, fig.height=4, fig.cap="Downpass traversal"}
+setMargins()
+plot(tree)
 nodelabels(tree$node.label)
 
 ## a
@@ -85,8 +88,9 @@ text(0.7, 3.5, "D", cex = 1)
 
 An uppass traversal works identically but in the other direction, going from the nodes towards the tips.
 
-```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
-plot(tree, main = "Uppass traversal")
+```{r, echo = FALSE, fig.width=5, fig.height=4, fig.cap="Uppass traversal"}
+setMargins()
+plot(tree)
 nodelabels(tree$node.label)
 
 ## First cherry
@@ -113,14 +117,15 @@ text(0.7, 3.5, "A", cex = 1)
 
 In both traversals, the sequence in which nodes are visited (i.e. which cherry to pick first in a downpass traversal, or whether to continue left or right in an uppass traversal) is arbitrary, provided that all tips and nodes are eventually visited.
 
-Now let's consider a more complex tree `((((a, b), c), d), (e, (f, (g, h))));` with a binary character distributed for the tips `10011001` respectively to the tips' alphabetical order:
+Now let's consider a more complex tree `((((a, b), c), d), (e, (f, (g, h))));` with a binary character distributed ((((1, 0), 0), 1), (1, (0, (0, 1)))):
 
 
-```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+```{r, echo = FALSE, fig.width = 6, fig.height = 5}
 tree <- ape::read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
 char <- c(1,0,0,1,1,0,0,1)
 
 ## Plotting the tree and characters
+setMargins()
 plot(tree, adj = 0.5)
 tiplabels(char, cex = 1, bg = Inapp::brewer[[2]][char + 1], adj = 1)
 nodelabels(paste0("n", 9:15), bg = "bisque")
@@ -129,7 +134,7 @@ nodelabels(paste0("n", 9:15), bg = "bisque")
 
 We can use the `Inapp` package to apply the Fitch algorithm for this character on this tree.
 
-```{r}
+```{r, echo=TRUE}
 ## Loading the Inapp package
 library(Inapp)
 
@@ -154,10 +159,10 @@ For example, node `n15` is case 2 because there is _nothing in common_ between t
 
 > Important: when the case 2 is encountered, a transformation is implied in the descendants of the considered node. The score of the tree is incremented by +1.
 
-In the following example, nodes that are in case one are in white and nodes that imply a transformation (i.e. that add to the tree score) are in green.
+In the following example, nodes that are in case 1 are in white and nodes in case 2, which imply a transformation (i.e. that add to the tree score), are in green.
 
 
-```{r, fig.width = 7.1, fig.height = 7.1}
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="Node reconstructions after downpass"}
 ## Plotting the first downpass
 plot.states.matrix(matrix, passes = 1, counts = 2, show.labels = c(1,2))
 tiplabels(char, cex = 1, bg = Inapp::brewer[[2]][char + 1], adj = 1)
@@ -165,9 +170,9 @@ tiplabels(char, cex = 1, bg = Inapp::brewer[[2]][char + 1], adj = 1)
 
 ## Uppass
 
-The downpass is sufficient for calculating the score of the tree, but some nodes might not yet be properly resolved.
-For example, the state of node `n14` might be `1` as well as the `0` presently reconstructed, since both its ancestor and one of its descendants has an ambiguous state of `01`. 
-The present reconstruction seemingly indicates a change from state 1 to state 0 in an ancestor of `n14`, and a subsequent change from state 0 to state 1 in the ancestor of `h`, but an alternative reconstruction is equally parsimonious: n13, n14 and n15 may all have state `1`, with a change from state 1 to state 0 in each of the two lineages leading to `f` and `g`.
+The score of the tree is known after the downpass, but the states of some nodes might not yet be properly resolved.
+For example, parsimonious reconstructions exist that reconstruct node `n14` as state `1`, as opposed to the `0` presently reconstructed. 
+The present reconstruction seemingly indicates a change from state 1 to state 0 in an ancestor of `n14`, and a subsequent change from state 0 to state 1 in the ancestor of `h`, but an alternative reconstruction is equally parsimonious: `n13`, `n14` and `n15` may all have state `1`, with a change from state `1` to state `0` in each of the two lineages leading to `f` and `g`.
 
 The uppass traversal employs the following rules:
 
@@ -180,9 +185,10 @@ For example, node `n13` is already resolved (it has all its states in common wit
 Node `n14` has not all its states in common with its ancestor but its two descendants (`n15` and `f`) have at least one state in common (`0`).
 This node is thus solved to be the states in common between both descendants (`01`) and its ancestor (`01` as well).
 
-```{r, fig.width = 7.1, fig.height = 7.1}
-## Plotting the first downpass
-plot.states.matrix(matrix, passes = c(1,2), counts = 2, show.labels = c(1,2), col.states=TRUE)
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="Node reconstructions after uppass"}
+## Plotting the first uppass
+plot.states.matrix(matrix, passes = 1:2, counts = 2,
+                   show.labels = 1:2, col.states=TRUE)
 ```
 
 More complex cases can be studied in the Inapp App (running in your favourite web browser) by switching the **`Reconstruction method`** to **`Normal Fitch`**.
@@ -194,6 +200,7 @@ runInapp()
 
 ## Resolving ambiguous resolutions
 
+In certain cases, it is necessary to go further and discriminate between the equally-parsimonious reconstructions provided by the Fitch algorithm.
 A number of approaches have been proposed concerning which resolution of ambiguous
 nodes is preferable.
 
@@ -203,7 +210,7 @@ The `r acctran` approach reconstructs transformations as occurring as close to t
 
 In this case, the ambiguous resolution of the root leaves two options for the latter:
 
-```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1, fig.cap="Node reconstructions after AccTran or DelTran` optimizations"}
 par(mfrow=c(2, 2), mar=rep(1, 4))
 
 tree <- read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
@@ -287,27 +294,23 @@ of times that such a character evolves attributes more similarity to homology th
 an equally parsimonious reconstruction in which said character is gained multiple times
 independently.
 
+### Maximising homology
+
+Neither `r acctran` nor `r deltran` is guaranteed to maximise homology [@Agnarsson2008]. 
 In this particular case, the `r deltran` reconstruction maximises homology.  If the
 character denotes the presence or absence of a tail, then this reconstruction invokes the presence of a tail in the common ancestor of all taxa, meaning that the tails present in
 tips `a`, `d`, `e` and `h` are homologous with one another.
 The `r acctran` reconstruction, in contrast, identifies a loss of a tail
 at nodes 11 and 14, with a tail evolving independently in tips `a` and `h`. 
-Under this reconstruction, the tails of `a` and `h` are not homologous with each other,
-or with the tails of `d` and `e`.
-(The alternative `r deltran` approach, which could arguably be described as `r acctran` too,
-invokes four independent origins of the character and clearly does not maximise its homology.)
-
-Neither `r acctran` nor `r deltran` is guaranteed to maximise homology [@Agnarsson2008]. 
+Under this reconstruction, the tails of `a` and `h` are not homologous with each other, or with the tails of `d` and `e`.
+(The alternative `r deltran` approach, which could arguably be described as `r acctran` instead, invokes four independent origins of the character and clearly does not maximise its homology.)
 
 Where we wish to maximise homology, we modify the Fitch uppass such that any node
-whose final state reconstruction is ambiguous is instead reconstructed as present.
+whose final state reconstruction would be ambiguous is instead reconstructed as present when that node is encountered.
+This approach maximises homology in the problematic trees presented by 
+Agnarsson & Miller [-@Agnarsson2008; "A&M" below]:
 
-We can show that this maximises homology in the problematic trees presented by 
-Agnarsson & Miller [-@Agnarsson2008; "A&M"]:
-
-
-
-```{r, echo = FALSE, fig.width = 7.1, fig.height = 4}
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 4, fig.cap="Homology-maximising character optimisations"}
 par(mfrow=c(1, 2), mar=rep(0.75, 4))
 tree <- read.tree(text = "(H, (G, (F, (E, (D, (C, (B, A)))))));")
 tree$tip.label <- paste("_", tree$tip.label)
@@ -367,9 +370,9 @@ markChanges(c(4, 7, 15, 18), c('0->1', rep('1->0', 3)))
 
 ```
 
-And this approach is robust to missing entries:
+This approach is also robust to missing entries:
 
-```{r, echo = FALSE, fig.width = 7.1, fig.height = 4}
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 4, fig.cap="Homology maximisation with missing entries"}
 par(mfrow=c(1, 2), mar=rep(0.75, 4))
 tree <- read.tree(text = "(F, (E, (D, (C, (B, A)))));")
 tree$tip.label <- paste("_", tree$tip.label)
@@ -417,6 +420,5 @@ markChanges(c(4, 9), c('0->1', rep('1->0', 1)))
 # Check that this is how our algorithm works with the following lines:
 #vignettePlot(tree, c(2, '-', 2, '?', '-', '-'), passes=1:2, legend.pos='none')
 #vignettePlot(tree, rev(char), na=FALSE, passes=1:2, legend.pos='none')
-
 
 ```

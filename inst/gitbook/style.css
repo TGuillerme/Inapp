@@ -1,1 +1,6 @@
-.smallcaps{font-variant: small-caps;}
+.smallcaps {font-variant: small-caps;}
+
+.caption {
+    text-align: center;
+    font-size: smaller;
+}

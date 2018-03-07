@@ -8,4 +8,4 @@ bookdown::epub_book: default
 bookdown::gitbook:
   css: style.css
   config:
-    edit: https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/%s
+    edit: https://github.com/TGuillerme/Inapp/edit/master/inst/gitbook/%s

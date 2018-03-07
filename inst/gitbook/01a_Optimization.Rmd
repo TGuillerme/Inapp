@@ -13,6 +13,9 @@ output:
 library('Inapp'); library('ape')
 col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0")
 colours <- Inapp::brewer[[2]]
+deltran <- '<span style="font-variant:small-caps;">DelTran</span>'
+acctran <- '<span style="font-variant:small-caps;">AccTran</span>'
+
 ```
 
 # [Comment:] Incomplete; MS to work on this tomorrow.

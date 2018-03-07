@@ -105,10 +105,10 @@ Contrast <- function (character, char.label, states.labels, y=0, header=FALSE) {
     
 }
 
-Contrast('0001111111111', "Appendages:", ap, header=TRUE, y=0.5)
-Contrast('---0011112222', "Appendage termination:", c("Blunt", "Claw", "Sucker"), y=1.8)
-Contrast('-----1122----', "Claw morphology:", c('', "Smooth", "Serrated"), y=1.2)
-Contrast('---------1122', "Sucker morphology:", c('', "Round", "Polygonal"), y=1.2)
+Contrast('0001111111111', "Appendages:", ap, header=TRUE, y=0.8)
+Contrast('---0011112222', "Appendage termination:", c("Blunt", "Claw", "Sucker"), y=2.3)
+Contrast('-----1122----', "Claw morphology:", c('', "Smooth", "Serrated"), y=1.6)
+Contrast('---------1122', "Sucker morphology:", c('', "Round", "Polygonal"), y=1.6)
 mtext("Appendage condition", outer=TRUE)
 
 ```
@@ -121,7 +121,7 @@ that would be inapplicable in all taxa that lacked serrated claws.
 
 ```{r, echo=FALSE, fig.width=8, fig.height=4}
 setPar(c(1, 2))
-Contrast('-------11----', "Serration spacing:", c('', "Regular", "Irregular"), y=0.5)
+Contrast('-------11----', "Serration spacing:", c('', "Regular", "Irregular"), y=0.2)
 ```
 
 To readers familiar with standard Fitch parsimony, it will be surprising to notice that the two trees receive a different score for this invariant character.  When our algorithm is employed, invariant characters that contain inapplicable tokens can inform parsimony.

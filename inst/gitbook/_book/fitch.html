@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>The Fitch Algorithm</title>
+  <title>Inapplicable data</title>
   <meta name="description" content="Inapplicable data in a parsimony setting">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="The Fitch Algorithm" />
+  <meta property="og:title" content="Inapplicable data" />
   <meta property="og:type" content="book" />
   
   
@@ -17,12 +17,12 @@
   <meta name="github-repo" content="TGuillerme/Inapp" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="The Fitch Algorithm" />
+  <meta name="twitter:title" content="Inapplicable data" />
   
   <meta name="twitter:description" content="Inapplicable data in a parsimony setting" />
   
 
-<meta name="author" content="Thomas Guillerme; Martin R. Smith">
+<meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
 <meta name="date" content="2018-03-07">
@@ -32,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
+<link rel="prev" href="index.html">
 <link rel="next" href="problems.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -116,21 +116,21 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Inapplicable data in a parsimony setting</a></li>
-
-<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Inapplicable data in a parsimony setting</a></li>
 <li class="chapter" data-level="1" data-path="fitch.html"><a href="fitch.html"><i class="fa fa-check"></i><b>1</b> The Fitch algorithm</a><ul>
 <li class="chapter" data-level="1.1" data-path="fitch.html"><a href="fitch.html#downpass"><i class="fa fa-check"></i><b>1.1</b> Downpass</a></li>
 <li class="chapter" data-level="1.2" data-path="fitch.html"><a href="fitch.html#uppass"><i class="fa fa-check"></i><b>1.2</b> Uppass</a></li>
-<li class="chapter" data-level="1.3" data-path="fitch.html"><a href="fitch.html#optimizing-ambiguous-characters"><i class="fa fa-check"></i><b>1.3</b> Optimizing ambiguous characters</a></li>
+<li class="chapter" data-level="1.3" data-path="fitch.html"><a href="fitch.html#resolving-ambiguous-resolutions"><i class="fa fa-check"></i><b>1.3</b> Resolving ambiguous resolutions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="fitch.html"><a href="fitch.html#maximising-homology"><i class="fa fa-check"></i><b>1.3.1</b> Maximising homology</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="problems.html"><a href="problems.html"><i class="fa fa-check"></i><b>2</b> Problems with the Fitch algorithm</a><ul>
 <li class="chapter" data-level="2.1" data-path="problems.html"><a href="problems.html#red-tails-blue-tails"><i class="fa fa-check"></i><b>2.1</b> Red tails, blue tails</a></li>
-<li class="chapter" data-level="2.2" data-path="problems.html"><a href="problems.html#why-reductive-coding-doesnt-work"><i class="fa fa-check"></i><b>2.2</b> Why Reductive coding doesn’t work</a><ul>
+<li class="chapter" data-level="2.2" data-path="problems.html"><a href="problems.html#reductive-coding"><i class="fa fa-check"></i><b>2.2</b> Reductive coding</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="problems.html"><a href="problems.html#an-exception"><i class="fa fa-check"></i><b>2.2.1</b> An exception</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="problems.html"><a href="problems.html#why-extra-state-coding-doesnt-work"><i class="fa fa-check"></i><b>2.3</b> Why Extra State coding doesn’t work</a></li>
-<li class="chapter" data-level="2.4" data-path="problems.html"><a href="problems.html#why-a-single-multi-state-character-doesnt-work"><i class="fa fa-check"></i><b>2.4</b> Why a single multi-state character doesn’t work</a></li>
+<li class="chapter" data-level="2.3" data-path="problems.html"><a href="problems.html#inapplicable-as-an-extra-state"><i class="fa fa-check"></i><b>2.3</b> Inapplicable as an extra state</a></li>
+<li class="chapter" data-level="2.4" data-path="problems.html"><a href="problems.html#a-single-multi-state-character"><i class="fa fa-check"></i><b>2.4</b> A single multi-state character</a></li>
 <li class="chapter" data-level="2.5" data-path="problems.html"><a href="problems.html#sankoff-matrices"><i class="fa fa-check"></i><b>2.5</b> Sankoff matrices</a><ul>
 <li class="chapter" data-level="2.5.1" data-path="problems.html"><a href="problems.html#symmetric"><i class="fa fa-check"></i><b>2.5.1</b> Symmetric</a></li>
 <li class="chapter" data-level="2.5.2" data-path="problems.html"><a href="problems.html#gain-and-loss-asymmetric"><i class="fa fa-check"></i><b>2.5.2</b> Gain and loss asymmetric</a></li>
@@ -138,54 +138,43 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="2.6" data-path="problems.html"><a href="problems.html#why-counting-steps-cannot-work"><i class="fa fa-check"></i><b>2.6</b> Why counting steps cannot work</a></li>
 <li class="chapter" data-level="2.7" data-path="problems.html"><a href="problems.html#conclusion"><i class="fa fa-check"></i><b>2.7</b> Conclusion</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="a-solution.html"><a href="a-solution.html"><i class="fa fa-check"></i><b>3</b> A solution</a><ul>
-<li class="chapter" data-level="3.1" data-path="a-solution.html"><a href="a-solution.html#minimising-homoplasy"><i class="fa fa-check"></i><b>3.1</b> Minimising homoplasy</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="a-solution.html"><a href="a-solution.html#what-does-it-take-to-denote-separate-regions"><i class="fa fa-check"></i><b>3.1.1</b> What does it take to denote separate regions?</a></li>
-<li class="chapter" data-level="3.1.2" data-path="a-solution.html"><a href="a-solution.html#how-this-fixes-the-problem"><i class="fa fa-check"></i><b>3.1.2</b> How this fixes the problem</a></li>
-<li class="chapter" data-level="3.1.3" data-path="a-solution.html"><a href="a-solution.html#summary"><i class="fa fa-check"></i><b>3.1.3</b> Summary</a></li>
+<li class="chapter" data-level="3" data-path="solution.html"><a href="solution.html"><i class="fa fa-check"></i><b>3</b> A solution</a><ul>
+<li class="chapter" data-level="3.1" data-path="solution.html"><a href="solution.html#minimising-homoplasy"><i class="fa fa-check"></i><b>3.1</b> Minimising homoplasy</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="solution.html"><a href="solution.html#what-does-it-take-to-denote-separate-regions"><i class="fa fa-check"></i><b>3.1.1</b> What does it take to denote separate regions?</a></li>
+<li class="chapter" data-level="3.1.2" data-path="solution.html"><a href="solution.html#how-this-fixes-the-problem"><i class="fa fa-check"></i><b>3.1.2</b> How this fixes the problem</a></li>
+<li class="chapter" data-level="3.1.3" data-path="solution.html"><a href="solution.html#summary"><i class="fa fa-check"></i><b>3.1.3</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="solution.html"><a href="solution.html#algorithm"><i class="fa fa-check"></i><b>3.2</b> Algorithmic implementation</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="solution.html"><a href="solution.html#passes-1-2"><i class="fa fa-check"></i><b>3.2.1</b> Passes 1 &amp; 2</a></li>
+<li class="chapter" data-level="3.2.2" data-path="solution.html"><a href="solution.html#pass-3"><i class="fa fa-check"></i><b>3.2.2</b> Pass 3</a></li>
+<li class="chapter" data-level="3.2.3" data-path="solution.html"><a href="solution.html#pass-4"><i class="fa fa-check"></i><b>3.2.3</b> Pass 4</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="solution.html"><a href="solution.html#software"><i class="fa fa-check"></i><b>3.3</b> Software implementation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="coding.html"><a href="coding.html"><i class="fa fa-check"></i><b>4</b> Coding data</a><ul>
+<li class="chapter" data-level="4.1" data-path="coding.html"><a href="coding.html#multiple-dependencies"><i class="fa fa-check"></i><b>4.1</b> Multiple dependencies</a></li>
+<li class="chapter" data-level="4.2" data-path="coding.html"><a href="coding.html#invariant-characters-can-inform-parsimony"><i class="fa fa-check"></i><b>4.2</b> Invariant characters can inform parsimony</a></li>
+<li class="chapter" data-level="4.3" data-path="coding.html"><a href="coding.html#puip"><i class="fa fa-check"></i><b>4.3</b> Variable but ‘parsimony uninformative’ characters can inform parsimony</a></li>
+<li class="chapter" data-level="4.4" data-path="coding.html"><a href="coding.html#this-may-not-be-desirable-in-neomorphic-characters"><i class="fa fa-check"></i><b>4.4</b> This may not be desirable in neomorphic characters</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="coding.html"><a href="coding.html#three-scenarios"><i class="fa fa-check"></i><b>4.4.1</b> Three scenarios</a></li>
+<li class="chapter" data-level="4.4.2" data-path="coding.html"><a href="coding.html#does-absence-contain-phylogenetic-information"><i class="fa fa-check"></i><b>4.4.2</b> Does absence contain phylogenetic information?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i><b>4</b> Implementation</a><ul>
-<li class="chapter" data-level="4.1" data-path="implementation.html"><a href="implementation.html#passes-1-2"><i class="fa fa-check"></i><b>4.1</b> Passes 1 &amp; 2</a></li>
-<li class="chapter" data-level="4.2" data-path="implementation.html"><a href="implementation.html#pass-3"><i class="fa fa-check"></i><b>4.2</b> Pass 3</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="implementation.html"><a href="implementation.html#tracking-applicable-regions"><i class="fa fa-check"></i><b>4.2.1</b> Tracking applicable regions</a></li>
+<li class="chapter" data-level="5" data-path="ambiguity.html"><a href="ambiguity.html"><i class="fa fa-check"></i><b>5</b> Coding ambiguity</a><ul>
+<li class="chapter" data-level="5.1" data-path="ambiguity.html"><a href="ambiguity.html#principal-character-ambiguous"><i class="fa fa-check"></i><b>5.1</b> Principal character ambiguous</a></li>
+<li class="chapter" data-level="5.2" data-path="ambiguity.html"><a href="ambiguity.html#principal-character-known"><i class="fa fa-check"></i><b>5.2</b> Principal character known</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="ambiguity.html"><a href="ambiguity.html#subordinate-character-has-finite-states"><i class="fa fa-check"></i><b>5.2.1</b> Subordinate character has finite states</a></li>
+<li class="chapter" data-level="5.2.2" data-path="ambiguity.html"><a href="ambiguity.html#subordinate-character-may-have-unobserved-states"><i class="fa fa-check"></i><b>5.2.2</b> Subordinate character may have unobserved states</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="implementation.html"><a href="implementation.html#pass-4"><i class="fa fa-check"></i><b>4.3</b> Pass 4</a></li>
-<li class="chapter" data-level="4.4" data-path="implementation.html"><a href="implementation.html#software-implementation"><i class="fa fa-check"></i><b>4.4</b> Software implementation</a></li>
+<li class="chapter" data-level="5.3" data-path="ambiguity.html"><a href="ambiguity.html#recommendation"><i class="fa fa-check"></i><b>5.3</b> Recommendation</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="coding-data.html"><a href="coding-data.html"><i class="fa fa-check"></i><b>5</b> Coding data</a><ul>
-<li class="chapter" data-level="5.1" data-path="coding-data.html"><a href="coding-data.html#multiple-dependencies"><i class="fa fa-check"></i><b>5.1</b> Multiple dependencies</a></li>
-<li class="chapter" data-level="5.2" data-path="coding-data.html"><a href="coding-data.html#invariant-characters-can-inform-parsimony"><i class="fa fa-check"></i><b>5.2</b> Invariant characters can inform parsimony</a></li>
-<li class="chapter" data-level="5.3" data-path="coding-data.html"><a href="coding-data.html#variable-but-parsimony-uninformative-characters-can-inform-parsimony"><i class="fa fa-check"></i><b>5.3</b> Variable but ‘parsimony uninformative’ characters can inform parsimony</a></li>
-<li class="chapter" data-level="5.4" data-path="coding-data.html"><a href="coding-data.html#this-may-not-be-desirable-in-neomorphic-characters"><i class="fa fa-check"></i><b>5.4</b> This may not be desirable in neomorphic characters</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="coding-data.html"><a href="coding-data.html#three-scenarios"><i class="fa fa-check"></i><b>5.4.1</b> Three scenarios</a></li>
-<li class="chapter" data-level="5.4.2" data-path="coding-data.html"><a href="coding-data.html#does-absence-contain-phylogenetic-information"><i class="fa fa-check"></i><b>5.4.2</b> Does absence contain phylogenetic information?</a></li>
+<li class="chapter" data-level="6" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>6</b> Examples</a><ul>
+<li class="chapter" data-level="6.1" data-path="examples.html"><a href="examples.html#some-caterpillars"><i class="fa fa-check"></i><b>6.1</b> Some caterpillars</a></li>
+<li class="chapter" data-level="6.2" data-path="examples.html"><a href="examples.html#three-equally-suboptimal-alternatives"><i class="fa fa-check"></i><b>6.2</b> Three equally suboptimal alternatives</a></li>
+<li class="chapter" data-level="6.3" data-path="examples.html"><a href="examples.html#a-better-caterpillar-tree"><i class="fa fa-check"></i><b>6.3</b> A better caterpillar tree</a></li>
+<li class="chapter" data-level="6.4" data-path="examples.html"><a href="examples.html#de-laets-caterpillars"><i class="fa fa-check"></i><b>6.4</b> De Laet’s caterpillars</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="coding-data.html"><a href="coding-data.html#coding-ontologically-dependent-neomorphic-characters"><i class="fa fa-check"></i><b>5.5</b> Coding ontologically dependent neomorphic characters</a><ul>
-<li class="chapter" data-level="5.5.1" data-path="coding-data.html"><a href="coding-data.html#neomorphic-and-transformational-characters"><i class="fa fa-check"></i><b>5.5.1</b> Neomorphic and transformational characters</a></li>
-<li class="chapter" data-level="5.5.2" data-path="coding-data.html"><a href="coding-data.html#three-trees"><i class="fa fa-check"></i><b>5.5.2</b> Three trees</a></li>
-<li class="chapter" data-level="5.5.3" data-path="coding-data.html"><a href="coding-data.html#recommendation"><i class="fa fa-check"></i><b>5.5.3</b> Recommendation</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="ambiguity.html"><a href="ambiguity.html"><i class="fa fa-check"></i><b>6</b> Ambiguity</a><ul>
-<li class="chapter" data-level="6.1" data-path="ambiguity.html"><a href="ambiguity.html#ambiguity-when-parent-character-ambiguous"><i class="fa fa-check"></i><b>6.1</b> Ambiguity when parent character ambiguous</a></li>
-<li class="chapter" data-level="6.2" data-path="ambiguity.html"><a href="ambiguity.html#ambiguity-when-parent-character-known"><i class="fa fa-check"></i><b>6.2</b> Ambiguity when parent character known</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="ambiguity.html"><a href="ambiguity.html#subordinate-character-has-finite-states"><i class="fa fa-check"></i><b>6.2.1</b> Subordinate character has finite states</a></li>
-<li class="chapter" data-level="6.2.2" data-path="ambiguity.html"><a href="ambiguity.html#subordinate-character-may-have-unobserved-states"><i class="fa fa-check"></i><b>6.2.2</b> Subordinate character may have unobserved states</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="ambiguity.html"><a href="ambiguity.html#recommendation-1"><i class="fa fa-check"></i><b>6.3</b> Recommendation</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7</b> Examples</a><ul>
-<li class="chapter" data-level="7.1" data-path="examples.html"><a href="examples.html#some-caterpillars"><i class="fa fa-check"></i><b>7.1</b> Some caterpillars</a></li>
-<li class="chapter" data-level="7.2" data-path="examples.html"><a href="examples.html#three-equally-suboptimal-alternatives"><i class="fa fa-check"></i><b>7.2</b> Three equally suboptimal alternatives</a></li>
-<li class="chapter" data-level="7.3" data-path="examples.html"><a href="examples.html#a-better-caterpillar-tree"><i class="fa fa-check"></i><b>7.3</b> A better caterpillar tree</a></li>
-<li class="chapter" data-level="7.4" data-path="examples.html"><a href="examples.html#de-laets-caterpillars"><i class="fa fa-check"></i><b>7.4</b> De Laet’s caterpillars</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
-<li class="chapter" data-level="9" data-path="inapplicable-data-in-a-parsimony-setting.html"><a href="inapplicable-data-in-a-parsimony-setting.html"><i class="fa fa-check"></i><b>9</b> Inapplicable data in a parsimony setting</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
-
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
       </nav>
@@ -195,7 +184,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">The Fitch Algorithm</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Inapplicable data</a>
           </h1>
         </div>
 
@@ -203,25 +192,35 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">The Fitch Algorithm</h1>
-<h4 class="author"><em>Thomas Guillerme; Martin R. Smith</em></h4>
-<h4 class="date"><em>2018-03-07</em></h4>
-</div>
 <div id="fitch" class="section level1">
 <h1><span class="header-section-number">1</span> The Fitch algorithm</h1>
-<p>This algorithm was proposed by Fitch <span class="citation">(<a href="#ref-Fitch1971">1971</a>)</span> and is implemented in many phylogenetic softwares based on maximum parsimony <span class="citation">(Goloboff &amp; Catalano, <a href="#ref-Goloboff2016">2016</a>; Swofford, <a href="#ref-swofford2001paup">2001</a>)</span> or probabilistic methods <span class="citation">(@ Ronquist et al., <a href="#ref-Ronquist2012mrbayes">2012</a>; Stamatakis, <a href="#ref-Stamatakis2014">2014</a>)</span>.
+<p>This algorithm was proposed by Fitch <span class="citation">(<a href="#ref-Fitch1971">1971</a>)</span> and is implemented in many phylogenetic softwares based on maximum parsimony <span class="citation">(Goloboff &amp; Catalano, <a href="#ref-Goloboff2016">2016</a>; Swofford, <a href="#ref-swofford2001paup">2001</a>)</span> or probabilistic methods <span class="citation">(Ronquist et al., <a href="#ref-Ronquist2012mrbayes">2012</a>; Stamatakis, <a href="#ref-Stamatakis2014">2014</a>)</span>.
 The procedure is simple and elegant and entails going down the tree to count the number of transformations, and then going back up the tree to finalise the ancestral state reconstructions.</p>
 <p>The way the algorithm goes up and down depends on the software, but often employs a <em>traversal</em>: a recursive function that can visit all tips and nodes in a logical fashion.
 For example, consider the following tree:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-2-1.png" width="681.6" /></p>
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-3-1.png" alt="A five-tip tree" width="480" />
+<p class="caption">
+Figure 1.1: A five-tip tree
+</p>
+</div>
 <p>A downpass traversal will first evaluate the first cherry (or pair of taxa) (<code>A</code> below), then save the results in <code>n1</code> and evaluate the second pair of tips/nodes (<code>B</code>), saving the results in <code>n2</code>, proceeding until all the nodes/tips are visited.</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-3-1.png" width="681.6" /></p>
+<div class="figure"><span id="fig:unnamed-chunk-4"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-4-1.png" alt="Downpass traversal" width="480" />
+<p class="caption">
+Figure 1.2: Downpass traversal
+</p>
+</div>
 <p>An uppass traversal works identically but in the other direction, going from the nodes towards the tips.</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-4-1.png" width="681.6" /></p>
+<div class="figure"><span id="fig:unnamed-chunk-5"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-5-1.png" alt="Uppass traversal" width="480" />
+<p class="caption">
+Figure 1.3: Uppass traversal
+</p>
+</div>
 <p>In both traversals, the sequence in which nodes are visited (i.e. which cherry to pick first in a downpass traversal, or whether to continue left or right in an uppass traversal) is arbitrary, provided that all tips and nodes are eventually visited.</p>
-<p>Now let’s consider a more complex tree <code>((((a, b), c), d), (e, (f, (g, h))));</code> with a binary character distributed for the tips <code>10011001</code> respectively to the tips’ alphabetical order:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-5-1.png" width="681.6" /></p>
+<p>Now let’s consider a more complex tree <code>((((a, b), c), d), (e, (f, (g, h))));</code> with a binary character distributed ((((1, 0), 0), 1), (1, (0, (0, 1)))):</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
 <p>We can use the <code>Inapp</code> package to apply the Fitch algorithm for this character on this tree.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">## Loading the Inapp package</div>
 <div class="sourceLine" id="2" href="#2" data-line-number="2"><span class="kw">library</span>(Inapp)</div>
@@ -245,17 +244,22 @@ For example, consider the following tree:</p>
 <blockquote>
 <p>Important: when the case 2 is encountered, a transformation is implied in the descendants of the considered node. The score of the tree is incremented by +1.</p>
 </blockquote>
-<p>In the following example, nodes that are in case one are in white and nodes that imply a transformation (i.e. that add to the tree score) are in green.</p>
+<p>In the following example, nodes that are in case 1 are in white and nodes in case 2, which imply a transformation (i.e. that add to the tree score), are in green.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">## Plotting the first downpass</div>
 <div class="sourceLine" id="2" href="#2" data-line-number="2"><span class="kw">plot.states.matrix</span>(matrix, <span class="dt">passes =</span> <span class="dv">1</span>, <span class="dt">counts =</span> <span class="dv">2</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</div>
 <div class="sourceLine" id="3" href="#3" data-line-number="3"><span class="kw">tiplabels</span>(char, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">bg =</span> Inapp<span class="op">::</span>brewer[[<span class="dv">2</span>]][char <span class="op">+</span><span class="st"> </span><span class="dv">1</span>], <span class="dt">adj =</span> <span class="dv">1</span>)</div></code></pre>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-7-1.png" width="681.6" /></p>
+<div class="figure"><span id="fig:unnamed-chunk-8"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-8-1.png" alt="Node reconstructions after downpass" width="681.6" />
+<p class="caption">
+Figure 1.4: Node reconstructions after downpass
+</p>
+</div>
 </div>
 <div id="uppass" class="section level2">
 <h2><span class="header-section-number">1.2</span> Uppass</h2>
-<p>The downpass is sufficient for calculating the score of the tree, but some nodes might not yet be properly resolved.
-For example, the state of node <code>n14</code> might be <code>1</code> as well as the <code>0</code> presently reconstructed, since both its ancestor and one of its descendants has an ambiguous state of <code>01</code>.
-The present reconstruction seemingly indicates a change from state 1 to state 0 in an ancestor of <code>n14</code>, and a subsequent change from state 0 to state 1 in the ancestor of <code>h</code>, but an alternative reconstruction is equally parsimonious: n13, n14 and n15 may all have state <code>1</code>, with a change from state 1 to state 0 in each of the two lineages leading to <code>f</code> and <code>g</code>.</p>
+<p>The score of the tree is known after the downpass, but the states of some nodes might not yet be properly resolved.
+For example, parsimonious reconstructions exist that reconstruct node <code>n14</code> as state <code>1</code>, as opposed to the <code>0</code> presently reconstructed.
+The present reconstruction seemingly indicates a change from state 1 to state 0 in an ancestor of <code>n14</code>, and a subsequent change from state 0 to state 1 in the ancestor of <code>h</code>, but an alternative reconstruction is equally parsimonious: <code>n13</code>, <code>n14</code> and <code>n15</code> may all have state <code>1</code>, with a change from state <code>1</code> to state <code>0</code> in each of the two lineages leading to <code>f</code> and <code>g</code>.</p>
 <p>The uppass traversal employs the following rules:</p>
 <ol style="list-style-type: decimal">
 <li>If the current node and its ancestor have <em>all states in common</em>, the node is already resolved.</li>
@@ -265,21 +269,33 @@ The present reconstruction seemingly indicates a change from state 1 to state 0 
 <p>For example, node <code>n13</code> is already resolved (it has all its states in common with the ancestor - case 1).
 Node <code>n14</code> has not all its states in common with its ancestor but its two descendants (<code>n15</code> and <code>f</code>) have at least one state in common (<code>0</code>).
 This node is thus solved to be the states in common between both descendants (<code>01</code>) and its ancestor (<code>01</code> as well).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">## Plotting the first downpass</div>
-<div class="sourceLine" id="2" href="#2" data-line-number="2"><span class="kw">plot.states.matrix</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">counts =</span> <span class="dv">2</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">col.states=</span><span class="ot">TRUE</span>)</div></code></pre>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-8-1.png" width="681.6" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">## Plotting the first uppass</div>
+<div class="sourceLine" id="2" href="#2" data-line-number="2"><span class="kw">plot.states.matrix</span>(matrix, <span class="dt">passes =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">counts =</span> <span class="dv">2</span>,</div>
+<div class="sourceLine" id="3" href="#3" data-line-number="3">                   <span class="dt">show.labels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">col.states=</span><span class="ot">TRUE</span>)</div></code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-9"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-9-1.png" alt="Node reconstructions after uppass" width="681.6" />
+<p class="caption">
+Figure 1.5: Node reconstructions after uppass
+</p>
+</div>
 <p>More complex cases can be studied in the Inapp App (running in your favourite web browser) by switching the <strong><code>Reconstruction method</code></strong> to <strong><code>Normal Fitch</code></strong>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">## Running the Inapp App</div>
 <div class="sourceLine" id="2" href="#2" data-line-number="2"><span class="kw">runInapp</span>()</div></code></pre>
 </div>
-<div id="optimizing-ambiguous-characters" class="section level2">
-<h2><span class="header-section-number">1.3</span> Optimizing ambiguous characters</h2>
-<p>A number of approaches have been proposed concerning which resolution of ambiguous
+<div id="resolving-ambiguous-resolutions" class="section level2">
+<h2><span class="header-section-number">1.3</span> Resolving ambiguous resolutions</h2>
+<p>In certain cases, it is necessary to go further and discriminate between the equally-parsimonious reconstructions provided by the Fitch algorithm.
+A number of approaches have been proposed concerning which resolution of ambiguous
 nodes is preferable.</p>
 <p>The two most familiar approaches to resolving ambiguous node are the Accelerated Transformation (<span class="smallcaps">AccTran</span>) and Delayed Transformation (<span class="smallcaps">DelTran</span>) approaches.</p>
 <p>The <span class="smallcaps">AccTran</span> approach reconstructs transformations as occurring as close to the root as possible; the <span class="smallcaps">DelTran</span>, as far from the root as possible.</p>
 <p>In this case, the ambiguous resolution of the root leaves two options for the latter:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-10-1.png" width="681.6" /></p>
+<div class="figure"><span id="fig:unnamed-chunk-11"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-11-1.png" alt="Node reconstructions after AccTran or DelTran` optimizations" width="681.6" />
+<p class="caption">
+Figure 1.6: Node reconstructions after AccTran or DelTran` optimizations
+</p>
+</div>
 <p>If the states <code>0</code> and <code>1</code> represent states of a transformational character –
 whether an organism’s tail is red or blue, say – then there is no reason to prefer
 any of the equally-parsimonious reconstructions, as none implies any more homology
@@ -290,25 +306,35 @@ and state <code>1</code> its presence. On one view, a reconstruction that minimi
 of times that such a character evolves attributes more similarity to homology than
 an equally parsimonious reconstruction in which said character is gained multiple times
 independently.</p>
-<p>In this particular case, the <span class="smallcaps">DelTran</span> reconstruction maximises homology. If the
+<div id="maximising-homology" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Maximising homology</h3>
+<p>Neither <span class="smallcaps">AccTran</span> nor <span class="smallcaps">DelTran</span> is guaranteed to maximise homology <span class="citation">(Agnarsson &amp; Miller, <a href="#ref-Agnarsson2008">2008</a>)</span>.
+In this particular case, the <span class="smallcaps">DelTran</span> reconstruction maximises homology. If the
 character denotes the presence or absence of a tail, then this reconstruction invokes the presence of a tail in the common ancestor of all taxa, meaning that the tails present in
 tips <code>a</code>, <code>d</code>, <code>e</code> and <code>h</code> are homologous with one another.
 The <span class="smallcaps">AccTran</span> reconstruction, in contrast, identifies a loss of a tail
 at nodes 11 and 14, with a tail evolving independently in tips <code>a</code> and <code>h</code>.
-Under this reconstruction, the tails of <code>a</code> and <code>h</code> are not homologous with each other,
-or with the tails of <code>d</code> and <code>e</code>.
-(The alternative <span class="smallcaps">DelTran</span> approach, which could arguably be described as <span class="smallcaps">AccTran</span> too,
-invokes four independent origins of the character and clearly does not maximise its homology.)</p>
-<p>Neither <span class="smallcaps">AccTran</span> nor <span class="smallcaps">DelTran</span> is guaranteed to maximise homology <span class="citation">(Agnarsson &amp; Miller, <a href="#ref-Agnarsson2008">2008</a>)</span>.</p>
+Under this reconstruction, the tails of <code>a</code> and <code>h</code> are not homologous with each other, or with the tails of <code>d</code> and <code>e</code>.
+(The alternative <span class="smallcaps">DelTran</span> approach, which could arguably be described as <span class="smallcaps">AccTran</span> instead, invokes four independent origins of the character and clearly does not maximise its homology.)</p>
 <p>Where we wish to maximise homology, we modify the Fitch uppass such that any node
-whose final state reconstruction is ambiguous is instead reconstructed as present.</p>
-<p>We can show that this maximises homology in the problematic trees presented by
-Agnarsson &amp; Miller [<span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>; “A&amp;M”]:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-11-1.png" width="681.6" /></p>
-<p>And this approach is robust to missing entries:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-12-1.png" width="681.6" /></p>
+whose final state reconstruction would be ambiguous is instead reconstructed as present when that node is encountered.
+This approach maximises homology in the problematic trees presented by
+Agnarsson &amp; Miller [<span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>; “A&amp;M” below]:</p>
+<div class="figure"><span id="fig:unnamed-chunk-12"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-12-1.png" alt="Homology-maximising character optimisations" width="681.6" />
+<p class="caption">
+Figure 1.7: Homology-maximising character optimisations
+</p>
+</div>
+<p>This approach is also robust to missing entries:</p>
+<div class="figure"><span id="fig:unnamed-chunk-13"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-13-1.png" alt="Homology maximisation with missing entries" width="681.6" />
+<p class="caption">
+Figure 1.8: Homology maximisation with missing entries
+</p>
+</div>
 
-
+</div>
 </div>
 </div>
 <h3>References</h3>
@@ -337,8 +363,8 @@ Agnarsson &amp; Miller [<span class="citation">(<a href="#ref-Agnarsson2008">200
           </div>
         </div>
       </div>
-
-<a href="problems.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="problems.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -368,10 +394,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/01_Fitch.Rmd",
+"link": "https://github.com/TGuillerme/Inapp/edit/master/inst/gitbook/01_Fitch.Rmd",
 "text": "Edit"
 },
-"download": ["Inapplicable_data.pdf"],
+"download": ["Inapplicable_data.pdf", "Inapplicable_data.epub"],
 "toc": {
 "collapse": "subsection"
 }

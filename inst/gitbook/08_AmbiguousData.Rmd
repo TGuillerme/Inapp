@@ -17,12 +17,12 @@ ap <- c("Absent", "Present")
 rb <- c("Red", "Blue")
 ```
 
-## Ambiguity
+# Ambiguity
 
 Ambiguous data does not pose a problem for the algorithm, but the nature of the
 ambiguity must be considered when scoring a character.
 
-### Ambiguity when parent character ambiguous
+## Ambiguity when parent character ambiguous
 
 If it's not clear whether or not a taxon has a tail, then tail colour should be 
 coded as `?`, denoting that any possible token (including the inapplicable token)
@@ -52,12 +52,12 @@ vignettePlot(lacksTail, tail, legend.pos='topleft', na=FALSE, main="Tail", state
 vignettePlot(lacksTail, col, legend.pos='topleft', main="Tail colour", state.labels = rb)
 ```
 
-### Ambiguity when parent character known
+## Ambiguity when parent character known
 
 If a taxon is known to have a tail, there are two scenarios for ontologically
 dependent transformational characters:
 
-#### Subordinate character has finite states
+### Subordinate character has finite states
 
 If the subordinate character must take one of a finite set of values, then the
 unobserved property of the tail is known to belong to these values and should be 
@@ -73,7 +73,7 @@ reason to assume that either state is ancestral (i.e. the character is strictly
 transformational).  Tail margin should then be coded as `{01}`: i.e. the tail
 is known to have taken one of the two states 0 or 1.
 
-#### Subordinate character may have unobserved states
+### Subordinate character may have unobserved states
 
 A more complicated situation arises where a subordinate character may have 
 unobserved states, as with 
@@ -125,7 +125,7 @@ vignettePlot(ape::read.tree(text="((a, (i1, i2)), (b, (c, (d, (e, (f, (g, h)))))
              '---00011??', legend.pos='topleft', state.labels = rb, passes=4)
 ```
 
-### Recommendation 
+## Recommendation 
 
 We therefore recommend the following coding schema for ambiguous tips where the
 tail is (A) known to be present; (B) ambiguous; (C) known to be absent:

@@ -16,7 +16,7 @@ ap <- c('Absent', 'Present')
 rb <- c('Red', 'Blue')
 ```
 
-## Problems with the Fitch algorithm
+# Problems with the Fitch algorithm
 
 The Fitch algorithm counts changes in a character.
 It assumes that the character is applicable throughout the tree.
@@ -28,7 +28,7 @@ This assumption does not lead to error if:
   in distinct regions of the tree [@Maddison1993].
 
 
-### Red tails, blue tails
+## Red tails, blue tails
 Maddison [-@Maddison1993] provided the following example to demonstrate
 the problem encountered by the Fitch algorithm when inapplicable
 characters were present.
@@ -57,7 +57,7 @@ Tail colour should group the red-tailed tips together, and the blue-tailed tips 
 but does not establish whether the ancestor of the left-hand tail-bearing clade 
 had a red or blue tail.
 
-### Why Reductive coding doesn't work
+## Why Reductive coding doesn't work
 
 Under reductive coding, the tail and its colour are described in two character statements:
 
@@ -85,11 +85,11 @@ reconstructs a change in tail colour in a taxon that doesn't have a tail!
 
 This reconstruction is not logically consistent.
 
-#### An exception
+### An exception
 
 If the parent character can parsimoniously be reconstructed as present at every internal node in a single unbroken region of a tree, and nowhere else, then reductive coding does work successfully.  Reductive coding may therefore be appropriate if only a subset of all possible trees are under consideration, and is always (i.e. for all trees) appropriate if a character exhibits fewer than three inapplicable tokens.
 
-### Why Extra State coding doesn't work
+## Why Extra State coding doesn't work
 
 An alternative is to code the inapplicable token as an extra state:
 
@@ -120,7 +120,7 @@ incur a cost of one step in the tail character and one step in each
 ontologically dependent character, even though it represents a single
 evolutionary event.
 
-### Why a single multi-state character doesn't work
+## Why a single multi-state character doesn't work
 
 A different approach is to use a single character to denote both the 
 presence and the colour of the tail:
@@ -154,7 +154,7 @@ text(4, 4.1, "One gain of tail (preferable)", cex=1.2)
 
 ```
 
-### Sankoff matrices
+## Sankoff matrices
 
 It would be possible to establish a Sankoff matrix
 such that a change between absent and red or absent and blue cost more than 
@@ -162,7 +162,7 @@ a change between red and blue, but this effectively up-weights the tail characte
 and it's not clear that this is desirable -- or how much this extra weight
 should be [@Maddison1993].
 
-#### Symmetric
+### Symmetric
 
 Consider a character with three ontologically dependent characters:
 
@@ -208,7 +208,7 @@ that losing a tail, which arguably corresponds to a single evolutionary
 event, is allocated a large cost (here, 4) that grows in line with the number of 
 ontogenetically dependant characters.
 
-#### Gain and loss asymmetric
+### Gain and loss asymmetric
 
 At the cost of symmetry, one could argue that the loss of a tail requires a single
 transformation, whereas the gain requires the addition of a tail and the "setting"
@@ -264,7 +264,7 @@ nodelabels(c("1>8 (+3)", rep("1>0 (+1)",  2), rep("8>0 (+1)", 2)), node=c(11:13,
 ```
 
 
-### Conclusion
+## Conclusion
 
 No coding mechanism can generate consistent and logically meaningful tree scores
 when employing the Fitch algorithm.  The inapplicable state needs treating 

@@ -20,9 +20,7 @@ choose1 <- "[01]=>1"
 
 ```
 
-# [Comment:] Incomplete; MS to work on this tomorrow.
-
-## Optimizing ambiguous characters characters
+# Optimizing ambiguous characters
 
 A number of approaches have been proposed concerning which resolution of ambiguous
 nodes is preferable.

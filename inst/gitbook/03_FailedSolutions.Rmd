@@ -24,7 +24,7 @@ noCol <- "#fc8d5960"
 setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 1, 0.2), oma=c(0,0,0,0), cex=0.7)
 ```
 
-## The problem with counting steps
+# The problem with counting steps
 
 If a new algorithm is called for, how should it work?
 

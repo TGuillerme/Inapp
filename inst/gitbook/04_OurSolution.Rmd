@@ -35,7 +35,7 @@ De Laet has made this point before [@DeLaet2005; -@DeLaet2015], suggesting that 
 
 > Total score = Number of steps + Number of (additional) regions.
 
-Practically, because the number of unavoidable regions is a function of a dataset and not of a tree, one could also count 
+Practically, because the number of unavoidable regions is a function of a dataset and not of a tree, one could alternatively count 
 
 > Total score = Number of steps + Number of regions
 
@@ -81,22 +81,22 @@ setPar(c(1,1))
 vignettePlot(tree12, '111100?01111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
 ```
 
-But if two were ambiguous, then the 'inapplicable' region could equally be interpreted, under the Fitch algorithm, as 'applicable' -- with the two inapplicable tips becoming inapplicable in the branches that led to them:
+But if two were ambiguous, then the root of the tree could be parsimoniously reconstructed as 'applicable' -- with the two inapplicable tips becoming inapplicable in the branches that led to them:
 
 ```{r, echo=FALSE, fig.width=6, fig.height=5}
 setPar(c(1,1))
 vignettePlot(tree12, '1111?0?01111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
 ```
 
-The ambiguous region of this tree may parsimoniously be interpreted as applicable, and doing so increases the opportunity to attribute shared colours in the tail to common ancestry, this our algorithm chooses to interpret the region as applicable whereever it is parsimonious to do so.
+This reconstruction maximises the inferred homology between tails, and so increases the opportunity to attribute shared colours in the tail to common ancestry.  As such, our algorithm chooses to interpret this region as applicable whereever it parsimoniously can.
 
 Note that the three inapplicable tips necessary to define an inapplicable region must be in a contiguous region of the tree, separated from one another only by taxa whose applicability is ambiguous, in order for two applicable regions to be reconstructed as separate.
 
 ### How this fixes the problem
 
-This overcomes the problem where steps cancould be avoided by inferring multiple innovations of a character:
+This overcomes the problem where steps could be avoided by inferring multiple innovations of a character:
 
-```{r, echo=FALSE, fig.width=8, fig.height=8}
+```{r, echo=FALSE, fig.width=7.1, fig.height=2.8, fig.cap="Reconstructions of tail presence and five contingent characters (only two shown)"}
 comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
 comb5i <- ape::read.tree(text="(((((vv, c), d), yy), f), (g, (xx, (j, (k, (ww, (m, (n, zz))))))));")
 
@@ -107,7 +107,7 @@ sub3 <- '--------11122'
 sub4 <- '--------11122'
 sub5 <- '--------11112'
 
-setPar(c(3, 2))
+setPar(c(1, 2))
 par(oma=c(3,0,0,0))
 Compare <- function (char.states, char.label, states.labels, top=FALSE) {
     vignettePlot(comb15, char.states, na=!top, 
@@ -139,7 +139,7 @@ mtext("\n... and for three more characters", outer=TRUE, side=1)
 
 On the other hand, if taxa either have a blue, scaly, straight tail or a red, smooth, curly tail, then the fact that the tails have so little in common means that it wouldn't be entirely surprising if the two different tail types evolved twice.  This scenario thus incurs a cost of only one step (for the additional origin of the tail) more than if the tail evolved once, and change all its attributes:
 
-```{r, echo=FALSE, fig.width=8, fig.height=8}
+```{r, echo=FALSE, fig.width=8, fig.height=8, fig.cap="Reconstructions of tail presence and five contingent characters (only two shown)"}
 comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
 comb5i <- ape::read.tree(text="(((((xx, yy), zz), a), b), (c, (d, (e, (f, (g, (h, (vv, ww))))))));")
 
@@ -168,7 +168,7 @@ Compare <- function (char.states, char.label, states.labels, top=FALSE) {
 Compare(char, 'Tail, presence', ap, TRUE)
 Compare(sub1, 'Tail, colour', orb)
 Compare(sub2, 'Tail, covering', c("", "Scaly", "Hairy"))
-mtext("\n... and for n more characters", outer=TRUE, side=1)
+mtext("\n... and for three more characters", outer=TRUE, side=1)
 #Compare(sub3, 'Tail, shape', c("", "straight", "curly"))
 #Compare(sub4, 'Tail, margin', c("", "smooth", "serrated"))
 #Compare(sub5, 'Tail, poison barbs', c("", "absent", "present"))
@@ -200,7 +200,7 @@ tiplabels(c("2","3","-","-","1","?","?","-","-","0","3","2"), cex = 1, bg = "ora
 nodelabels(paste0("n", 13:23), bg = "bisque")
 ```
 
-We can use the `Inapp` package to apply our four passes inapplicable algorithm for this character on this tree.
+We can use the `Inapp` package to apply our four-pass inapplicable algorithm to this character on this tree.
 
 ```{r}
 ## Loading the Inapp package
@@ -213,11 +213,10 @@ tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 character <- "23--1??--032"
 
 ## Applying the NA algorithm
-matrix <- apply.reconstruction(tree, character, method = "NA", passes = 4)
+matrix <- apply.reconstruction(tree, character, method = "NA")
 ```
 
 Here is what is happening:
-
 
 ### Passes 1 & 2
 
@@ -233,21 +232,22 @@ For the second pass (first uppass):
  * If the focal node has both applicable and inapplicable states, set it to be the inapplicable state only if its ancestor has also only the inapplicable state, else remove the inapplicable state.
  * If the focal node has only an inapplicable state and it's ancestor has not only the inapplicable state, set it to be the union between it's descendants states if their are both applicable, else, leave it as the inapplicable state.
 
-```{r, fig.width = 7.1, fig.height = 7.1}
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap = "Inapplicable reconstruction after two passes"}
 ## Plotting the NA two first passes
-plot(matrix, passes = c(1,2), counts = 0, main = "Inapplicable reconstruction")
+plot(matrix, passes = c(1,2), counts = 0, 
+     legend.pos = 'none', show.labels=1:2)
 ```
 
 The parent character can be considered as a binary character "presence (`1`) or absence (`0`) of a tail" that would be `11001??00111`.
 The character would be reconstructed as:
 
-```{r, fig.width = 7.1, fig.height = 7.1}
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap = "Fitch reconstruction of the parent character"}
 ## The parent character
 parent_character <- "11001??00111"
 
 ## Applying the Fitch algorithm
-matrix_parent <- apply.reconstruction(tree, parent_character, method = "Fitch", passes = 2)
-plot(matrix_parent, passes = c(1,2), counts = 0, main = "Fitch reconstruction of the parent character")
+matrix_parent <- apply.reconstruction(tree, parent_character, method = "Fitch")
+plot(matrix_parent, passes = 1:2, legend.pos='none', show.labels=1:2)
 ```
 
 As you can see, both reconstructions are identical: nodes with no tail are denoted as `0` in the case of the "parent character" and as `-` for our current character.
@@ -267,11 +267,10 @@ This score is composed of both:
 
 The changes of states are calculated the same way as Fitch **for the applicable states only**:
 
- 1. If there is no state in common between both node's descendants and that the node and its descendant have a least one applicable state, increment the tree score.
+ * If there is no state in common between both node's descendants and that the node, and its descendants have a least one applicable state, increment the tree score.
 
-```{r, fig.width = 7.1, fig.height = 7.1}
-## Plotting the NA two first passes
-plot(matrix, passes = c(1,2,3), counts = 2, main = "State changes", show.labels = c(1,2))
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="State changes"}
+plot(matrix, passes = c(1,2,3), counts = 2, show.labels = 1:2)
 ```
 
 For example, for node `n23`, there is no state in common between the tip `12` (`2`) and `11` (`3`), the tree score is incremented at this node (case `1` above).
@@ -281,25 +280,25 @@ In other words, there is no change in state at the node `n21` from the tail havi
 #### Tracking applicable regions
 
 To know whether any node leads to a region of applicable states we can use a "tracker" for each node that tells us at any moment whether descendants of a node contain applicable data or not.
-Doing so, we can know, when a node is inapplicable and its descendant lead to applicable regions that extra applicable regions are implied by the tree.
-In other words and following our "colour of the tail" character, extra applicable regions imply independent appearances of the tail somewhere in the node's descendants.
+When a node is inapplicable and has a descendant whose lineage leads to applicable regions, an extra applicable region is implied by the tree.
+In other words, following our "colour of the tail" character, extra applicable regions imply independent appearances of the tail somewhere in the node's descendants.
 
 The tracker is initialised during the *second pass* (first uppass) and is updated during the *third pass* (second downpass).
 The tracker works as follows for each node's left and right descendants:
  
- * If the descendant state was resolved as applicable, the node leads to an applicable region, else, it leads to an inapplicable one. 
+ * If the descendant state is applicable or leads to an applicable region, then the node leads to an applicable region; else, it does not. 
 
 The trackers are initialised for each node during the first uppass and then propagated back down the tree during the second downpass.
 
-Using these trackers, we can then increments the tree score for all changes that imply a new applicable region.
-The switch to or from an inapplicable and applicable region are counted as follow:
+Using these trackers, we can then increment the tree score for all changes that imply a new applicable region.
+The switch to or from an inapplicable and applicable region are counted as follows:
 
-  2. If the node is inapplicable and both descendants lead to regions of applicable states, increment the region count.
+  * If the node is inapplicable and both descendants lead to regions of applicable states, increment the region count.
+  * If the node is applicable, but has an inapplicable descendant that leads to a region of applicable states, increment the region count.
 
 
-```{r, fig.width = 7.1, fig.height = 7.1}
-## Plotting the NA two first passes
-plot(matrix, passes = c(1,2,3), counts = 1, main = "Applicable regions", show.labels = c(1,2))
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="Counting applicable regions"}
+plot(matrix, passes = c(1,2,3), counts = 1, show.labels = 1:2)
 ```
 
 For example, node `n15` is solved as inapplicable but both his descendants lead to two independent applicable regions (tip `5` with the state `1` and node `n18` with the states `1` and `2`).
@@ -310,26 +309,23 @@ This node does thus not imply an independent change in the parent character.
 > Note that the number of applicable regions for a character is always at least 1 (unless every taxa has the inapplicable state) and therefore, we only count the *additional* regions.
 
 
-Combining both scores - the number of changes in character states and the number of additional applicable regions - we get indeed a total tree score of 5 for this tree and character
+Combining both scores -- the number of changes in character states and the number of additional applicable regions -- we get indeed a total tree score of 5 for this character on this tree.
 
 ```{r, fig.width = 7.1, fig.height = 7.1}
 ## Plotting the NA two first passes
 plot(matrix, passes = c(1,2,3), counts = c(1,2), show.labels = c(1,2))
 ```
 
-Using these tree passes is enough to get the tree score (while taking into account inapplicable data!) but does not solve all ancestral reconstructions.
+Using the first three passes is enough to get the tree score (while taking into account inapplicable data!) but does not solve all ancestral reconstructions.
 A fourth pass (second uppass) might be necessary to finalise the node states reconstructions.
 
 ### Pass 4
 
-In the example above, the node `n23` is still not correctly solved after the third pass.
-In fact, considering its ancestor's states (`023`) and its descendants' states (`2` and `3`), it should be resolved as `023` under a delayed transition model (DELTRAN).
-In order to do so, we can apply a extra pass similar to the second pass (first uppass), as described above.
-
+In the example above, the node `n23` is still not correctly solved after the third pass.  It could conceivably be state 0 (with transformations to states `2` and `3` occurring on the branches leading to tips 11 and 12 resepctively).  As such, its final state reconstruction should be `023`.
+To reach the correct final reconstructions, we apply a final pass of the algorithm <mark>which we haven't described in this document</mark>.
 
 ```{r, fig.width = 7.1, fig.height = 7.1}
-## Plotting the NA two first passes
-plot(matrix, passes = c(1,2,3,4), counts = c(1,2), show.labels = c(1,2))
+plot(matrix, passes = c(1,2,3,4), counts = c(1,2), show.labels = c(1,2), col.states=TRUE)
 ```
 
 ## Software implementation {#software}

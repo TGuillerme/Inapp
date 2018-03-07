@@ -86,7 +86,7 @@ knitr::kable(mDep, caption="Heirarchichal characters")
 
 Which would plot on a tree thus:
 
-```{r, echo=FALSE, fig.width=7.1, fig.height=2.8, fig.cap="Reconstructed nodal states of a character hierarchy"}
+```{r, echo=FALSE, fig.width=7.1, fig.height=2.8}
 goodtree <- ape::read.tree(text="(a, (b, (c, ((d, e), ((f, (g, (h, i))), ((j, k), (l, m)))))));")
 badtree <- ape::read.tree(text="(A, (C, (B, ((D, E), ((F, (J, (K, I))), ((G, H), (L, M)))))));")
 par(mfrow=c(1, 2), cex=0.7, mar=c(0, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0))

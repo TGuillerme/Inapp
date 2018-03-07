@@ -12,11 +12,17 @@ output:
 ```{r, echo=FALSE, message=FALSE}
 library('Inapp')
 library('ape')
-ap <- c('Absent', 'Present')
-rb <- c('Red', 'Blue')
+ap <- c("Absent", "Present")
+rb <- c("Red", "Blue")
+orb <- c('', rb)
+
+yesCol <- "#7fbf7be0"
+noCol <- "#fc8d5960"
+
+setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 1, 0.2), oma=c(0,0,0,0), cex=0.7)
 ```
 
-# Problems with the Fitch algorithm
+# Problems with the Fitch algorithm {problems}
 
 The Fitch algorithm counts changes in a character.
 It assumes that the character is applicable throughout the tree.
@@ -263,9 +269,72 @@ nodelabels(c("1>8 (+3)", rep("1>0 (+1)",  2), rep("8>0 (+1)", 2)), node=c(11:13,
            bg="#af8dc300", pos=3, frame='no', col="#af8dc3e0", font=2)
 ```
 
+## Why counting steps cannot work
+
+The failure of the Sankoff approach illustrates a more general problem:
+if the only thing that is counted is the number of steps, then trees that 
+imply multiple gains and losses of a principal character are not adequately penalised.
+
+To illustrate this point, consider counting only transitions between applicable states
+(i.e. steps), but not transitions from the applicable state to the inapplicable state:
+
+```{r, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
+tree <- ape::read.tree(text="((((a, b), c), d), (e, (f, ((g, h), (i, j)))));")
+vignettePlot(tree, '11----1122', passes=1:2, legend.pos='none',
+             main="Tail colour", state.labels=orb, counts=2)
+
+nodelabels(node=c(13, 16), pch=15, col=noCol, cex=7)
+
+legend('bottomleft', bty='n',
+       c('State change: +1 step', 'Change from inapplicable to applicable: +0 steps'),
+       pch=15, pt.cex=1.5, col=c(yesCol, noCol))
+```
+
+The number of steps can be minimized by maximizing the number of independent gains of a parent character.
+
+```{r, echo=FALSE, fig.width=8, fig.height=16}
+comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
+comb5i <- ape::read.tree(text="(((((vv, c), d), yy), f), (g, (xx, (j, (k, (ww, (m, (n, zz))))))));")
+
+char <- '0000000011111'
+sub1 <- '--------12222'
+sub2 <- '--------11222'
+sub3 <- '--------11122'
+sub4 <- '--------11122'
+sub5 <- '--------11112'
+
+setPar(c(6, 2))
+Compare <- function (char.states, char.label, states.labels, top=FALSE) {
+    vignettePlot(comb15, char.states, na=!top, 
+                 counts=2, passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    legend('topleft', char.label, bty='n')
+    legend('bottomleft', pch=15, pt.cex=1.5, col=yesCol, bty='n', "+1 step")
+    if (top) title('Single gain of tail (total score = 6)')
+    
+    vignettePlot(comb5i, char.states, na=!top, 
+                 counts=2,  passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    if (!top)  legend('bottomleft', pch=1 , pt.cex=1.5, col=yesCol, bty='n', "+0 steps") 
+    if (top) legend('bottomleft', pch=15, pt.cex=1.5, col=yesCol, bty='n', "+5 steps") 
+    if (top) title('Five gains of tail (total score = 5)')
+        
+}
+
+Compare(char, 'Tail, presence', ap, TRUE)
+Compare(sub1, 'Tail, colour', orb)
+Compare(sub2, 'Tail, covering', c("", "Scaly", "Hairy"))
+Compare(sub3, 'Tail, shape', c("", "Straight", "Curly"))
+Compare(sub4, 'Tail, margin', c("", "Smooth", "Serrated"))
+Compare(sub5, 'Tail, poison barbs', c("", "Absent", "Present"))
+
+
+```
 
 ## Conclusion
 
 No coding mechanism can generate consistent and logically meaningful tree scores
-when employing the Fitch algorithm.  The inapplicable state needs treating 
-differently from other states.  A [new algorithm](OurSolution.html) is needed.
+when employing the Fitch algorithm.  A new algorithm is needed: one that counts
+homoplasies instead of steps.
+  

@@ -134,9 +134,9 @@ tail is (A) known to be present; (B) ambiguous; (C) known to be absent:
 mDep <- matrix(c("1", "?", "0",
                  "{01}", "?", "-",
                  "?", "?", "-"), byrow=TRUE, ncol=3)
-colnames(mDep) <- LETTERS[1:3]
+colnames(mDep) <- c('Present', 'Unknown', 'Absent')
 rownames(mDep) <- c("Tail: (0), absent; (1), present.",
                     "Tail margin: (0), smooth; (1), serrated.",
                     "Tail colour: (0), red; (1), blue.")
-knitr::kable(mDep, caption="Coding")
+knitr::kable(mDep, caption="Recommended coding for unknown states")
 ```

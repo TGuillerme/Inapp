@@ -298,6 +298,8 @@ plot.states.matrix <- function(
                 state.labels <- c(state.labels, 'Ambiguous', 'Inapplicable')
             } else if (length(state.labels) == length(edge_palette) - 1) {
                 state.labels <- c(state.labels, 'Ambiguous')
+            } else if (length(state.labels) != length(edge_palette)) {
+                warning("State labels do not seem to match states.  You need to label all states from 0 to the maximum observed.")
             }
             state_labels <- paste(names(edge_palette), gsub("^['\"]|['\"]$", "", state.labels), sep=": ")
         }

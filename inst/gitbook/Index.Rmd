@@ -18,36 +18,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Inapplicable data in a parsimony setting
 
-This series of vignettes works through the inapplicable algorithm proposed by Brazeau _et al._ [-@ThisStudy].
-
-## The packages
-
-Illustration of the inapplicable algorithm is based on the [Inapp](https://github.com/TGuillerme/Inapp) `R` package.
-This package allows to visualise how the algorithm is counting the score of a tree for a given character with different algorithms treating inapplicable data differently.
-It allows users to input any tree and character.
-
-<!-- badges out start -->
-[![Build Status](https://travis-ci.org/TGuillerme/Inapp.svg?branch=master)](https://travis-ci.org/TGuillerme/Inapp)
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![codecov](https://codecov.io/gh/TGuillerme/Inapp/branch/master/graph/badge.svg)](https://codecov.io/gh/TGuillerme/Inapp)
-<!-- badges out end   -->
-
-To actually perform tree search, please have a look at the [TreeSearch](https://github.com/ms609/TreeSearch) `R` package.
-This package allows some heuristic searches on reasonable-sized matrices.
-
-<!-- badges out start -->
-[![Build Status](https://travis-ci.org/ms609/TreeSearch.svg?branch=master)](https://travis-ci.org/ms609/TreeSearch)
-[![CRAN Status Badge](http://www.r-pkg.org/badges/version/TreeSearch)](https://cran.r-project.org/package=TreeSearch)
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![codecov](https://codecov.io/gh/ms609/TreeSearch/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/TreeSearch)
-<!-- badges out end   -->
-
-Both these `R` packages are based on the [morphylib](https://github.com/mbrazeau/morphylib) `C` library that allows to score characters with inapplicable using our new algorithm.
-This library will be eventually implemented in [Morphy](http://www.morphyproject.org/), a fully functional `C` based API for phylogenetic searches.
-
-<!-- badges out start -->
-[![Build Status](https://travis-ci.org/mbrazeau/morphylib.svg?branch=master)](https://travis-ci.org/mbrazeau/morphylib)
-[![Coverage Status](https://coveralls.io/repos/github/mbrazeau/MorphyLib/badge.svg?branch=development)](https://coveralls.io/github/mbrazeau/MorphyLib?branch=development)
-[![DOI](https://zenodo.org/badge/90367119.svg)](https://zenodo.org/badge/latestdoi/90367119)
-<!-- badges out end   -->
+This document provides a detailed explanation of the algorithm for handling
+inapplicable data proposed by Brazeau _et al._ [-@ThisStudy].
 

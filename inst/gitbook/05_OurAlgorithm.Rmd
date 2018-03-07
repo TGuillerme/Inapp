@@ -156,3 +156,17 @@ In order to do so, we can apply a extra pass similar to the second pass (first u
 ## Plotting the NA two first passes
 plot(matrix, passes = c(1,2,3,4), counts = c(1,2), show.labels = c(1,2))
 ```
+
+## Software implementation
+
+This algorithm has been implemented in two `R` packages.  [Inapp](https://github.com/TGuillerme/Inapp) provides an interactive 
+visualization of how the score of a user-specified tree is calculated for any
+character under different approaches to inapplicable data.  
+This package was used to generate many of the figures in this document.
+
+[TreeSearch](https://github.com/ms609/TreeSearch) allows for parsimony tree
+searches with the inapplicable algorithm [@ThisStudy].  
+It includes heuristic search options that make it possible to search reasonable-sized matrices, and includes an option for equal or implied weighting.
+
+TreeSearch is a front-end to the [morphylib](https://github.com/mbrazeau/morphylib) 
+`C` library, which will eventually implemented in the standalone [Morphy](http://www.morphyproject.org/) program for rapid phylogenetic searches.

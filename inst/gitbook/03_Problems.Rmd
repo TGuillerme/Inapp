@@ -22,7 +22,7 @@ noCol <- "#fc8d5960"
 setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 1, 0.2), oma=c(0,0,0,0), cex=0.7)
 ```
 
-# Problems with the Fitch algorithm {problems}
+# Problems with the Fitch algorithm {#problems}
 
 The Fitch algorithm counts changes in a character.
 It assumes that the character is applicable throughout the tree.

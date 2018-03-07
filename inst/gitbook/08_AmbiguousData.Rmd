@@ -138,5 +138,5 @@ colnames(mDep) <- LETTERS[1:3]
 rownames(mDep) <- c("Tail: (0), absent; (1), present.",
                     "Tail margin: (0), smooth; (1), serrated.",
                     "Tail colour: (0), red; (1), blue.")
-knitr::kable(mDep, capiton="Coding")
+knitr::kable(mDep, caption="Coding")
 ```

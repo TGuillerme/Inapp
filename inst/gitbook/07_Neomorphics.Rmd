@@ -52,7 +52,7 @@ tailEyes <- matrix(c(tail, eyespot), byrow=TRUE, ncol=length(tail))
 colnames(tailEyes) <- LETTERS[seq_along(tail)]
 rownames(tailEyes) <- c("Tail: (0), absent; (1), present",
                         "Tail eyespots: (-), inapplicable; (0), absent; (1), present")
-kable(tailEyes, capiton="Coding")
+kable(tailEyes, caption="Coding")
 ```
 
 The presence of tail eyespots obviously contains grouping information -- we
@@ -111,7 +111,7 @@ colnames(unobserved) <- LETTERS[seq_along(tail)]
 rownames(unobserved) <- c("Tail: (0), absent; (1), present",
                         "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
                         "Tail with ability to generate electricity: (-), inapplicable; (0), absent; (1), present")
-kable(unobserved, capiton="Coding")
+kable(unobserved, caption="Coding")
 ```
 
 Note that each of the unobserved characters provides evidence against independent origins of the tail, preferring instead independent losses:
@@ -147,7 +147,7 @@ colnames(unobserved) <- LETTERS[seq_along(tail)]
 rownames(unobserved) <- c("Tail: (0), absent; (1), present",
                         "Tail with glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
                         "Tail with ability to generate electricity: (-), inapplicable; (0), absent; (1), present")
-kable(unobserved, capiton="Coding")
+kable(unobserved, caption="Coding")
 ```
 
 This can be handled by the Fitch algorithm, and works well in simple cases:

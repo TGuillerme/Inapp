@@ -75,7 +75,7 @@ rownames(mDep) <- c("Appendages: (0), absent; (1), present.",
                     "Appendage termination: (1), blunt; (2), sucker; (3), claw.",
                     "Sucker morphology: (1), smooth; (2), serrated.", 
                     "Claw morphology: (1), round; (2), polygonal.")
-knitr::kable(mDep, capiton="Coding")
+knitr::kable(mDep, caption="Coding")
 ```
 
 Which would plot on a tree thus:
@@ -140,7 +140,7 @@ colnames(blueTails) <- LETTERS[seq_along(tail)]
 rownames(blueTails) <- c("Tail: (0), absent; (1), present",
                          "Tail colour: (1), blue; (-), inapplicable",
                          "Body colour: (1), black; (2), white")
-kable(blueTails, capiton="Coding")
+kable(blueTails, caption="Coding")
 ```
 
 Let's compare two trees.  The first groups taxa based on the presence of tails; the other
@@ -186,7 +186,7 @@ colnames(blueTails) <- LETTERS[seq_along(tail)]
 rownames(blueTails) <- c("Tail: (0), absent; (1), present",
                          "Tail colour: (1), red; (2), blue; (-), inapplicable",
                          "Body colour: (1), black; (2), white")
-kable(blueTails, capiton="Coding")
+kable(blueTails, caption="Coding")
 ```
 
 Any tree that implies that blueness evolves multiple times will incur an additional penalty that would not have been encountered had the tail colour character been omitted.
@@ -226,7 +226,7 @@ tailEyes <- matrix(c(tail, eyespot), byrow=TRUE, ncol=length(tail))
 colnames(tailEyes) <- LETTERS[seq_along(tail)]
 rownames(tailEyes) <- c("Tail: (0), absent; (1), present",
                         "Tail, poison barbs: (-), inapplicable; (0), absent; (1), present")
-kable(tailEyes, capiton="Coding")
+kable(tailEyes, caption="Coding")
 ```
 
 #### Three scenarios
@@ -297,7 +297,7 @@ colnames(tailEyes) <- LETTERS[seq_along(tail)]
 rownames(tailEyes) <- c("Tail: (0), absent; (1), present",
                         "Tail, poison barbs: (0), absent; (1), present",
                         "Tail, colour: (-), inapplicable; (1), red; (2), blue")
-kable(tailEyes, capiton="Coding")
+kable(tailEyes, caption="Coding")
 ```
 
 <!--
@@ -342,7 +342,7 @@ rownames(unobserved) <- c("Tail: (0), absent; (1), present",
                           "Tail, margin: (-), inapplicable; (1), smooth; (2), serrated",
                         "Tail, glow-in-the-dark pigment: (-), inapplicable; (1), absent; (2), present",
                         "Tail, ability to generate electricity: (-), inapplicable; (1), absent; (2), present")
-kable(unobserved, capiton="Coding")
+kable(unobserved, caption="Coding")
 ```
 
 Note that each of the unobserved characters provides evidence against independent origins of the tail, preferring instead independent losses:
@@ -382,5 +382,5 @@ rownames(unobserved) <- c("Tail: (0), absent; (1), present",
                           "Tail, margin: (1), smooth; (2), serrated",
                         "Tail, glow-in-the-dark pigment: (-), inapplicable; (0), absent; (1), present",
                         "Tail, ability to generate electricity: (-), inapplicable; (0), absent; (1), present")
-kable(unobserved, capiton="Coding")
+kable(unobserved, caption="Coding")
 ```

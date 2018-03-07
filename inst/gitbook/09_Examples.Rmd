@@ -149,7 +149,7 @@ mDep <- matrix(strsplit(paste0(tail, clr2, collapse=''), '')[[1]], byrow=TRUE, n
 colnames(mDep) <- LETTERS[1:ncol(mDep)]
 rownames(mDep) <- c("Tail: (0), absent; (1), present.",
                     "Tail, colour: (1), red; (2),blue.")
-knitr::kable(mDep, capiton="Coding")
+knitr::kable(mDep, caption="Coding")
 ```
 
 When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11). 

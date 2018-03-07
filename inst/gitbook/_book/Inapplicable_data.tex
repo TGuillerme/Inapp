@@ -1,0 +1,456 @@
+\documentclass[]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Inapplicable data},
+            pdfauthor={Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Inapplicable data}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Martin Brazeau
+(\href{mailto:m.brazeau@imperial.ac.uk}{\nolinkurl{m.brazeau@imperial.ac.uk}}),
+Thomas Guillerme
+(\href{mailto:guillert@tcd.ie}{\nolinkurl{guillert@tcd.ie}}) and Martin
+Smith
+(\href{mailto:martin.smith@durham.ac.uk}{\nolinkurl{martin.smith@durham.ac.uk}})}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{2018-03-07}
+
+\usepackage{booktabs}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{inapplicable-data-in-a-parsimony-setting}{%
+\chapter*{Inapplicable data in a parsimony
+setting}\label{inapplicable-data-in-a-parsimony-setting}}
+\addcontentsline{toc}{chapter}{Inapplicable data in a parsimony setting}
+
+This document provides a detailed explanation of the algorithm for
+handling inapplicable data proposed by Brazeau \emph{et al.}
+\citeyearpar{ThisStudy}.
+
+We first discuss how the \href{../fitch}{Fitch algorithm} works and
+introduce the \url{problems} that it encounters in the face of
+inapplicable character states.
+
+We then introduce our \url{solution}, a new \url{algorithm}, implemented
+in various \href{software}{software packages}, and discuss its
+implications for the coding of \href{coding}{characters} and
+\url{ambiguity}.
+
+We close with some \href{examples}{example} trees that demonstrate how
+our algorithm behaves in more complicated cases.
+
+\hypertarget{fitch}{%
+\chapter{The Fitch algorithm}\label{fitch}}
+
+Placeholder
+
+\hypertarget{a}{%
+\section{a}\label{a}}
+
+\hypertarget{b}{%
+\section{b}\label{b}}
+
+\hypertarget{c}{%
+\section{c}\label{c}}
+
+\hypertarget{d}{%
+\section{d}\label{d}}
+
+\hypertarget{e}{%
+\section{e}\label{e}}
+
+\hypertarget{n2}{%
+\section{n2}\label{n2}}
+
+\hypertarget{n1}{%
+\section{n1}\label{n1}}
+
+\hypertarget{n3}{%
+\section{n3}\label{n3}}
+
+\hypertarget{n4}{%
+\section{n4}\label{n4}}
+
+\hypertarget{first-cherry}{%
+\section{First cherry}\label{first-cherry}}
+
+\hypertarget{second-cherry}{%
+\section{Second cherry}\label{second-cherry}}
+
+\hypertarget{third}{%
+\section{Third}\label{third}}
+
+\hypertarget{fourth}{%
+\section{Fourth}\label{fourth}}
+
+\hypertarget{first-cherry-1}{%
+\section{First cherry}\label{first-cherry-1}}
+
+\hypertarget{second-cherry-1}{%
+\section{Second cherry}\label{second-cherry-1}}
+
+\hypertarget{third-1}{%
+\section{Third}\label{third-1}}
+
+\hypertarget{fourth-1}{%
+\section{Fourth}\label{fourth-1}}
+
+\hypertarget{plotting-the-tree-and-characters}{%
+\section{Plotting the tree and
+characters}\label{plotting-the-tree-and-characters}}
+
+\hypertarget{loading-the-inapp-package}{%
+\section{Loading the Inapp package}\label{loading-the-inapp-package}}
+
+\hypertarget{the-tree}{%
+\section{The tree}\label{the-tree}}
+
+\hypertarget{the-character}{%
+\section{The character}\label{the-character}}
+
+\hypertarget{applying-the-fitch-algorithm}{%
+\section{Applying the Fitch
+algorithm}\label{applying-the-fitch-algorithm}}
+
+\hypertarget{downpass}{%
+\section{Downpass}\label{downpass}}
+
+\hypertarget{plotting-the-first-downpass}{%
+\section{Plotting the first
+downpass}\label{plotting-the-first-downpass}}
+
+\hypertarget{uppass}{%
+\section{Uppass}\label{uppass}}
+
+\hypertarget{plotting-the-first-downpass-1}{%
+\section{Plotting the first
+downpass}\label{plotting-the-first-downpass-1}}
+
+\hypertarget{running-the-inapp-app}{%
+\section{Running the Inapp App}\label{running-the-inapp-app}}
+
+\hypertarget{resolving-ambiguous-resolutions}{%
+\section{Resolving ambiguous
+resolutions}\label{resolving-ambiguous-resolutions}}
+
+\hypertarget{problems}{%
+\chapter{Problems with the Fitch algorithm}\label{problems}}
+
+Placeholder
+
+\hypertarget{red-tails-blue-tails}{%
+\section{Red tails, blue tails}\label{red-tails-blue-tails}}
+
+\hypertarget{why-reductive-coding-doesnt-work}{%
+\section{Why Reductive coding doesn't
+work}\label{why-reductive-coding-doesnt-work}}
+
+\hypertarget{an-exception}{%
+\subsection{An exception}\label{an-exception}}
+
+\hypertarget{why-extra-state-coding-doesnt-work}{%
+\section{Why Extra State coding doesn't
+work}\label{why-extra-state-coding-doesnt-work}}
+
+\hypertarget{why-a-single-multi-state-character-doesnt-work}{%
+\section{Why a single multi-state character doesn't
+work}\label{why-a-single-multi-state-character-doesnt-work}}
+
+\hypertarget{sankoff-matrices}{%
+\section{Sankoff matrices}\label{sankoff-matrices}}
+
+\hypertarget{symmetric}{%
+\subsection{Symmetric}\label{symmetric}}
+
+\hypertarget{gain-and-loss-asymmetric}{%
+\subsection{Gain and loss asymmetric}\label{gain-and-loss-asymmetric}}
+
+\hypertarget{why-counting-steps-cannot-work}{%
+\section{Why counting steps cannot
+work}\label{why-counting-steps-cannot-work}}
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+\hypertarget{solution}{%
+\chapter{A solution}\label{solution}}
+
+Placeholder
+
+\hypertarget{minimising-homoplasy}{%
+\section{Minimising homoplasy}\label{minimising-homoplasy}}
+
+\hypertarget{what-does-it-take-to-denote-separate-regions}{%
+\subsection{What does it take to denote separate
+regions?}\label{what-does-it-take-to-denote-separate-regions}}
+
+\hypertarget{how-this-fixes-the-problem}{%
+\subsection{How this fixes the
+problem}\label{how-this-fixes-the-problem}}
+
+\hypertarget{summary}{%
+\subsection{Summary}\label{summary}}
+
+\hypertarget{algorithm}{%
+\section{Algorithmic implementation}\label{algorithm}}
+
+\hypertarget{plotting-the-tree}{%
+\section{Plotting the tree}\label{plotting-the-tree}}
+
+\hypertarget{loading-the-inapp-package-1}{%
+\section{Loading the Inapp package}\label{loading-the-inapp-package-1}}
+
+\hypertarget{the-tree-1}{%
+\section{The tree}\label{the-tree-1}}
+
+\hypertarget{the-character-1}{%
+\section{The character}\label{the-character-1}}
+
+\hypertarget{applying-the-na-algorithm}{%
+\section{Applying the NA algorithm}\label{applying-the-na-algorithm}}
+
+\hypertarget{passes-1-2}{%
+\subsection{Passes 1 \& 2}\label{passes-1-2}}
+
+\hypertarget{plotting-the-na-two-first-passes}{%
+\section{Plotting the NA two first
+passes}\label{plotting-the-na-two-first-passes}}
+
+\hypertarget{the-parent-character}{%
+\section{The parent character}\label{the-parent-character}}
+
+\hypertarget{applying-the-fitch-algorithm-1}{%
+\section{Applying the Fitch
+algorithm}\label{applying-the-fitch-algorithm-1}}
+
+\hypertarget{pass-3}{%
+\subsection{Pass 3}\label{pass-3}}
+
+\hypertarget{plotting-the-na-two-first-passes-1}{%
+\section{Plotting the NA two first
+passes}\label{plotting-the-na-two-first-passes-1}}
+
+\hypertarget{tracking-applicable-regions}{%
+\subsubsection{Tracking applicable
+regions}\label{tracking-applicable-regions}}
+
+\hypertarget{plotting-the-na-two-first-passes-2}{%
+\section{Plotting the NA two first
+passes}\label{plotting-the-na-two-first-passes-2}}
+
+\hypertarget{plotting-the-na-two-first-passes-3}{%
+\section{Plotting the NA two first
+passes}\label{plotting-the-na-two-first-passes-3}}
+
+\hypertarget{pass-4}{%
+\subsection{Pass 4}\label{pass-4}}
+
+\hypertarget{plotting-the-na-two-first-passes-4}{%
+\section{Plotting the NA two first
+passes}\label{plotting-the-na-two-first-passes-4}}
+
+\hypertarget{software}{%
+\section{Software implementation}\label{software}}
+
+\hypertarget{coding}{%
+\chapter{Coding data}\label{coding}}
+
+Placeholder
+
+\hypertarget{multiple-dependencies}{%
+\section{Multiple dependencies}\label{multiple-dependencies}}
+
+\hypertarget{invariant-characters-can-inform-parsimony}{%
+\section{Invariant characters can inform
+parsimony}\label{invariant-characters-can-inform-parsimony}}
+
+\hypertarget{variable-but-parsimony-uninformative-characters-can-inform-parsimony}{%
+\section{Variable but `parsimony uninformative' characters can inform
+parsimony}\label{variable-but-parsimony-uninformative-characters-can-inform-parsimony}}
+
+\hypertarget{this-may-not-be-desirable-in-neomorphic-characters}{%
+\section{This may not be desirable in neomorphic
+characters}\label{this-may-not-be-desirable-in-neomorphic-characters}}
+
+\hypertarget{three-scenarios}{%
+\subsection{Three scenarios}\label{three-scenarios}}
+
+\hypertarget{evaluation}{%
+\subsubsection{Evaluation}\label{evaluation}}
+
+\hypertarget{does-absence-contain-phylogenetic-information}{%
+\subsection{Does absence contain phylogenetic
+information?}\label{does-absence-contain-phylogenetic-information}}
+
+\hypertarget{neomorphics}{%
+\section{Coding ontologically dependent neomorphic
+characters}\label{neomorphics}}
+
+\hypertarget{neomorphic-and-transformational-characters}{%
+\subsection{Neomorphic and transformational
+characters}\label{neomorphic-and-transformational-characters}}
+
+\hypertarget{three-trees}{%
+\subsection{Three trees}\label{three-trees}}
+
+\hypertarget{one-tail-spotted-one-not}{%
+\subsubsection{One tail spotted, one
+not}\label{one-tail-spotted-one-not}}
+
+\hypertarget{two-spot-appearances}{%
+\subsubsection{Two spot appearances}\label{two-spot-appearances}}
+
+\hypertarget{two-non-spotted-appearances}{%
+\subsubsection{Two non-spotted
+appearances}\label{two-non-spotted-appearances}}
+
+\hypertarget{evaluation-1}{%
+\subsubsection{Evaluation}\label{evaluation-1}}
+
+\hypertarget{implications}{%
+\subsubsection{Implications}\label{implications}}
+
+\hypertarget{recommendation}{%
+\subsection{Recommendation}\label{recommendation}}
+
+\hypertarget{ambiguity}{%
+\chapter{Coding ambiguity}\label{ambiguity}}
+
+Placeholder
+
+\hypertarget{principal-character-ambiguous}{%
+\section{Principal character
+ambiguous}\label{principal-character-ambiguous}}
+
+\hypertarget{principal-character-known}{%
+\section{Principal character known}\label{principal-character-known}}
+
+\hypertarget{subordinate-character-has-finite-states}{%
+\subsection{Subordinate character has finite
+states}\label{subordinate-character-has-finite-states}}
+
+\hypertarget{subordinate-character-may-have-unobserved-states}{%
+\subsection{Subordinate character may have unobserved
+states}\label{subordinate-character-may-have-unobserved-states}}
+
+\hypertarget{recommendation-1}{%
+\section{Recommendation}\label{recommendation-1}}
+
+\hypertarget{examples}{%
+\chapter{Examples}\label{examples}}
+
+Placeholder
+
+\hypertarget{some-caterpillars}{%
+\section{Some caterpillars}\label{some-caterpillars}}
+
+\hypertarget{three-equally-suboptimal-alternatives}{%
+\section{Three equally suboptimal
+alternatives}\label{three-equally-suboptimal-alternatives}}
+
+\hypertarget{a-better-caterpillar-tree}{%
+\section{A better caterpillar tree}\label{a-better-caterpillar-tree}}
+
+\hypertarget{de-laets-caterpillars}{%
+\section{De Laet's caterpillars}\label{de-laets-caterpillars}}
+
+\bibliography{../References.bib,packages.bib}
+
+
+\end{document}

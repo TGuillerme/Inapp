@@ -16,8 +16,8 @@ labelRow <- function(text) text(-3, 9, text, font=2, pos=4, cex=1.2)
 goloPar <- function () par(mfrow=c(1, 2), mar=c(0.5, 0.2, 0.6, 0.2), oma=c(0, 0, 2, 0), cex=0.5)
 goloPlot <- function (tai, clr, nodeLabels=FALSE) {
     goloPar()
-    vignettePlot(comb, tai, legend.pos='topleft', FALSE, passes=2)
-    vignettePlot(comb, clr, legend.pos='topleft', passes=4)
+    vignettePlot(comb, tai, legend.pos='topleft', FALSE, passes=2, state.labels=ap)
+    vignettePlot(comb, clr, legend.pos='topleft', passes=4, state.labels = rb)
     if (nodeLabels) {
         text((1:15) - 1 , 1:15, LETTERS[1:15])
         text((1:14) + 2.5 , (1:14) - 0.5, 1:14)

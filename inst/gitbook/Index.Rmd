@@ -21,13 +21,13 @@ knitr::opts_chunk$set(echo = TRUE)
 This document provides a detailed explanation of the algorithm for handling
 inapplicable data proposed by Brazeau _et al._ [-@ThisStudy].
 
-We first discuss how the \@ref(fitch)[Fitch algorithm] works and introduce
+We first discuss how the [Fitch algorithm][fitch] works and introduce
 the \@ref(problems) that it encounters in the face of inapplicable character states.
 
-We then introduce our \@ref(solution), a new \@ref(algorithm), implemented in
-various \@ref(software)[software packages], and discuss its
-implications for the coding of \@ref(coding)[characters] and
-\@ref(ambiguity).
+We then introduce our [solution], a new [algorithm], implemented in
+various [software packages][software], and discuss its
+implications for the coding of [characters][coding] and
+[ambiguity].
 
-We close with some \@ref(example) trees that demonstrate how our algorithm behaves in
+We close with some [examples] trees that demonstrate how our algorithm behaves in
 more complicated cases.

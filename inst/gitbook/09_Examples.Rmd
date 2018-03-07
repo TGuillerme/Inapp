@@ -30,7 +30,7 @@ oap <- c('', ap)
 orb <- c('', rb)
 ```
 
-# Examples
+# Examples {#examples}
 
 This vignette describes how the algorithm approaches some example trees.
 We follow the example of a tail coded using two characters:

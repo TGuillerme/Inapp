@@ -102,21 +102,33 @@ edgelabels(frame='none', edge=c(4, 7, 9, 14), "X", col=col.tips.nodes[3])
 
 ```
 
-If state 0 stands for the absence of a character, and state 1 its presence, then in
-this particular case the <span style="font-variant:small-caps;">DelTran</span> reconstruction maximises homology: it explains the absence of the character in `b`, `c`, `f` and `g` as a product of four independent losses, meaning that the characters prsent in `a`, `d`, `e` and `h` are homologous with one another.  The <span style="font-variant:small-caps;">AccTran</span> 
-reconstruction, in contrast, identifies a loss of the character at nodes 11 and 14, with
- independent innovations of the character in tips `a` and `h`. 
-(The alternative DelTran approach, which could arguably be described as AccTran too,
-invokes four independent origins of the character and clearly does not maximise its homology.)
-
-Neither AccTran nor DelTran is guaranteed to maximise homology. 
-The homology-maximising reconstruction of a neomrophic character minimises the number of 
-times that it arises; this is equivalent to reconstructing nodes as present for
-the character whereever parsimony allows it.
-
-With transformational characters, however, origins of state `0` infer no less homoplasy than origins of state `1`, and no one (equally-parsimonious) reconstruction implies more homoplasy
+If the states `0` and `1` represent states of a transformational character -- 
+whether an organism's tail is red or blue, say -- then there is no reason to prefer
+any of the equally-parsimonious reconstructions, as none implies any more homology
 than any other.
 
+With neomorphic characters, however, state `0` stands for the absence of a character
+-- for example, a tail --
+and state `1` its presence.  On one view, a reconstruction that minimises the number
+of times that such a character evolves attributes more similarity to homology than 
+an equally parsimonious reconstruction in which said character is gained multiple times
+independently.
 
+In this particular case, the `r deltran` reconstruction maximises homology.  If the
+character denotes the presence or absence of a tail, then this reconstruction invokes the presence of a tail in the common ancestor of all taxa, meaning that the tails present in
+tips `a`, `d`, `e` and `h` are homologous with one another.
+The `r acctran` reconstruction, in contrast, identifies a loss of a tail
+at nodes 11 and 14, with a tail evolving independently in tips `a` and `h`. 
+Under this reconstruction, the tails of `a` and `h` are not homologous with each other,
+or with the tails of `d` and `e`.
+(The alternative `r deltran` approach, which could arguably be described as `r acctran` too,
+invokes four independent origins of the character and clearly does not maximise its homology.)
 
-- Here's how we'd resolve the ambiguous trees from [@Agnarsson2008].
+Neither `r acctran` nor `r deltran` is guaranteed to maximise homology [@Agnarsson2008]. 
+
+Where we wish to maximise homology, we modify the Fitch uppass such that any node
+whose final state reconstruction is ambiguous is instead reconstructed as present.
+
+We can show that this maximises homology is the problematic trees presented by 
+Agnarsson & Miller [-@Agnarsson2008]:
+

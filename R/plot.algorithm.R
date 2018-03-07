@@ -133,8 +133,8 @@ plot.states.matrix <- function(
 
     ## show.labels
     if(!is.null(show.labels)) {
-        if(!(all(show.labels %in% 1:2))) {
-            stop("show.labels argument must be 0 (none), 1 (tips), 2 (nodes), c(1, 2) (both)")
+        if(!(all(show.labels %in% c(FALSE, 0:2)))) {
+            stop("show.labels argument, ", show.labels, class(show.labels), " must be 0 (none), 1 (tips), 2 (nodes), c(1, 2) (both)")
         }
         ## Setting up the labels options
         show.tip.label <- 1 %in% show.labels

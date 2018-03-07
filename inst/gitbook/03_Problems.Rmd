@@ -324,7 +324,7 @@ legend('bottomleft', bty='n',
 
 The number of steps can be minimized by maximizing the number of independent gains of a parent character.
 
-```{r, echo=FALSE, fig.width=8, fig.height=16}
+```{r, echo=FALSE, fig.width=7.1, fig.height=2.8}
 comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
 comb5i <- ape::read.tree(text="(((((vv, c), d), yy), f), (g, (xx, (j, (k, (ww, (m, (n, zz))))))));")
 
@@ -335,7 +335,7 @@ sub3 <- '--------11122'
 sub4 <- '--------11122'
 sub5 <- '--------11112'
 
-setPar(c(6, 2))
+setPar(c(1, 2))
 Compare <- function (char.states, char.label, states.labels, top=FALSE) {
     vignettePlot(comb15, char.states, na=!top, 
                  counts=2, passes=4 - (2 * top),

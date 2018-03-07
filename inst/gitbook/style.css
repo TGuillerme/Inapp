@@ -1,6 +1,9 @@
 .smallcaps {font-variant: small-caps;}
 
-.caption {
+.figure {
     text-align: center;
+}
+
+.caption {
     font-size: smaller;
 }

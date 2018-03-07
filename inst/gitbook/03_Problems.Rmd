@@ -14,6 +14,7 @@ library('Inapp')
 library('ape')
 ap <- c("Absent", "Present")
 rb <- c("Red", "Blue")
+redBlue <- Inapp::brewer[[2]]
 orb <- c('', rb)
 
 yesCol <- "#7fbf7be0"
@@ -44,7 +45,7 @@ Consider the following tree, each node of which is supported by a number of
 characters.  Tail colour (illustrated; 0 = red, 1 = blue) has not yet been 
 considered, but has the potential to resolve the polytomy on the left hand side (bold).
 
-```{r, echo=FALSE, fig.height=5, fig.width=8}
+```{r, echo=FALSE, fig.height=5, fig.width=7.1}
 par(mar=rep(0.2, 4))
 treeUnresolved <- ape:::read.tree(text="(((((A, B, C, D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeUnresolved$edge.length <- rep(1, dim(treeUnresolved$edge)[1])
@@ -59,11 +60,39 @@ tiplabels(c(0, 1, 0, 1, rep('-', 6), 1, 1, 0, 0), bg=c(c0, c1, c0, c1, rep(cX, 6
      
 ```
 
-Tail colour should group the red-tailed tips together, and the blue-tailed tips together,
+In the bold region, tail colour should group the red-tailed tips together, and the blue-tailed tips together,
 but does not establish whether the ancestor of the left-hand tail-bearing clade 
 had a red or blue tail.
 
-## Why Reductive coding doesn't work
+```{r, echo=FALSE, fig.width=6, fig.height=4, fig.cap="Possible resolutions for bold region of tree"}
+setPar(c(2, 3))
+pair <- ape::read.tree(text="(((a, b), (c, d)));")
+walk <- ape::read.tree(text="((a, (b, (c, d))));")
+c0011<- c(0, 0, 1, 1)
+c0101 <- c(0, 1, 0, 1)
+pair$edge.length <- walk$edge.length <- rep(1, 8)
+
+plot(pair, direction='upwards', use.edge.length=TRUE, show.tip.label=FALSE,
+     edge.width=2, main = "Good")
+tiplabels(c0011, bg=redBlue[c0011 + 1])
+plot(walk, direction='upwards', use.edge.length=TRUE, show.tip.label=FALSE,
+     edge.width=2, main='Equally good')
+tiplabels(c0011, bg=redBlue[c0011 + 1])
+plot(walk, direction='upwards', use.edge.length=TRUE, show.tip.label=FALSE,
+     edge.width=2, main='Equally good')
+tiplabels(rev(c0011), bg=redBlue[2 - c0011])
+plot(pair, direction='upwards', use.edge.length=TRUE, show.tip.label=FALSE,
+     edge.width=2, main = "Bad")
+tiplabels(c0101, bg=redBlue[c0101 + 1])
+plot(walk, direction='upwards', use.edge.length=TRUE, show.tip.label=FALSE,
+     edge.width=2, main='Equally Bad')
+tiplabels(c0101, bg=redBlue[c0101 + 1])
+plot(walk, direction='upwards', use.edge.length=TRUE, show.tip.label=FALSE,
+     edge.width=2, main='Equally Bad')
+tiplabels(rev(c0101), bg=redBlue[2 - c0101])
+```
+
+## Reductive coding
 
 Under reductive coding, the tail and its colour are described in two character statements:
 
@@ -78,7 +107,7 @@ is not as desired.
 The Fitch algorithm will prefer trees in which the left-hand tail-bearing clade
 has a blue tail, simply because the right-hand tail-bearing clade ancestrally did.
 
-```{r, echo=FALSE, fig.height=9, fig.width=8}
+```{r, echo=FALSE, fig.height=9, fig.width=7.1}
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
@@ -95,7 +124,7 @@ This reconstruction is not logically consistent.
 
 If the parent character can parsimoniously be reconstructed as present at every internal node in a single unbroken region of a tree, and nowhere else, then reductive coding does work successfully.  Reductive coding may therefore be appropriate if only a subset of all possible trees are under consideration, and is always (i.e. for all trees) appropriate if a character exhibits fewer than three inapplicable tokens.
 
-## Why Extra State coding doesn't work
+## Inapplicable as an extra state
 
 An alternative is to code the inapplicable token as an extra state:
 
@@ -105,7 +134,7 @@ An alternative is to code the inapplicable token as an extra state:
 
 This seems to resolve the problem case that we encountered with reductive coding:
 
-```{r, echo=FALSE, fig.height=9, fig.width=8}
+```{r, echo=FALSE, fig.height=9, fig.width=7.1}
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
@@ -126,7 +155,7 @@ incur a cost of one step in the tail character and one step in each
 ontologically dependent character, even though it represents a single
 evolutionary event.
 
-## Why a single multi-state character doesn't work
+## A single multi-state character
 
 A different approach is to use a single character to denote both the 
 presence and the colour of the tail:
@@ -135,7 +164,7 @@ presence and the colour of the tail:
 
 This seems to resolve the problem case that we encountered with reductive coding:
 
-```{r, echo=FALSE, fig.height=9, fig.width=8}
+```{r, echo=FALSE, fig.height=9, fig.width=7.1}
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 treeA <- ape::read.tree(text="(((((((A, B), C), D), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
 treeB <- ape::read.tree(text="(((((A, (B, (C, D))), e), f), g), (h, (i, (j, (K, (L, (M, N)))))));")
@@ -147,7 +176,7 @@ However, we now have a situation where the gain/loss of a tail is afforded the s
 as a change in tail colour.  We ought to prefer a tree where the tail evolved once
 (and changed colour) to one where it evolved twice (being a different colour each time).
 
-```{r, echo=FALSE, fig.width=8, fig.height=4.5}
+```{r, echo=FALSE, fig.width=6, fig.height=5}
 par(mar=rep(0.2, 4), mfrow=c(2, 1), cex=0.8)
 simpleTree <- ape::read.tree(text="((((a, b), c), e), (f, g));")
 vignettePlot(simpleTree, "110022", na=FALSE)
@@ -200,9 +229,10 @@ costNames <- c("(0), absent",
                      "(3), present, red, hairy, straight",
                      dots,
                      "(8), present, blue, hairy, curly")
+sankoffCaption <- "Tail: Cost to go from left state to top state:"
 colnames(costs) <-  state
 rownames(costs) <- costNames
-knitr::kable(costs, caption="Tail: Cost to go from left state to top entry:")
+knitr::kable(costs, caption=sankoffCaption)
 
 ```
 
@@ -231,17 +261,18 @@ costs <- matrix(c(
   c(rep('.', 5), 0, rep('.', 2)),
   c(rep('.', 6), 0, rep('.', 1)),
   c(1, 3, 2, 2, dots, 0)) , byrow=TRUE, ncol=length(state))
-colnames(costs) <-  state
+colnames(costs) <-  c('(0)', '(1)', '(2)', '(3)', '.', '.', '.', '(8)')
 rownames(costs) <- costNames
-knitr::kable(costs, caption="Tail: Cost to go from left to top entry:")
+knitr::kable(costs, caption=sankoffCaption)
 
 ```
 
 Here, though, we encounter a new problem: reconstructions involving very many losses 
 are preferred to those involving a single gain.
 
-```{r, echo=FALSE, fig.height=7, fig.width=8}
-par(mfrow=c(2, 1), mar=rep(0.2, 4))
+```{r, echo=FALSE, fig.height=7.2, fig.width=6.6}
+setPar(c(2, 1))
+par(mar=c(0.2, 0.2, 4.2, 0.2))
 sankTree <- ape::read.tree(text="(((((a, b), c), dX), eX), (fX, (gX, (p, (q, r)))));")
 #vignettePlot(sankTree, '1110000888', na=FALSE, legend='none', blankNodes=TRUE)
 sankTree$edge.length <- rep(1, dim(sankTree$edge)[1])
@@ -278,11 +309,11 @@ imply multiple gains and losses of a principal character are not adequately pena
 To illustrate this point, consider counting only transitions between applicable states
 (i.e. steps), but not transitions from the applicable state to the inapplicable state:
 
-```{r, echo=FALSE, fig.width=6, fig.height=5}
+```{r, echo=FALSE, fig.width=6, fig.height=5, fig.cap="Tail colour optimization"}
 setPar(c(1,1))
 tree <- ape::read.tree(text="((((a, b), c), d), (e, (f, ((g, h), (i, j)))));")
 vignettePlot(tree, '11----1122', passes=1:2, legend.pos='none',
-             main="Tail colour", state.labels=orb, counts=2)
+            state.labels=orb, counts=2)
 
 nodelabels(node=c(13, 16), pch=15, col=noCol, cex=7)
 

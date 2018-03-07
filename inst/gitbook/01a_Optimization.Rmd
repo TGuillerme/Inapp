@@ -11,10 +11,12 @@ output:
 
 ```{r, echo = FALSE}
 library('Inapp'); library('ape')
+markChanges <- function (edges, labels='X') edgelabels(frame='none', edge=edges, labels, font=2)
 col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0")
-colours <- Inapp::brewer[[2]]
+redBlue <- colours <- c(Inapp::brewer[[2]], 'grey')
 deltran <- '<span style="font-variant:small-caps;">DelTran</span>'
 acctran <- '<span style="font-variant:small-caps;">AccTran</span>'
+choose1 <- "[01]=>1"
 
 ```
 
@@ -53,7 +55,7 @@ node_labels <- paste(paste("n", 9:15, "\n", sep = ""), node_labels, sep = "")
 ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,3,3,2,3)])
 
 tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
-edgelabels(frame='none', edge=c(2, 4, 10, 14), "X", col=col.tips.nodes[3])
+markChanges(c(2, 4, 10, 14))
 
 edge_col <- Inapp::brewer[[2]][2]
 
@@ -67,7 +69,7 @@ node_labels <- paste(paste("n", 9:15, "\n", sep = ""), node_labels, sep = "")
 ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,3,3,2,3)])
 
 tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
-edgelabels(frame='none', edge=c(5, 6, 11, 13), "X", col=col.tips.nodes[3])
+markChanges(c(5, 6, 11, 13))
 
 plot(1, type="n", axes=F, xlab="", ylab="")
 #edge_col <- Inapp::brewer[[2]][3-c(2,2,1,1,  1,1,2,
@@ -98,7 +100,7 @@ node_labels <- paste(paste("n", 9:15, "\n", sep = ""), node_labels, sep = "")
 ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,3,3,2,3)])
 
 tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
-edgelabels(frame='none', edge=c(4, 7, 9, 14), "X", col=col.tips.nodes[3])
+markChanges(c(4, 7, 9, 14))
 
 ```
 
@@ -129,6 +131,122 @@ Neither `r acctran` nor `r deltran` is guaranteed to maximise homology [@Agnarss
 Where we wish to maximise homology, we modify the Fitch uppass such that any node
 whose final state reconstruction is ambiguous is instead reconstructed as present.
 
-We can show that this maximises homology is the problematic trees presented by 
-Agnarsson & Miller [-@Agnarsson2008]:
+We can show that this maximises homology in the problematic trees presented by 
+Agnarsson & Miller [-@Agnarsson2008; "A&M"]:
 
+
+
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+par(mfrow=c(1, 2), mar=rep(0.75, 4))
+tree <- read.tree(text = "(H, (G, (F, (E, (D, (C, (B, A)))))));")
+tree$tip.label <- paste("_", tree$tip.label)
+char <- c(0,0,1,1,1,0,1,0)
+
+edge_col <- Inapp::brewer[[2]][c(1,1,1,1,rep(2, 10))]
+
+graphics::plot(tree, show.tip.label = TRUE, main='A&M fig. 2',
+               type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
+               edge.color = edge_col, edge.width = 2, direction='upwards',
+               x.lim = c(0.7200000, length(char) + 0.5),
+               y.lim = c(-0.5, length(char) + 0.5))
+
+
+down_labels <- paste("1:", c(0, 1, '01')[c(1, 3, 2, 2, 3, 1, 3)])
+up_labels <- paste("2:",   c(0,0,1,1,1,choose1,1)) # n14 informs n15
+#node_labels <- paste(paste("n", 9:15, sep = ""), down_labels, up_labels, sep = "\n")
+node_labels <- paste(down_labels, up_labels, sep = "\n")
+
+ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,2,3,2,3)])
+
+tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
+markChanges(c(4, 11, 14), c('0->1', '1->0', '1->0'))
+# Check that this is how our algorithm works with the following lines:
+#toInapp <- function (x) rev(c('-', '0')[x + 1])
+#vignettePlot(tree, toInapp(char), passes=1:2, legend.pos='none')
+#vignettePlot(tree, rev(char), na=FALSE, passes=1:2, legend.pos='none')
+
+tree <- read.tree(text = "(J, (I, (H, (G, (F, (E, (D, (C, (B, A)))))))));")
+tree$tip.label <- paste("_", tree$tip.label)
+char <- c(0,0,1,0,1,1,1,0,1,0)
+
+edge_col <- Inapp::brewer[[2]][c(1,1,1,1,rep(2, 14))]
+
+graphics::plot(tree, show.tip.label = TRUE, main='A&M fig. 3',
+               type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
+               edge.color = edge_col, edge.width = 2, direction='upwards',
+               x.lim = c(0.7200000, length(char) + 0.5),
+               y.lim = c(-0.5, length(char) + 0.5))
+
+down_labels <- paste("1:", c(0, 1, '01')[c(1,3,2,3,2,2,3,1,3)])
+up_labels <- paste("2:",   c(0,0, choose1, rep(1, length(char) - 6), choose1, 1))
+#node_labels <- paste(paste("n", 9:15, sep = ""), down_labels, up_labels, sep = "\n")
+node_labels <- paste(down_labels, up_labels, sep = "\n")
+
+ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,3,2,2,3,2,3)])
+
+tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
+#edgelabels()
+markChanges(c(4, 7, 15, 18), c('0->1', rep('1->0', 3)))
+
+
+# Check that this is how our algorithm works with the following lines:
+#vignettePlot(tree, toInapp(char), passes=1:2, legend.pos='none')
+#vignettePlot(tree, rev(char), na=FALSE, passes=1:2, legend.pos='none')
+
+
+```
+
+And this approach is robust to missing entries:
+
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+par(mfrow=c(1, 2), mar=rep(0.75, 4))
+tree <- read.tree(text = "(F, (E, (D, (C, (B, A)))));")
+tree$tip.label <- paste("_", tree$tip.label)
+char <- c(0,0, '?', 1, 1, 1)
+
+edge_col <- redBlue[c(1,1,1,1,rep(2, 10))]
+
+graphics::plot(tree, show.tip.label = TRUE, main='A&M fig. 4a',
+               type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
+               edge.color = edge_col, edge.width = 2, direction='upwards',
+               x.lim = c(0.7200000, length(char) + 0.5),
+               y.lim = c(-0.5, length(char) + 0.5))
+
+down_labels <- paste("1:", c(0, 1, '01')[c(1, 3, 2, 2, 2)])
+up_labels <- paste("2:",   c(0, 0, 1, 1, 1))
+node_labels <- paste(down_labels, up_labels, sep = "\n")
+
+ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,2,2)])
+
+tiplabels(char, cex = 1, bg = colours[c(1,1,3,2,2,2)], adj = 1)
+markChanges(4, '0->1')
+# Check that this is how our algorithm works with the following lines:
+vignettePlot(tree, c(2,2,2, '?', '-', '-'), passes=1:2, legend.pos='none')
+vignettePlot(tree, rev(char), na=FALSE, passes=1:2, legend.pos='none')
+
+char <- c(0,0,'?', 1, 0, 1)
+edge_col <- Inapp::brewer[[2]][c(1,1,1,1,rep(2, 14))]
+
+graphics::plot(tree, show.tip.label = TRUE, main='A&M fig. 3',
+               type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
+               edge.color = edge_col, edge.width = 2, direction='upwards',
+               x.lim = c(0.7200000, length(char) + 0.5),
+               y.lim = c(-0.5, length(char) + 0.5))
+
+down_labels <- paste("1:", c(0, 1, '01')[c(1,3,2,3,2,2,3,1,3)])
+up_labels <- paste("2:",   c(0,0, rep(1, length(char) - 3)))
+node_labels <- paste(down_labels, up_labels, sep = "\n")
+
+ape::nodelabels(node_labels, cex = 0.9, bg = col.tips.nodes[c(2,3,2,3,2,2,3,2,3)])
+
+tiplabels(char, cex = 1, bg = colours[c(1,1,3,2,1,2)], adj = 1)
+#edgelabels()
+markChanges(c(4, 7, 15, 18), c('0->1', rep('1->0', 3)))
+
+
+# Check that this is how our algorithm works with the following lines:
+#vignettePlot(tree, c(2, '-', 2, '?', '-', '-'), passes=1:2, legend.pos='none')
+#vignettePlot(tree, rev(char), na=FALSE, passes=0, legend.pos='none')
+
+
+```

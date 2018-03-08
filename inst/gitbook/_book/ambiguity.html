@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Inapplicable data</title>
+  <title>The Fitch Algorithm</title>
   <meta name="description" content="Inapplicable data in a parsimony setting">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Inapplicable data" />
+  <meta property="og:title" content="The Fitch Algorithm" />
   <meta property="og:type" content="book" />
   
   
@@ -17,12 +17,12 @@
   <meta name="github-repo" content="TGuillerme/Inapp" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Inapplicable data" />
+  <meta name="twitter:title" content="The Fitch Algorithm" />
   
   <meta name="twitter:description" content="Inapplicable data in a parsimony setting" />
   
 
-<meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
+<meta name="author" content="Thomas Guillerme; Martin R. Smith">
 
 
 <meta name="date" content="2018-03-08">
@@ -50,41 +50,57 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; }
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource div.sourceLine, .numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; color = initial; }
+}
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.bn { color: #40a070; } /* BaseN */
+code span.fl { color: #40a070; } /* Float */
+code span.ch { color: #4070a0; } /* Char */
+code span.st { color: #4070a0; } /* String */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.ot { color: #007020; } /* Other */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: #06287e; } /* Function */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.cn { color: #880000; } /* Constant */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: #19177c; } /* Variable */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.op { color: #666666; } /* Operator */
+code span.bu { } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.at { color: #7d9029; } /* Attribute */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -100,68 +116,68 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Inapplicable data</a></li>
+<li><a href="./index.html">Inapplicable data</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Inapplicable data in a parsimony setting</a></li>
-<li class="chapter" data-level="2" data-path="fitch.html"><a href="fitch.html"><i class="fa fa-check"></i><b>2</b> The Fitch algorithm</a><ul>
-<li class="chapter" data-level="2.1" data-path="fitch.html"><a href="fitch.html#downpass"><i class="fa fa-check"></i><b>2.1</b> Downpass</a></li>
-<li class="chapter" data-level="2.2" data-path="fitch.html"><a href="fitch.html#uppass"><i class="fa fa-check"></i><b>2.2</b> Uppass</a></li>
-<li class="chapter" data-level="2.3" data-path="fitch.html"><a href="fitch.html#resolving-ambiguous-resolutions"><i class="fa fa-check"></i><b>2.3</b> Resolving ambiguous resolutions</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="fitch.html"><a href="fitch.html#maximising-homology"><i class="fa fa-check"></i><b>2.3.1</b> Maximising homology</a></li>
+<li class="chapter" data-level="1" data-path="fitch.html"><a href="fitch.html"><i class="fa fa-check"></i><b>1</b> The Fitch algorithm</a><ul>
+<li class="chapter" data-level="1.1" data-path="fitch.html"><a href="fitch.html#downpass"><i class="fa fa-check"></i><b>1.1</b> Downpass</a></li>
+<li class="chapter" data-level="1.2" data-path="fitch.html"><a href="fitch.html#uppass"><i class="fa fa-check"></i><b>1.2</b> Uppass</a></li>
+<li class="chapter" data-level="1.3" data-path="fitch.html"><a href="fitch.html#resolving-ambiguous-resolutions"><i class="fa fa-check"></i><b>1.3</b> Resolving ambiguous resolutions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="fitch.html"><a href="fitch.html#maximising-homology"><i class="fa fa-check"></i><b>1.3.1</b> Maximising homology</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="problems.html"><a href="problems.html"><i class="fa fa-check"></i><b>3</b> Problems with the Fitch algorithm</a><ul>
-<li class="chapter" data-level="3.1" data-path="problems.html"><a href="problems.html#red-tails-blue-tails"><i class="fa fa-check"></i><b>3.1</b> Red tails, blue tails</a></li>
-<li class="chapter" data-level="3.2" data-path="problems.html"><a href="problems.html#reductive-coding"><i class="fa fa-check"></i><b>3.2</b> Reductive coding</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="problems.html"><a href="problems.html#an-exception"><i class="fa fa-check"></i><b>3.2.1</b> An exception</a></li>
+<li class="chapter" data-level="2" data-path="problems.html"><a href="problems.html"><i class="fa fa-check"></i><b>2</b> Problems with the Fitch algorithm</a><ul>
+<li class="chapter" data-level="2.1" data-path="problems.html"><a href="problems.html#red-tails-blue-tails"><i class="fa fa-check"></i><b>2.1</b> Red tails, blue tails</a></li>
+<li class="chapter" data-level="2.2" data-path="problems.html"><a href="problems.html#reductive-coding"><i class="fa fa-check"></i><b>2.2</b> Reductive coding</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="problems.html"><a href="problems.html#an-exception"><i class="fa fa-check"></i><b>2.2.1</b> An exception</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="problems.html"><a href="problems.html#inapplicable-as-an-extra-state"><i class="fa fa-check"></i><b>3.3</b> Inapplicable as an extra state</a></li>
-<li class="chapter" data-level="3.4" data-path="problems.html"><a href="problems.html#a-single-multi-state-character"><i class="fa fa-check"></i><b>3.4</b> A single multi-state character</a></li>
-<li class="chapter" data-level="3.5" data-path="problems.html"><a href="problems.html#sankoff-matrices"><i class="fa fa-check"></i><b>3.5</b> Sankoff matrices</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="problems.html"><a href="problems.html#symmetric"><i class="fa fa-check"></i><b>3.5.1</b> Symmetric</a></li>
-<li class="chapter" data-level="3.5.2" data-path="problems.html"><a href="problems.html#gain-and-loss-asymmetric"><i class="fa fa-check"></i><b>3.5.2</b> Gain and loss asymmetric</a></li>
+<li class="chapter" data-level="2.3" data-path="problems.html"><a href="problems.html#inapplicable-as-an-extra-state"><i class="fa fa-check"></i><b>2.3</b> Inapplicable as an extra state</a></li>
+<li class="chapter" data-level="2.4" data-path="problems.html"><a href="problems.html#a-single-multi-state-character"><i class="fa fa-check"></i><b>2.4</b> A single multi-state character</a></li>
+<li class="chapter" data-level="2.5" data-path="problems.html"><a href="problems.html#sankoff-matrices"><i class="fa fa-check"></i><b>2.5</b> Sankoff matrices</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="problems.html"><a href="problems.html#symmetric"><i class="fa fa-check"></i><b>2.5.1</b> Symmetric</a></li>
+<li class="chapter" data-level="2.5.2" data-path="problems.html"><a href="problems.html#gain-and-loss-asymmetric"><i class="fa fa-check"></i><b>2.5.2</b> Gain and loss asymmetric</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="problems.html"><a href="problems.html#why-counting-steps-cannot-work"><i class="fa fa-check"></i><b>3.6</b> Why counting steps cannot work</a></li>
-<li class="chapter" data-level="3.7" data-path="problems.html"><a href="problems.html#conclusion"><i class="fa fa-check"></i><b>3.7</b> Conclusion</a></li>
+<li class="chapter" data-level="2.6" data-path="problems.html"><a href="problems.html#why-counting-steps-cannot-work"><i class="fa fa-check"></i><b>2.6</b> Why counting steps cannot work</a></li>
+<li class="chapter" data-level="2.7" data-path="problems.html"><a href="problems.html#conclusion"><i class="fa fa-check"></i><b>2.7</b> Conclusion</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="solution.html"><a href="solution.html"><i class="fa fa-check"></i><b>4</b> A solution</a><ul>
-<li class="chapter" data-level="4.1" data-path="solution.html"><a href="solution.html#minimising-homoplasy"><i class="fa fa-check"></i><b>4.1</b> Minimising homoplasy</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="solution.html"><a href="solution.html#what-does-it-take-to-denote-separate-regions"><i class="fa fa-check"></i><b>4.1.1</b> What does it take to denote separate regions?</a></li>
-<li class="chapter" data-level="4.1.2" data-path="solution.html"><a href="solution.html#how-this-fixes-the-problem"><i class="fa fa-check"></i><b>4.1.2</b> How this fixes the problem</a></li>
-<li class="chapter" data-level="4.1.3" data-path="solution.html"><a href="solution.html#summary"><i class="fa fa-check"></i><b>4.1.3</b> Summary</a></li>
+<li class="chapter" data-level="3" data-path="solution.html"><a href="solution.html"><i class="fa fa-check"></i><b>3</b> A solution</a><ul>
+<li class="chapter" data-level="3.1" data-path="solution.html"><a href="solution.html#minimising-homoplasy"><i class="fa fa-check"></i><b>3.1</b> Minimising homoplasy</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="solution.html"><a href="solution.html#what-does-it-take-to-denote-separate-regions"><i class="fa fa-check"></i><b>3.1.1</b> What does it take to denote separate regions?</a></li>
+<li class="chapter" data-level="3.1.2" data-path="solution.html"><a href="solution.html#how-this-fixes-the-problem"><i class="fa fa-check"></i><b>3.1.2</b> How this fixes the problem</a></li>
+<li class="chapter" data-level="3.1.3" data-path="solution.html"><a href="solution.html#summary"><i class="fa fa-check"></i><b>3.1.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="solution.html"><a href="solution.html#algorithm"><i class="fa fa-check"></i><b>4.2</b> Algorithmic implementation</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="solution.html"><a href="solution.html#passes-1-2"><i class="fa fa-check"></i><b>4.2.1</b> Passes 1 &amp; 2</a></li>
-<li class="chapter" data-level="4.2.2" data-path="solution.html"><a href="solution.html#pass-3"><i class="fa fa-check"></i><b>4.2.2</b> Pass 3</a></li>
-<li class="chapter" data-level="4.2.3" data-path="solution.html"><a href="solution.html#pass-4"><i class="fa fa-check"></i><b>4.2.3</b> Pass 4</a></li>
+<li class="chapter" data-level="3.2" data-path="solution.html"><a href="solution.html#algorithm"><i class="fa fa-check"></i><b>3.2</b> Algorithmic implementation</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="solution.html"><a href="solution.html#passes-1-2"><i class="fa fa-check"></i><b>3.2.1</b> Passes 1 &amp; 2</a></li>
+<li class="chapter" data-level="3.2.2" data-path="solution.html"><a href="solution.html#pass-3"><i class="fa fa-check"></i><b>3.2.2</b> Pass 3</a></li>
+<li class="chapter" data-level="3.2.3" data-path="solution.html"><a href="solution.html#pass-4"><i class="fa fa-check"></i><b>3.2.3</b> Pass 4</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="solution.html"><a href="solution.html#software"><i class="fa fa-check"></i><b>4.3</b> Software implementation</a></li>
+<li class="chapter" data-level="3.3" data-path="solution.html"><a href="solution.html#software"><i class="fa fa-check"></i><b>3.3</b> Software implementation</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="coding.html"><a href="coding.html"><i class="fa fa-check"></i><b>5</b> Coding data</a><ul>
-<li class="chapter" data-level="5.1" data-path="coding.html"><a href="coding.html#multiple-dependencies"><i class="fa fa-check"></i><b>5.1</b> Multiple dependencies</a></li>
-<li class="chapter" data-level="5.2" data-path="coding.html"><a href="coding.html#invariant-characters-can-inform-parsimony"><i class="fa fa-check"></i><b>5.2</b> Invariant characters can inform parsimony</a></li>
-<li class="chapter" data-level="5.3" data-path="coding.html"><a href="coding.html#puip"><i class="fa fa-check"></i><b>5.3</b> Variable but ‘parsimony uninformative’ characters can inform parsimony</a></li>
-<li class="chapter" data-level="5.4" data-path="coding.html"><a href="coding.html#this-may-not-be-desirable-in-neomorphic-characters"><i class="fa fa-check"></i><b>5.4</b> This may not be desirable in neomorphic characters</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="coding.html"><a href="coding.html#three-scenarios"><i class="fa fa-check"></i><b>5.4.1</b> Three scenarios</a></li>
-<li class="chapter" data-level="5.4.2" data-path="coding.html"><a href="coding.html#does-absence-contain-phylogenetic-information"><i class="fa fa-check"></i><b>5.4.2</b> Does absence contain phylogenetic information?</a></li>
+<li class="chapter" data-level="4" data-path="coding.html"><a href="coding.html"><i class="fa fa-check"></i><b>4</b> Coding data</a><ul>
+<li class="chapter" data-level="4.1" data-path="coding.html"><a href="coding.html#multiple-dependencies"><i class="fa fa-check"></i><b>4.1</b> Multiple dependencies</a></li>
+<li class="chapter" data-level="4.2" data-path="coding.html"><a href="coding.html#invariant-characters-can-inform-parsimony"><i class="fa fa-check"></i><b>4.2</b> Invariant characters can inform parsimony</a></li>
+<li class="chapter" data-level="4.3" data-path="coding.html"><a href="coding.html#puip"><i class="fa fa-check"></i><b>4.3</b> Variable but ‘parsimony uninformative’ characters can inform parsimony</a></li>
+<li class="chapter" data-level="4.4" data-path="coding.html"><a href="coding.html#this-may-not-be-desirable-in-neomorphic-characters"><i class="fa fa-check"></i><b>4.4</b> This may not be desirable in neomorphic characters</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="coding.html"><a href="coding.html#three-scenarios"><i class="fa fa-check"></i><b>4.4.1</b> Three scenarios</a></li>
+<li class="chapter" data-level="4.4.2" data-path="coding.html"><a href="coding.html#does-absence-contain-phylogenetic-information"><i class="fa fa-check"></i><b>4.4.2</b> Does absence contain phylogenetic information?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="ambiguity.html"><a href="ambiguity.html"><i class="fa fa-check"></i><b>6</b> Coding ambiguity</a><ul>
-<li class="chapter" data-level="6.1" data-path="ambiguity.html"><a href="ambiguity.html#principal-character-ambiguous"><i class="fa fa-check"></i><b>6.1</b> Principal character ambiguous</a></li>
-<li class="chapter" data-level="6.2" data-path="ambiguity.html"><a href="ambiguity.html#principal-character-known"><i class="fa fa-check"></i><b>6.2</b> Principal character known</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="ambiguity.html"><a href="ambiguity.html#subordinate-character-has-finite-states"><i class="fa fa-check"></i><b>6.2.1</b> Subordinate character has finite states</a></li>
-<li class="chapter" data-level="6.2.2" data-path="ambiguity.html"><a href="ambiguity.html#subordinate-character-may-have-unobserved-states"><i class="fa fa-check"></i><b>6.2.2</b> Subordinate character may have unobserved states</a></li>
+<li class="chapter" data-level="5" data-path="ambiguity.html"><a href="ambiguity.html"><i class="fa fa-check"></i><b>5</b> Coding ambiguity</a><ul>
+<li class="chapter" data-level="5.1" data-path="ambiguity.html"><a href="ambiguity.html#principal-character-ambiguous"><i class="fa fa-check"></i><b>5.1</b> Principal character ambiguous</a></li>
+<li class="chapter" data-level="5.2" data-path="ambiguity.html"><a href="ambiguity.html#principal-character-known"><i class="fa fa-check"></i><b>5.2</b> Principal character known</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="ambiguity.html"><a href="ambiguity.html#subordinate-character-has-finite-states"><i class="fa fa-check"></i><b>5.2.1</b> Subordinate character has finite states</a></li>
+<li class="chapter" data-level="5.2.2" data-path="ambiguity.html"><a href="ambiguity.html#subordinate-character-may-have-unobserved-states"><i class="fa fa-check"></i><b>5.2.2</b> Subordinate character may have unobserved states</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="ambiguity.html"><a href="ambiguity.html#recommendation"><i class="fa fa-check"></i><b>6.3</b> Recommendation</a></li>
+<li class="chapter" data-level="5.3" data-path="ambiguity.html"><a href="ambiguity.html#recommendation"><i class="fa fa-check"></i><b>5.3</b> Recommendation</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7</b> Examples</a><ul>
-<li class="chapter" data-level="7.1" data-path="examples.html"><a href="examples.html#some-caterpillars"><i class="fa fa-check"></i><b>7.1</b> Some caterpillars</a></li>
-<li class="chapter" data-level="7.2" data-path="examples.html"><a href="examples.html#three-equally-suboptimal-alternatives"><i class="fa fa-check"></i><b>7.2</b> Three equally suboptimal alternatives</a></li>
-<li class="chapter" data-level="7.3" data-path="examples.html"><a href="examples.html#a-better-caterpillar-tree"><i class="fa fa-check"></i><b>7.3</b> A better caterpillar tree</a></li>
-<li class="chapter" data-level="7.4" data-path="examples.html"><a href="examples.html#de-laets-caterpillars"><i class="fa fa-check"></i><b>7.4</b> De Laet’s caterpillars</a></li>
+<li class="chapter" data-level="6" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>6</b> Examples</a><ul>
+<li class="chapter" data-level="6.1" data-path="examples.html"><a href="examples.html#some-caterpillars"><i class="fa fa-check"></i><b>6.1</b> Some caterpillars</a></li>
+<li class="chapter" data-level="6.2" data-path="examples.html"><a href="examples.html#three-equally-suboptimal-alternatives"><i class="fa fa-check"></i><b>6.2</b> Three equally suboptimal alternatives</a></li>
+<li class="chapter" data-level="6.3" data-path="examples.html"><a href="examples.html#a-better-caterpillar-tree"><i class="fa fa-check"></i><b>6.3</b> A better caterpillar tree</a></li>
+<li class="chapter" data-level="6.4" data-path="examples.html"><a href="examples.html#de-laets-caterpillars"><i class="fa fa-check"></i><b>6.4</b> De Laet’s caterpillars</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
+<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="chapter" data-level="8" data-path="inapplicable-data-in-a-parsimony-setting.html"><a href="inapplicable-data-in-a-parsimony-setting.html"><i class="fa fa-check"></i><b>8</b> Inapplicable data in a parsimony setting</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
 
@@ -174,7 +190,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Inapplicable data</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">The Fitch Algorithm</a>
           </h1>
         </div>
 
@@ -183,51 +199,79 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="ambiguity" class="section level1">
-<h1><span class="header-section-number">6</span> Coding ambiguity</h1>
-<p>Ambiguous data does not pose a problem for the algorithm, but the nature of the ambiguity must be considered when scoring a character.</p>
+<h1><span class="header-section-number">5</span> Coding ambiguity</h1>
+<p>Ambiguous data does not pose a problem for the algorithm, but the nature of the
+ambiguity must be considered when scoring a character.</p>
 <div id="principal-character-ambiguous" class="section level2">
-<h2><span class="header-section-number">6.1</span> Principal character ambiguous</h2>
-<p>If it’s not clear whether or not a taxon has a tail, then tail colour should be coded as <code>?</code>, denoting that any possible token (including the inapplicable token) may be the most parsimonious for the tail.</p>
-<p>In trees in which the tail can be reconstructed as present, the ambiguous tip will be reconstructed as having a tail of the appropriate colour:</p>
+<h2><span class="header-section-number">5.1</span> Principal character ambiguous</h2>
+<p>If it’s not clear whether or not a taxon has a tail, then tail colour should be
+coded as <code>?</code>, denoting that any possible token (including the inapplicable token)
+may be the most parsimonious for the tail.</p>
+<p>In trees in which the tail can be reconstructed as present, the ambiguous tip
+will be reconstructed as having a tail of the appropriate colour:</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-60-1.png" width="768" /></p>
-<p>In trees in which the tail cannot be reconstructed as present without inferring a homoplasious origin, the tail colour will be reconstructed as inapplicable:</p>
+<p>In trees in which the tail cannot be reconstructed as present without inferring
+a homoplasious origin, the tail colour will be reconstructed as inapplicable:</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-61-1.png" width="768" /></p>
 </div>
 <div id="principal-character-known" class="section level2">
-<h2><span class="header-section-number">6.2</span> Principal character known</h2>
-<p>If a taxon is known to have a tail, there are two scenarios for ontologically dependent transformational characters:</p>
+<h2><span class="header-section-number">5.2</span> Principal character known</h2>
+<p>If a taxon is known to have a tail, there are two scenarios for ontologically
+dependent transformational characters:</p>
 <div id="subordinate-character-has-finite-states" class="section level3">
-<h3><span class="header-section-number">6.2.1</span> Subordinate character has finite states</h3>
-<p>If the subordinate character must take one of a finite set of values, then the unobserved property of the tail is known to belong to these values and should be coded accordingly.</p>
+<h3><span class="header-section-number">5.2.1</span> Subordinate character has finite states</h3>
+<p>If the subordinate character must take one of a finite set of values, then the
+unobserved property of the tail is known to belong to these values and should be
+coded accordingly.</p>
 <p>For example:</p>
 <blockquote>
 <p>Tail: (0), absent; (1), present</p>
 <p>Tail margin: (0), smooth; (1), serrated.</p>
 </blockquote>
-<p>Assume that the tail margin must either be smooth or serrated, and there is no reason to assume that either state is ancestral (i.e. the character is strictly transformational). Tail margin should then be coded as <code>{01}</code>: i.e. the tail is known to have taken one of the two states 0 or 1.</p>
+<p>Assume that the tail margin must either be smooth or serrated, and there is no
+reason to assume that either state is ancestral (i.e. the character is strictly
+transformational). Tail margin should then be coded as <code>{01}</code>: i.e. the tail
+is known to have taken one of the two states 0 or 1.</p>
 </div>
 <div id="subordinate-character-may-have-unobserved-states" class="section level3">
-<h3><span class="header-section-number">6.2.2</span> Subordinate character may have unobserved states</h3>
-<p>A more complicated situation arises where a subordinate character may have unobserved states, as with</p>
+<h3><span class="header-section-number">5.2.2</span> Subordinate character may have unobserved states</h3>
+<p>A more complicated situation arises where a subordinate character may have
+unobserved states, as with</p>
 <blockquote>
 <p>Tail colour: (0), red; (1), blue.</p>
 </blockquote>
-<p>A taxon that is known to have a tail, but whose tail colour is uncertain, should generally be coded as <code>?</code>.</p>
-<p>Coding it as <code>{01}</code> would be appropriate if the tail was known to certainly be homologous with other tails in the dataset, in which case it would be most parsimonious to assume that the tail colour is the same colour as the ancestor of the tip, which was necessarily either red or blue.</p>
+<p>A taxon that is known to have a tail, but whose tail colour is uncertain, should
+generally be coded as <code>?</code>.</p>
+<p>Coding it as <code>{01}</code> would be appropriate if the tail was
+known to certainly be homologous with other tails in the dataset, in which case
+it would be most parsimonious to assume that the tail colour is the same colour
+as the ancestor of the tip, which was necessarily either red or blue.</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-62-1.png" width="384" /></p>
-<p>But if, as will more often be the case, homology of the tails is not known <em>a priori</em>, then it is possible that this taxon has a tail that is not homologous with any other tail whose colour has been observed.</p>
-<p>In this case, coding the tail colour as <code>{01}</code> denotes that the tail is the same colour as a tail that has already been observed. This means that the independent origin of the tail also represents an independent origin of this particular colour – and hence an instance of homoplasy.</p>
+<p>But if, as will more often be the case, homology of the tails is not known
+<em>a priori</em>, then it is possible that this taxon has a tail
+that is not homologous with any other tail whose colour has been observed.</p>
+<p>In this case, coding the tail colour as <code>{01}</code> denotes that the tail is the same
+colour as a tail that has already been observed. This means that the independent
+origin of the tail also represents an independent
+origin of this particular colour – and hence an instance of homoplasy.</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-63-1.png" width="384" /></p>
-<p>Coding the tail colour as <code>?</code> allows the possibility that the independently-evolved tail has a different colour to the tails already observed – green, perhaps. Reconstructing the tail colour as a colour that has not already been observed avoids an instance of homoplasy, and is therefore more parsimonious.</p>
-<p>In the case that the unknown tail evolved independently and was green, the original character formulation – which only provides tokens for red and blue tails – cannot be applied and is thus inapplicable. Our algorithm will thus reconstruct tail colour as being inapplicable in such a taxon.</p>
+<p>Coding the tail colour as <code>?</code> allows the possibility that the independently-evolved
+tail has a different colour to the tails already observed – green, perhaps.
+Reconstructing the tail colour as a colour that has not already been observed
+avoids an instance of homoplasy, and is therefore more parsimonious.</p>
+<p>In the case that the unknown tail evolved independently and was green, the original
+character formulation – which only provides tokens for red and blue tails –
+cannot be applied and is thus inapplicable. Our algorithm will thus reconstruct
+tail colour as being inapplicable in such a taxon.</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-64-1.png" width="384" /></p>
 </div>
 </div>
 <div id="recommendation" class="section level2">
-<h2><span class="header-section-number">6.3</span> Recommendation</h2>
-<p>We therefore recommend the following coding schema for ambiguous tips where the tail is known to be present, ambiguous, or known to be absent:</p>
+<h2><span class="header-section-number">5.3</span> Recommendation</h2>
+<p>We therefore recommend the following coding schema for ambiguous tips where the
+tail is known to be present, ambiguous, or known to be absent:</p>
 <table>
-<caption><span id="tab:unnamed-chunk-65">Table 6.1: </span>Recommended coding for unknown contingent characters</caption>
+<caption><span id="tab:unnamed-chunk-65">Table 5.1: </span>Recommended coding for unknown contingent characters</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -278,17 +322,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
 "facebook": true,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -312,9 +357,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

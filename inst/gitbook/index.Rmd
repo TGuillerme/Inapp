@@ -16,7 +16,7 @@ description: "Inapplicable data in a parsimony setting"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Inapplicable data in a parsimony setting
+# Inapplicable data in a parsimony setting {-}
 
 This document provides a detailed explanation of the algorithm for handling
 inapplicable data proposed by Brazeau _et al._ [-@ThisStudy].

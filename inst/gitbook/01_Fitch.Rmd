@@ -8,6 +8,7 @@ output:
   html_document: default
   pdf_document: default
 ---
+
 ```{r, echo = FALSE, message=FALSE}
 library('Inapp'); library('ape')
 setMargins <- function () par(mar=rep(0.2, 4))
@@ -150,7 +151,7 @@ matrix <- apply.reconstruction(tree, character, method = "Fitch", passes = 2)
 
 ## Downpass
 
-The downpass is quite simple and follows the following rules for the two possible cases in the traversal:
+The downpass is quite simple and follows these rules for the two possible cases in the traversal:
 
  1. If the two considered tips or nodes have _at least one state in common_, set the node to be these states in *common*.
  2. Else, if there is _nothing in common_ between the to tips or nodes, set the node to be the *union* of the two states.
@@ -188,7 +189,7 @@ This node is thus solved to be the states in common between both descendants (`0
 ```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="Node reconstructions after uppass"}
 ## Plotting the first uppass
 plot.states.matrix(matrix, passes = 1:2, counts = 2,
-                   show.labels = 1:2, col.states=TRUE)
+                   show.labels = c(1, 2), col.states=TRUE)
 ```
 
 More complex cases can be studied in the Inapp App (running in your favourite web browser) by switching the **`Reconstruction method`** to **`Normal Fitch`**.

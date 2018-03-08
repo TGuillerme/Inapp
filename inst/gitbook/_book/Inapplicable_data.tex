@@ -129,7 +129,7 @@ Smith
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-03-07}
+  \date{2018-03-08}
 
 \usepackage{booktabs}
 
@@ -142,11 +142,8 @@ Smith
 \newtheorem{proposition}{Proposition}[chapter]
 \theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercise}[chapter]
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
-\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -154,30 +151,27 @@ Smith
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{inapplicable-data-in-a-parsimony-setting}{%
-\chapter*{Inapplicable data in a parsimony
-setting}\label{inapplicable-data-in-a-parsimony-setting}}
-\addcontentsline{toc}{chapter}{Inapplicable data in a parsimony setting}
+\chapter{Inapplicable data in a parsimony
+setting}\label{inapplicable-data-in-a-parsimony-setting}
 
 This document provides a detailed explanation of the algorithm for
 handling inapplicable data proposed by Brazeau \emph{et al.}
 \citeyearpar{ThisStudy}.
 
-We first discuss how the \href{../fitch.html}{Fitch algorithm} works and
-introduce the \url{problems} that it encounters in the face of
-inapplicable character states.
+We first discuss how the \protect\hyperlink{fitch}{Fitch algorithm}
+works and introduce the \protect\hyperlink{problems}{problems} that it
+encounters in the face of inapplicable character states.
 
-We then introduce our \href{solution.html}{solution}, a new
-\href{algorithm.html}{algorithm}, implemented in various
-\href{software.html}{software packages}, and discuss its implications
-for the coding of \href{coding.html}{characters} and
-\href{ambiguity.html}{ambiguity}.
+We then introduce our \protect\hyperlink{solution}{solution}, a new
+\protect\hyperlink{algorithm}{algorithm}, implemented in various
+\protect\hyperlink{software}{software packages}, and discuss its
+implications for the coding of \protect\hyperlink{coding}{characters}
+and \protect\hyperlink{ambiguity}{ambiguity}.
 
-We close with some \href{examples.html}{example} trees that demonstrate
-how our algorithm behaves in more complicated cases.
+We close with some \protect\hyperlink{examples}{example} trees that
+demonstrate how our algorithm behaves in more complicated cases.
 
-\hypertarget{fitch}{%
-\chapter{The Fitch algorithm}\label{fitch}}
+\hypertarget{fitch}{\chapter{The Fitch algorithm}\label{fitch}}
 
 This algorithm was proposed by Fitch \citeyearpar{Fitch1971} and is
 implemented in many phylogenetic softwares based on maximum parsimony
@@ -194,8 +188,8 @@ following tree:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-3-1.pdf}
-\caption{\label{fig:unnamed-chunk-3}A five-tip tree}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-2-1.pdf}
+\caption{\label{fig:unnamed-chunk-2}A five-tip tree}
 \end{figure}
 
 A downpass traversal will first evaluate the first cherry (or pair of
@@ -205,8 +199,8 @@ in \texttt{n2}, proceeding until all the nodes/tips are visited.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-4-1.pdf}
-\caption{\label{fig:unnamed-chunk-4}Downpass traversal}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-3-1.pdf}
+\caption{\label{fig:unnamed-chunk-3}Downpass traversal}
 \end{figure}
 
 An uppass traversal works identically but in the other direction, going
@@ -214,8 +208,8 @@ from the nodes towards the tips.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-5-1.pdf}
-\caption{\label{fig:unnamed-chunk-5}Uppass traversal}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-4-1.pdf}
+\caption{\label{fig:unnamed-chunk-4}Uppass traversal}
 \end{figure}
 
 In both traversals, the sequence in which nodes are visited (i.e.~which
@@ -227,7 +221,7 @@ Now let's consider a more complex tree
 \texttt{((((a,\ b),\ c),\ d),\ (e,\ (f,\ (g,\ h))));} with a binary
 character distributed ((((1, 0), 0), 1), (1, (0, (0, 1)))):
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-6-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-5-1.pdf}
 
 We can use the \texttt{Inapp} package to apply the Fitch algorithm for
 this character on this tree.
@@ -248,10 +242,9 @@ this character on this tree.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{downpass}{%
-\section{Downpass}\label{downpass}}
+\section{Downpass}\label{downpass}
 
-The downpass is quite simple and follows the following rules for the two
+The downpass is quite simple and follows these rules for the two
 possible cases in the traversal:
 
 \begin{enumerate}
@@ -291,12 +284,11 @@ score), are in green.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-8-1.pdf}
-\caption{\label{fig:unnamed-chunk-8}Node reconstructions after downpass}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-7-1.pdf}
+\caption{\label{fig:unnamed-chunk-7}Node reconstructions after downpass}
 \end{figure}
 
-\hypertarget{uppass}{%
-\section{Uppass}\label{uppass}}
+\section{Uppass}\label{uppass}
 
 The score of the tree is known after the downpass, but the states of
 some nodes might not yet be properly resolved. For example, parsimonious
@@ -341,14 +333,14 @@ well).
 \begin{Highlighting}[]
 \NormalTok{## Plotting the first uppass}
 \KeywordTok{plot.states.matrix}\NormalTok{(matrix, }\DataTypeTok{passes =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DataTypeTok{counts =} \DecValTok{2}\NormalTok{,}
-                   \DataTypeTok{show.labels =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DataTypeTok{col.states=}\OtherTok{TRUE}\NormalTok{)}
+                   \DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{col.states=}\OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-9-1.pdf}
-\caption{\label{fig:unnamed-chunk-9}Node reconstructions after uppass}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-8-1.pdf}
+\caption{\label{fig:unnamed-chunk-8}Node reconstructions after uppass}
 \end{figure}
 
 More complex cases can be studied in the Inapp App (running in your
@@ -363,9 +355,8 @@ favourite web browser) by switching the
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{resolving-ambiguous-resolutions}{%
 \section{Resolving ambiguous
-resolutions}\label{resolving-ambiguous-resolutions}}
+resolutions}\label{resolving-ambiguous-resolutions}
 
 In certain cases, it is necessary to go further and discriminate between
 the equally-parsimonious reconstructions provided by the Fitch
@@ -385,8 +376,8 @@ for the latter:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-11-1.pdf}
-\caption{\label{fig:unnamed-chunk-11}Node reconstructions after AccTran or
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-10-1.pdf}
+\caption{\label{fig:unnamed-chunk-10}Node reconstructions after AccTran or
 DelTran` optimizations}
 \end{figure}
 
@@ -402,8 +393,7 @@ times that such a character evolves attributes more similarity to
 homology than an equally parsimonious reconstruction in which said
 character is gained multiple times independently.
 
-\hypertarget{maximising-homology}{%
-\subsection{Maximising homology}\label{maximising-homology}}
+\subsection{Maximising homology}\label{maximising-homology}
 
 Neither \textsc{AccTran} nor \textsc{DelTran} is guaranteed to maximise
 homology \citep{Agnarsson2008}. In this particular case, the
@@ -425,12 +415,12 @@ Where we wish to maximise homology, we modify the Fitch uppass such that
 any node whose final state reconstruction would be ambiguous is instead
 reconstructed as present when that node is encountered. This approach
 maximises homology in the problematic trees presented by Agnarsson \&
-Miller {[}\citeyearpar{Agnarsson2008}; ``A\&M'' below{]}:
+Miller {[}\citet{Agnarsson2008}; ``A\&M'' below{]}:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-12-1.pdf}
-\caption{\label{fig:unnamed-chunk-12}Homology-maximising character
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-11-1.pdf}
+\caption{\label{fig:unnamed-chunk-11}Homology-maximising character
 optimisations}
 \end{figure}
 
@@ -438,13 +428,13 @@ This approach is also robust to missing entries:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-13-1.pdf}
-\caption{\label{fig:unnamed-chunk-13}Homology maximisation with missing
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-12-1.pdf}
+\caption{\label{fig:unnamed-chunk-12}Homology maximisation with missing
 entries}
 \end{figure}
 
-\hypertarget{problems}{%
-\chapter{Problems with the Fitch algorithm}\label{problems}}
+\hypertarget{problems}{\chapter{Problems with the Fitch
+algorithm}\label{problems}}
 
 The Fitch algorithm counts changes in a character. It assumes that the
 character is applicable throughout the tree. This assumption does not
@@ -458,8 +448,7 @@ lead to error if:
   occur in distinct regions of the tree \citep{Maddison1993}.
 \end{itemize}
 
-\hypertarget{red-tails-blue-tails}{%
-\section{Red tails, blue tails}\label{red-tails-blue-tails}}
+\section{Red tails, blue tails}\label{red-tails-blue-tails}
 
 Maddison \citeyearpar{Maddison1993} provided the following example to
 demonstrate the problem encountered by the Fitch algorithm when
@@ -470,7 +459,7 @@ of characters. Tail colour (illustrated; 0 = red, 1 = blue) has not yet
 been considered, but has the potential to resolve the polytomy on the
 left hand side (bold).
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-15-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-14-1.pdf}
 
 In the bold region, tail colour should group the red-tailed tips
 together, and the blue-tailed tips together, but does not establish
@@ -479,13 +468,12 @@ blue tail.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-16-1.pdf}
-\caption{\label{fig:unnamed-chunk-16}Possible resolutions for bold region of
-tree}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-15-1.pdf}
+\caption{\label{fig:unnamed-chunk-15}Possible resolutions for bold region of
+tree (Good ones imply only one change)}
 \end{figure}
 
-\hypertarget{reductive-coding}{%
-\section{Reductive coding}\label{reductive-coding}}
+\section{Reductive coding}\label{reductive-coding}
 
 Under reductive coding, the tail and its colour are described in two
 character statements:
@@ -504,7 +492,7 @@ The Fitch algorithm will prefer trees in which the left-hand
 tail-bearing clade has a blue tail, simply because the right-hand
 tail-bearing clade ancestrally did.
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-17-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 Notice the additional step reconstructed at the root node: the Fitch
 algorithm reconstructs a change in tail colour in a taxon that doesn't
@@ -512,8 +500,7 @@ have a tail!
 
 This reconstruction is not logically consistent.
 
-\hypertarget{an-exception}{%
-\subsection{An exception}\label{an-exception}}
+\subsection{An exception}\label{an-exception}
 
 If the parent character can parsimoniously be reconstructed as present
 at every internal node in a single unbroken region of a tree, and
@@ -523,9 +510,8 @@ trees are under consideration, and is always (i.e.~for all trees)
 appropriate if a character exhibits fewer than three inapplicable
 tokens.
 
-\hypertarget{inapplicable-as-an-extra-state}{%
 \section{Inapplicable as an extra
-state}\label{inapplicable-as-an-extra-state}}
+state}\label{inapplicable-as-an-extra-state}
 
 An alternative is to code the inapplicable token as an extra state:
 
@@ -538,7 +524,7 @@ Tail, colour: (0), red; (1), blue; (2), inapplicable.
 This seems to resolve the problem case that we encountered with
 reductive coding:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-18-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-17-1.pdf}
 
 Both trees now receive the same score for the `tail colour' character,
 which contributes four steps. Two of these steps, however, correspond to
@@ -555,9 +541,8 @@ example, would incur a cost of one step in the tail character and one
 step in each ontologically dependent character, even though it
 represents a single evolutionary event.
 
-\hypertarget{a-single-multi-state-character}{%
 \section{A single multi-state
-character}\label{a-single-multi-state-character}}
+character}\label{a-single-multi-state-character}
 
 A different approach is to use a single character to denote both the
 presence and the colour of the tail:
@@ -569,17 +554,16 @@ Tail: (0), absent; (1), present, red; (2), present, blue.
 This seems to resolve the problem case that we encountered with
 reductive coding:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-19-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-18-1.pdf}
 
 However, we now have a situation where the gain/loss of a tail is
 afforded the same weight as a change in tail colour. We ought to prefer
 a tree where the tail evolved once (and changed colour) to one where it
 evolved twice (being a different colour each time).
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-20-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-19-1.pdf}
 
-\hypertarget{sankoff-matrices}{%
-\section{Sankoff matrices}\label{sankoff-matrices}}
+\section{Sankoff matrices}\label{sankoff-matrices}
 
 It would be possible to establish a Sankoff matrix such that a change
 between absent and red or absent and blue cost more than a change
@@ -587,8 +571,7 @@ between red and blue, but this effectively up-weights the tail
 character, and it's not clear that this is desirable -- or how much this
 extra weight should be \citep{Maddison1993}.
 
-\hypertarget{symmetric}{%
-\subsection{Symmetric}\label{symmetric}}
+\subsection{Symmetric}\label{symmetric}
 
 Consider a character with three ontologically dependent characters:
 
@@ -607,7 +590,7 @@ matrix:
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-21}Tail: Cost to go from left state to top state:}
+\caption{\label{tab:unnamed-chunk-20}Tail: Cost to go from left state to top state:}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l}
 \hline
@@ -641,8 +624,7 @@ issue remains that losing a tail, which arguably corresponds to a single
 evolutionary event, is allocated a large cost (here, 4) that grows in
 line with the number of ontogenetically dependant characters.
 
-\hypertarget{gain-and-loss-asymmetric}{%
-\subsection{Gain and loss asymmetric}\label{gain-and-loss-asymmetric}}
+\subsection{Gain and loss asymmetric}\label{gain-and-loss-asymmetric}
 
 At the cost of symmetry, one could argue that the loss of a tail
 requires a single transformation, whereas the gain requires the addition
@@ -652,7 +634,7 @@ triangular inequality:
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-22}Tail: Cost to go from left state to top state:}
+\caption{\label{tab:unnamed-chunk-21}Tail: Cost to go from left state to top state:}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l}
 \hline
@@ -680,11 +662,10 @@ triangular inequality:
 Here, though, we encounter a new problem: reconstructions involving very
 many losses are preferred to those involving a single gain.
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-23-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-22-1.pdf}
 
-\hypertarget{why-counting-steps-cannot-work}{%
 \section{Why counting steps cannot
-work}\label{why-counting-steps-cannot-work}}
+work}\label{why-counting-steps-cannot-work}
 
 The failure of the Sankoff approach illustrates a more general problem:
 if the only thing that is counted is the number of steps, then trees
@@ -697,32 +678,29 @@ state to the inapplicable state:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-24-1.pdf}
-\caption{\label{fig:unnamed-chunk-24}Tail colour optimization}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-23-1.pdf}
+\caption{\label{fig:unnamed-chunk-23}Tail colour optimization}
 \end{figure}
 
 The number of steps can be minimized by maximizing the number of
 independent gains of a parent character.
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-25-1.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-25-2.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-25-3.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-25-4.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-25-5.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-25-6.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-24-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-24-2.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-24-3.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-24-4.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-24-5.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-24-6.pdf}
 
-\hypertarget{conclusion}{%
-\section{Conclusion}\label{conclusion}}
+\section{Conclusion}\label{conclusion}
 
 No coding mechanism can generate consistent and logically meaningful
 tree scores when employing the Fitch algorithm. A new algorithm is
 needed: one that counts homoplasies instead of steps.
 
-\hypertarget{solution}{%
-\chapter{A solution}\label{solution}}
+\hypertarget{solution}{\chapter{A solution}\label{solution}}
 
-\hypertarget{minimising-homoplasy}{%
-\section{Minimising homoplasy}\label{minimising-homoplasy}}
+\section{Minimising homoplasy}\label{minimising-homoplasy}
 
 A solution can be found if the goal of parsimony is recast not in terms
 of minimising the number of steps, but instead of minimising the amount
@@ -752,7 +730,7 @@ The tree below gives an example of a tree in which a character in
 applicable in two regions (one more than the minimum possible, one) and
 one state change.
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-27-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-26-1.pdf}
 
 This score denotes two evolutionary observations that cannot be
 attributed to inheritance from a common ancestor: the blueness of tail
@@ -761,9 +739,8 @@ and the redness of tail in the second region of the tree (as the common
 ancestor of all tail-bearing taxa did not itself have a tail, so tail
 colour could no be inherited).
 
-\hypertarget{what-does-it-take-to-denote-separate-regions}{%
 \subsection{What does it take to denote separate
-regions?}\label{what-does-it-take-to-denote-separate-regions}}
+regions?}\label{what-does-it-take-to-denote-separate-regions}
 
 It takes three inapplicable nodes (including tips) to force two regions
 of the tree to be separrated by an inapplicable region.
@@ -784,19 +761,19 @@ character as inapplicable).
 In the tree shown above, the Fitch algorithm identifies two regions
 where the applicability character is unambiguously `applicable':
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-27-1.pdf}
 
 If one of the inapplicable tips had instead been ambiguous, then the
 same distribution would arise:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-29-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-28-1.pdf}
 
 But if two were ambiguous, then the root of the tree could be
 parsimoniously reconstructed as `applicable' -- with the two
 inapplicable tips becoming inapplicable in the branches that led to
 them:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-30-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 This reconstruction maximises the inferred homology between tails, and
 so increases the opportunity to attribute shared colours in the tail to
@@ -809,16 +786,15 @@ separated from one another only by taxa whose applicability is
 ambiguous, in order for two applicable regions to be reconstructed as
 separate.
 
-\hypertarget{how-this-fixes-the-problem}{%
 \subsection{How this fixes the
-problem}\label{how-this-fixes-the-problem}}
+problem}\label{how-this-fixes-the-problem}
 
 This overcomes the problem where steps could be avoided by inferring
 multiple innovations of a character:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-31-1.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-31-2.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-31-3.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-30-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-30-2.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-30-3.pdf}
 
 On the other hand, if taxa either have a blue, scaly, straight tail or a
 red, smooth, curly tail, then the fact that the tails have so little in
@@ -829,13 +805,12 @@ tail evolved once, and change all its attributes:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-32-1.pdf}
-\caption{\label{fig:unnamed-chunk-32}Reconstructions of tail presence and
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-31-1.pdf}
+\caption{\label{fig:unnamed-chunk-31}Reconstructions of tail presence and
 five contingent characters (only two shown)}
 \end{figure}
 
-\hypertarget{summary}{%
-\subsection{Summary}\label{summary}}
+\subsection{Summary}\label{summary}
 
 This is the desired behaviour. But how do we count this in practice?
 
@@ -852,8 +827,8 @@ this downpass, by counting nodes that are ancestral to an inapplicable
 region of the tree that itself leads to an as-yet-uncounted applicable
 region.
 
-\hypertarget{algorithm}{%
-\section{Algorithmic implementation}\label{algorithm}}
+\hypertarget{algorithm}{\section{Algorithmic
+implementation}\label{algorithm}}
 
 Consider a tree with 12 taxa and the following multi-state characters
 with inapplicable data \texttt{23-\/-1??-\/-032}; say the character is
@@ -862,7 +837,7 @@ our example have no tail (hence the inapplicable data \texttt{-}) and
 for two taxa, the data is missing (\texttt{?}- we don't known the colour
 of the tail or even whether the taxa have a tail or not).
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-32-1.pdf}
 
 We can use the \texttt{Inapp} package to apply our four-pass
 inapplicable algorithm to this character on this tree.
@@ -885,12 +860,12 @@ inapplicable algorithm to this character on this tree.
 
 Here is what is happening:
 
-\hypertarget{passes-1-2}{%
-\subsection{Passes 1 \& 2}\label{passes-1-2}}
+\subsection{Passes 1 \& 2}\label{passes-1-2}
 
 The first two passes are a standard Fitch algorithm applied the the
-parent character of the studied character (see {[}Fitch.Rmd{]}) with a
-special rule for the inapplicable state (\texttt{-}).
+parent character of the studied character (see
+\protect\hyperlink{fitch}{Fitch algorithm}) with a special rule for the
+inapplicable state (\texttt{-}).
 
 For the first pass (first downpass):
 
@@ -927,14 +902,14 @@ For the second pass (first uppass):
 \begin{Highlighting}[]
 \NormalTok{## Plotting the NA two first passes}
 \KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\DataTypeTok{counts =} \DecValTok{0}\NormalTok{, }
-     \DataTypeTok{legend.pos =} \StringTok{'none'}\NormalTok{, }\DataTypeTok{show.labels=}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{)}
+     \DataTypeTok{legend.pos =} \StringTok{'none'}\NormalTok{, }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-35-1.pdf}
-\caption{\label{fig:unnamed-chunk-35}Inapplicable reconstruction after two
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-34-1.pdf}
+\caption{\label{fig:unnamed-chunk-34}Inapplicable reconstruction after two
 passes}
 \end{figure}
 
@@ -949,14 +924,14 @@ The parent character can be considered as a binary character ``presence
 
 \NormalTok{## Applying the Fitch algorithm}
 \NormalTok{matrix_parent <-}\StringTok{ }\KeywordTok{apply.reconstruction}\NormalTok{(tree, parent_character, }\DataTypeTok{method =} \StringTok{"Fitch"}\NormalTok{)}
-\KeywordTok{plot}\NormalTok{(matrix_parent, }\DataTypeTok{passes =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DataTypeTok{legend.pos=}\StringTok{'none'}\NormalTok{, }\DataTypeTok{show.labels=}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(matrix_parent, }\DataTypeTok{passes =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DataTypeTok{legend.pos=}\StringTok{'none'}\NormalTok{, }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-36-1.pdf}
-\caption{\label{fig:unnamed-chunk-36}Fitch reconstruction of the parent
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-35-1.pdf}
+\caption{\label{fig:unnamed-chunk-35}Fitch reconstruction of the parent
 character}
 \end{figure}
 
@@ -969,14 +944,13 @@ the ``parent character'', the gain or losses of a tail are counted but
 not the changes in states for the subtending character (the tree score
 is 3 in Fitch, 5 in our case).
 
-\hypertarget{pass-3}{%
-\subsection{Pass 3}\label{pass-3}}
+\subsection{Pass 3}\label{pass-3}
 
 The third pass further resolves ambiguities at nodal states. If the node
 is applicable, the standard Fitch downpass comparisons between the
-descendants are applied (see {[}Fitch.Rmd{]}) but with the rules
-relative to the inapplicable state described for the first downpass
-above.
+descendants are applied (see \protect\hyperlink{fitch}{Fitch algorithm})
+but with the rules relative to the inapplicable state described for the
+first downpass above.
 
 During this pass, we can also count the tree score. This score is
 composed of both:
@@ -1003,14 +977,14 @@ the applicable states only}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DataTypeTok{counts =} \DecValTok{2}\NormalTok{, }\DataTypeTok{show.labels =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DataTypeTok{counts =} \DecValTok{2}\NormalTok{, }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-37-1.pdf}
-\caption{\label{fig:unnamed-chunk-37}State changes}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-36-1.pdf}
+\caption{\label{fig:unnamed-chunk-36}State changes}
 \end{figure}
 
 For example, for node \texttt{n23}, there is no state in common between
@@ -1025,9 +999,8 @@ being present (\texttt{-}) but rather a change in the parent character
 between presence and absence of the tail (present is \texttt{023} and
 absent is \texttt{-}).
 
-\hypertarget{tracking-applicable-regions}{%
 \subsubsection{Tracking applicable
-regions}\label{tracking-applicable-regions}}
+regions}\label{tracking-applicable-regions}
 
 To know whether any node leads to a region of applicable states we can
 use a ``tracker'' for each node that tells us at any moment whether
@@ -1069,14 +1042,14 @@ inapplicable and applicable region are counted as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DataTypeTok{counts =} \DecValTok{1}\NormalTok{, }\DataTypeTok{show.labels =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DataTypeTok{counts =} \DecValTok{1}\NormalTok{, }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-38-1.pdf}
-\caption{\label{fig:unnamed-chunk-38}Counting applicable regions}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-37-1.pdf}
+\caption{\label{fig:unnamed-chunk-37}Counting applicable regions}
 \end{figure}
 
 For example, node \texttt{n15} is solved as inapplicable but both his
@@ -1106,23 +1079,54 @@ tree score of 5 for this character on this tree.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-39-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-38-1.pdf}
 
 Using the first three passes is enough to get the tree score (while
 taking into account inapplicable data!) but does not solve all ancestral
 reconstructions. A fourth pass (second uppass) might be necessary to
 finalise the node states reconstructions.
 
-\hypertarget{pass-4}{%
-\subsection{Pass 4}\label{pass-4}}
+\subsection{Pass 4}\label{pass-4}
 
 In the example above, the node \texttt{n23} is still not correctly
 solved after the third pass. It could conceivably be state 0 (with
 transformations to states \texttt{2} and \texttt{3} occurring on the
-branches leading to tips 11 and 12 resepctively). As such, its final
+branches leading to tips 11 and 12 respectively). As such, its final
 state reconstruction should be \texttt{023}. To reach the correct final
-reconstructions, we apply a final pass of the algorithm which we haven't
-described in this document.
+reconstructions, we apply a final pass of the algorithm. This algorithm,
+similarly to the second pass of the Fitch algorithm is used to solve
+ambiguities in the ancestral nodes reconstructions (although the score
+of the tree is already known). It follows these rules and only applies
+to nodes and ancestors that have at least one applicable token for
+themselves and their ancestor(nodes that are inapplicable are already
+solved):
+
+\begin{itemize}
+\tightlist
+\item
+  If there is a state \emph{in common} between the node and its ancestor
+  or between the ancestor and the states \emph{in common} of its
+  descendants, resolve the node to be this state in common.
+\item
+  If there is nothing in common between the node and its ancestor or
+  between its descendants, solve the node as either:
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    being the ancestors state if the any of the descendants' have at
+    least one inapplicable state but no state in common with the
+    ancestor.
+  \item
+    being the union of the ancestor's and the descendants' states if the
+    any of the descendants have at least one inapplicable and have at
+    least one state in common with the ancestor.
+  \item
+    being the union of the ancestor's and the current node states the
+    descendants have no inapplicable state.
+  \end{enumerate}
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1130,17 +1134,17 @@ described in this document.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-40-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-39-1.pdf}
 
-\hypertarget{software}{%
-\section{Software implementation}\label{software}}
+\hypertarget{software}{\section{Software
+implementation}\label{software}}
 
 This algorithm has been implemented in two \texttt{R} packages.
 \href{https://github.com/TGuillerme/Inapp}{Inapp} provides an
 interactive visualization of how the score of a user-specified tree is
 calculated for any character under different approaches to inapplicable
-data.\\
-This package was used to generate many of the figures in this document.
+data. This package was used to generate many of the figures in this
+document.
 
 \href{https://github.com/ms609/TreeSearch}{TreeSearch} allows for
 parsimony tree searches with the inapplicable algorithm
@@ -1155,14 +1159,12 @@ library, which will eventually implemented in the standalone
 \href{http://www.morphyproject.org/}{Morphy} program for rapid
 phylogenetic searches.
 
-\hypertarget{coding}{%
-\chapter{Coding data}\label{coding}}
+\hypertarget{coding}{\chapter{Coding data}\label{coding}}
 
 The availability of our algorithm has some implications for how
 investigators might choose to code characters.
 
-\hypertarget{multiple-dependencies}{%
-\section{Multiple dependencies}\label{multiple-dependencies}}
+\section{Multiple dependencies}\label{multiple-dependencies}
 
 It's not a problem to have characters dependent on characters that are
 dependent on characters. Consider the following characters, whose
@@ -1210,7 +1212,7 @@ A sample character matrix might look like this:
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-42}Heirarchichal characters}
+\caption{\label{tab:unnamed-chunk-41}Heirarchichal characters}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l|l|l|l|l|l}
 \hline
@@ -1229,10 +1231,10 @@ Claw morphology: (1), round; (2), polygonal. & - & - & - & - & - & - & - & - & -
 
 Which would plot on a tree thus:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-43-1.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-43-2.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-43-3.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-43-4.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-42-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-42-2.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-42-3.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-42-4.pdf}
 
 There's no limit to the depth of recursion: one could add a further
 character
@@ -1249,16 +1251,15 @@ character
 
 that would be inapplicable in all taxa that lacked serrated claws.
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-44-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-43-1.pdf}
 
 To readers familiar with standard Fitch parsimony, it will be surprising
 to notice that the two trees receive a different score for this
 invariant character. When our algorithm is employed, invariant
 characters that contain inapplicable tokens can inform parsimony.
 
-\hypertarget{invariant-characters-can-inform-parsimony}{%
 \section{Invariant characters can inform
-parsimony}\label{invariant-characters-can-inform-parsimony}}
+parsimony}\label{invariant-characters-can-inform-parsimony}
 
 Consider a situation in which every tail in the observed taxa is blue --
 but the same complex molecular machinery is responsible for this blue
@@ -1272,7 +1273,7 @@ to common ancestry will be more parsimonious than those that do not.
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-45}An invariant character, tail colour, contributes as much to tree score as a variable one, body colour.}
+\caption{\label{tab:unnamed-chunk-44}An invariant character, tail colour, contributes as much to tree score as a variable one, body colour.}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l}
 \hline
@@ -1290,9 +1291,9 @@ Body colour: (1), black; (2), white & 1 & 1 & 2 & 2 & 2 & 2 & 1 & 1\\
 Let's compare two trees. The first groups taxa based on the presence of
 tails; the other groups taxa based on body colour.
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-46-1.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-46-2.pdf}
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-46-3.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-45-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-45-2.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-45-3.pdf}
 
 Where the tail has a single origin (one step), blue colouration also
 evolves once (zero steps), but body colour must change twice (two steps;
@@ -1309,16 +1310,16 @@ be carefully evaluated: if there is a case that an invariant
 between those taxa that share it, then it should be included; if not,
 then it should be excluded.
 
-\hypertarget{puip}{%
-\section{Variable but `parsimony uninformative' characters can inform
-parsimony}\label{puip}}
+\hypertarget{puip}{\section{\texorpdfstring{Variable but `parsimony
+uninformative' characters can inform
+parsimony}{Variable but parsimony uninformative characters can inform parsimony}}\label{puip}}
 
 The same effect of course follows if a character has an additional state
 that is only observed in one taxon.
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-47}Tail colour is variable but 'parsimony uninformative'}
+\caption{\label{tab:unnamed-chunk-46}Tail colour is variable but 'parsimony uninformative'}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l|l}
 \hline
@@ -1339,13 +1340,12 @@ colour character been omitted.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-48-1.pdf}
-\caption{\label{fig:unnamed-chunk-48}Tail colour}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-47-1.pdf}
+\caption{\label{fig:unnamed-chunk-47}Tail colour}
 \end{figure}
 
-\hypertarget{this-may-not-be-desirable-in-neomorphic-characters}{%
 \section{This may not be desirable in neomorphic
-characters}\label{this-may-not-be-desirable-in-neomorphic-characters}}
+characters}\label{this-may-not-be-desirable-in-neomorphic-characters}
 
 The more general rule is that any tree that reconstructs the same state
 arising twice, independently, in an ontologically dependent character
@@ -1366,7 +1366,7 @@ added to a tail once a tail is already present.
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-49}A neomorphic character, poison barbs, present in some but not all tails}
+\caption{\label{tab:unnamed-chunk-48}A neomorphic character, poison barbs, present in some but not all tails}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l|l}
 \hline
@@ -1379,8 +1379,7 @@ Tail, poison barbs: (-), inapplicable; (0), absent; (1), present & - & - & - & 0
 \end{tabular}
 \end{table}
 
-\hypertarget{three-scenarios}{%
-\subsection{Three scenarios}\label{three-scenarios}}
+\subsection{Three scenarios}\label{three-scenarios}
 
 The presence of poison barbs obviously contains grouping information --
 a reconstruction that attribute the presence of posion barbs to a single
@@ -1390,8 +1389,8 @@ that character (even if it is less parsimonious with respect to another
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-51-1.pdf}
-\caption{\label{fig:unnamed-chunk-51}One tail with barbs, one without}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-50-1.pdf}
+\caption{\label{fig:unnamed-chunk-50}One tail with barbs, one without}
 \end{figure}
 
 Consider a reconstruction in which a tail evolved twice, and barbs
@@ -1401,8 +1400,8 @@ parsimonious.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-52-1.pdf}
-\caption{\label{fig:unnamed-chunk-52}Two barb appearances}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-51-1.pdf}
+\caption{\label{fig:unnamed-chunk-51}Two barb appearances}
 \end{figure}
 
 But what about a situation in which a tail evolved twice, and lacked
@@ -1422,8 +1421,8 @@ non-origination should not, therefore, be penalized in this situation.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-53-1.pdf}
-\caption{\label{fig:unnamed-chunk-53}Two barbless appearances: second
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-52-1.pdf}
+\caption{\label{fig:unnamed-chunk-52}Two barbless appearances: second
 absence is penalized}
 \end{figure}
 
@@ -1439,8 +1438,8 @@ the inapplicable:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-54-1.pdf}
-\caption{\label{fig:unnamed-chunk-54}Two barbless appearances}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-53-1.pdf}
+\caption{\label{fig:unnamed-chunk-53}Two barbless appearances}
 \end{figure}
 
 The point here is that the inapplicable token ought only to be used in
@@ -1456,7 +1455,7 @@ transformational characters using the positive integers:
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-55}Recommended coding: state 0 reserved for absence; states 1 and 2 used for (transformational) tail colour character.}
+\caption{\label{tab:unnamed-chunk-54}Recommended coding: state 0 reserved for absence; states 1 and 2 used for (transformational) tail colour character.}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l|l}
 \hline
@@ -1477,8 +1476,8 @@ single evolutionary event) causes the loss of all contingent characters
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-56-1.pdf}
-\caption{\label{fig:unnamed-chunk-56}Presence of a tail and presence of
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-55-1.pdf}
+\caption{\label{fig:unnamed-chunk-55}Presence of a tail and presence of
 poison barbs will have the same distribution if all tails have poison
 barbs. Loss and subsequent re-gain of a tail implies the same loss and
 re-gain of barbs.}
@@ -1500,9 +1499,8 @@ assume character independence; it is perhaps more fruitful to focus
 effort on developing models of evolution that take proper account of
 character non-independence.
 
-\hypertarget{does-absence-contain-phylogenetic-information}{%
 \subsection{Does absence contain phylogenetic
-information?}\label{does-absence-contain-phylogenetic-information}}
+information?}\label{does-absence-contain-phylogenetic-information}
 
 In some cases, the absence of a feature (e.g.~serrations) may represent
 a transformational character and should thus be coded as such. But this
@@ -1515,7 +1513,7 @@ inform parsimony}.
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-57}Absences treated as transformational characters}
+\caption{\label{tab:unnamed-chunk-56}Absences treated as transformational characters}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l}
 \hline
@@ -1536,7 +1534,7 @@ Note that each of the unobserved (i.e.~always-absent) characters
 provides evidence against independent origins of the tail, in favour of
 independent losses:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-58-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-57-1.pdf}
 
 Under the simple matrix presented above, the left-hand tree receives a
 score of five (two independent gains of the tail, plus the three
@@ -1556,7 +1554,7 @@ when tail absent).
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-59}Recommended coding: Absences treated as neomorphic characters were appropriate}
+\caption{\label{tab:unnamed-chunk-58}Recommended coding: Absences treated as neomorphic characters were appropriate}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l}
 \hline
@@ -1573,15 +1571,13 @@ Tail, ability to generate electricity: (-), inapplicable; (0), absent; (1), pres
 \end{tabular}
 \end{table}
 
-\hypertarget{ambiguity}{%
-\chapter{Coding ambiguity}\label{ambiguity}}
+\hypertarget{ambiguity}{\chapter{Coding ambiguity}\label{ambiguity}}
 
 Ambiguous data does not pose a problem for the algorithm, but the nature
 of the ambiguity must be considered when scoring a character.
 
-\hypertarget{principal-character-ambiguous}{%
 \section{Principal character
-ambiguous}\label{principal-character-ambiguous}}
+ambiguous}\label{principal-character-ambiguous}
 
 If it's not clear whether or not a taxon has a tail, then tail colour
 should be coded as \texttt{?}, denoting that any possible token
@@ -1592,23 +1588,21 @@ In trees in which the tail can be reconstructed as present, the
 ambiguous tip will be reconstructed as having a tail of the appropriate
 colour:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-61-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-60-1.pdf}
 
 In trees in which the tail cannot be reconstructed as present without
 inferring a homoplasious origin, the tail colour will be reconstructed
 as inapplicable:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-62-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-61-1.pdf}
 
-\hypertarget{principal-character-known}{%
-\section{Principal character known}\label{principal-character-known}}
+\section{Principal character known}\label{principal-character-known}
 
 If a taxon is known to have a tail, there are two scenarios for
 ontologically dependent transformational characters:
 
-\hypertarget{subordinate-character-has-finite-states}{%
 \subsection{Subordinate character has finite
-states}\label{subordinate-character-has-finite-states}}
+states}\label{subordinate-character-has-finite-states}
 
 If the subordinate character must take one of a finite set of values,
 then the unobserved property of the tail is known to belong to these
@@ -1628,9 +1622,8 @@ character is strictly transformational). Tail margin should then be
 coded as \texttt{\{01\}}: i.e.~the tail is known to have taken one of
 the two states 0 or 1.
 
-\hypertarget{subordinate-character-may-have-unobserved-states}{%
 \subsection{Subordinate character may have unobserved
-states}\label{subordinate-character-may-have-unobserved-states}}
+states}\label{subordinate-character-may-have-unobserved-states}
 
 A more complicated situation arises where a subordinate character may
 have unobserved states, as with
@@ -1648,7 +1641,7 @@ case it would be most parsimonious to assume that the tail colour is the
 same colour as the ancestor of the tip, which was necessarily either red
 or blue.
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-63-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-62-1.pdf}
 
 But if, as will more often be the case, homology of the tails is not
 known \emph{a priori}, then it is possible that this taxon has a tail
@@ -1661,7 +1654,7 @@ means that the independent origin of the tail also represents an
 independent origin of this particular colour -- and hence an instance of
 homoplasy.
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-64-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-63-1.pdf}
 
 Coding the tail colour as \texttt{?} allows the possibility that the
 independently-evolved tail has a different colour to the tails already
@@ -1675,17 +1668,16 @@ and blue tails -- cannot be applied and is thus inapplicable. Our
 algorithm will thus reconstruct tail colour as being inapplicable in
 such a taxon.
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-65-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-64-1.pdf}
 
-\hypertarget{recommendation}{%
-\section{Recommendation}\label{recommendation}}
+\section{Recommendation}\label{recommendation}
 
 We therefore recommend the following coding schema for ambiguous tips
 where the tail is known to be present, ambiguous, or known to be absent:
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-66}Recommended coding for unknown contingent characters}
+\caption{\label{tab:unnamed-chunk-65}Recommended coding for unknown contingent characters}
 \centering
 \begin{tabular}[t]{l|l|l|l}
 \hline
@@ -1704,8 +1696,7 @@ Tail colour: (0), red; (1), blue. & ? & ? & -\\
 observed (smooth or serrated), whereas tail colour represents a
 character that may take an unobserved state (e.g.~green).
 
-\hypertarget{examples}{%
-\chapter{Examples}\label{examples}}
+\hypertarget{examples}{\chapter{Examples}\label{examples}}
 
 This vignette describes how the algorithm approaches some example trees.
 We follow the example of a tail coded using two characters:
@@ -1716,8 +1707,7 @@ Tail: (0), absent; (1), present;
 Tail colour: (0), red; (1), blue.
 \end{quote}
 
-\hypertarget{some-caterpillars}{%
-\section{Some caterpillars}\label{some-caterpillars}}
+\section{Some caterpillars}\label{some-caterpillars}
 
 First we'll address some pectinate ``caterpillar'' trees, in which eight
 taxa have tails (and eight do not), four of which are red, four of which
@@ -1729,8 +1719,8 @@ is one example:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-69-1.pdf}
-\caption{\label{fig:unnamed-chunk-69}An optimal tree: Total score 2}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-68-1.pdf}
+\caption{\label{fig:unnamed-chunk-68}An optimal tree: Total score 2}
 \end{figure}
 
 If we insist that the tail evolves twice, then the best score is
@@ -1741,8 +1731,8 @@ innovation in a tail-less taxon of a tail that has a different colour:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-70-1.pdf}
-\caption{\label{fig:unnamed-chunk-70}Two tail innovations: Total score 2
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-69-1.pdf}
+\caption{\label{fig:unnamed-chunk-69}Two tail innovations: Total score 2
 (best possible)}
 \end{figure}
 
@@ -1754,13 +1744,12 @@ instance of homoplasy.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-71-1.pdf}
-\caption{\label{fig:unnamed-chunk-71}Tree A: Total score 4}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-70-1.pdf}
+\caption{\label{fig:unnamed-chunk-70}Tree A: Total score 4}
 \end{figure}
 
-\hypertarget{three-equally-suboptimal-alternatives}{%
 \section{Three equally suboptimal
-alternatives}\label{three-equally-suboptimal-alternatives}}
+alternatives}\label{three-equally-suboptimal-alternatives}
 
 The following three trees differ in the number of innovations of the
 tail that are implied, and the number of changes in tail colour. All are
@@ -1775,8 +1764,8 @@ to blue somewhere between edges 7 and 9 (three homoplasies).
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-72-1.pdf}
-\caption{\label{fig:unnamed-chunk-72}Tree B: Total score 9}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-71-1.pdf}
+\caption{\label{fig:unnamed-chunk-71}Tree B: Total score 9}
 \end{figure}
 
 In the second, our algorithm reconstructs the tail as ancestrally
@@ -1788,8 +1777,8 @@ somewhere between edges 7 and 9 (two homoplasies).
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-73-1.pdf}
-\caption{\label{fig:unnamed-chunk-73}Tree C: Total score 9}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-72-1.pdf}
+\caption{\label{fig:unnamed-chunk-72}Tree C: Total score 9}
 \end{figure}
 
 The third configuration reconstructs the tail as ancestrally present,
@@ -1799,12 +1788,11 @@ colour from red to blue on edge 8.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-74-1.pdf}
-\caption{\label{fig:unnamed-chunk-74}Tree D: Total score 9}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-73-1.pdf}
+\caption{\label{fig:unnamed-chunk-73}Tree D: Total score 9}
 \end{figure}
 
-\hypertarget{a-better-caterpillar-tree}{%
-\section{A better caterpillar tree}\label{a-better-caterpillar-tree}}
+\section{A better caterpillar tree}\label{a-better-caterpillar-tree}
 
 The tree below obtains a better score than any of the previous three: it
 implies a loss of the tail at edge 2, a gain at edge 6, a loss at edge
@@ -1814,12 +1802,11 @@ for a combined score of 7.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-75-1.pdf}
-\caption{\label{fig:unnamed-chunk-75}Tree E: Total score 7}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-74-1.pdf}
+\caption{\label{fig:unnamed-chunk-74}Tree E: Total score 7}
 \end{figure}
 
-\hypertarget{de-laets-caterpillars}{%
-\section{De Laet's caterpillars}\label{de-laets-caterpillars}}
+\section{De Laet's caterpillars}\label{de-laets-caterpillars}
 
 De Laet \citeyearpar{DeLaet2017} identifies a corner case in which our
 algorithm \citep{ThisStudy} will not reconstruct every
@@ -1828,7 +1815,7 @@ version of his example:
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-77}Coding}
+\caption{\label{tab:unnamed-chunk-76}Coding}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l}
 \hline
@@ -1845,7 +1832,7 @@ When optimising tail colour, we reconstruct the tail as present at all
 internal nodes, with independent losses of the tail in each of the three
 tailless taxa (i.e.~edges 1, 9, 11).
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-78-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-77-1.pdf}
 
 The Fitch algorithm identifies other reconstructions as equally
 parsimonious: for example, a tail may have been lost on edge 6 and
@@ -1864,16 +1851,14 @@ In this particular case, there is an equally-parsimonious character
 reconstruction that our algorithm excludes, which invokes two gains (and
 one loss) of the tail:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-79-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-78-1.pdf}
 
 This has no effect on tree scoring, but may be relevant if complete
 internal nodal reconstructions are desired.
 
-\hypertarget{references}{%
-\chapter*{References}\label{references}}
-\addcontentsline{toc}{chapter}{References}
+\chapter{References}\label{references}
 
-\bibliography{../References.bib,packages.bib}
+\bibliography{packages.bib,../References.bib}
 
 
 \end{document}

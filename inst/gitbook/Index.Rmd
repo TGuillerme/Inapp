@@ -12,20 +12,20 @@ description: "Inapplicable data in a parsimony setting"
 ---
 
 
-```{r, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Inapplicable data in a parsimony setting {-}
+# Inapplicable data in a parsimony setting
 
 This document provides a detailed explanation of the algorithm for handling
 inapplicable data proposed by Brazeau _et al._ [-@ThisStudy].
 
-We first discuss how the [Fitch algorithm](../fitch.html) works and introduce
-the [problems](problems) that it encounters in the face of inapplicable character states.
+We first discuss how the [Fitch algorithm](#fitch) works and introduce
+the [problems](#problems) that it encounters in the face of inapplicable character states.
 
-We then introduce our [solution](solution.html), a new [algorithm](algorithm.html), implemented in
-various [software packages](software.html), and discuss its
-implications for the coding of [characters](coding.html) and [ambiguity](ambiguity.html).
+We then introduce our [solution](#solution), a new [algorithm](#algorithm), implemented in
+various [software packages](#software), and discuss its
+implications for the coding of [characters](#coding) and [ambiguity](#ambiguity).
 
-We close with some [example](examples.html) trees that demonstrate how our algorithm behaves in more complicated cases.
+We close with some [example](#examples) trees that demonstrate how our algorithm behaves in more complicated cases.

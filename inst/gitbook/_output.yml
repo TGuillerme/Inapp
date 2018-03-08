@@ -8,4 +8,10 @@ bookdown::epub_book: default
 bookdown::gitbook:
   css: style.css
   config:
-    edit: https://github.com/TGuillerme/Inapp/edit/master/inst/gitbook/%s
+    toc:
+      before: |
+        <li><a href="./">Inapplicable data</a></li>
+      after: |
+        <li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
+    edit: https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/%s
+

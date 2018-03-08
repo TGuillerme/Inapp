@@ -1,0 +1,353 @@
+---
+title: "The solution: Count homologies"
+author: "Martin R. Smith; Thomas Guillerme; Martin D. Brazeau"
+date: "`r Sys.Date()`"
+bibliography: [../References.bib, packages.bib]
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# A solution {#solution}
+
+```{r, echo=FALSE, message=FALSE}
+library('ape')
+library('Inapp')
+ap<-c('Absent', 'Present')
+rb <- c('Red', 'Blue')
+orb <- c('', rb)
+ia <- c('Inapplicable', 'Applicable')
+
+setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 1, 0.2), oma=c(0,0,0,0), cex=0.7)
+
+leafy <- '#7fbf7be0'
+lilac <- '#af8dc3e0'
+
+tree12 <- ape::read.tree(text='((((((a, b), c), d), E), F), (G, (H, (i, (j, (k, l))))));')
+```
+
+## Minimising homoplasy
+
+A solution can be found if the goal of parsimony is recast not in terms of minimising the number of steps, but instead of minimising the amount of homoplasy in a tree.
+
+De Laet has made this point before [@DeLaet2005; -@DeLaet2015], suggesting that a tree's score should be calculated as 
+
+> Total score = Number of steps + Number of (additional) regions.
+
+Practically, because the number of unavoidable regions is a function of a dataset and not of a tree, one could alternatively count 
+
+> Total score = Number of steps + Number of regions
+
+which would be a constant number larger than the total score generated just counting additional regions; the absolute value of the score is not meaningful in itself and is not comparable between datasets, so the calculation method does not affect tree search.
+
+The tree below gives an example of a tree in which a character in applicable in two regions (one more than the minimum possible, one) and one state change. 
+
+```{r, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
+vignettePlot(tree12, '1100----0000', na=TRUE, passes=0, state.labels=rb)
+#nodelabels(node=17, pch=15, col='#7fbf7be0', cex=2.5)
+#nodelabels(node=c(16, 21), pch=15, col='#af8dc3e0', cex=2.5)
+
+edgelabels(edge=5, pch=15, col=leafy, cex=2.5)
+edgelabels(edge=c(3, 16), pch=15, col=lilac, cex=2.5)
+
+```
+
+This score denotes two evolutionary observations that cannot be attributed to inheritance from a common ancestor: the blueness of tail in the blue tailed taxa (as the common ancestor inherited a red tail), and the redness of tail in the second region of the tree (as the common ancestor of all tail-bearing taxa did not itself have a tail, so tail colour could no be inherited).
+
+
+### What does it take to denote separate regions?
+
+It takes three inapplicable nodes (including tips) to force two regions of the tree to be separrated by an inapplicable region.
+
+This can be estabilshed by imagining the Fitch optimisation of a separate character
+
+> Applicability of the character of interest: (0), inapplicable; (1), applicable
+
+In the case of tail colour, this applicability character has the same distribution as the presence / absence of the tail, but this is not necessarily the case (there may be a range of reasons to code a character as inapplicable).
+
+In the tree shown above, the Fitch algorithm identifies two regions where the applicability character is unambiguously 'applicable':
+
+```{r, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
+vignettePlot(tree12, '111100001111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
+```
+
+If one of the inapplicable tips had instead been ambiguous, then the same distribution would arise:
+
+```{r, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
+vignettePlot(tree12, '111100?01111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
+```
+
+But if two were ambiguous, then the root of the tree could be parsimoniously reconstructed as 'applicable' -- with the two inapplicable tips becoming inapplicable in the branches that led to them:
+
+```{r, echo=FALSE, fig.width=6, fig.height=5}
+setPar(c(1,1))
+vignettePlot(tree12, '1111?0?01111', na=FALSE, passes=1:2, state.labels=ia, legend.pos='none')
+```
+
+This reconstruction maximises the inferred homology between tails, and so increases the opportunity to attribute shared colours in the tail to common ancestry.  As such, our algorithm chooses to interpret this region as applicable whereever it parsimoniously can.
+
+Note that the three inapplicable tips necessary to define an inapplicable region must be in a contiguous region of the tree, separated from one another only by taxa whose applicability is ambiguous, in order for two applicable regions to be reconstructed as separate.
+
+### How this fixes the problem
+
+This overcomes the problem where steps could be avoided by inferring multiple innovations of a character:
+
+```{r, echo=FALSE, fig.width=7.1, fig.height=2.8, fig.cap="Reconstructions of tail presence and five contingent characters (only two shown)"}
+comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
+comb5i <- ape::read.tree(text="(((((vv, c), d), yy), f), (g, (xx, (j, (k, (ww, (m, (n, zz))))))));")
+
+char <- '0000000011111'
+sub1 <- '--------12222'
+sub2 <- '--------11222'
+sub3 <- '--------11122'
+sub4 <- '--------11122'
+sub5 <- '--------11112'
+
+setPar(c(1, 2))
+par(oma=c(3,0,0,0))
+Compare <- function (char.states, char.label, states.labels, top=FALSE) {
+    vignettePlot(comb15, char.states, na=!top, 
+                 passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    legend('topleft', char.label, bty='n')
+    legend('bottomleft', pch=15, pt.cex=1.5, col=leafy, bty='n', "+1 step")
+    if (top) title('Single gain of tail (total score = 6)')
+    
+    vignettePlot(comb5i, char.states, na=!top, 
+                 passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    if (!top)legend('bottomleft', pch=15, pt.cex=1.5, col=lilac, bty='n', "+4 regions") 
+    if (top) legend('bottomleft', pch=15, pt.cex=1.5, col=leafy, bty='n', "+5 steps") 
+    if (top) title('Five gains of tail (total score = 25)')
+        
+}
+
+Compare(char, 'Tail, presence', ap, TRUE)
+Compare(sub1, 'Tail, colour', orb)
+Compare(sub2, 'Tail, covering', c("", "Scaly", "Hairy"))
+mtext("\n... and for three more characters", outer=TRUE, side=1)
+#Compare(sub3, 'Tail, shape', c("", "straight", "curly"))
+#Compare(sub4, 'Tail, margin', c("", "smooth", "serrated"))
+#Compare(sub5, 'Tail, poison barbs', c("", "absent", "present"))
+
+
+```
+
+On the other hand, if taxa either have a blue, scaly, straight tail or a red, smooth, curly tail, then the fact that the tails have so little in common means that it wouldn't be entirely surprising if the two different tail types evolved twice.  This scenario thus incurs a cost of only one step (for the additional origin of the tail) more than if the tail evolved once, and change all its attributes:
+
+```{r, echo=FALSE, fig.width=8, fig.height=8, fig.cap="Reconstructions of tail presence and five contingent characters (only two shown)"}
+comb15 <- ape::read.tree(text="(((((a, c), d), e), f), (g, (i, (j, (v, (w, (x, (y, z))))))));")
+comb5i <- ape::read.tree(text="(((((xx, yy), zz), a), b), (c, (d, (e, (f, (g, (h, (vv, ww))))))));")
+
+char <- '0000000011111'
+sub1 <- '--------11222'
+
+setPar(c(3, 2))
+par(oma=c(3,0,0,0))
+Compare <- function (char.states, char.label, states.labels, top=FALSE) {
+    vignettePlot(comb15, char.states, na=!top, 
+                 passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    legend('topleft', char.label, bty='n')
+    legend('bottomleft', pch=15, pt.cex=1.5, col=leafy, bty='n', "+1 step")
+    if (top) title('Single gain of tail (total score = 6)')
+    
+    vignettePlot(comb5i, char.states, na=!top, 
+                 passes=4 - (2 * top),
+                 legend.pos='none', state.labels=states.labels)
+    if (!top)legend('bottomleft', pch=15, pt.cex=1.5, col=lilac, bty='n', "+1 region") 
+    if (top) legend('bottomleft', pch=15, pt.cex=1.5, col=leafy, bty='n', "+2 steps") 
+    if (top) title('Two gains of tail (total score = 7)')
+        
+}
+
+Compare(char, 'Tail, presence', ap, TRUE)
+Compare(sub1, 'Tail, colour', orb)
+Compare(sub2, 'Tail, covering', c("", "Scaly", "Hairy"))
+mtext("\n... and for three more characters", outer=TRUE, side=1)
+#Compare(sub3, 'Tail, shape', c("", "straight", "curly"))
+#Compare(sub4, 'Tail, margin', c("", "smooth", "serrated"))
+#Compare(sub5, 'Tail, poison barbs', c("", "absent", "present"))
+
+
+```
+
+### Summary
+
+This is the desired behaviour.  But how do we count this in practice?
+
+In brief, we evaluate for each tip whether the character in question is applicable, inapplicable, or ambiguous (could be either), and use the standard Fitch algorithm on this applicability data to reconstruct the state of each internal node, reconstructing ambiguous nodes on the uppass as applicable.
+
+This done, we conduct a second Fitch-like pass on the tree, in which we count transformations if they occur at nodes in which the character has been reconstructed as applicable.  Additional regions are also counted on this downpass, by counting nodes that are ancestral to an inapplicable region of the tree that itself leads to an as-yet-uncounted applicable region.
+
+
+## Algorithmic implementation {#algorithm}
+
+Consider a tree with 12 taxa and the following multi-state characters with inapplicable data `23--1??--032`; say the character is "colour of the tail" ranging from 0 to 3 (four colours).
+Four taxa in our example have no tail (hence the inapplicable data `-`) and for two taxa, the data is missing (`?`- we don't known the colour of the tail or even whether the taxa have a tail or not).
+
+```{r, echo = FALSE, fig.width = 7.1, fig.height = 7.1}
+tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+character <- "23--1??--032"
+
+## Plotting the tree
+plot(tree, adj = 0.5)
+tiplabels(c("2","3","-","-","1","?","?","-","-","0","3","2"), cex = 1, bg = "orange", adj = 1)
+nodelabels(paste0("n", 13:23), bg = "bisque")
+```
+
+We can use the `Inapp` package to apply our four-pass inapplicable algorithm to this character on this tree.
+
+```{r}
+## Loading the Inapp package
+library(Inapp)
+
+## The tree
+tree <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
+
+## The character
+character <- "23--1??--032"
+
+## Applying the NA algorithm
+matrix <- apply.reconstruction(tree, character, method = "NA")
+```
+
+Here is what is happening:
+
+### Passes 1 & 2
+
+The first two passes are a standard Fitch algorithm applied the the parent character of the studied character (see [Fitch algorithm](#fitch)) with a special rule for the inapplicable state (`-`).
+
+For the first pass (first downpass):
+ 
+ * If state in common between the two descendants is the inapplicable state, but that both have also applicable states, set the node's state to be the union between the descendants states (rather than their state in common).
+ * If there is no state in common between the descendants and both descendants have applicable states, remove the inapplicable state from their union (rather than simply setting the nodal state to their union).
+
+For the second pass (first uppass):
+
+ * If the focal node has both applicable and inapplicable states, set it to be the inapplicable state only if its ancestor has also only the inapplicable state, else remove the inapplicable state.
+ * If the focal node has only an inapplicable state and it's ancestor has not only the inapplicable state, set it to be the union between it's descendants states if their are both applicable, else, leave it as the inapplicable state.
+
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap = "Inapplicable reconstruction after two passes"}
+## Plotting the NA two first passes
+plot(matrix, passes = c(1,2), counts = 0, 
+     legend.pos = 'none', show.labels = c(1, 2))
+```
+
+The parent character can be considered as a binary character "presence (`1`) or absence (`0`) of a tail" that would be `11001??00111`.
+The character would be reconstructed as:
+
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap = "Fitch reconstruction of the parent character"}
+## The parent character
+parent_character <- "11001??00111"
+
+## Applying the Fitch algorithm
+matrix_parent <- apply.reconstruction(tree, parent_character, method = "Fitch")
+plot(matrix_parent, passes = 1:2, legend.pos='none', show.labels = c(1, 2))
+```
+
+As you can see, both reconstructions are identical: nodes with no tail are denoted as `0` in the case of the "parent character" and as `-` for our current character.
+Note however that contrary to the Fitch algorithm, there is no tree score counting in our algorithm for the two first passes.
+Indeed, in the case of the Fitch reconstruction of the "parent character", the gain or losses of a tail are counted but not the changes in states for the subtending character (the tree score is 3 in Fitch, 5 in our case).
+
+### Pass 3
+
+The third pass further resolves ambiguities at nodal states.
+If the node is applicable, the standard Fitch downpass comparisons between the descendants are applied (see [Fitch algorithm](#fitch)) but with the rules relative to the inapplicable state described for the first downpass above.
+
+During this pass, we can also count the tree score.
+This score is composed of both:
+ 
+ * the change in states (e.g. the change in the colour of the tail)
+ * the change between applicable and inapplicable regions (e.g. the change in the parent character: a gain or a loss of the tail)
+
+The changes of states are calculated the same way as Fitch **for the applicable states only**:
+
+ * If there is no state in common between both node's descendants and that the node, and its descendants have a least one applicable state, increment the tree score.
+
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="State changes"}
+plot(matrix, passes = c(1,2,3), counts = 2, show.labels = c(1, 2))
+```
+
+For example, for node `n23`, there is no state in common between the tip `12` (`2`) and `11` (`3`), the tree score is incremented at this node (case `1` above).
+Note, however, that for node `n21`, there is no state in common between node `n22` (`023`) and tip `9` (`-`) but the score is not incremented since it does not concern applicable states only.
+In other words, there is no change in state at the node `n21` from the tail having a colour 0, 2 or 3 to the tail not being present (`-`) but rather a change in the parent character between presence and absence of the tail (present is `023` and absent is `-`).
+
+#### Tracking applicable regions
+
+To know whether any node leads to a region of applicable states we can use a "tracker" for each node that tells us at any moment whether descendants of a node contain applicable data or not.
+When a node is inapplicable and has a descendant whose lineage leads to applicable regions, an extra applicable region is implied by the tree.
+In other words, following our "colour of the tail" character, extra applicable regions imply independent appearances of the tail somewhere in the node's descendants.
+
+The tracker is initialised during the *second pass* (first uppass) and is updated during the *third pass* (second downpass).
+The tracker works as follows for each node's left and right descendants:
+ 
+ * If the descendant state is applicable or leads to an applicable region, then the node leads to an applicable region; else, it does not. 
+
+The trackers are initialised for each node during the first uppass and then propagated back down the tree during the second downpass.
+
+Using these trackers, we can then increment the tree score for all changes that imply a new applicable region.
+The switch to or from an inapplicable and applicable region are counted as follows:
+
+  * If the node is inapplicable and both descendants lead to regions of applicable states, increment the region count.
+  * If the node is applicable, but has an inapplicable descendant that leads to a region of applicable states, increment the region count.
+
+
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="Counting applicable regions"}
+plot(matrix, passes = c(1,2,3), counts = 1, show.labels = c(1, 2))
+```
+
+For example, node `n15` is solved as inapplicable but both his descendants lead to two independent applicable regions (tip `5` with the state `1` and node `n18` with the states `1` and `2`).
+This implies an independent change in the parent character (in our example, tail is absent at node `n15` but evolves independently at tip `5` and node `n18`).
+Conversely, node `n21` is solved as inapplicable but not both his descendants lead to independent applicable regions.
+This node does thus not imply an independent change in the parent character.
+
+> Note that the number of applicable regions for a character is always at least 1 (unless every taxa has the inapplicable state) and therefore, we only count the *additional* regions.
+
+
+Combining both scores -- the number of changes in character states and the number of additional applicable regions -- we get indeed a total tree score of 5 for this character on this tree.
+
+```{r, fig.width = 7.1, fig.height = 7.1}
+## Plotting the NA two first passes
+plot(matrix, passes = c(1,2,3), counts = c(1,2), show.labels = c(1,2))
+```
+
+Using the first three passes is enough to get the tree score (while taking into account inapplicable data!) but does not solve all ancestral reconstructions.
+A fourth pass (second uppass) might be necessary to finalise the node states reconstructions.
+
+### Pass 4
+
+In the example above, the node `n23` is still not correctly solved after the third pass.
+It could conceivably be state 0 (with transformations to states `2` and `3` occurring on the branches leading to tips 11 and 12 respectively).
+As such, its final state reconstruction should be `023`.
+To reach the correct final reconstructions, we apply a final pass of the algorithm.
+This algorithm, similarly to the second pass of the Fitch algorithm is used to solve ambiguities in the ancestral nodes reconstructions (although the score of the tree is already known).
+It follows these rules and only applies to nodes and ancestors that have at least one applicable token for themselves and their ancestor(nodes that are inapplicable are already solved):
+
+ * If there is a state _in common_ between the node and its ancestor or between the ancestor and the states _in common_ of its descendants, resolve the node to be this state in common.
+ * If there is nothing in common between the node and its ancestor or between its descendants, solve the node as either:
+    1. being the ancestors state if the any of the descendants' have at least one inapplicable state but no state in common with the ancestor.
+    2. being the union of the ancestor's and the descendants' states if the any of the descendants have at least one inapplicable and have at least one state in common with the ancestor.
+    3. being the union of the ancestor's and the current node states the descendants have no inapplicable state.
+
+```{r, fig.width = 7.1, fig.height = 7.1}
+plot(matrix, passes = c(1,2,3,4), counts = c(1,2), show.labels = c(1,2), col.states=TRUE)
+```
+
+## Software implementation {#software}
+
+This algorithm has been implemented in two `R` packages.  [Inapp](https://github.com/TGuillerme/Inapp) provides an interactive 
+visualization of how the score of a user-specified tree is calculated for any
+character under different approaches to inapplicable data. This package was used to generate many of the figures in this document.
+
+[TreeSearch](https://github.com/ms609/TreeSearch) allows for parsimony tree
+searches with the inapplicable algorithm [@ThisStudy].  
+It includes heuristic search options that make it possible to search reasonable-sized matrices, and includes an option for equal or implied weighting.
+
+TreeSearch is a front-end to the [morphylib](https://github.com/mbrazeau/morphylib) 
+`C` library, which will eventually implemented in the standalone [Morphy](http://www.morphyproject.org/) program for rapid phylogenetic searches.
+

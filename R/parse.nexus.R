@@ -124,7 +124,7 @@ read.characters <- function (filepath, character_num=NULL, session=NULL) {
             }
         } else {
             if (length(labelStart) > 1) {
-                eturn(list("Multiple StateLabels blocks in Nexus file."))
+                return(list("Multiple StateLabels blocks in Nexus file."))
             }
         }
     }

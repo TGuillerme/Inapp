@@ -15,7 +15,8 @@ RoxygenNote: 6.0.1
 Imports:
     ape,
     phangorn,
-    shiny
+    shiny,
+    TreeSearch (>= 0.0.8)
 Suggests: 
     devtools,
     knitr,

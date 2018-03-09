@@ -22,6 +22,8 @@ tokens will be matched to labels in alphabetical order.}
 
 \item{state.labels}{Will be passed directly to \code{\link{plot.states.matrix}}}
 
+\item{counts}{\code{integer} vector specifying which counts to show: see \link{plot.states.matrix} for details}
+
 \item{\dots}{Additional parameters to pass to \code{\link{plot.states.matrix}}.}
 }
 \description{

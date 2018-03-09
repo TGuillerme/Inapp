@@ -7,6 +7,7 @@
 #'                  tokens will be matched to labels in alphabetical order.
 #' @param na \code{logical}, should `-` be treated as `inapplicable`?
 #' @param legend.pos \code{character} Position to plot legend.
+#' @param counts \code{integer} vector specifying which counts to show: see [plot.states.matrix] for details
 #' @param passes \code{integer} specifying which passes to plot; specify 0 for none.
 #' @param state.labels Will be passed directly to \code{\link{plot.states.matrix}}
 #' @param \dots Additional parameters to pass to \code{\link{plot.states.matrix}}.

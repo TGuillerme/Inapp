@@ -268,6 +268,7 @@ convert.char <- function(character) {
 
     ## Character is not numeric
     if(class(character) == "character") {
+        character <- gsub(',', '', character, fixed=TRUE)
 
         ## Get all the states
         stateslist <- paste0(character, collapse='')
@@ -286,7 +287,7 @@ convert.char <- function(character) {
 
         ## Convert inapplicable
         character <- lapply(character, function (states) {
-          states <- unlist(strsplit(gsub("[\\{\\}]", "", states), ''))
+          states <- unlist(strsplit(gsub("[\\{\\}\\(\\)]", "", states), ''))
           states[states=='-'] <- -1
           sort(as.numeric(states))
         })

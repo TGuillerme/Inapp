@@ -57,7 +57,8 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     }
 
     # Read tree properties
-    n_tip <- length(tree$tip.label)
+    tip_labels <- tree$tip.label
+    n_tip <- tip_labels
     n_node <- tree$Nnode
 
     ## Transform character
@@ -100,7 +101,6 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
         ordering <- match(tip_labels, names(character))
     } else {
         if (match.tip.char == TRUE) {
-            tip_labels <- tree$tip.label
             ## Check if tips are alphanumeric
             if(all(vapply(tip_labels, is.numeric, logical(1)))) {
               ## Get the tips in numeric order

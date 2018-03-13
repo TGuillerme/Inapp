@@ -97,9 +97,9 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
           ## Get the tips in numeric order
           ordering <- match(as.numeric(tip_labels), sort(as.numeric(tip_labels)))
         } else {
-            ## Check if tips contain numeric
           matches <- gregexpr("\\d+(\\.\\d+)?", tip_labels, perl=TRUE)
           if (all(matches > -1)) {
+              ## All tips contain numeric
               tip_numbers <- regmatches(tip_labels, matches)
               if (any (vapply(tip_numbers, length, integer(1)) > 1)) {
                 stop("Some tips bear multiple numeric components.")
@@ -112,9 +112,12 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
             }
         }
     } else {
-        ordering <- seq_len(n_tip)
+        if (all(tip_labels %in% names(character))) {
+            ordering <- match(tip_labels, names(character))
+        } else {
+            ordering <- seq_len(n_tip)
+        }
     }
-
 
     ## Add the character into the list
     states_matrix$Char[1:n_tip] <- character[ordering]

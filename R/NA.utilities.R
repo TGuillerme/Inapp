@@ -58,7 +58,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
 
     # Read tree properties
     tip_labels <- tree$tip.label
-    n_tip <- tip_labels
+    n_tip <- length(tip_labels)
     n_node <- tree$Nnode
 
     ## Transform character

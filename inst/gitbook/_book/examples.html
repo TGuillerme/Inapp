@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Inapplicable data</title>
   <meta name="description" content="Inapplicable data in a parsimony setting">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="Inapplicable data" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-03-08">
+<meta name="date" content="2018-03-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,57 +50,41 @@
 
 
 <style type="text/css">
-div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource div.sourceLine, .numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em; }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; color = initial; }
-}
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
-code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -197,38 +181,29 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
             <section class="normal" id="section-">
 <div id="examples" class="section level1">
 <h1><span class="header-section-number">6</span> Examples</h1>
-<p>This vignette describes how the algorithm approaches some example trees.
-We follow the example of a tail coded using two characters:</p>
+<p>This vignette describes how the algorithm approaches some example trees. We follow the example of a tail coded using two characters:</p>
 <blockquote>
 <p>Tail: (0), absent; (1), present;</p>
 <p>Tail colour: (0), red; (1), blue.</p>
 </blockquote>
 <div id="some-caterpillars" class="section level2">
 <h2><span class="header-section-number">6.1</span> Some caterpillars</h2>
-<p>First we’ll address some pectinate “caterpillar” trees, in which eight
-taxa have tails (and eight do not), four of which are red, four of which are blue.</p>
-<p>An optimal tree with this character invokes a single origin of the tail, and a single
-change in tail colour, thus incurring a score of two. Here is one example:</p>
+<p>First we’ll address some pectinate “caterpillar” trees, in which eight taxa have tails (and eight do not), four of which are red, four of which are blue.</p>
+<p>An optimal tree with this character invokes a single origin of the tail, and a single change in tail colour, thus incurring a score of two. Here is one example:</p>
 <div class="figure"><span id="fig:unnamed-chunk-68"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-68-1.png" alt="An optimal tree: Total score 2" width="681.6" />
 <p class="caption">
 Figure 6.1: An optimal tree: Total score 2
 </p>
 </div>
-<p>If we insist that the tail evolves twice, then the best score is accomplished
-by reconstructing a different colour of tail in each of the two regions
-in which the tail is present. On a caterpillar tree, this means the loss of a
-tail that has one colour, and an independent innovation in a tail-less taxon
-of a tail that has a different colour:</p>
+<p>If we insist that the tail evolves twice, then the best score is accomplished by reconstructing a different colour of tail in each of the two regions in which the tail is present. On a caterpillar tree, this means the loss of a tail that has one colour, and an independent innovation in a tail-less taxon of a tail that has a different colour:</p>
 <div class="figure"><span id="fig:unnamed-chunk-69"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-69-1.png" alt="Two tail innovations: Total score 2 (best possible)" width="681.6" />
 <p class="caption">
 Figure 6.2: Two tail innovations: Total score 2 (best possible)
 </p>
 </div>
-<p>Under the parsimony criterion, it is considered less optimal if a tail, when it re-evolves, happens to independently re-evolve a colour that has already been observed –
-“blueness” has evolved twice on the following tree, meaning that
-the second innovation of “blueness” represents an instance of homoplasy.</p>
+<p>Under the parsimony criterion, it is considered less optimal if a tail, when it re-evolves, happens to independently re-evolve a colour that has already been observed – “blueness” has evolved twice on the following tree, meaning that the second innovation of “blueness” represents an instance of homoplasy.</p>
 <div class="figure"><span id="fig:unnamed-chunk-70"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-70-1.png" alt="Tree A: Total score 4" width="681.6" />
 <p class="caption">
@@ -238,35 +213,23 @@ Figure 6.3: Tree A: Total score 4
 </div>
 <div id="three-equally-suboptimal-alternatives" class="section level2">
 <h2><span class="header-section-number">6.2</span> Three equally suboptimal alternatives</h2>
-<p>The following three trees differ in the number of innovations of the tail that
-are implied, and the number of changes in tail colour. All are equally parsimonious.</p>
-<p>Under the first, our algorithm reconstructs the tail as ancestrally present,
-being lost on edge 2, gained on edge 5, lost in tips H and I, lost on edge 11,
-and gained on edge 14 (a total of six homoplasies). It further reconstructs
-independent, homoplastic origins of tail redness on edge 5, tail blueness on
-edge 14, and a change in tail colour from red to blue somewhere between edges
-7 and 9 (three homoplasies).</p>
+<p>The following three trees differ in the number of innovations of the tail that are implied, and the number of changes in tail colour. All are equally parsimonious.</p>
+<p>Under the first, our algorithm reconstructs the tail as ancestrally present, being lost on edge 2, gained on edge 5, lost in tips H and I, lost on edge 11, and gained on edge 14 (a total of six homoplasies). It further reconstructs independent, homoplastic origins of tail redness on edge 5, tail blueness on edge 14, and a change in tail colour from red to blue somewhere between edges 7 and 9 (three homoplasies).</p>
 <div class="figure"><span id="fig:unnamed-chunk-71"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-71-1.png" alt="Tree B: Total score 9" width="681.6" />
 <p class="caption">
 Figure 6.4: Tree B: Total score 9
 </p>
 </div>
-<p>In the second, our algorithm reconstructs the tail as ancestrally present,
-being lost in tips B, D, E, H, and I, and on edge 11, before being independently
-gained on edge 14 (a total of seven homoplasies).<br />
-It further reconstructs an independent, homoplastic origins of tail blueness on
-edge 14, and a change in tail colour from red to blue somewhere between edges 7 and 9 (two homoplasies).</p>
+<p>In the second, our algorithm reconstructs the tail as ancestrally present, being lost in tips B, D, E, H, and I, and on edge 11, before being independently gained on edge 14 (a total of seven homoplasies).<br />
+It further reconstructs an independent, homoplastic origins of tail blueness on edge 14, and a change in tail colour from red to blue somewhere between edges 7 and 9 (two homoplasies).</p>
 <div class="figure"><span id="fig:unnamed-chunk-72"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-72-1.png" alt="Tree C: Total score 9" width="681.6" />
 <p class="caption">
 Figure 6.5: Tree C: Total score 9
 </p>
 </div>
-<p>The third configuration reconstructs the tail as ancestrally present,
-being lost in tips B, D, F, H, J, L, N and P (a total of eight homoplastic losses).
-It further reconstructs a single change in tail colour from red to blue
-on edge 8.</p>
+<p>The third configuration reconstructs the tail as ancestrally present, being lost in tips B, D, F, H, J, L, N and P (a total of eight homoplastic losses). It further reconstructs a single change in tail colour from red to blue on edge 8.</p>
 <div class="figure"><span id="fig:unnamed-chunk-73"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-73-1.png" alt="Tree D: Total score 9" width="681.6" />
 <p class="caption">
@@ -276,10 +239,7 @@ Figure 6.6: Tree D: Total score 9
 </div>
 <div id="a-better-caterpillar-tree" class="section level2">
 <h2><span class="header-section-number">6.3</span> A better caterpillar tree</h2>
-<p>The tree below obtains a better score than any of the previous three: it implies
-a loss of the tail at edge 2, a gain at edge 6, a loss at edge 10, and a gain at
-edge 14; it invokes a homoplastic origin of redness at edge 6, one of blueness
-at edge 14, and a change in colour at edge 8, for a combined score of 7.</p>
+<p>The tree below obtains a better score than any of the previous three: it implies a loss of the tail at edge 2, a gain at edge 6, a loss at edge 10, and a gain at edge 14; it invokes a homoplastic origin of redness at edge 6, one of blueness at edge 14, and a change in colour at edge 8, for a combined score of 7.</p>
 <div class="figure"><span id="fig:unnamed-chunk-74"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-74-1.png" alt="Tree E: Total score 7" width="681.6" />
 <p class="caption">
@@ -365,18 +325,17 @@ Figure 6.7: Tree E: Total score 7
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-gitbook.require(["gitbook"], function(gitbook) {
+require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
 "facebook": true,
 "twitter": true,
 "google": false,
-"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -387,7 +346,7 @@ gitbook.start({
 "link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/06_examples.Rmd",
 "text": "Edit"
 },
-"download": ["Inapplicable_data.pdf"],
+"download": null,
 "toc": {
 "collapse": "subsection"
 }
@@ -400,11 +359,9 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

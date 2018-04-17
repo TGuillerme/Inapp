@@ -6,6 +6,7 @@ site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
 bibliography: [../References.bib, packages.bib]
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 link-citations: yes
 github-repo: TGuillerme/Inapp
 description: "Inapplicable data in a parsimony setting"

@@ -26,8 +26,8 @@ r_binary_packages:
   - shiny
   - testthat
 
-r_packages:
-  - TreeSearch
+before_script:
+- Rscript -e 'install.packages("TreeSearch")'
 
 after_success:
 - Rscript -e 'library("covr"); codecov()'

@@ -12,10 +12,9 @@ warnings_are_errors: false
 branches:
   only:
     - master
-    - Character-names
+    - readCharacters
     # Change to release once released
 
-# Code coverage
 r_binary_packages:
   - ape
   - covr
@@ -26,5 +25,9 @@ r_binary_packages:
   - shiny
   - testthat
 
+r_packages:
+  - TreeSearch
+
+# Code coverage
 after_success:
 - Rscript -e 'library("covr"); codecov()'

@@ -25,6 +25,7 @@ r_binary_packages:
   - roxygen2
   - shiny
   - testthat
+  - TreeSearch
 
 after_success:
 - Rscript -e 'library("covr"); codecov()'

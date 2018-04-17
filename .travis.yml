@@ -15,7 +15,6 @@ branches:
     - Character-names
     # Change to release once released
 
-# Code coverage
 r_binary_packages:
   - ape
   - covr
@@ -26,8 +25,12 @@ r_binary_packages:
   - shiny
   - testthat
 
+r_packages:
+  - TreeSearch
+
 before_script:
 - Rscript -e 'install.packages("TreeSearch")'
 
+# Code coverage
 after_success:
 - Rscript -e 'library("covr"); codecov()'

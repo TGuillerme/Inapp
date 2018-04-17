@@ -17,10 +17,12 @@ Imports:
     phangorn,
     shiny,
     TreeSearch (>= 0.0.8)
-Suggests: 
+Suggests:
     devtools,
     knitr,
     rmarkdown,
     testthat
+Remotes:
+    ms609/TreeSearch
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

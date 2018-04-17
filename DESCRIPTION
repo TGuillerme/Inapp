@@ -22,5 +22,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat
+Remotes:
+    ms609/TreeSearch
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

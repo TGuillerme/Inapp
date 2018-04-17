@@ -5,7 +5,13 @@
 #' @param tree \code{phylo}, a tree
 #' @param character Either vector of character states (\code{"numeric"} or \code{"character"}) or a list of the same length of than the tips in the tree (see details)
 #' @param inapplicable When the intended reconstruction method is \code{"Fitch"}, how do deal with inapplicable data: \code{1}, \code{2} for respectively treating them as ? or an extra state (default = \code{NULL}).
-#' @param match.tip.char \code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)
+#' @param match.tip.char \code{logical}, \code{TRUE} to match the character
+#' to the tip labels (e.g character 1 matches with tip "a" or "1")
+#' or \code{FALSE} (default) to match the character to the tips entry
+#'  (e.g. character 1 matches with the first tip).  If a character is supplied
+#'  as a named list, and the names correspond to the names of the tips, then
+#'  this parameter will be ignored and the names of the characters will be used
+#'  to match them to the names of the tips.
 #'
 #' @details
 #' If \code{character} argument is a list, each element of the list must be a \code{"numeric"} vector with \code{"?"} being all states and \code{"-"} being \code{-1}.
@@ -51,7 +57,8 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     }
 
     # Read tree properties
-    n_tip <- length(tree$tip.label)
+    tip_labels <- tree$tip.label
+    n_tip <- length(tip_labels)
     n_node <- tree$Nnode
 
     ## Transform character
@@ -90,36 +97,39 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     }
 
     ## Sorting the character to match the tip.labels entry
-    if(match.tip.char == TRUE) {
-        tip_labels <- tree$tip.label
-        ## Check if tips are alphanumeric
-        if(all(vapply(tip_labels, is.numeric, logical(1)))) {
-          ## Get the tips in numeric order
-          ordering <- match(as.numeric(tip_labels), sort(as.numeric(tip_labels)))
-        } else {
-            ## Check if tips contain numeric
-          matches <- gregexpr("\\d+(\\.\\d+)?", tip_labels, perl=TRUE)
-          if (all(matches > -1)) {
-              tip_numbers <- regmatches(tip_labels, matches)
-              if (any (vapply(tip_numbers, length, integer(1)) > 1)) {
-                stop("Some tips bear multiple numeric components.")
-              }
-              tip_numbers <- as.numeric(tip_numbers)
-              ordering <- match(tip_numbers, sort(tip_numbers))
-            } else {
-                ## Getting the tips in alphabetical order
-                ordering <- match(tip_labels, sort(tip_labels))
-            }
-        }
+    if (all(tip_labels %in% names(character))) {
+        ordering <- match(tip_labels, names(character))
     } else {
-        ordering <- seq_len(n_tip)
+        if (match.tip.char == TRUE) {
+            ## Check if tips are alphanumeric
+            if(all(vapply(tip_labels, is.numeric, logical(1)))) {
+              ## Get the tips in numeric order
+              ordering <- match(as.numeric(tip_labels), sort(as.numeric(tip_labels)))
+            } else {
+              matches <- gregexpr("\\d+(\\.\\d+)?", tip_labels, perl=TRUE)
+              if (all(matches > -1)) {
+                  ## All tips contain numeric
+                  tip_numbers <- regmatches(tip_labels, matches)
+                  if (any (vapply(tip_numbers, length, integer(1)) > 1)) {
+                    stop("Some tips bear multiple numeric components.")
+                  }
+                  tip_numbers <- as.numeric(tip_numbers)
+                  ordering <- match(tip_numbers, sort(tip_numbers))
+                } else {
+                    ## Getting the tips in alphabetical order
+                    ordering <- match(tip_labels, sort(tip_labels))
+                }
+            }
+        } else {
+            # i.e. match.tip.char == FALSE
+            ordering <- seq_len(n_tip)
+        }
     }
-
 
     ## Add the character into the list
     states_matrix$Char[1:n_tip] <- character[ordering]
 
-    ## Add tip labels
+    ## Add tip labels
 
     ## Set up the active region tracker
     states_matrix$tracker <- list("Dp1" = filling, "Up1" = filling, "Dp2" = filling, "Up2" = filling)
@@ -268,6 +278,7 @@ convert.char <- function(character) {
 
     ## Character is not numeric
     if(class(character) == "character") {
+        character <- gsub(',', '', character, fixed=TRUE)
 
         ## Get all the states
         stateslist <- paste0(character, collapse='')
@@ -286,7 +297,7 @@ convert.char <- function(character) {
 
         ## Convert inapplicable
         character <- lapply(character, function (states) {
-          states <- unlist(strsplit(gsub("[\\{\\}]", "", states), ''))
+          states <- unlist(strsplit(gsub("[\\{\\}\\(\\)]", "", states), ''))
           states[states=='-'] <- -1
           sort(as.numeric(states))
         })

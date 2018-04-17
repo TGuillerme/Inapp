@@ -3,6 +3,7 @@
 .Rhistory
 .Rproj.user
 *.Rproj
+.Rprofile
 
 # Data
 *.tre

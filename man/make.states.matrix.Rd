@@ -14,7 +14,13 @@ make.states.matrix(tree, character, inapplicable = NULL,
 
 \item{inapplicable}{When the intended reconstruction method is \code{"Fitch"}, how do deal with inapplicable data: \code{1}, \code{2} for respectively treating them as ? or an extra state (default = \code{NULL}).}
 
-\item{match.tip.char}{\code{logical}, \code{TRUE} to match the character to the tip labels (e.g character 1 matches with tip "a" or "1") or \code{FALSE} (default) to match the character to the tips entry (e.g. character 1 matches with the first tip)}
+\item{match.tip.char}{\code{logical}, \code{TRUE} to match the character
+to the tip labels (e.g character 1 matches with tip "a" or "1")
+or \code{FALSE} (default) to match the character to the tips entry
+(e.g. character 1 matches with the first tip).  If a character is supplied
+as a named list, and the names correspond to the names of the tips, then
+this parameter will be ignored and the names of the characters will be used
+to match them to the names of the tips.}
 }
 \value{
 A list of character states for each node and tip per pass:

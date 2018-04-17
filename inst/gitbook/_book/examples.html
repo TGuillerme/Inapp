@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-03-08">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,6 +47,16 @@
 
 
 
+<!--Sort the references alphabetically.  Modified from an implementation by Yvonne Aburrow.-->
+<script>
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html() > $(a).children('p').html() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
 
 
 <style type="text/css">
@@ -174,7 +184,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.3" data-path="examples.html"><a href="examples.html#a-better-caterpillar-tree"><i class="fa fa-check"></i><b>6.3</b> A better caterpillar tree</a></li>
 <li class="chapter" data-level="6.4" data-path="examples.html"><a href="examples.html#de-laets-caterpillars"><i class="fa fa-check"></i><b>6.4</b> De Laet’s caterpillars</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
 
@@ -289,7 +299,7 @@ Figure 6.7: Tree E: Total score 7
 </div>
 <div id="de-laets-caterpillars" class="section level2">
 <h2><span class="header-section-number">6.4</span> De Laet’s caterpillars</h2>
-<p>De Laet <span class="citation">(<a href="#ref-DeLaet2017">2017</a>)</span> identifies a corner case in which our algorithm <span class="citation">(Brazeau et al., <a href="#ref-ThisStudy">2017</a>)</span> will not reconstruct every equally-parsimonious character reconstruction. Below is a simplified version of his example:</p>
+<p>De Laet <span class="citation">(<a href="#ref-DeLaet2017">2017</a>)</span> identifies a corner case in which our algorithm <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2018</a>)</span> will not reconstruct every equally-parsimonious character reconstruction. Below is a simplified version of his example:</p>
 <table>
 <caption><span id="tab:unnamed-chunk-76">Table 6.1: </span>Coding</caption>
 <thead>
@@ -337,15 +347,16 @@ Figure 6.7: Tree E: Total score 7
 <p>In this particular case, there is an equally-parsimonious character reconstruction that our algorithm excludes, which invokes two gains (and one loss) of the tail:</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-78-1.png" width="768" /></p>
 <p>This has no effect on tree scoring, but may be relevant if complete internal nodal reconstructions are desired.</p>
+
 </div>
 </div>
-<h3> References</h3>
+<h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-DeLaet2017">
 <p>De Laet, J. (2017). A note on Brazeau et al.’s (2017) algorithm for characters with inapplicable data, illustrated with an analysis of their Fig. 3d using anagallis, a program for parsimony analysis of character hierarchies. doi:<a href="https://doi.org/10.13140/RG.2.2.31309.54245">10.13140/RG.2.2.31309.54245</a></p>
 </div>
-<div id="ref-ThisStudy">
-<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2017). Morphological phylogenetic analysis with inapplicable data. <em>bioR<span class="math inline">\(\chi\)</span>iv</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+<div id="ref-Brazeau2018">
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2018). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
 </div>
 </div>
             </section>
@@ -384,10 +395,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/06_examples.Rmd",
+"link": "https://github.com/TGuillerme/Inapp/edit/master/inst/gitbook/06_examples.Rmd",
 "text": "Edit"
 },
-"download": ["Inapplicable_data.pdf"],
+"download": ["Inapplicable_data.pdf", "Inapplicable_data.epub"],
 "toc": {
 "collapse": "subsection"
 }
@@ -395,19 +406,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

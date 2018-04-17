@@ -1,12 +1,6 @@
 ---
 title: "The Fitch Algorithm"
 author: "Thomas Guillerme; Martin R. Smith"
-date: "`r Sys.Date()`"
-bibliography: [../References.bib, packages.bib]
-csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
-output:
-  html_document: default
-  pdf_document: default
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -160,7 +154,7 @@ For example, node `n15` is case 2 because there is _nothing in common_ between t
 
 > Important: when the case 2 is encountered, a transformation is implied in the descendants of the considered node. The score of the tree is incremented by +1.
 
-In the following example, nodes that are in case 1 are in white and nodes in case 2, which imply a transformation (i.e. that add to the tree score), are in green.
+In the following example, nodes that are in case 1 are in white and nodes in case 2, which imply a transformation (i.e. that adds to the tree score), are in green.
 
 
 ```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="Node reconstructions after downpass"}
@@ -309,7 +303,7 @@ Under this reconstruction, the tails of `a` and `h` are not homologous with each
 Where we wish to maximise homology, we modify the Fitch uppass such that any node
 whose final state reconstruction would be ambiguous is instead reconstructed as present when that node is encountered.
 This approach maximises homology in the problematic trees presented by 
-Agnarsson & Miller [-@Agnarsson2008; "A&M" below]:
+Agnarsson & Miller [-@Agnarsson2008]("A&M" below):
 
 ```{r, echo = FALSE, fig.width = 7.1, fig.height = 4, fig.cap="Homology-maximising character optimisations"}
 par(mfrow=c(1, 2), mar=rep(0.75, 4))

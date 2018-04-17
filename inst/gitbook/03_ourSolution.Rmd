@@ -1,12 +1,6 @@
 ---
 title: "The solution: Count homologies"
 author: "Martin R. Smith; Thomas Guillerme; Martin D. Brazeau"
-date: "`r Sys.Date()`"
-bibliography: [../References.bib, packages.bib]
-csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
-output:
-  html_document: default
-  pdf_document: default
 ---
 
 # A solution {#solution}
@@ -335,7 +329,7 @@ It follows these rules and only applies to nodes and ancestors that have at leas
     3. being the union of the ancestor's and the current node states the descendants have no inapplicable state.
 
 ```{r, fig.width = 7.1, fig.height = 7.1}
-plot(matrix, passes = c(1,2,3,4), counts = c(1,2), show.labels = c(1,2), col.states=TRUE)
+plot(matrix, passes = c(1,2,3,4), counts = c(1,2), show.labels = c(1,2))#, col.states=TRUE)
 ```
 
 ## Software implementation {#software}
@@ -345,9 +339,8 @@ visualization of how the score of a user-specified tree is calculated for any
 character under different approaches to inapplicable data. This package was used to generate many of the figures in this document.
 
 [TreeSearch](https://github.com/ms609/TreeSearch) allows for parsimony tree
-searches with the inapplicable algorithm [@ThisStudy].  
+searches with the inapplicable algorithm [@Brazeau2018].  
 It includes heuristic search options that make it possible to search reasonable-sized matrices, and includes an option for equal or implied weighting.
 
 TreeSearch is a front-end to the [morphylib](https://github.com/mbrazeau/morphylib) 
 `C` library, which will eventually implemented in the standalone [Morphy](http://www.morphyproject.org/) program for rapid phylogenetic searches.
-

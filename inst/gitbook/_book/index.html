@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-03-08">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,6 +47,16 @@
 
 
 
+<!--Sort the references alphabetically.  Modified from an implementation by Yvonne Aburrow.-->
+<script>
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html() > $(a).children('p').html() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
 
 
 <style type="text/css">
@@ -174,7 +184,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.3" data-path="examples.html"><a href="examples.html#a-better-caterpillar-tree"><i class="fa fa-check"></i><b>6.3</b> A better caterpillar tree</a></li>
 <li class="chapter" data-level="6.4" data-path="examples.html"><a href="examples.html#de-laets-caterpillars"><i class="fa fa-check"></i><b>6.4</b> De Laet’s caterpillars</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
 
@@ -198,12 +208,12 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <div id="header">
 <h1 class="title">Inapplicable data</h1>
 <h4 class="author"><em>Martin Brazeau (<a href="mailto:m.brazeau@imperial.ac.uk">m.brazeau@imperial.ac.uk</a>), Thomas Guillerme (<a href="mailto:guillert@tcd.ie">guillert@tcd.ie</a>) and Martin Smith (<a href="mailto:martin.smith@durham.ac.uk">martin.smith@durham.ac.uk</a>)</em></h4>
-<h4 class="date"><em>2018-03-08</em></h4>
+<h4 class="date"><em>2018-04-17</em></h4>
 </div>
 <div id="inapplicable-data-in-a-parsimony-setting" class="section level1 unnumbered">
 <h1>Inapplicable data in a parsimony setting</h1>
 <p>This document provides a detailed explanation of the algorithm for handling
-inapplicable data proposed by Brazeau <em>et al.</em> <span class="citation">(<a href="#ref-ThisStudy">2017</a>)</span>.</p>
+inapplicable data proposed by <span class="citation">Brazeau, Guillerme, &amp; Smith (<a href="#ref-Brazeau2018">2018</a>)</span>.</p>
 <p>We first discuss how the <a href="fitch.html#fitch">Fitch algorithm</a> works and introduce
 the <a href="problems.html#problems">problems</a> that it encounters in the face of inapplicable character states.</p>
 <p>We then introduce our <a href="solution.html#solution">solution</a>, a new <a href="solution.html#algorithm">algorithm</a>, implemented in
@@ -212,10 +222,10 @@ implications for the coding of <a href="coding.html#coding">characters</a> and <
 <p>We close with some <a href="examples.html#examples">example</a> trees that demonstrate how our algorithm behaves in more complicated cases.</p>
 
 </div>
-<h3> References</h3>
+<h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-ThisStudy">
-<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2017). Morphological phylogenetic analysis with inapplicable data. <em>bioR<span class="math inline">\(\chi\)</span>iv</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+<div id="ref-Brazeau2018">
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2018). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
 </div>
 </div>
             </section>
@@ -254,10 +264,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/index.Rmd",
+"link": "https://github.com/TGuillerme/Inapp/edit/master/inst/gitbook/index.Rmd",
 "text": "Edit"
 },
-"download": ["Inapplicable_data.pdf"],
+"download": ["Inapplicable_data.pdf", "Inapplicable_data.epub"],
 "toc": {
 "collapse": "subsection"
 }
@@ -265,19 +275,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

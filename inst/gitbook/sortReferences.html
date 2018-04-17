@@ -1,0 +1,10 @@
+<!--Sort the references alphabetically.  Modified from an implementation by Yvonne Aburrow.-->
+<script>
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html() > $(a).children('p').html() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>

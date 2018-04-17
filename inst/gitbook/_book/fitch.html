@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-03-08">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,6 +47,16 @@
 
 
 
+<!--Sort the references alphabetically.  Modified from an implementation by Yvonne Aburrow.-->
+<script>
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html() > $(a).children('p').html() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
 
 
 <style type="text/css">
@@ -174,7 +184,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.3" data-path="examples.html"><a href="examples.html#a-better-caterpillar-tree"><i class="fa fa-check"></i><b>6.3</b> A better caterpillar tree</a></li>
 <li class="chapter" data-level="6.4" data-path="examples.html"><a href="examples.html#de-laets-caterpillars"><i class="fa fa-check"></i><b>6.4</b> De Laet’s caterpillars</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
 
@@ -247,7 +257,7 @@ Figure 1.3: Uppass traversal
 <blockquote>
 <p>Important: when the case 2 is encountered, a transformation is implied in the descendants of the considered node. The score of the tree is incremented by +1.</p>
 </blockquote>
-<p>In the following example, nodes that are in case 1 are in white and nodes in case 2, which imply a transformation (i.e. that add to the tree score), are in green.</p>
+<p>In the following example, nodes that are in case 1 are in white and nodes in case 2, which imply a transformation (i.e. that adds to the tree score), are in green.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">## Plotting the first downpass</div>
 <div class="sourceLine" id="2" href="#2" data-line-number="2"><span class="kw">plot.states.matrix</span>(matrix, <span class="dt">passes =</span> <span class="dv">1</span>, <span class="dt">counts =</span> <span class="dv">2</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</div>
 <div class="sourceLine" id="3" href="#3" data-line-number="3"><span class="kw">tiplabels</span>(char, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">bg =</span> Inapp<span class="op">::</span>brewer[[<span class="dv">2</span>]][char <span class="op">+</span><span class="st"> </span><span class="dv">1</span>], <span class="dt">adj =</span> <span class="dv">1</span>)</div></code></pre>
@@ -322,7 +332,7 @@ Under this reconstruction, the tails of <code>a</code> and <code>h</code> are no
 <p>Where we wish to maximise homology, we modify the Fitch uppass such that any node
 whose final state reconstruction would be ambiguous is instead reconstructed as present when that node is encountered.
 This approach maximises homology in the problematic trees presented by
-Agnarsson &amp; Miller [<span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>; “A&amp;M” below]:</p>
+Agnarsson &amp; Miller <span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>(“A&amp;M” below):</p>
 <div class="figure"><span id="fig:unnamed-chunk-11"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-11-1.png" alt="Homology-maximising character optimisations" width="681.6" />
 <p class="caption">
@@ -340,7 +350,7 @@ Figure 1.8: Homology maximisation with missing entries
 </div>
 </div>
 </div>
-<h3> References</h3>
+<h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Fitch1971">
 <p>Fitch, W. M. (1971). Toward defining the course of evolution: minimum change for a specific tree topology. <em>Systematic Biology</em>, <em>20</em>(4), 406–416. doi:<a href="https://doi.org/10.1093/sysbio/20.4.406">10.1093/sysbio/20.4.406</a></p>
@@ -397,10 +407,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/01_Fitch.Rmd",
+"link": "https://github.com/TGuillerme/Inapp/edit/master/inst/gitbook/01_Fitch.Rmd",
 "text": "Edit"
 },
-"download": ["Inapplicable_data.pdf"],
+"download": ["Inapplicable_data.pdf", "Inapplicable_data.epub"],
 "toc": {
 "collapse": "subsection"
 }
@@ -408,19 +418,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

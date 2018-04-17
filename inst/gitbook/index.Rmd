@@ -6,6 +6,7 @@ site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
 bibliography: [../References.bib, packages.bib]
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
 link-citations: yes
 github-repo: TGuillerme/Inapp
 description: "Inapplicable data in a parsimony setting"
@@ -19,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Inapplicable data in a parsimony setting {-}
 
 This document provides a detailed explanation of the algorithm for handling
-inapplicable data proposed by Brazeau _et al._ [-@ThisStudy].
+inapplicable data proposed by @Brazeau2018.
 
 We first discuss how the [Fitch algorithm](#fitch) works and introduce
 the [problems](#problems) that it encounters in the face of inapplicable character states.

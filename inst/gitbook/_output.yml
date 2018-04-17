@@ -11,5 +11,7 @@ bookdown::gitbook:
     toc:
       after: |
         <li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
-    edit: https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/%s
+    edit: https://github.com/TGuillerme/Inapp/edit/master/inst/gitbook/%s
+  includes:
+    in_header: sortReferences.html
 

@@ -1,4 +1,5 @@
 book_filename: "Inapplicable_data"
+delete_merged_file: TRUE
 language:
   ui:
     chapter_name: ""

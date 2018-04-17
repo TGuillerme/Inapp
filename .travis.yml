@@ -26,8 +26,8 @@ r_binary_packages:
   - shiny
   - testthat
 
-r_github_packages:
-  - ms609/TreeSearch
+r_packages:
+  - TreeSearch
 
 after_success:
 - Rscript -e 'library("covr"); codecov()'

@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-03-08">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,6 +47,16 @@
 
 
 
+<!--Sort the references alphabetically.  Modified from an implementation by Yvonne Aburrow.-->
+<script>
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html() > $(a).children('p').html() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
 
 
 <style type="text/css">
@@ -174,7 +184,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.3" data-path="examples.html"><a href="examples.html#a-better-caterpillar-tree"><i class="fa fa-check"></i><b>6.3</b> A better caterpillar tree</a></li>
 <li class="chapter" data-level="6.4" data-path="examples.html"><a href="examples.html#de-laets-caterpillars"><i class="fa fa-check"></i><b>6.4</b> De Laet’s caterpillars</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
 
@@ -549,7 +559,7 @@ homoplasies instead of steps.</p>
 
 </div>
 </div>
-<h3> References</h3>
+<h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Maddison1993">
 <p>Maddison, W. P. (1993). Missing data versus missing characters in phylogenetic analysis. <em>Systematic Biology</em>, <em>42</em>(4), 576–581. doi:<a href="https://doi.org/10.1093/sysbio/42.4.576">10.1093/sysbio/42.4.576</a></p>
@@ -602,19 +612,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

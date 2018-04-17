@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-03-08">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,6 +47,16 @@
 
 
 
+<!--Sort the references alphabetically.  Modified from an implementation by Yvonne Aburrow.-->
+<script>
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html() > $(a).children('p').html() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
 
 
 <style type="text/css">
@@ -174,7 +184,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.3" data-path="examples.html"><a href="examples.html#a-better-caterpillar-tree"><i class="fa fa-check"></i><b>6.3</b> A better caterpillar tree</a></li>
 <li class="chapter" data-level="6.4" data-path="examples.html"><a href="examples.html#de-laets-caterpillars"><i class="fa fa-check"></i><b>6.4</b> De Laet’s caterpillars</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/TGuillerme/Inapp/" target="blank">Project GitHub page</a></li>
 
@@ -195,15 +205,15 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1">
-<h1><span class="header-section-number">7</span> References</h1>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
 
 <div id="refs" class="references">
 <div>
 <p>Agnarsson, I., &amp; Miller, J. A. (2008). Is <span class="smallcaps">AccTran</span> better than <span class="smallcaps">DelTran</span>? <em>Cladistics</em>, <em>24</em>(6), 1032–1038. doi:<a href="https://doi.org/10.1111/j.1096-0031.2008.00229.x">10.1111/j.1096-0031.2008.00229.x</a></p>
 </div>
 <div>
-<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2017). Morphological phylogenetic analysis with inapplicable data. <em>bioR<span class="math inline">\(\chi\)</span>iv</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2018). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
 </div>
 <div>
 <p>De Laet, J. (2005). Parsimony and the problem of inapplicables in sequence data. In V. Albert (Ed.), <em>Parsimony, phylogeny and genomics</em> (pp. 81–116). Oxford University Press.</p>
@@ -273,7 +283,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/06_examples.Rmd",
+"link": "https://github.com/TGuillerme/Inapp/inst/gitbook/edit/master/07_references.Rmd",
 "text": "Edit"
 },
 "download": ["Inapplicable_data.pdf"],
@@ -284,19 +294,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@ Author: c(person("Thomas", "Guillerme", email = "guillert@tcd.ie", role = c("aut
 Maintainer: Thomas Guillerme <guillert@tcd.ie>
 Description: An algorithm allowing states reconstruction and tree length counting for inapplicable discrete characters.
 Depends:
-    R (>= 3.3.3)
+    R (>= 3.4.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

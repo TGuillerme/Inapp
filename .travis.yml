@@ -26,7 +26,7 @@ r_binary_packages:
   - shiny
   - testthat
 
-r_github_packages:
+r_packages:
   - ms609/TreeSearch
 
 after_success:

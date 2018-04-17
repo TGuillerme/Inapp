@@ -12,7 +12,7 @@ warnings_are_errors: false
 branches:
   only:
     - master
-    - Character-names
+    - readCharacters
     # Change to release once released
 
 r_binary_packages:

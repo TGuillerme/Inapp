@@ -329,7 +329,7 @@ It follows these rules and only applies to nodes and ancestors that have at leas
     3. being the union of the ancestor's and the current node states the descendants have no inapplicable state.
 
 ```{r, fig.width = 7.1, fig.height = 7.1}
-plot(matrix, passes = c(1,2,3,4), counts = c(1,2), show.labels = c(1,2), col.states=TRUE)
+plot(matrix, passes = c(1,2,3,4), counts = c(1,2), show.labels = c(1,2))#, col.states=TRUE)
 ```
 
 ## Software implementation {#software}

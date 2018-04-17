@@ -28,10 +28,6 @@ r_binary_packages:
 r_packages:
   - TreeSearch
 
-before_script:
-- Rscript -e 'install.packages("TreeSearch")'
-- Rscript -e 'devtools::install_github("ms609/TreeSearch")'
-
 # Code coverage
 after_success:
 - Rscript -e 'library("covr"); codecov()'

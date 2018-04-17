@@ -1,12 +1,6 @@
 ---
 title: "Inapplicable data with the Fitch algorithm"
 author: "Martin R. Smith"
-date: "`r Sys.Date()`"
-bibliography: [../References.bib, packages.bib]
-csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
-output:
-  html_document: default
-  pdf_document: default
 ---
 
 ```{r, echo=FALSE, message=FALSE}
@@ -14,7 +8,7 @@ library('Inapp')
 library('ape')
 ap <- c("Absent", "Present")
 rb <- c("Red", "Blue")
-redBlue <- Inapp::brewer[[2]]
+redBlue <- TreeSearch::brewer[[2]]
 orb <- c('', rb)
 
 yesCol <- "#7fbf7be0"

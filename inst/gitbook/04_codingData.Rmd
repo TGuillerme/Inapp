@@ -1,12 +1,6 @@
 ---
 title: "Implications for character coding"
 author: "Martin R. Smith"
-date: "`r Sys.Date()`"
-bibliography: [../References.bib, packages.bib]
-csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
-output:
-  html_document: default
-  pdf_document: default
 ---
 
 

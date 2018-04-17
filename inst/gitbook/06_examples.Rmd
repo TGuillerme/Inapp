@@ -134,7 +134,7 @@ goloPlot(taiE, clrE, TRUE)
 combH <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, (G, H)))))));")
 ```
 
-De Laet [-@DeLaet2017] identifies a corner case in which our algorithm [@ThisStudy] will not reconstruct every equally-parsimonious character reconstruction.  Below is a simplified version of his example:
+De Laet [-@DeLaet2017] identifies a corner case in which our algorithm [@Brazeau2018] will not reconstruct every equally-parsimonious character reconstruction.  Below is a simplified version of his example:
 
 ```{r, echo=FALSE, asis=TRUE}
 tail <- "011?0011"
@@ -183,6 +183,3 @@ nodelabels(c("-1", "1", 1, '-1', rep("-", 2), 2), cex=1.6, frame='none')
 ```
 
 This has no effect on tree scoring, but may be relevant if complete internal nodal reconstructions are desired.
-
-
-# References

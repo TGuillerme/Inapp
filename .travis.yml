@@ -30,6 +30,7 @@ r_packages:
 
 before_script:
 - Rscript -e 'install.packages("TreeSearch")'
+- Rscript -e 'devtools::install_github("ms609/TreeSearch")'
 
 # Code coverage
 after_success:

@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Inapplicable data in a parsimony setting {-}
 
 This document provides a detailed explanation of the algorithm for handling
-inapplicable data proposed by Brazeau _et al._ [-@ThisStudy].
+inapplicable data proposed by @Brazeau2018.
 
 We first discuss how the [Fitch algorithm](#fitch) works and introduce
 the [problems](#problems) that it encounters in the face of inapplicable character states.

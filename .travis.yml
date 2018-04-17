@@ -12,7 +12,7 @@ warnings_are_errors: false
 branches:
   only:
     - master
-    - Character-names
+    - release
     # Change to release once released
 
 # Code coverage

@@ -257,7 +257,7 @@ Figure 1.3: Uppass traversal
 <blockquote>
 <p>Important: when the case 2 is encountered, a transformation is implied in the descendants of the considered node. The score of the tree is incremented by +1.</p>
 </blockquote>
-<p>In the following example, nodes that are in case 1 are in white and nodes in case 2, which imply a transformation (i.e. that add to the tree score), are in green.</p>
+<p>In the following example, nodes that are in case 1 are in white and nodes in case 2, which imply a transformation (i.e. that adds to the tree score), are in green.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">## Plotting the first downpass</div>
 <div class="sourceLine" id="2" href="#2" data-line-number="2"><span class="kw">plot.states.matrix</span>(matrix, <span class="dt">passes =</span> <span class="dv">1</span>, <span class="dt">counts =</span> <span class="dv">2</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</div>
 <div class="sourceLine" id="3" href="#3" data-line-number="3"><span class="kw">tiplabels</span>(char, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">bg =</span> Inapp<span class="op">::</span>brewer[[<span class="dv">2</span>]][char <span class="op">+</span><span class="st"> </span><span class="dv">1</span>], <span class="dt">adj =</span> <span class="dv">1</span>)</div></code></pre>
@@ -332,7 +332,7 @@ Under this reconstruction, the tails of <code>a</code> and <code>h</code> are no
 <p>Where we wish to maximise homology, we modify the Fitch uppass such that any node
 whose final state reconstruction would be ambiguous is instead reconstructed as present when that node is encountered.
 This approach maximises homology in the problematic trees presented by
-Agnarsson &amp; Miller [<span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>; “A&amp;M” below]:</p>
+Agnarsson &amp; Miller <span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>(“A&amp;M” below):</p>
 <div class="figure"><span id="fig:unnamed-chunk-11"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-11-1.png" alt="Homology-maximising character optimisations" width="681.6" />
 <p class="caption">

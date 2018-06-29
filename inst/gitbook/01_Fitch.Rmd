@@ -199,7 +199,8 @@ In certain cases, it is necessary to go further and discriminate between the equ
 A number of approaches have been proposed concerning which resolution of ambiguous
 nodes is preferable.
 
-The two most familiar approaches to resolving ambiguous node are the Accelerated Transformation (`r acctran`) and Delayed Transformation (`r deltran`) approaches.
+The two most familiar approaches to resolving ambiguous node are the Accelerated Transformation (`r acctran`) and Delayed Transformation (`r deltran`) approaches
+[@Farris1970;@Swofford1987].
 
 The `r acctran` approach reconstructs transformations as occurring as close to the root as possible; the `r deltran`, as far from the root as possible.
 
@@ -303,7 +304,7 @@ Under this reconstruction, the tails of `a` and `h` are not homologous with each
 Where we wish to maximise homology, we modify the Fitch uppass such that any node
 whose final state reconstruction would be ambiguous is instead reconstructed as present when that node is encountered.
 This approach maximises homology in the problematic trees presented by 
-Agnarsson & Miller [-@Agnarsson2008]("A&M" below):
+Agnarsson & Miller [-@Agnarsson2008; "A&M" below):
 
 ```{r, echo = FALSE, fig.width = 7.1, fig.height = 4, fig.cap="Homology-maximising character optimisations"}
 par(mfrow=c(1, 2), mar=rep(0.75, 4))

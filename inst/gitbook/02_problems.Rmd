@@ -19,7 +19,7 @@ setPar <- function (mfrow=c(1, 2)) par(mfrow=mfrow, mar=c(0.2, 0.2, 1, 0.2), oma
 
 # Problems with the Fitch algorithm {#problems}
 
-The Fitch algorithm counts changes in a character.
+The Fitch algorithm [@Fitch1971] counts changes in a character.
 It assumes that the character is applicable throughout the tree.
 This assumption does not lead to error if:
 
@@ -57,7 +57,7 @@ tiplabels(c(0, 1, 0, 1, rep('-', 6), 1, 1, 0, 0), bg=c(c0, c1, c0, c1, rep(cX, 6
 In the bold region, tail colour should group the red-tailed tips together, and the blue-tailed tips together,
 but does not establish whether the ancestor of the left-hand tail-bearing clade had a red or blue tail.
 
-```{r, echo=FALSE, fig.width=6, fig.height=4, fig.cap="Possible resolutions for bold region of tree (Good ones imply only one change)"}
+```{r, echo=FALSE, fig.width=6, fig.height=4, fig.cap="Possible resolutions for bold region of tree. Good resolutions imply one change; bad ones, two."}
 setPar(c(2, 3))
 pair <- ape::read.tree(text="(((a, b), (c, d)));")
 walk <- ape::read.tree(text="((a, (b, (c, d))));")
@@ -184,7 +184,7 @@ text(4, 4.1, "One gain of tail (preferable)", cex=1.2)
 
 ## Sankoff matrices
 
-It would be possible to establish a Sankoff matrix
+It would be possible to establish a Sankoff matrix [@Sankoff1975;@Sankoff1983]
 such that a change between absent and red or absent and blue cost more than 
 a change between red and blue, but this effectively up-weights the tail character,
 and it's not clear that this is desirable -- or how much this extra weight
@@ -242,7 +242,7 @@ ontogenetically dependant characters.
 At the cost of symmetry, one could argue that the loss of a tail requires a single
 transformation, whereas the gain requires the addition of a tail and the "setting"
 of each ontologically dependent character, rendering an asymmetric Sankoff
-matrix that nevertheless respects triangular inequality:
+matrix that nevertheless respects triangular inequality [@Wheeler1993]:
 
 ```{r, echo = FALSE, results='asis'}
 costs <- matrix(c(

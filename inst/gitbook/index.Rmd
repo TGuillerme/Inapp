@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Inapplicable data in a parsimony setting {-}
 
-This document `r if(knitr::is_latex_output()) "(also available as an [HTML webpage*](https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/index.html)"` provides a detailed explanation of the algorithm for handling
+This document `r if(knitr::is_latex_output()) "(also available as an [HTML webpage*](https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/index.html))"` provides a detailed explanation of the algorithm for handling
 inapplicable data proposed by @Brazeau2018.
 
 We first discuss how the [Fitch algorithm](#fitch) works and introduce
@@ -31,4 +31,4 @@ implications for the coding of [characters](#coding) and [ambiguity](#ambiguity)
 
 We close with some [example](#examples) trees that demonstrate how our algorithm behaves in more complicated cases.
 
- `r if(knitr::is_latex_output()) "\n\n\n\n\n\n\n\n* [rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/](https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/index.html)})`
+ `r if(knitr::is_latex_output()) "&#42; [rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/](https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/index.html)"`

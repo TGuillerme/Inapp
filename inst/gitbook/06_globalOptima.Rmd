@@ -5,6 +5,8 @@ author: "Martin R. Smith"
 
 # Global optimization {#global}
 
+
+## Global optima may be locally suboptimal
 OUr algorithm only considers reconstructions of principal characters that are 
 parsimonious.  Jan De Laet (personal communication) drew our attention to 
 situations where it is possible to reconstruct less global homoplasy by
@@ -14,9 +16,11 @@ Consider the following minimal example:
 
 ```{r, echo=FALSE, asis=TRUE}
 tail <- "11000011"
+tailCodings <- strsplit(tail, '')[[1]]
 clr  <- "11----11"
 ontd <- 5
 tips <- nchar(tail)
+losses <- sum(tailCodings == 0)
 bifH <- read.tree(text="((((a, b), c), d), (e, (f, (g, h))));")
 mDep <- matrix(strsplit(paste0(c(tail, tail, rep(clr, ontd)), collapse=''), '')[[1]], byrow=TRUE, nrow=2 + ontd)
 colnames(mDep) <- LETTERS[1:ncol(mDep)]
@@ -56,10 +60,10 @@ An alternative is to reconstruct the tail as ancestrally present, and lost indep
 ```{r, echo=FALSE, fig.width=8, fig.height=4}
 goloPar()
 nodeStates <- rep(1, nchar(tail) - 1)
-myStates <- c(strsplit(tail, '')[[1]], as.list(nodeStates))
+myStates <- c(tailCodings, as.list(nodeStates))
 vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
              main='Tail', state.labels = ap, state.override=myStates,
-             changes.override = integer(3))
+             changes.override = integer(losses))
 nodelabels(pch=16, cex=6, col=c(whitey, greeny, greeny, whitey, greeny, greeny, whitey))
 nodelabels(nodeStates, cex=1.6, frame='none')
 
@@ -74,22 +78,20 @@ nodelabels(nodeStates, cex=1.6, frame='none')
 
 ```
 
-Considering only the tail, this is an unparsimonious reconstruction: it requires `r number(tips - 4)` independent evolutionary events (losses), whereas the former required only two independent evolutionary events (gains).  Globally, however, this allows the similarity between ontologically dependent characters to be attributed to common ancestry (i.e. homology), resulting in a lower overall score of `r number(tips - 4L + 2)` homoplasies (the `r number(tips - 4L)` in the tail, plus the two in the beak, reconstructed as before, but none in any ontologically dependent character).
+Considering only the tail, this is an unparsimonious reconstruction: it requires `r number(losses)` independent evolutionary events (losses), whereas the former required only two independent evolutionary events (gains).  Globally, however, this allows the similarity between ontologically dependent characters to be attributed to common ancestry (i.e. homology), resulting in a lower overall score of `r number(losses + 2)` homoplasies (the `r number(losses)` in the tail, plus the two in the beak, reconstructed as before, but none in any ontologically dependent character).
 
-Note that the details of this reconstruction rely on the attribution of ontologically dependent characters to specific principal characters.  Changing the ontology of the previous matrix (but none of the scorings) such that two ontologically dependent characters depend on the beak, rather than the tail, results in a different outcome:
+## Ontology
+
+Note that the details of this reconstruction rely on the attribution of ontologically dependent characters to specific principal characters.  Changing the ontology of the previous matrix (without modifying the scorings) such that two ontologically dependent characters depend on the beak, rather than the tail, results in a different outcome:
 
 ```{r, echo=FALSE, asis=TRUE}
-rownames(mDep) <- c("Tail: (0), absent; (1), present.",
-                    "Beak: (0), absent; (1), present.",
-                    "Tail, colour: (1), red; (2), blue.",
-                    "Tail, length: (1), long; (2), short.",
-                    "**Beak**, curvature: (1), convex; (2), concave.",
+rownames(mDep)[nrow(mDep) - 1:0] <- c("**Beak**, curvature: (1), convex; (2), concave.",
                     "**Beak**, lustre: (1), glossy; (2), matt.")
 knitr::kable(mDep, caption="Coding")
 ```
 
 Now, neither principal character has enough ontologically dependent characters to 
-compensate for the additional cost of unparsimoniously reconstructing its own distribution. The 'parsimonious' reconstruction entails a minimum of eight homoplasies:
+compensate for the additional cost of unparsimoniously reconstructing its own distribution. Following the individually parsimonious reconstruction of the tail and beak entails a minimum of `r number(1 + 1 + ontd)` homoplasies: one additional gain of each of the beak and the tail, and an independent origin of redness, longness, rigidity, curvature and lustre:
 
 ```{r, echo=FALSE, fig.width=8, fig.height=4}
 goloPar()
@@ -107,15 +109,15 @@ nodelabels(c('-', '-', 1, '-', '-', '-', 1), cex=1.6, frame='none')
 
 ```
 
-
+On the other hand, reconstructing a beak and a tail as present in the common ancestor requires four independent losses in each character -- a total of `r number(2 * losses)` homoplasies, which does not outweigh the benefit obtained by reconstructing the ontologically dependent characters as homologous:
 
 ```{r, echo=FALSE, fig.width=8, fig.height=4}
 goloPar()
 nodeStates <- rep(1, nchar(tail) - 1)
 myStates <- c(strsplit(tail, '')[[1]], as.list(nodeStates))
 vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
-             main='Tail', state.labels = ap, state.override=myStates,
-             changes.override = integer(3))
+             main='Tail AND beak', state.labels = ap, state.override=myStates,
+             changes.override = integer(losses))
 nodelabels(pch=16, cex=6, col=c(whitey, greeny, greeny, whitey, greeny, greeny, whitey))
 nodelabels(nodeStates, cex=1.6, frame='none')
 

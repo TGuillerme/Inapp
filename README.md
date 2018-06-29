@@ -7,10 +7,8 @@
 
 <a href="https://figshare.com/articles/Guillerme_Evolution2017_pdf/5140222"><img src="http://tguillerme.github.io/images/logo-FS.png" height="15" widht="15"/></a> 
 Check out the [presentation](https://figshare.com/articles/Guillerme_Evolution2017_pdf/5140222). 
-<!-- or the [video](https://www.youtube.com/watch?v=ZzipKw8W8KQ) of some of the package's novel features. -->
 
-
-This package allows to run the algorithm described in @@@(TBC).
+This package allows to run the algorithm described in [this preprint](https://www.biorxiv.org/content/early/2017/10/26/209775) (stay tuned for the accepted version in Systematic Biology comming soon!).
 You can either directly run the package on your web browser (Graphical User Interface mode!), or install it in `R` as a proper package (or both!).
 
 ## Running Inapp on your web browser
@@ -32,6 +30,9 @@ library(Inapp)
 ## Running the App:
 runInapp()
 ```
+
+Check out the package [vignette](https://cdn.rawgit.com/TGuillerme/Inapp/2d7de88b/inst/gitbook/_book/index.html) for (many) more details on the GUI possibilities.
+
 
 Authors
 -------

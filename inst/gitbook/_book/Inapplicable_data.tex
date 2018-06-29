@@ -132,6 +132,11 @@ Smith
   \date{2018-06-29}
 
 \usepackage{booktabs}
+\usepackage{doi} % Adds hyperlinks to dois
+\usepackage[nottoc]{tocbibind} % list references in TOC
+\setcitestyle{round} % [Bracket style]
+\usepackage{hyperref}
+\raggedbottom % Don't stretch out paragraps to bottom of page
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -159,8 +164,10 @@ Smith
 setting}\label{inapplicable-data-in-a-parsimony-setting}}
 \addcontentsline{toc}{chapter}{Inapplicable data in a parsimony setting}
 
-This document provides a detailed explanation of the algorithm for
-handling inapplicable data proposed by \citet{Brazeau2018}.
+This document (also available as an
+\href{https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/index.html}{HTML
+webpage*}) provides a detailed explanation of the algorithm for handling
+inapplicable data proposed by \citet{Brazeau2018}.
 
 We first discuss how the \protect\hyperlink{fitch}{Fitch algorithm}
 works and introduce the \protect\hyperlink{problems}{problems} that it
@@ -175,16 +182,19 @@ and \protect\hyperlink{ambiguity}{ambiguity}.
 We close with some \protect\hyperlink{examples}{example} trees that
 demonstrate how our algorithm behaves in more complicated cases.
 
+*
+\href{https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/index.html}{rawgit.com/TGuillerme/Inapp/master/inst/gitbook/\_book/}
+
 \hypertarget{fitch}{%
 \chapter{The Fitch algorithm}\label{fitch}}
 
 This algorithm was proposed by Fitch \citeyearpar{Fitch1971} and is
-implemented in many phylogenetic softwares based on maximum parsimony
-\citep{swofford2001paup, Goloboff2016} or probabilistic methods
-\citep{Ronquist2012mrbayes, Stamatakis2014}. The procedure is simple and
-elegant and entails going down the tree to count the number of
-transformations, and then going back up the tree to finalise the
-ancestral state reconstructions.
+implemented in phylogenetic software that employs maximum parsimony
+\citep{swofford2001paup, Goloboff2016} and probabilistic methods
+\citep{Ronquist2012mrbayes, Stamatakis2014}. The simple and elegant
+procedure and entails going down the tree to count the number of
+transformations, then going back up the tree to finalise the ancestral
+state reconstructions.
 
 The way the algorithm goes up and down depends on the software, but
 often employs a \emph{traversal}: a recursive function that can visit
@@ -200,7 +210,8 @@ following tree:
 A downpass traversal will first evaluate the first cherry (or pair of
 taxa) (\texttt{A} below), then save the results in \texttt{n1} and
 evaluate the second pair of tips/nodes (\texttt{B}), saving the results
-in \texttt{n2}, proceeding until all the nodes/tips are visited.
+in \texttt{n2}, proceeding until all the nodes and tips have been
+visited.
 
 \begin{figure}
 \centering
@@ -224,7 +235,8 @@ tips and nodes are eventually visited.
 
 Now let's consider a more complex tree
 \texttt{((((a,\ b),\ c),\ d),\ (e,\ (f,\ (g,\ h))));} with a binary
-character distributed ((((1, 0), 0), 1), (1, (0, (0, 1)))):
+character distributed
+\texttt{((((1,\ 0),\ 0),\ 1),\ (1,\ (0,\ (0,\ 1))))}:
 
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-5-1.pdf}
 
@@ -251,7 +263,7 @@ this character on this tree.
 \section{Downpass}\label{downpass}}
 
 The downpass is quite simple and follows these rules for the two
-possible cases in the traversal:
+possible cases in the traversal \citep{Fitch1971}:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -309,7 +321,7 @@ reconstruction is equally parsimonious: \texttt{n13}, \texttt{n14} and
 \texttt{1} to state \texttt{0} in each of the two lineages leading to
 \texttt{f} and \texttt{g}.
 
-The uppass traversal employs the following rules:
+The uppass traversal employs the following rules \citep{Fitch1971}:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -382,11 +394,14 @@ root as possible.
 In this case, the ambiguous resolution of the root leaves two options
 for the latter:
 
+
+
+
 \begin{figure}
 \centering
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-10-1.pdf}
-\caption{\label{fig:unnamed-chunk-10}Node reconstructions after AccTran or
-DelTran` optimizations}
+\caption{\label{fig:unnamed-chunk-10}Node reconstructions after \textsc{AccTran} or
+\textsc{DelTran} optimizations}
 \end{figure}
 
 If the states \texttt{0} and \texttt{1} represent states of a
@@ -424,7 +439,7 @@ Where we wish to maximise homology, we modify the Fitch uppass such that
 any node whose final state reconstruction would be ambiguous is instead
 reconstructed as present when that node is encountered. This approach
 maximises homology in the problematic trees presented by Agnarsson \&
-Miller {[}\citeyearpar{Agnarsson2008}; ``A\&M'' below):
+Miller {[}\citeyearpar{Agnarsson2008}; ``A\&M'' below{]}:
 
 \begin{figure}
 \centering
@@ -1737,6 +1752,121 @@ Tail colour: (0), red; (1), blue. & ? & ? & -\\
 observed (smooth or serrated), whereas tail colour represents a
 character that may take an unobserved state (e.g.~green).
 
+\hypertarget{global}{%
+\chapter{Global optimization}\label{global}}
+
+\hypertarget{global-optima-may-be-locally-suboptimal}{%
+\section{Global optima may be locally
+suboptimal}\label{global-optima-may-be-locally-suboptimal}}
+
+OUr algorithm only considers reconstructions of principal characters
+that are parsimonious. Jan De Laet (personal communication) drew our
+attention to situations where it is possible to reconstruct less global
+homoplasy by employing a more homoplasious reconstruction of a principal
+character.
+
+Consider the following minimal example:
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-66}Coding}
+\centering
+\begin{tabular}[t]{l|l|l|l|l|l|l|l|l}
+\hline
+  & A & B & C & D & E & F & G & H\\
+\hline
+Tail: (0), absent; (1), present. & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1\\
+\hline
+Beak: (0), absent; (1), present. & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1\\
+\hline
+Tail, colour: (1), red; (2), blue. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+Tail, length: (1), long; (2), short. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+Tail, rigidity: (1), rigid; (2), flexible. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+Tail, curvature: (1), convex; (2), concave. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+Tail, lustre: (1), glossy; (2), matt. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+\end{tabular}
+\end{table}
+
+On a tree where tail-less taxa separate A and B from F and G, our
+algorithm reconstructs two separate origins of the tail:
+
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-67-1.pdf}
+
+This reconstruction implies seven homoplasies across these characters:
+one independent gain of the tail, one of the beak, and one independent
+origin of each ontologically dependent property (redness, longness,
+rigidity, convexness, glossiness).
+
+An alternative is to reconstruct the tail as ancestrally present, and
+lost independently in C, D and E.
+
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-68-1.pdf}
+
+Considering only the tail, this is an unparsimonious reconstruction: it
+requires four independent evolutionary events (losses), whereas the
+former required only two independent evolutionary events (gains).
+Globally, however, this allows the similarity between ontologically
+dependent characters to be attributed to common ancestry
+(i.e.~homology), resulting in a lower overall score of six homoplasies
+(the four in the tail, plus the two in the beak, reconstructed as
+before, but none in any ontologically dependent character).
+
+\hypertarget{ontology}{%
+\section{Ontology}\label{ontology}}
+
+Note that the details of this reconstruction rely on the attribution of
+ontologically dependent characters to specific principal characters.
+Changing the ontology of the previous matrix (but none of the scorings)
+such that two ontologically dependent characters depend on the beak,
+rather than the tail, results in a different outcome:
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-69}Coding}
+\centering
+\begin{tabular}[t]{l|l|l|l|l|l|l|l|l}
+\hline
+  & A & B & C & D & E & F & G & H\\
+\hline
+Tail: (0), absent; (1), present. & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1\\
+\hline
+Beak: (0), absent; (1), present. & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1\\
+\hline
+Tail, colour: (1), red; (2), blue. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+Tail, length: (1), long; (2), short. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+Tail, rigidity: (1), rigid; (2), flexible. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+**Beak**, curvature: (1), convex; (2), concave. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+**Beak**, lustre: (1), glossy; (2), matt. & 1 & 1 & - & - & - & - & 1 & 1\\
+\hline
+\end{tabular}
+\end{table}
+
+Now, neither principal character has enough ontologically dependent
+characters to compensate for the additional cost of unparsimoniously
+reconstructing its own distribution. Following the individually
+parsimonious reconstruction of the tail and beak entails a minimum of
+seven homoplasies: one additional gain of each of the beak and the tail,
+and an independent origin of redness, longness, rigidity, curvature and
+lustre:
+
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-70-1.pdf}
+
+On the other hand, reconstructing a beak and a tail as present in the
+common ancestor requires four independent losses in each character -- a
+total of eight homoplasies, which does not outweigh the benefit obtained
+by reconstructing the ontologically dependent characters as homologous:
+
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-71-1.pdf}
+
 \hypertarget{examples}{%
 \chapter{Examples}\label{examples}}
 
@@ -1762,8 +1892,8 @@ is one example:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-68-1.pdf}
-\caption{\label{fig:unnamed-chunk-68}An optimal tree: Total score 2}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-73-1.pdf}
+\caption{\label{fig:unnamed-chunk-73}An optimal tree: Total score 2}
 \end{figure}
 
 If we insist that the tail evolves twice, then the best score is
@@ -1774,8 +1904,8 @@ innovation in a tail-less taxon of a tail that has a different colour:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-69-1.pdf}
-\caption{\label{fig:unnamed-chunk-69}Two tail innovations: Total score 2
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-74-1.pdf}
+\caption{\label{fig:unnamed-chunk-74}Two tail innovations: Total score 2
 (best possible)}
 \end{figure}
 
@@ -1787,8 +1917,8 @@ instance of homoplasy.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-70-1.pdf}
-\caption{\label{fig:unnamed-chunk-70}Tree A: Total score 4}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-75-1.pdf}
+\caption{\label{fig:unnamed-chunk-75}Tree A: Total score 4}
 \end{figure}
 
 \hypertarget{three-equally-suboptimal-alternatives}{%
@@ -1808,8 +1938,8 @@ to blue somewhere between edges 7 and 9 (three homoplasies).
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-71-1.pdf}
-\caption{\label{fig:unnamed-chunk-71}Tree B: Total score 9}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-76-1.pdf}
+\caption{\label{fig:unnamed-chunk-76}Tree B: Total score 9}
 \end{figure}
 
 In the second, our algorithm reconstructs the tail as ancestrally
@@ -1821,8 +1951,8 @@ somewhere between edges 7 and 9 (two homoplasies).
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-72-1.pdf}
-\caption{\label{fig:unnamed-chunk-72}Tree C: Total score 9}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-77-1.pdf}
+\caption{\label{fig:unnamed-chunk-77}Tree C: Total score 9}
 \end{figure}
 
 The third configuration reconstructs the tail as ancestrally present,
@@ -1832,8 +1962,8 @@ colour from red to blue on edge 8.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-73-1.pdf}
-\caption{\label{fig:unnamed-chunk-73}Tree D: Total score 9}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-78-1.pdf}
+\caption{\label{fig:unnamed-chunk-78}Tree D: Total score 9}
 \end{figure}
 
 \hypertarget{a-better-caterpillar-tree}{%
@@ -1847,21 +1977,21 @@ for a combined score of 7.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-74-1.pdf}
-\caption{\label{fig:unnamed-chunk-74}Tree E: Total score 7}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-79-1.pdf}
+\caption{\label{fig:unnamed-chunk-79}Tree E: Total score 7}
 \end{figure}
 
 \hypertarget{de-laets-caterpillars}{%
 \section{De Laet's caterpillars}\label{de-laets-caterpillars}}
 
-De Laet \citeyearpar{DeLaet2017} identifies a corner case in which our
+De Laet \citeyearpar{DeLaet2017} identifies a case in which our
 algorithm \citep{Brazeau2018} will not reconstruct every
 equally-parsimonious character reconstruction. Below is a simplified
 version of his example:
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-76}Coding}
+\caption{\label{tab:unnamed-chunk-81}Coding}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l}
 \hline
@@ -1869,7 +1999,7 @@ version of his example:
 \hline
 Tail: (0), absent; (1), present. & 0 & 1 & 1 & ? & 0 & 0 & 1 & 1\\
 \hline
-Tail, colour: (1), red; (2),blue. & - & 1 & 1 & ? & - & - & 2 & 2\\
+Tail, colour: (1), red; (2), blue. & - & 1 & 1 & ? & - & - & 2 & 2\\
 \hline
 \end{tabular}
 \end{table}
@@ -1878,7 +2008,7 @@ When optimising tail colour, we reconstruct the tail as present at all
 internal nodes, with independent losses of the tail in each of the three
 tailless taxa (i.e.~edges 1, 9, 11).
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-77-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-82-1.pdf}
 
 The Fitch algorithm identifies other reconstructions as equally
 parsimonious: for example, a tail may have been lost on edge 6 and
@@ -1897,7 +2027,7 @@ In this particular case, there is an equally-parsimonious character
 reconstruction that our algorithm excludes, which invokes two gains (and
 one loss) of the tail:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-78-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-83-1.pdf}
 
 This has no effect on tree scoring, but may be relevant if complete
 internal nodal reconstructions are desired.

@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="fitch.html">
-<link rel="next" href="solution.html">
+<link rel="prev" href="ambiguity.html">
+<link rel="next" href="examples.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -209,376 +209,222 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="problems" class="section level1">
-<h1><span class="header-section-number">2</span> Problems with the Fitch algorithm</h1>
-<p>The Fitch algorithm <span class="citation">(Fitch, <a href="#ref-Fitch1971">1971</a>)</span> counts changes in a character.
-It assumes that the character is applicable throughout the tree.
-This assumption does not lead to error if:</p>
-<ul>
-<li><p>The character is inapplicable in fewer than three tips; or</p></li>
-<li><p>In the trees being considered, applicable and inapplicable tokens occur
-in distinct regions of the tree <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>.</p></li>
-</ul>
-<div id="red-tails-blue-tails" class="section level2">
-<h2><span class="header-section-number">2.1</span> Red tails, blue tails</h2>
-<p>Maddison <span class="citation">(<a href="#ref-Maddison1993">1993</a>)</span> provided the following example to demonstrate
-the problem encountered by the Fitch algorithm when inapplicable
-characters were present.</p>
-<p>Consider the following tree, each node of which is supported by a number of
-characters. Tail colour (illustrated; 0 = red, 1 = blue) has not yet been
-considered, but has the potential to resolve the polytomy on the left hand side (bold).</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-14-1.png" width="681.6" /></p>
-<p>In the bold region, tail colour should group the red-tailed tips together, and the blue-tailed tips together,
-but does not establish whether the ancestor of the left-hand tail-bearing clade had a red or blue tail.</p>
-<div class="figure"><span id="fig:unnamed-chunk-15"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-15-1.png" alt="Possible resolutions for bold region of tree. Good resolutions imply one change; bad ones, two." width="576" />
-<p class="caption">
-Figure 2.1: Possible resolutions for bold region of tree. Good resolutions imply one change; bad ones, two.
-</p>
-</div>
-</div>
-<div id="reductive-coding" class="section level2">
-<h2><span class="header-section-number">2.2</span> Reductive coding</h2>
-<p>Under reductive coding, the tail and its colour are described in two character statements:</p>
-<blockquote>
-<p>Tail: (0), absent; (1), present.</p>
-<p>Tail, colour: (0), red; (1), blue; (?), inapplicable.</p>
-</blockquote>
-<p>Consider the following two trees, each of which receives a score of two for the first
-character (presence of tail). The score of the second character (tail colour)
-is not as desired.</p>
-<p>The Fitch algorithm will prefer trees in which the left-hand tail-bearing clade
-has a blue tail, simply because the right-hand tail-bearing clade ancestrally did.</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-16-1.png" width="681.6" /></p>
-<p>Notice the additional step reconstructed at the root node: the Fitch algorithm
-reconstructs a change in tail colour in a taxon that doesn’t have a tail!</p>
-<p>This reconstruction is not logically consistent.</p>
-<div id="an-exception" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> An exception</h3>
-<p>If the parent character can parsimoniously be reconstructed as present at every internal node in a single unbroken region of a tree, and nowhere else, then reductive coding does work successfully. Reductive coding may therefore be appropriate if only a subset of all possible trees are under consideration, and is always (i.e. for all trees) appropriate if a character exhibits fewer than three inapplicable tokens.</p>
-</div>
-</div>
-<div id="inapplicable-as-an-extra-state" class="section level2">
-<h2><span class="header-section-number">2.3</span> Inapplicable as an extra state</h2>
-<p>An alternative is to code the inapplicable token as an extra state:</p>
-<blockquote>
-<p>Tail: (0), absent; (1), present.</p>
-<p>Tail, colour: (0), red; (1), blue; (2), inapplicable.</p>
-</blockquote>
-<p>This seems to resolve the problem case that we encountered with reductive coding:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-17-1.png" width="681.6" /></p>
-<p>Both trees now receive the same score for the ‘tail colour’ character, which
-contributes four steps. Two of these steps, however, correspond to steps that have
-already been counted in the parent character, reflecting the two gains of a tail.</p>
-<p>Although this reconstruction is logically consistent, the gain (or loss) of the tail
-is now reflected in two characters – characters are not independent of one another.</p>
-<p>The outcome is that each ontologically dependent character serves to increase
-the weight of its parent character. The loss of a tail, for example, would
-incur a cost of one step in the tail character and one step in each
-ontologically dependent character, even though it represents a single
-evolutionary event.</p>
-</div>
-<div id="a-single-multi-state-character" class="section level2">
-<h2><span class="header-section-number">2.4</span> A single multi-state character</h2>
-<p>A different approach is to use a single character to denote both the
-presence and the colour of the tail:</p>
-<blockquote>
-<p>Tail: (0), absent; (1), present, red; (2), present, blue.</p>
-</blockquote>
-<p>This seems to resolve the problem case that we encountered with reductive coding:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-18-1.png" width="681.6" /></p>
-<p>However, we now have a situation where the gain/loss of a tail is afforded the same weight
-as a change in tail colour. We ought to prefer a tree where the tail evolved once
-(and changed colour) to one where it evolved twice (being a different colour each time).</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-19-1.png" width="576" /></p>
-</div>
-<div id="sankoff-matrices" class="section level2">
-<h2><span class="header-section-number">2.5</span> Sankoff matrices</h2>
-<p>It would be possible to establish a Sankoff matrix <span class="citation">(Sankoff &amp; Cedergren, <a href="#ref-Sankoff1983">1983</a>; Sankoff &amp; Rousseau, <a href="#ref-Sankoff1975">1975</a>)</span>
-such that a change between absent and red or absent and blue cost more than
-a change between red and blue, but this effectively up-weights the tail character,
-and it’s not clear that this is desirable – or how much this extra weight
-should be <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>.</p>
-<div id="symmetric" class="section level3">
-<h3><span class="header-section-number">2.5.1</span> Symmetric</h3>
-<p>Consider a character with three ontologically dependent characters:</p>
-<blockquote>
-<p>Presence: Absent / present</p>
-<p>Colour: Red / blue</p>
-<p>Covering: Scaly / hairy</p>
-<p>Shape: Straight / curly</p>
-</blockquote>
-<p>This could be coded as a single transformation series using a Sankoff matrix:</p>
+<div id="global" class="section level1">
+<h1><span class="header-section-number">6</span> Global optimization</h1>
+<div id="global-optima-may-be-locally-suboptimal" class="section level2">
+<h2><span class="header-section-number">6.1</span> Global optima may be locally suboptimal</h2>
+<p>OUr algorithm only considers reconstructions of principal characters that are
+parsimonious. Jan De Laet (personal communication) drew our attention to
+situations where it is possible to reconstruct less global homoplasy by
+employing a more homoplasious reconstruction of a principal character.</p>
+<p>Consider the following minimal example:</p>
 <table>
-<caption><span id="tab:unnamed-chunk-20">Table 2.1: </span>Tail: Cost to go from left state to top state:</caption>
+<caption><span id="tab:unnamed-chunk-66">Table 6.1: </span>Coding</caption>
 <thead>
 <tr class="header">
 <th></th>
-<th align="left">0</th>
-<th align="left">1</th>
-<th align="left">2</th>
-<th align="left">3</th>
-<th align="left">.</th>
-<th align="left">.</th>
-<th align="left">.</th>
-<th align="left">8</th>
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+<th align="left">D</th>
+<th align="left">E</th>
+<th align="left">F</th>
+<th align="left">G</th>
+<th align="left">H</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>(0), absent</td>
+<td>Tail: (0), absent; (1), present.</td>
+<td align="left">1</td>
+<td align="left">1</td>
 <td align="left">0</td>
-<td align="left">4</td>
-<td align="left">4</td>
-<td align="left">4</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">4</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
-<td>(1), present, red, scaly, straight</td>
-<td align="left">4</td>
+<td>Beak: (0), absent; (1), present.</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
 <td align="left">0</td>
 <td align="left">1</td>
 <td align="left">1</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">3</td>
 </tr>
 <tr class="odd">
-<td>(2), present, red, scaly, curly</td>
-<td align="left">4</td>
+<td>Tail, colour: (1), red; (2), blue.</td>
 <td align="left">1</td>
-<td align="left">0</td>
-<td align="left">2</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
-<td>(3), present, red, hairy, straight</td>
-<td align="left">4</td>
+<td>Tail, length: (1), long; (2), short.</td>
 <td align="left">1</td>
-<td align="left">2</td>
-<td align="left">0</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="odd">
-<td>.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">0</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
+<td>Tail, rigidity: (1), rigid; (2), flexible.</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
-<td>.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">0</td>
-<td align="left">.</td>
-<td align="left">.</td>
+<td>Tail, curvature: (1), convex; (2), concave.</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="odd">
-<td>.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">0</td>
-<td align="left">.</td>
-</tr>
-<tr class="even">
-<td>(8), present, blue, hairy, curly</td>
-<td align="left">4</td>
-<td align="left">3</td>
-<td align="left">2</td>
-<td align="left">2</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">0</td>
+<td>Tail, lustre: (1), glossy; (2), matt.</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 </tbody>
 </table>
-<p>The first thing to note is that each additional ontologically depedent character
-generates disproportionately more complexity in the Sankoff matrix.</p>
-<p>Even if this additional complexity could be handled, the underlying issue remains
-that losing a tail, which arguably corresponds to a single evolutionary
-event, is allocated a large cost (here, 4) that grows in line with the number of
-ontogenetically dependant characters.</p>
+<p>On a tree where tail-less taxa separate A and B from F and G, our algorithm
+reconstructs two separate origins of the tail:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-67-1.png" width="768" /></p>
+<p>This reconstruction implies seven homoplasies across these characters: one independent gain of the tail, one of the beak, and one independent origin of each ontologically dependent property (redness, longness, rigidity, convexness, glossiness).</p>
+<p>An alternative is to reconstruct the tail as ancestrally present, and lost independently in C, D and E.</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-68-1.png" width="768" /></p>
+<p>Considering only the tail, this is an unparsimonious reconstruction: it requires four independent evolutionary events (losses), whereas the former required only two independent evolutionary events (gains). Globally, however, this allows the similarity between ontologically dependent characters to be attributed to common ancestry (i.e. homology), resulting in a lower overall score of six homoplasies (the four in the tail, plus the two in the beak, reconstructed as before, but none in any ontologically dependent character).</p>
 </div>
-<div id="gain-and-loss-asymmetric" class="section level3">
-<h3><span class="header-section-number">2.5.2</span> Gain and loss asymmetric</h3>
-<p>At the cost of symmetry, one could argue that the loss of a tail requires a single
-transformation, whereas the gain requires the addition of a tail and the “setting”
-of each ontologically dependent character, rendering an asymmetric Sankoff
-matrix that nevertheless respects triangular inequality <span class="citation">(Wheeler, <a href="#ref-Wheeler1993">1993</a>)</span>:</p>
+<div id="ontology" class="section level2">
+<h2><span class="header-section-number">6.2</span> Ontology</h2>
+<p>Note that the details of this reconstruction rely on the attribution of ontologically dependent characters to specific principal characters. Changing the ontology of the previous matrix (but none of the scorings) such that two ontologically dependent characters depend on the beak, rather than the tail, results in a different outcome:</p>
 <table>
-<caption><span id="tab:unnamed-chunk-21">Table 2.2: </span>Tail: Cost to go from left state to top state:</caption>
+<caption><span id="tab:unnamed-chunk-69">Table 6.2: </span>Coding</caption>
 <thead>
 <tr class="header">
 <th></th>
-<th align="left">(0)</th>
-<th align="left">(1)</th>
-<th align="left">(2)</th>
-<th align="left">(3)</th>
-<th align="left">.</th>
-<th align="left">.</th>
-<th align="left">.</th>
-<th align="left">(8)</th>
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+<th align="left">D</th>
+<th align="left">E</th>
+<th align="left">F</th>
+<th align="left">G</th>
+<th align="left">H</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>(0), absent</td>
+<td>Tail: (0), absent; (1), present.</td>
+<td align="left">1</td>
+<td align="left">1</td>
 <td align="left">0</td>
-<td align="left">4</td>
-<td align="left">4</td>
-<td align="left">4</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">4</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
-<td>(1), present, red, scaly, straight</td>
+<td>Beak: (0), absent; (1), present.</td>
 <td align="left">1</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
 <td align="left">0</td>
 <td align="left">1</td>
 <td align="left">1</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">3</td>
 </tr>
 <tr class="odd">
-<td>(2), present, red, scaly, curly</td>
+<td>Tail, colour: (1), red; (2), blue.</td>
 <td align="left">1</td>
 <td align="left">1</td>
-<td align="left">0</td>
-<td align="left">2</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">2</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
-<td>(3), present, red, hairy, straight</td>
+<td>Tail, length: (1), long; (2), short.</td>
 <td align="left">1</td>
 <td align="left">1</td>
-<td align="left">2</td>
-<td align="left">0</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">2</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="odd">
-<td>.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">0</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
+<td>Tail, rigidity: (1), rigid; (2), flexible.</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
-<td>.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">0</td>
-<td align="left">.</td>
-<td align="left">.</td>
+<td><strong>Beak</strong>, curvature: (1), convex; (2), concave.</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="odd">
-<td>.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">0</td>
-<td align="left">.</td>
-</tr>
-<tr class="even">
-<td>(8), present, blue, hairy, curly</td>
+<td><strong>Beak</strong>, lustre: (1), glossy; (2), matt.</td>
 <td align="left">1</td>
-<td align="left">3</td>
-<td align="left">2</td>
-<td align="left">2</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">.</td>
-<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">-</td>
+<td align="left">1</td>
+<td align="left">1</td>
 </tr>
 </tbody>
 </table>
-<p>Here, though, we encounter a new problem: reconstructions involving very many losses
-are preferred to those involving a single gain.</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-22-1.png" width="633.6" /></p>
-</div>
-</div>
-<div id="why-counting-steps-cannot-work" class="section level2">
-<h2><span class="header-section-number">2.6</span> Why counting steps cannot work</h2>
-<p>The failure of the Sankoff approach illustrates a more general problem:
-if the only thing that is counted is the number of steps, then trees that
-imply multiple gains and losses of a principal character are not adequately penalised.</p>
-<p>To illustrate this point, consider counting only transitions between applicable states
-(i.e. steps), but not transitions from the applicable state to the inapplicable state:</p>
-<div class="figure"><span id="fig:unnamed-chunk-23"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-23-1.png" alt="Tail colour optimization" width="576" />
-<p class="caption">
-Figure 2.2: Tail colour optimization
-</p>
-</div>
-<p>The number of steps can be minimized by maximizing the number of independent gains of a parent character.</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-24-1.png" width="681.6" /><img src="Inapplicable_data_files/figure-html/unnamed-chunk-24-2.png" width="681.6" /><img src="Inapplicable_data_files/figure-html/unnamed-chunk-24-3.png" width="681.6" /><img src="Inapplicable_data_files/figure-html/unnamed-chunk-24-4.png" width="681.6" /><img src="Inapplicable_data_files/figure-html/unnamed-chunk-24-5.png" width="681.6" /><img src="Inapplicable_data_files/figure-html/unnamed-chunk-24-6.png" width="681.6" /></p>
-</div>
-<div id="conclusion" class="section level2">
-<h2><span class="header-section-number">2.7</span> Conclusion</h2>
-<p>No coding mechanism can generate consistent and logically meaningful tree scores
-when employing the Fitch algorithm. A new algorithm is needed: one that counts
-homoplasies instead of steps.</p>
+<p>Now, neither principal character has enough ontologically dependent characters to
+compensate for the additional cost of unparsimoniously reconstructing its own distribution. Following the individually parsimonious reconstruction of the tail and beak entails a minimum of seven homoplasies: one additional gain of each of the beak and the tail, and an independent origin of redness, longness, rigidity, curvature and lustre:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-70-1.png" width="768" /></p>
+<p>On the other hand, reconstructing a beak and a tail as present in the common ancestor requires four independent losses in each character – a total of eight homoplasies, which does not outweigh the benefit obtained by reconstructing the ontologically dependent characters as homologous:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-71-1.png" width="768" /></p>
 
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Fitch1971">
-<p>Fitch, W. M. (1971). Toward defining the course of evolution: minimum change for a specific tree topology. <em>Systematic Biology</em>, <em>20</em>(4), 406–416. doi:<a href="https://doi.org/10.1093/sysbio/20.4.406">10.1093/sysbio/20.4.406</a></p>
-</div>
-<div id="ref-Maddison1993">
-<p>Maddison, W. P. (1993). Missing data versus missing characters in phylogenetic analysis. <em>Systematic Biology</em>, <em>42</em>(4), 576–581. doi:<a href="https://doi.org/10.1093/sysbio/42.4.576">10.1093/sysbio/42.4.576</a></p>
-</div>
-<div id="ref-Sankoff1983">
-<p>Sankoff, D., &amp; Cedergren, R. J. (1983). Simultaneous comparison of three or more sequences related by a tree. In D. Sankoff &amp; J. B. Kruskal (Eds.), <em>Time warps, string edits and macromolecules: The theory and practice of sequence comparison</em> (pp. 253–263). Reading, Massachusetts: Addison-Wesley.</p>
-</div>
-<div id="ref-Sankoff1975">
-<p>Sankoff, D., &amp; Rousseau, P. (1975). Locating the vertices of a steiner tree in an arbitrary metric space. <em>Mathematical Programming</em>, <em>9</em>(1), 240–246. doi:<a href="https://doi.org/10.1007/BF01681346">10.1007/BF01681346</a></p>
-</div>
-<div id="ref-Wheeler1993">
-<p>Wheeler, W. C. (1993). The triangle inequality and character analysis. <em>Molecular Biology and Evolution</em>, <em>10</em>(3), 707–712.</p>
 </div>
 </div>
             </section>
@@ -586,8 +432,8 @@ homoplasies instead of steps.</p>
           </div>
         </div>
       </div>
-<a href="fitch.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="solution.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ambiguity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -617,7 +463,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TGuillerme/Inapp/edit/master/inst/gitbook/02_problems.Rmd",
+"link": "https://github.com/TGuillerme/Inapp/edit/master/inst/gitbook/06_globalOptima.Rmd",
 "text": "Edit"
 },
 "download": ["Inapplicable_data.pdf", "Inapplicable_data.epub"],

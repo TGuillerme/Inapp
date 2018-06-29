@@ -134,7 +134,7 @@ goloPlot(taiE, clrE, TRUE)
 combH <- ape::read.tree(text="(A, (B, (C, (D, (E, (F, (G, H)))))));")
 ```
 
-De Laet [-@DeLaet2017] identifies a corner case in which our algorithm [@Brazeau2018] will not reconstruct every equally-parsimonious character reconstruction.  Below is a simplified version of his example:
+De Laet [-@DeLaet2017] identifies a case in which our algorithm [@Brazeau2018] will not reconstruct every equally-parsimonious character reconstruction.  Below is a simplified version of his example:
 
 ```{r, echo=FALSE, asis=TRUE}
 tail <- "011?0011"

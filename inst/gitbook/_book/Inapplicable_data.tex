@@ -129,7 +129,7 @@ Smith
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-04-17}
+  \date{2018-06-29}
 
 \usepackage{booktabs}
 
@@ -373,7 +373,7 @@ resolution of ambiguous nodes is preferable.
 
 The two most familiar approaches to resolving ambiguous node are the
 Accelerated Transformation (\textsc{AccTran}) and Delayed Transformation
-(\textsc{DelTran}) approaches.
+(\textsc{DelTran}) approaches \citep{Farris1970, Swofford1987}.
 
 The \textsc{AccTran} approach reconstructs transformations as occurring
 as close to the root as possible; the \textsc{DelTran}, as far from the
@@ -424,7 +424,7 @@ Where we wish to maximise homology, we modify the Fitch uppass such that
 any node whose final state reconstruction would be ambiguous is instead
 reconstructed as present when that node is encountered. This approach
 maximises homology in the problematic trees presented by Agnarsson \&
-Miller \citeyearpar{Agnarsson2008}(``A\&M'' below):
+Miller {[}\citeyearpar{Agnarsson2008}; ``A\&M'' below):
 
 \begin{figure}
 \centering
@@ -445,9 +445,9 @@ entries}
 \hypertarget{problems}{%
 \chapter{Problems with the Fitch algorithm}\label{problems}}
 
-The Fitch algorithm counts changes in a character. It assumes that the
-character is applicable throughout the tree. This assumption does not
-lead to error if:
+The Fitch algorithm \citep{Fitch1971} counts changes in a character. It
+assumes that the character is applicable throughout the tree. This
+assumption does not lead to error if:
 
 \begin{itemize}
 \item
@@ -480,7 +480,7 @@ blue tail.
 \centering
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-15-1.pdf}
 \caption{\label{fig:unnamed-chunk-15}Possible resolutions for bold region of
-tree (Good ones imply only one change)}
+tree. Good resolutions imply one change; bad ones, two.}
 \end{figure}
 
 \hypertarget{reductive-coding}{%
@@ -580,11 +580,12 @@ evolved twice (being a different colour each time).
 \hypertarget{sankoff-matrices}{%
 \section{Sankoff matrices}\label{sankoff-matrices}}
 
-It would be possible to establish a Sankoff matrix such that a change
-between absent and red or absent and blue cost more than a change
-between red and blue, but this effectively up-weights the tail
-character, and it's not clear that this is desirable -- or how much this
-extra weight should be \citep{Maddison1993}.
+It would be possible to establish a Sankoff matrix
+\citep{Sankoff1975, Sankoff1983} such that a change between absent and
+red or absent and blue cost more than a change between red and blue, but
+this effectively up-weights the tail character, and it's not clear that
+this is desirable -- or how much this extra weight should be
+\citep{Maddison1993}.
 
 \hypertarget{symmetric}{%
 \subsection{Symmetric}\label{symmetric}}
@@ -647,7 +648,7 @@ At the cost of symmetry, one could argue that the loss of a tail
 requires a single transformation, whereas the gain requires the addition
 of a tail and the ``setting'' of each ontologically dependent character,
 rendering an asymmetric Sankoff matrix that nevertheless respects
-triangular inequality:
+triangular inequality \citep{Wheeler1993}:
 
 \begin{table}
 

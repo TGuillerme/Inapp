@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-04-17">
+<meta name="date" content="2018-06-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -207,7 +207,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
             <section class="normal" id="section-">
 <div id="problems" class="section level1">
 <h1><span class="header-section-number">2</span> Problems with the Fitch algorithm</h1>
-<p>The Fitch algorithm counts changes in a character.
+<p>The Fitch algorithm <span class="citation">(Fitch, <a href="#ref-Fitch1971">1971</a>)</span> counts changes in a character.
 It assumes that the character is applicable throughout the tree.
 This assumption does not lead to error if:</p>
 <ul>
@@ -227,9 +227,9 @@ considered, but has the potential to resolve the polytomy on the left hand side 
 <p>In the bold region, tail colour should group the red-tailed tips together, and the blue-tailed tips together,
 but does not establish whether the ancestor of the left-hand tail-bearing clade had a red or blue tail.</p>
 <div class="figure"><span id="fig:unnamed-chunk-15"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-15-1.png" alt="Possible resolutions for bold region of tree (Good ones imply only one change)" width="576" />
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-15-1.png" alt="Possible resolutions for bold region of tree. Good resolutions imply one change; bad ones, two." width="576" />
 <p class="caption">
-Figure 2.1: Possible resolutions for bold region of tree (Good ones imply only one change)
+Figure 2.1: Possible resolutions for bold region of tree. Good resolutions imply one change; bad ones, two.
 </p>
 </div>
 </div>
@@ -290,7 +290,7 @@ as a change in tail colour. We ought to prefer a tree where the tail evolved onc
 </div>
 <div id="sankoff-matrices" class="section level2">
 <h2><span class="header-section-number">2.5</span> Sankoff matrices</h2>
-<p>It would be possible to establish a Sankoff matrix
+<p>It would be possible to establish a Sankoff matrix <span class="citation">(Sankoff &amp; Cedergren, <a href="#ref-Sankoff1983">1983</a>; Sankoff &amp; Rousseau, <a href="#ref-Sankoff1975">1975</a>)</span>
 such that a change between absent and red or absent and blue cost more than
 a change between red and blue, but this effectively up-weights the tail character,
 and it’s not clear that this is desirable – or how much this extra weight
@@ -423,7 +423,7 @@ ontogenetically dependant characters.</p>
 <p>At the cost of symmetry, one could argue that the loss of a tail requires a single
 transformation, whereas the gain requires the addition of a tail and the “setting”
 of each ontologically dependent character, rendering an asymmetric Sankoff
-matrix that nevertheless respects triangular inequality:</p>
+matrix that nevertheless respects triangular inequality <span class="citation">(Wheeler, <a href="#ref-Wheeler1993">1993</a>)</span>:</p>
 <table>
 <caption><span id="tab:unnamed-chunk-21">Table 2.2: </span>Tail: Cost to go from left state to top state:</caption>
 <thead>
@@ -561,8 +561,20 @@ homoplasies instead of steps.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-Fitch1971">
+<p>Fitch, W. M. (1971). Toward defining the course of evolution: minimum change for a specific tree topology. <em>Systematic Biology</em>, <em>20</em>(4), 406–416. doi:<a href="https://doi.org/10.1093/sysbio/20.4.406">10.1093/sysbio/20.4.406</a></p>
+</div>
 <div id="ref-Maddison1993">
 <p>Maddison, W. P. (1993). Missing data versus missing characters in phylogenetic analysis. <em>Systematic Biology</em>, <em>42</em>(4), 576–581. doi:<a href="https://doi.org/10.1093/sysbio/42.4.576">10.1093/sysbio/42.4.576</a></p>
+</div>
+<div id="ref-Sankoff1983">
+<p>Sankoff, D., &amp; Cedergren, R. J. (1983). Simultaneous comparison of three or more sequences related by a tree. In D. Sankoff &amp; J. B. Kruskal (Eds.), <em>Time warps, string edits and macromolecules: The theory and practice of sequence comparison</em> (pp. 253–263). Reading, Massachusetts: Addison-Wesley.</p>
+</div>
+<div id="ref-Sankoff1975">
+<p>Sankoff, D., &amp; Rousseau, P. (1975). Locating the vertices of a steiner tree in an arbitrary metric space. <em>Mathematical Programming</em>, <em>9</em>(1), 240–246. doi:<a href="https://doi.org/10.1007/BF01681346">10.1007/BF01681346</a></p>
+</div>
+<div id="ref-Wheeler1993">
+<p>Wheeler, W. C. (1993). The triangle inequality and character analysis. <em>Molecular Biology and Evolution</em>, <em>10</em>(3), 707–712.</p>
 </div>
 </div>
             </section>

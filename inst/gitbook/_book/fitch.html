@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-04-17">
+<meta name="date" content="2018-06-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -207,7 +207,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
             <section class="normal" id="section-">
 <div id="fitch" class="section level1">
 <h1><span class="header-section-number">1</span> The Fitch algorithm</h1>
-<p>This algorithm was proposed by Fitch <span class="citation">(<a href="#ref-Fitch1971">1971</a>)</span> and is implemented in many phylogenetic softwares based on maximum parsimony <span class="citation">(Goloboff &amp; Catalano, <a href="#ref-Goloboff2016">2016</a>; Swofford, <a href="#ref-swofford2001paup">2001</a>)</span> or probabilistic methods <span class="citation">(Ronquist et al., <a href="#ref-Ronquist2012mrbayes">2012</a>; Stamatakis, <a href="#ref-Stamatakis2014">2014</a>)</span>.
+<p>This algorithm was proposed by Fitch <span class="citation">(<a href="#ref-Fitch1971">1971</a>)</span> and is implemented in many phylogenetic softwares based on maximum parsimony <span class="citation">(Goloboff &amp; Catalano, <a href="#ref-Goloboff2016">2016</a>; David L Swofford, <a href="#ref-swofford2001paup">2001</a>)</span> or probabilistic methods <span class="citation">(Ronquist et al., <a href="#ref-Ronquist2012mrbayes">2012</a>; Stamatakis, <a href="#ref-Stamatakis2014">2014</a>)</span>.
 The procedure is simple and elegant and entails going down the tree to count the number of transformations, and then going back up the tree to finalise the ancestral state reconstructions.</p>
 <p>The way the algorithm goes up and down depends on the software, but often employs a <em>traversal</em>: a recursive function that can visit all tips and nodes in a logical fashion.
 For example, consider the following tree:</p>
@@ -300,7 +300,8 @@ Figure 1.5: Node reconstructions after uppass
 <p>In certain cases, it is necessary to go further and discriminate between the equally-parsimonious reconstructions provided by the Fitch algorithm.
 A number of approaches have been proposed concerning which resolution of ambiguous
 nodes is preferable.</p>
-<p>The two most familiar approaches to resolving ambiguous node are the Accelerated Transformation (<span class="smallcaps">AccTran</span>) and Delayed Transformation (<span class="smallcaps">DelTran</span>) approaches.</p>
+<p>The two most familiar approaches to resolving ambiguous node are the Accelerated Transformation (<span class="smallcaps">AccTran</span>) and Delayed Transformation (<span class="smallcaps">DelTran</span>) approaches
+<span class="citation">(Farris, Kluge, &amp; Eckardt, <a href="#ref-Farris1970">1970</a>; David L. Swofford &amp; Maddison, <a href="#ref-Swofford1987">1987</a>)</span>.</p>
 <p>The <span class="smallcaps">AccTran</span> approach reconstructs transformations as occurring as close to the root as possible; the <span class="smallcaps">DelTran</span>, as far from the root as possible.</p>
 <p>In this case, the ambiguous resolution of the root leaves two options for the latter:</p>
 <div class="figure"><span id="fig:unnamed-chunk-10"></span>
@@ -332,7 +333,7 @@ Under this reconstruction, the tails of <code>a</code> and <code>h</code> are no
 <p>Where we wish to maximise homology, we modify the Fitch uppass such that any node
 whose final state reconstruction would be ambiguous is instead reconstructed as present when that node is encountered.
 This approach maximises homology in the problematic trees presented by
-Agnarsson &amp; Miller <span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>(“A&amp;M” below):</p>
+Agnarsson &amp; Miller [<span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>; “A&amp;M” below):</p>
 <div class="figure"><span id="fig:unnamed-chunk-11"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-11-1.png" alt="Homology-maximising character optimisations" width="681.6" />
 <p class="caption">
@@ -366,6 +367,12 @@ Figure 1.8: Homology maximisation with missing entries
 </div>
 <div id="ref-Stamatakis2014">
 <p>Stamatakis, A. (2014). RAxML version 8: A tool for phylogenetic analysis and post-analysis of large phylogenies. <em>Bioinformatics</em>, <em>30</em>(9), 1312–1313. doi:<a href="https://doi.org/10.1093/bioinformatics/btu033">10.1093/bioinformatics/btu033</a></p>
+</div>
+<div id="ref-Farris1970">
+<p>Farris, J. S., Kluge, A. G., &amp; Eckardt, M. J. (1970). A numerical approach to phylogenetic systematics. <em>Systematic Biology</em>, <em>19</em>(2), 172–189. doi:<a href="https://doi.org/10.2307/2412452">10.2307/2412452</a></p>
+</div>
+<div id="ref-Swofford1987">
+<p>Swofford, D. L., &amp; Maddison, W. P. (1987). Reconstructing ancestral character states under Wagner parsimony. <em>Mathematical Biosciences</em>, <em>87</em>(2), 199–229. doi:<a href="https://doi.org/10.1016/0025-5564(87)90074-5">10.1016/0025-5564(87)90074-5</a></p>
 </div>
 <div id="ref-Agnarsson2008">
 <p>Agnarsson, I., &amp; Miller, J. A. (2008). Is <span class="smallcaps">AccTran</span> better than <span class="smallcaps">DelTran</span>? <em>Cladistics</em>, <em>24</em>(6), 1032–1038. doi:<a href="https://doi.org/10.1111/j.1096-0031.2008.00229.x">10.1111/j.1096-0031.2008.00229.x</a></p>

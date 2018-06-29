@@ -3,3 +3,129 @@ title: "Global vs. local optima"
 author: "Martin R. Smith"
 ---
 
+# Global optimization {#global}
+
+OUr algorithm only considers reconstructions of principal characters that are 
+parsimonious.  Jan De Laet (personal communication) drew our attention to 
+situations where it is possible to reconstruct less global homoplasy by
+employing a more homoplasious reconstruction of a principal character.
+
+Consider the following minimal example:
+
+```{r, echo=FALSE, asis=TRUE}
+tail <- "11000011"
+clr  <- "11----11"
+ontd <- 5
+tips <- nchar(tail)
+bifH <- read.tree(text="((((a, b), c), d), (e, (f, (g, h))));")
+mDep <- matrix(strsplit(paste0(c(tail, tail, rep(clr, ontd)), collapse=''), '')[[1]], byrow=TRUE, nrow=2 + ontd)
+colnames(mDep) <- LETTERS[1:ncol(mDep)]
+rownames(mDep) <- c("Tail: (0), absent; (1), present.",
+                    "Beak: (0), absent; (1), present.",
+                    "Tail, colour: (1), red; (2), blue.",
+                    "Tail, length: (1), long; (2), short.",
+                    "Tail, rigidity: (1), rigid; (2), flexible.",
+                    "Tail, curvature: (1), convex; (2), concave.",
+                    "Tail, lustre: (1), glossy; (2), matt.")
+knitr::kable(mDep, caption="Coding")
+```
+
+On a tree where tail-less taxa separate A and B from F and G, our algorithm 
+reconstructs two separate origins of the tail:
+
+```{r, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+
+vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
+             main='Tail (or beak)', state.labels = ap)
+nodelabels(pch=16, cex=6, col=c(whitey, whitey, greeny, whitey, whitey, greeny, whitey))
+nodelabels(c(0, 0, 0, 1, 0, 0, 1), cex=1.6, frame='none')
+
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+vignettePlot(bifH, clr, legend.pos='topleft', passes=0,
+             main='Tail colour (etc.)', state.labels=orb)
+nodelabels(pch=16, cex=6, col=c(purply, rep(whitey, 6)))
+nodelabels(c('-', '-', 1, '-', '-', '-', 1), cex=1.6, frame='none')
+
+```
+
+This reconstruction implies `r number(2 + ontd)` homoplasies across these characters: one independent gain of the tail, one of the beak, and one independent origin of each ontologically dependent property (redness, longness, rigidity, convexness, glossiness).
+
+An alternative is to reconstruct the tail as ancestrally present, and lost independently in C, D and E.  
+
+```{r, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+nodeStates <- rep(1, nchar(tail) - 1)
+myStates <- c(strsplit(tail, '')[[1]], as.list(nodeStates))
+vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
+             main='Tail', state.labels = ap, state.override=myStates,
+             changes.override = integer(3))
+nodelabels(pch=16, cex=6, col=c(whitey, greeny, greeny, whitey, greeny, greeny, whitey))
+nodelabels(nodeStates, cex=1.6, frame='none')
+
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+myStates <- c(strsplit(clr, '')[[1]], as.list(nodeStates))
+vignettePlot(bifH, clr, legend.pos='topleft', passes=0,
+             main='Tail colour (etc.)', state.labels=orb,
+             state.override=myStates, regions.override = integer(0),
+             changes.override = integer(0))
+nodelabels(pch=16, cex=6, col=whitey)
+nodelabels(nodeStates, cex=1.6, frame='none')
+
+```
+
+Considering only the tail, this is an unparsimonious reconstruction: it requires `r number(tips - 4)` independent evolutionary events (losses), whereas the former required only two independent evolutionary events (gains).  Globally, however, this allows the similarity between ontologically dependent characters to be attributed to common ancestry (i.e. homology), resulting in a lower overall score of `r number(tips - 4L + 2)` homoplasies (the `r number(tips - 4L)` in the tail, plus the two in the beak, reconstructed as before, but none in any ontologically dependent character).
+
+Note that the details of this reconstruction rely on the attribution of ontologically dependent characters to specific principal characters.  Changing the ontology of the previous matrix (but none of the scorings) such that two ontologically dependent characters depend on the beak, rather than the tail, results in a different outcome:
+
+```{r, echo=FALSE, asis=TRUE}
+rownames(mDep) <- c("Tail: (0), absent; (1), present.",
+                    "Beak: (0), absent; (1), present.",
+                    "Tail, colour: (1), red; (2), blue.",
+                    "Tail, length: (1), long; (2), short.",
+                    "**Beak**, curvature: (1), convex; (2), concave.",
+                    "**Beak**, lustre: (1), glossy; (2), matt.")
+knitr::kable(mDep, caption="Coding")
+```
+
+Now, neither principal character has enough ontologically dependent characters to 
+compensate for the additional cost of unparsimoniously reconstructing its own distribution. The 'parsimonious' reconstruction entails a minimum of eight homoplasies:
+
+```{r, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+
+vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
+             main='Tail (or beak)', state.labels = ap)
+nodelabels(pch=16, cex=6, col=c(whitey, whitey, greeny, whitey, whitey, greeny, whitey))
+nodelabels(c(0, 0, 0, 1, 0, 0, 1), cex=1.6, frame='none')
+
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+vignettePlot(bifH, clr, legend.pos='topleft', passes=0,
+             main='Tail colour (etc.)', state.labels=orb)
+nodelabels(pch=16, cex=6, col=c(purply, rep(whitey, 6)))
+nodelabels(c('-', '-', 1, '-', '-', '-', 1), cex=1.6, frame='none')
+
+```
+
+
+
+```{r, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+nodeStates <- rep(1, nchar(tail) - 1)
+myStates <- c(strsplit(tail, '')[[1]], as.list(nodeStates))
+vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
+             main='Tail', state.labels = ap, state.override=myStates,
+             changes.override = integer(3))
+nodelabels(pch=16, cex=6, col=c(whitey, greeny, greeny, whitey, greeny, greeny, whitey))
+nodelabels(nodeStates, cex=1.6, frame='none')
+
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+myStates <- c(strsplit(clr, '')[[1]], as.list(nodeStates))
+vignettePlot(bifH, clr, legend.pos='topleft', passes=0,
+             main='Tail colour (etc.)', state.labels=orb,
+             state.override=myStates, regions.override = integer(0),
+             changes.override = integer(0))
+nodelabels(pch=16, cex=6, col=whitey)
+nodelabels(nodeStates, cex=1.6, frame='none')
+
+```

@@ -207,8 +207,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
             <section class="normal" id="section-">
 <div id="fitch" class="section level1">
 <h1><span class="header-section-number">1</span> The Fitch algorithm</h1>
-<p>This algorithm was proposed by Fitch <span class="citation">(<a href="#ref-Fitch1971">1971</a>)</span> and is implemented in many phylogenetic softwares based on maximum parsimony <span class="citation">(Goloboff &amp; Catalano, <a href="#ref-Goloboff2016">2016</a>; David L Swofford, <a href="#ref-swofford2001paup">2001</a>)</span> or probabilistic methods <span class="citation">(Ronquist et al., <a href="#ref-Ronquist2012mrbayes">2012</a>; Stamatakis, <a href="#ref-Stamatakis2014">2014</a>)</span>.
-The procedure is simple and elegant and entails going down the tree to count the number of transformations, and then going back up the tree to finalise the ancestral state reconstructions.</p>
+<p>This algorithm was proposed by Fitch <span class="citation">(<a href="#ref-Fitch1971">1971</a>)</span> and is implemented in phylogenetic software that employs maximum parsimony <span class="citation">(Goloboff &amp; Catalano, <a href="#ref-Goloboff2016">2016</a>; David L Swofford, <a href="#ref-swofford2001paup">2001</a>)</span> and probabilistic methods <span class="citation">(Ronquist et al., <a href="#ref-Ronquist2012mrbayes">2012</a>; Stamatakis, <a href="#ref-Stamatakis2014">2014</a>)</span>.
+The simple and elegant procedure and entails going down the tree to count the number of transformations, then going back up the tree to finalise the ancestral state reconstructions.</p>
 <p>The way the algorithm goes up and down depends on the software, but often employs a <em>traversal</em>: a recursive function that can visit all tips and nodes in a logical fashion.
 For example, consider the following tree:</p>
 <div class="figure"><span id="fig:unnamed-chunk-2"></span>
@@ -217,7 +217,7 @@ For example, consider the following tree:</p>
 Figure 1.1: A five-tip tree
 </p>
 </div>
-<p>A downpass traversal will first evaluate the first cherry (or pair of taxa) (<code>A</code> below), then save the results in <code>n1</code> and evaluate the second pair of tips/nodes (<code>B</code>), saving the results in <code>n2</code>, proceeding until all the nodes/tips are visited.</p>
+<p>A downpass traversal will first evaluate the first cherry (or pair of taxa) (<code>A</code> below), then save the results in <code>n1</code> and evaluate the second pair of tips/nodes (<code>B</code>), saving the results in <code>n2</code>, proceeding until all the nodes and tips have been visited.</p>
 <div class="figure"><span id="fig:unnamed-chunk-3"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-3-1.png" alt="Downpass traversal" width="480" />
 <p class="caption">
@@ -232,7 +232,7 @@ Figure 1.3: Uppass traversal
 </p>
 </div>
 <p>In both traversals, the sequence in which nodes are visited (i.e. which cherry to pick first in a downpass traversal, or whether to continue left or right in an uppass traversal) is arbitrary, provided that all tips and nodes are eventually visited.</p>
-<p>Now let’s consider a more complex tree <code>((((a, b), c), d), (e, (f, (g, h))));</code> with a binary character distributed ((((1, 0), 0), 1), (1, (0, (0, 1)))):</p>
+<p>Now let’s consider a more complex tree <code>((((a, b), c), d), (e, (f, (g, h))));</code> with a binary character distributed <code>((((1, 0), 0), 1), (1, (0, (0, 1))))</code>:</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-5-1.png" width="576" /></p>
 <p>We can use the <code>Inapp</code> package to apply the Fitch algorithm for this character on this tree.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">## Loading the Inapp package</div>
@@ -248,7 +248,7 @@ Figure 1.3: Uppass traversal
 <div class="sourceLine" id="11" href="#11" data-line-number="11">matrix &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span>(tree, character, <span class="dt">method =</span> <span class="st">&quot;Fitch&quot;</span>, <span class="dt">passes =</span> <span class="dv">2</span>)</div></code></pre>
 <div id="downpass" class="section level2">
 <h2><span class="header-section-number">1.1</span> Downpass</h2>
-<p>The downpass is quite simple and follows these rules for the two possible cases in the traversal:</p>
+<p>The downpass is quite simple and follows these rules for the two possible cases in the traversal <span class="citation">(Fitch, <a href="#ref-Fitch1971">1971</a>)</span>:</p>
 <ol style="list-style-type: decimal">
 <li>If the two considered tips or nodes have <em>at least one state in common</em>, set the node to be these states in <em>common</em>.</li>
 <li>Else, if there is <em>nothing in common</em> between the to tips or nodes, set the node to be the <em>union</em> of the two states.</li>
@@ -273,7 +273,7 @@ Figure 1.4: Node reconstructions after downpass
 <p>The score of the tree is known after the downpass, but the states of some nodes might not yet be properly resolved.
 For example, parsimonious reconstructions exist that reconstruct node <code>n14</code> as state <code>1</code>, as opposed to the <code>0</code> presently reconstructed.
 The present reconstruction seemingly indicates a change from state 1 to state 0 in an ancestor of <code>n14</code>, and a subsequent change from state 0 to state 1 in the ancestor of <code>h</code>, but an alternative reconstruction is equally parsimonious: <code>n13</code>, <code>n14</code> and <code>n15</code> may all have state <code>1</code>, with a change from state <code>1</code> to state <code>0</code> in each of the two lineages leading to <code>f</code> and <code>g</code>.</p>
-<p>The uppass traversal employs the following rules:</p>
+<p>The uppass traversal employs the following rules <span class="citation">(Fitch, <a href="#ref-Fitch1971">1971</a>)</span>:</p>
 <ol style="list-style-type: decimal">
 <li>If the current node and its ancestor have <em>all states in common</em>, the node is already resolved.</li>
 <li>If there is <em>at least one state in common</em> between both left and right tips or nodes directly descended from the current node, resolve the node as being <em>the states in common</em> between its ancestor and both his descendants.</li>
@@ -304,10 +304,11 @@ nodes is preferable.</p>
 <span class="citation">(Farris, Kluge, &amp; Eckardt, <a href="#ref-Farris1970">1970</a>; David L. Swofford &amp; Maddison, <a href="#ref-Swofford1987">1987</a>)</span>.</p>
 <p>The <span class="smallcaps">AccTran</span> approach reconstructs transformations as occurring as close to the root as possible; the <span class="smallcaps">DelTran</span>, as far from the root as possible.</p>
 <p>In this case, the ambiguous resolution of the root leaves two options for the latter:</p>
+
 <div class="figure"><span id="fig:unnamed-chunk-10"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-10-1.png" alt="Node reconstructions after AccTran or DelTran` optimizations" width="681.6" />
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-10-1.png" alt="Node reconstructions after AccTran or DelTran optimizations" width="681.6" />
 <p class="caption">
-Figure 1.6: Node reconstructions after AccTran or DelTran` optimizations
+Figure 1.6: Node reconstructions after <span class="smallcaps">AccTran</span> or <span class="smallcaps">DelTran</span> optimizations
 </p>
 </div>
 <p>If the states <code>0</code> and <code>1</code> represent states of a transformational character –
@@ -333,7 +334,7 @@ Under this reconstruction, the tails of <code>a</code> and <code>h</code> are no
 <p>Where we wish to maximise homology, we modify the Fitch uppass such that any node
 whose final state reconstruction would be ambiguous is instead reconstructed as present when that node is encountered.
 This approach maximises homology in the problematic trees presented by
-Agnarsson &amp; Miller [<span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>; “A&amp;M” below):</p>
+Agnarsson &amp; Miller [<span class="citation">(<a href="#ref-Agnarsson2008">2008</a>)</span>; “A&amp;M” below]:</p>
 <div class="figure"><span id="fig:unnamed-chunk-11"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-11-1.png" alt="Homology-maximising character optimisations" width="681.6" />
 <p class="caption">

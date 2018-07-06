@@ -181,12 +181,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6" data-path="global.html"><a href="global.html"><i class="fa fa-check"></i><b>6</b> Global optimization</a><ul>
 <li class="chapter" data-level="6.1" data-path="global.html"><a href="global.html#global-optima-may-be-locally-suboptimal"><i class="fa fa-check"></i><b>6.1</b> Global optima may be locally suboptimal</a></li>
 <li class="chapter" data-level="6.2" data-path="global.html"><a href="global.html#ontology"><i class="fa fa-check"></i><b>6.2</b> Ontology</a></li>
-<li class="chapter" data-level="6.3" data-path="global.html"><a href="global.html#implied-weighting"><i class="fa fa-check"></i><b>6.3</b> Implied weighting</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="global.html"><a href="global.html#k-10"><i class="fa fa-check"></i><b>6.3.1</b> <em>k</em> = 10</a></li>
-<li class="chapter" data-level="6.3.2" data-path="global.html"><a href="global.html#k-5"><i class="fa fa-check"></i><b>6.3.2</b> <em>k</em> = 5</a></li>
-<li class="chapter" data-level="6.3.3" data-path="global.html"><a href="global.html#k-3"><i class="fa fa-check"></i><b>6.3.3</b> <em>k</em> = 3</a></li>
+<li class="chapter" data-level="6.3" data-path="global.html"><a href="global.html#similarity-due-to-chance"><i class="fa fa-check"></i><b>6.3</b> Similarity due to chance</a></li>
+<li class="chapter" data-level="6.4" data-path="global.html"><a href="global.html#implied-weighting"><i class="fa fa-check"></i><b>6.4</b> Implied weighting</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="global.html"><a href="global.html#k-10"><i class="fa fa-check"></i><b>6.4.1</b> <em>k</em> = 10</a></li>
+<li class="chapter" data-level="6.4.2" data-path="global.html"><a href="global.html#k-5"><i class="fa fa-check"></i><b>6.4.2</b> <em>k</em> = 5</a></li>
+<li class="chapter" data-level="6.4.3" data-path="global.html"><a href="global.html#k-3"><i class="fa fa-check"></i><b>6.4.3</b> <em>k</em> = 3</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="global.html"><a href="global.html#generalization"><i class="fa fa-check"></i><b>6.4</b> Generalization</a></li>
+<li class="chapter" data-level="6.5" data-path="global.html"><a href="global.html#generalization"><i class="fa fa-check"></i><b>6.5</b> Generalization</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7</b> Examples</a><ul>
 <li class="chapter" data-level="7.1" data-path="examples.html"><a href="examples.html#some-caterpillars"><i class="fa fa-check"></i><b>7.1</b> Some caterpillars</a></li>
@@ -219,7 +220,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h1><span class="header-section-number">6</span> Global optimization</h1>
 <div id="global-optima-may-be-locally-suboptimal" class="section level2">
 <h2><span class="header-section-number">6.1</span> Global optima may be locally suboptimal</h2>
-<p>OUr algorithm only considers reconstructions of principal characters that are
+<p>Our algorithm only considers reconstructions of principal characters that are
 parsimonious. Jan De Laet (personal communication) drew our attention to
 situations where it is possible to reconstruct less global homoplasy by
 employing a more homoplasious reconstruction of a principal character.</p>
@@ -431,10 +432,24 @@ compensate for the additional cost of unparsimoniously reconstructing its own di
 <p>On the other hand, reconstructing a beak and a tail as present in the common ancestor requires four independent losses in each character – a total of eight homoplasies, which does not outweigh the benefit obtained by reconstructing the ontologically dependent characters as homologous:</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-71-1.png" width="768" /></p>
 </div>
+<div id="similarity-due-to-chance" class="section level2">
+<h2><span class="header-section-number">6.3</span> Similarity due to chance</h2>
+<p>It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance. A curved beak, for example, must be either convex or concave, and must be either glossy or matt. If curved beaks evolved twice, then there is at least a <span class="math inline">\(\frac{1}{4}\)</span> chance that the two innovations will have the same lustre and direction of curvature. (In practice, fitness, developmental constraints and contingency are likely to make one curvature or lustre more likely, increasing the likelihood of a chance similarity.)</p>
+<p>On this basis, if a character has a number of ontologically dependent binary characters, then mathematically one must expect two independent origins of the parent character to bear a number of similarities by chance:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
+<p>In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary characters is expected to share, by chance, six attributes with any taxon that independently gained that character. Because a parsimony approach does not acknowledge this expectation, an attempt to maximise global homology places undue weight on similarities that could potentially be attributed to chance.</p>
+<p>Whether a character has 6, 12 or 120 ontologically dependent characters, if six of these characters bear the same state, then global homology will be maximised by reconstructing seven independent losses, in order to attribute these similarities to common ancestry – even though in the latter cases the similarities are likely due to chance, and the additional losses of the character implied by maximising global homoplasy are unlikely to represent evolutionary history.</p>
+<!-- MS: Might keep this for a later contribution.
+## Impact
+
+The central distinction between our approach (which insists that each principal character has a parsimonious distribution of states) and De Laet's (which seeks the global optimum) concerns the evaluation of regions of the tree where the principal character is conceivably absent.  De Laet's approach emphasizes homology in ontologically dependant characters to a greater extent than ours, but both approaches are greatly influenced by the inclusion of 'parsimony uninformative' characters.
+
+What is missing from the parsimony framework is a consideration of the evidential weight of these similarities.  Clearly, if there are only two possible states for an ontologically dependant character (e.g. 'rigid / flexible'), then there is a high chance (50%) that two independently-arising tails will share a characteristic by chance, rather than by common ancestry.  If, in constrast, there are ten thousand different pigments that are equally likely to be employed to colour a tail, and two different tails share a common pigment, then the probability of this commonality arising by chance is low; it represents strong evidence for common ancestry.-->
+</div>
 <div id="implied-weighting" class="section level2">
-<h2><span class="header-section-number">6.3</span> Implied weighting</h2>
-<p>The question here is how these counts ought to be considered in the context of implied weighting <span class="citation">(Goloboff, <a href="#ref-Goloboff1993">1993</a>, <a href="#ref-Goloboff2014">2014</a>)</span>.</p>
-<p>Let’s consider the case of a pollinator’s tongue.</p>
+<h2><span class="header-section-number">6.4</span> Implied weighting</h2>
+<p>This matter is exaggerated further in the context of implied weighting <span class="citation">(Goloboff, <a href="#ref-Goloboff1993">1993</a>, <a href="#ref-Goloboff2014">2014</a>)</span>.</p>
+<p>Consider the case of a pollinator’s tongue.</p>
 <blockquote>
 <p>Tongue: Curvature: Straight / curved</p>
 <p>Tongue: Curvature: Direction: Up / down</p>
@@ -443,7 +458,7 @@ compensate for the additional cost of unparsimoniously reconstructing its own di
 <p>Let’s assume that two taxa within an analysis have tongues that both curve uniformly up;
 other tongue-bearing taxa have straight tongues. In the absence of prior knowledge concerning the likely nature of tongue coiling, the probability that two tongues that evolved independently would both curve uniformly upwards is ¼. As such, the similarities between the coiling do not constitute strong evidence that coiling evolved once; two origins is less parsimonious, but not by much.</p>
 <p>Let’s consider now some trees where the two curled-tongued taxa are separated by a number of straight-tongued taxa:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-72-1.png" width="768" /></p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-73-1.png" width="768" /></p>
 <p>Each of these trees can be interpreted in one of two ways: there may have been two independent evolutionary events that gave rise to curved tongues (which both happened to curve uniformly upwards, by a small but unremarkable coincidence), or there was one evolutionary event that gave rise to a curved tongue, and 0, 1, 2, 3, 4, or 5 additional evolutionary events whereby a curved tongue was straightened.</p>
 <p>Let’s consider the extra steps entailed for each tree under these two scenarios:</p>
 <table>
@@ -553,9 +568,9 @@ other tongue-bearing taxa have straight tongues. In the absence of prior knowled
 <p>On this view, if there are fewer than three intervening taxa, then it is more homologous to reconstruct a single origin and zero, one or two losses; if there are more than three intervening taxa, it is more homologous to reconstruct two separate origins of curvature.</p>
 <p>However, under implied weights <span class="citation">(Goloboff, <a href="#ref-Goloboff1993">1993</a>)</span>, each additional homoplasy in a character is afforded less cost than the one before, according to a ‘goodness of fit’ function <span class="math inline">\(\frac{e}{e + k}\)</span>. The preferable reconstruction now is the one that minimises total cost, which will depend on the value of <em>k</em> selected. Under any value of of <em>k</em>, it takes at least four intervening taxa for two origins of the tail to be preferable to multiple losses:</p>
 <div id="k-10" class="section level3">
-<h3><span class="header-section-number">6.3.1</span> <em>k</em> = 10</h3>
+<h3><span class="header-section-number">6.4.1</span> <em>k</em> = 10</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-73">Table 6.5: </span>One origin, many losses; <em>k</em> = 10</caption>
+<caption><span id="tab:unnamed-chunk-74">Table 6.5: </span>One origin, many losses; <em>k</em> = 10</caption>
 <thead>
 <tr class="header">
 <th align="left">Intervening taxa</th>
@@ -607,7 +622,7 @@ other tongue-bearing taxa have straight tongues. In the absence of prior knowled
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-74">Table 6.6: </span>Two origins, no losses; <em>k</em> = 10</caption>
+<caption><span id="tab:unnamed-chunk-75">Table 6.6: </span>Two origins, no losses; <em>k</em> = 10</caption>
 <thead>
 <tr class="header">
 <th align="left">Intervening taxa</th>
@@ -661,9 +676,9 @@ other tongue-bearing taxa have straight tongues. In the absence of prior knowled
 <p>And at smaller values of <em>k</em>, progressively more losses of the tail are preferable to a single coincidence:</p>
 </div>
 <div id="k-5" class="section level3">
-<h3><span class="header-section-number">6.3.2</span> <em>k</em> = 5</h3>
+<h3><span class="header-section-number">6.4.2</span> <em>k</em> = 5</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-75">Table 6.7: </span>One origin, many losses; <em>k</em> = 5</caption>
+<caption><span id="tab:unnamed-chunk-76">Table 6.7: </span>One origin, many losses; <em>k</em> = 5</caption>
 <thead>
 <tr class="header">
 <th align="left">Intervening taxa</th>
@@ -715,7 +730,7 @@ other tongue-bearing taxa have straight tongues. In the absence of prior knowled
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-76">Table 6.8: </span>Two origins, no losses; <em>k</em> = 5</caption>
+<caption><span id="tab:unnamed-chunk-77">Table 6.8: </span>Two origins, no losses; <em>k</em> = 5</caption>
 <thead>
 <tr class="header">
 <th align="left">Intervening taxa</th>
@@ -768,9 +783,9 @@ other tongue-bearing taxa have straight tongues. In the absence of prior knowled
 </table>
 </div>
 <div id="k-3" class="section level3">
-<h3><span class="header-section-number">6.3.3</span> <em>k</em> = 3</h3>
+<h3><span class="header-section-number">6.4.3</span> <em>k</em> = 3</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-77">Table 6.9: </span>One origin, many losses; <em>k</em> = 3</caption>
+<caption><span id="tab:unnamed-chunk-78">Table 6.9: </span>One origin, many losses; <em>k</em> = 3</caption>
 <thead>
 <tr class="header">
 <th align="left">Intervening taxa</th>
@@ -847,7 +862,7 @@ other tongue-bearing taxa have straight tongues. In the absence of prior knowled
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-78">Table 6.10: </span>Two origins, no losses; <em>k</em> = 3</caption>
+<caption><span id="tab:unnamed-chunk-79">Table 6.10: </span>Two origins, no losses; <em>k</em> = 3</caption>
 <thead>
 <tr class="header">
 <th align="left">Intervening taxa</th>
@@ -926,19 +941,9 @@ other tongue-bearing taxa have straight tongues. In the absence of prior knowled
 </div>
 </div>
 <div id="generalization" class="section level2">
-<h2><span class="header-section-number">6.4</span> Generalization</h2>
+<h2><span class="header-section-number">6.5</span> Generalization</h2>
 <p>In general, if there are even a small number of similarities between ontologically dependent characters, then the maximal-fit reconstruction will infer a very high number of secondary losses rather than attributing a small number of similarities to convergence. This is especially true at small to medium values of <em>k</em>.</p>
 <p><img src="Inapplicable_data_files/figure-html/small-k-single-origin-1.png" width="672" /></p>
-<p>It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
-<p>In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary characters is expected to share, by chance, six attributes with any taxon that independently gained that character.</p>
-<p>However, a model that seeks to maximise global homology would prefer to reconstruct seven independent losses to two independent gains, in order to attribute these chance similarities to common ancestry. In practice, of course, it is likely that one of two binary features of a character is more probable than another, whether due to fitness, contingency or evolutionary constraint, increasing still further the expected similarities between two independently evolved instances of a character, and making it harder for global homology maximisation to identify genuine cases of evolutionary convergence.</p>
-<!-- MS: Might keep this for a later contribution.
-## Impact
-
-The central distinction between our approach (which insists that each principal character has a parsimonious distribution of states) and De Laet's (which seeks the global optimum) concerns the evaluation of regions of the tree where the principal character is conceivably absent.  De Laet's approach emphasizes homology in ontologically dependant characters to a greater extent than ours, but both approaches are greatly influenced by the inclusion of 'parsimony uninformative' characters.
-
-What is missing from the parsimony framework is a consideration of the evidential weight of these similarities.  Clearly, if there are only two possible states for an ontologically dependant character (e.g. 'rigid / flexible'), then there is a high chance (50%) that two independently-arising tails will share a characteristic by chance, rather than by common ancestry.  If, in constrast, there are ten thousand different pigments that are equally likely to be employed to colour a tail, and two different tails share a common pigment, then the probability of this commonality arising by chance is low; it represents strong evidence for common ancestry.-->
 
 </div>
 </div>

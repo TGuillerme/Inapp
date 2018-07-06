@@ -7,6 +7,7 @@ author: "Martin R. Smith"
 
 
 ## Global optima may be locally suboptimal
+
 OUr algorithm only considers reconstructions of principal characters that are 
 parsimonious.  Jan De Laet (personal communication) drew our attention to 
 situations where it is possible to reconstruct less global homoplasy by
@@ -131,3 +132,154 @@ nodelabels(pch=16, cex=6, col=whitey)
 nodelabels(nodeStates, cex=1.6, frame='none')
 
 ```
+
+## Implied weighting
+
+The question here is how these counts ought to be considered in the context of implied weighting [@Goloboff1993;@Goloboff2014].
+
+Let's consider the case of a pollinator's tongue.
+
+> Tongue: Curvature: Straight / curved
+>
+> Tongue: Curvature: Direction: Up / down
+>
+> Tongue: Curvature: Uniformity: Uniform / uneven
+
+Let's assume that two taxa within an analysis have tongues that both curve uniformly up;
+other tongue-bearing taxa have straight tongues.  In the absence of prior knowledge concerning the likely nature of tongue coiling, the probability that two tongues that evolved independently would both curve uniformly upwards is &frac14;.  As such, the similarities between the coiling do not constitute strong evidence that coiling evolved once; two origins is less parsimonious, but not by much.
+
+Let's consider now some trees where the two curled-tongued taxa are separated by a number of straight-tongued taxa:
+
+
+```{r, echo=FALSE, fig.width=8, fig.height=4}
+goloPar()
+par(mfrow=c(2, 3))
+tongue <- "110000000"
+sep0 <- read.tree(text="(z, (i, (h, (g, (f, (e, (d, (c, a))))))));")
+sep1 <- read.tree(text="(z, (i, (h, (g, (f, (e, (b, (c, a))))))));")
+sep2 <- read.tree(text="(z, (i, (h, (g, (f, (b, (d, (c, a))))))));")
+sep3 <- read.tree(text="(z, (i, (h, (g, (b, (e, (d, (c, a))))))));")
+sep4 <- read.tree(text="(z, (i, (h, (b, (f, (e, (d, (c, a))))))));")
+sep5 <- read.tree(text="(z, (i, (b, (g, (f, (e, (d, (c, a))))))));")
+vignettePlot(sep0, tongue, legend.pos='none', FALSE, passes=0, counts=0,
+             main='No intercalated taxa',
+             state.labels = c('Tongue straight', 'Tongue curved'))
+vignettePlot(sep1, tongue, legend.pos='none', FALSE, passes=0, counts=0,
+             main='One intercalated taxon', state.labels=NA)
+vignettePlot(sep2, tongue, legend.pos='none', FALSE, passes=0, counts=0,
+             main='Two intercalated taxa', state.labels=NA,
+             state.override=c(0,0,0,0,0,1,0,0,1, 0, 0, 0, 0, 0, 2, 2, 2))
+vignettePlot(sep3, tongue, legend.pos='none', FALSE, passes=0, counts=0,
+             main='Three intercalated taxa', state.labels=NA,
+             state.override=c(0,0,0,0,1,0,0,0,1, 0, 0, 0, 0, 2, 2, 2, 2))
+vignettePlot(sep4, tongue, legend.pos='none', FALSE, passes=0, counts=0,
+             main='Four intercalated taxa', state.labels = NA,
+             state.override=c(0,0,0,1,0,0,0,0,1, 0, 0, 0, 2, 2, 2, 2, 2))
+vignettePlot(sep5, tongue, legend.pos='none', FALSE, passes=0, counts=0,
+             main='Five intercalated taxa', state.labels = NA,
+             state.override=c(0,0,1,0,0,0,0,0,1, 0, 0, 2, 2, 2, 2, 2, 2))
+nInter <- 6
+ColouredText <- function(text, colour) {
+  if(knitr::is_latex_output())
+    paste0("\\textcolor{", colour, "}{", text, "}")
+  else if(knitr::is_html_output())
+    paste0("<font color='", colour, "'>", text, "</font>")
+  else
+    text
+}
+bad <- brewer[[11]][2]
+good <- brewer[[11]][9]
+    
+Table <- function (input, caption, greens=0) {
+    cells <-  matrix(input, byrow = TRUE, ncol=nInter)
+    colours <- if (greens < 0) c(rep(bad, nInter + greens), rep(good, -greens)) else
+        c(rep(good, greens), rep(bad, nInter - greens))
+    cells <- rbind(signif(cells, 3),
+                   paste0('**', ColouredText(signif(colSums(cells), 3), colours), '**'))
+    colnames(cells) <- seq_len(nInter) - 1
+    cells <- cbind(c('Taxa between', 'Curvature', 'Direction', 'Uniformity', '**Total**'), cells)
+    knitr::kable(cells, caption=caption)
+}
+Fit <- function (e, k) e / (e + k)
+```
+
+Each of these trees can be interpreted in one of two ways: there may have been two independent evolutionary events that gave rise to curved tongues (which both happened to curve uniformly upwards, by a small but unremarkable coincidence), or there was one evolutionary event that gave rise to a curved tongue, and 0, 1, 2, 3, 4, or 5 additional evolutionary events whereby a curved tongue was straightened.
+
+Let's consider the extra steps entailed for each tree under these two scenarios:
+
+
+```{r iw-delaet-ew-a, echo = FALSE, results='asis'}
+parent_extra_1 <- function() seq_len(nInter) - 1
+subchar_homoplasies_1 <- function() rep(0, nInter)
+Table(c(parent_extra_1(), rep(subchar_homoplasies_1(), 2)), caption="One origin, many losses", 4)
+```
+
+```{r iw-delaet-ew-b, echo = FALSE, results='asis'}
+parent_extra_2 <- function() rep(1, nInter)
+subchar_homoplasies_2 <- function() rep(1, nInter)
+Table(c(parent_extra_2(), rep(subchar_homoplasies_2(), 2)), caption="Two origins, no losses", -3)
+```
+
+On this view, if there are fewer than three intervening taxa, then it is more homologous to reconstruct a single origin and zero, one or two losses; if there are more than three intervening taxa, it is more homologous to reconstruct two separate origins.
+
+However, under implied weights [@Goloboff1993], each additional homoplasy in a character is afforded less cost than the one before, according to a 'goodness of fit' function $\frac{e}{e + k}$.  The preferable reconstruction now is the one that minimises total cost, which will depend on the value of _k_ selected.  Under any value of of _k_, it takes at least four intervening taxa for two origins of the tail to be preferable to multiple losses:
+
+### _k_ = 10
+
+```{r, echo = FALSE, results='asis'}
+k <- 10
+Table(c(Fit(parent_extra_1(), k), rep(Fit(subchar_homoplasies_1(), k), 2)),
+      caption=paste("One origin, many losses; _k_ =", k), 4)
+```
+```{r, echo = FALSE, results='asis'}
+Table(c(Fit(parent_extra_2(), k), rep(Fit(subchar_homoplasies_2(), k), 2)),
+      caption=paste("Two origins, no losses; _k_ =", k), -2)
+```
+
+And at smaller values of _k_, progressively more losses of the tail are preferable to a single coincidence:
+
+### _k_ = 5
+
+```{r, echo = FALSE, results='asis'}
+k <- 5
+Table(c(Fit(parent_extra_1(), k), rep(Fit(subchar_homoplasies_1(), k), 2)),
+      caption=paste("One origin, many losses; _k_ =", k), 6)
+```
+```{r, echo = FALSE, results='asis'}
+Table(c(Fit(parent_extra_2(), k), rep(Fit(subchar_homoplasies_2(), k), 2)),
+      caption=paste("Two origins, no losses; _k_ =", k), -1)
+```
+
+### _k_ = 3
+
+```{r, echo = FALSE, results='asis'}
+k <- 3
+nInter <- 9
+Table(c(Fit(parent_extra_1(), k), rep(Fit(subchar_homoplasies_1(), k), 2)),
+      caption=paste("One origin, many losses; _k_ =", k))
+```
+```{r, echo = FALSE, results='asis'}
+Table(c(Fit(parent_extra_2(), k), rep(Fit(subchar_homoplasies_2(), k), 2)),
+      caption=paste("Two origins, no losses; _k_ =", k))
+```
+
+### _k_ = 2
+
+```{r, echo = FALSE, results='asis'}
+k <- 2
+Table(c(Fit(parent_extra_1(), k), rep(Fit(subchar_homoplasies_1(), k), 2)),
+      caption=paste("One origin, many losses; _k_ =", k))
+```
+```{r, echo = FALSE, results='asis'}
+Table(c(Fit(parent_extra_2(), k), rep(Fit(subchar_homoplasies_2(), k), 2)),
+      caption=paste("Two origins, no losses; _k_ =", k))
+```
+
+<!-- MS: Might keep this for a later contribution.
+## Impact
+
+The central distinction between our approach (which insists that each principal character has a parsimonious distribution of states) and De Laet's (which seeks the global optimum) concerns the evaluation of regions of the tree where the principal character is conceivably absent.  De Laet's approach emphasizes homology in ontologically dependant characters to a greater extent than ours, but both approaches are greatly influenced by the inclusion of 'parsimony uninformative' characters.
+
+What is missing from the parsimony framework is a consideration of the evidential weight of these similarities.  Clearly, if there are only two possible states for an ontologically dependant character (e.g. 'rigid / flexible'), then there is a high chance (50%) that two independently-arising tails will share a characteristic by chance, rather than by common ancestry.  If, in constrast, there are ten thousand different pigments that are equally likely to be employed to colour a tail, and two different tails share a common pigment, then the probability of this commonality arising by chance is low; it represents strong evidence for common ancestry.-->
+
+

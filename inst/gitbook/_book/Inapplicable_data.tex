@@ -116,20 +116,21 @@
 }
 
 \setlength{\droptitle}{-2em}
+
   \title{Inapplicable data}
-  \pretitle{\vspace{\droptitle}\centering\huge}
+    \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
-  \author{Martin Brazeau
+    \author{Martin Brazeau
 (\href{mailto:m.brazeau@imperial.ac.uk}{\nolinkurl{m.brazeau@imperial.ac.uk}}),
 Thomas Guillerme
 (\href{mailto:guillert@tcd.ie}{\nolinkurl{guillert@tcd.ie}}) and Martin
 Smith
 (\href{mailto:martin.smith@durham.ac.uk}{\nolinkurl{martin.smith@durham.ac.uk}})}
-  \preauthor{\centering\large\emph}
+    \preauthor{\centering\large\emph}
   \postauthor{\par}
-  \predate{\centering\large\emph}
+      \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-06-29}
+    \date{2018-07-06}
 
 \usepackage{booktabs}
 \usepackage{doi} % Adds hyperlinks to dois
@@ -1821,9 +1822,9 @@ before, but none in any ontologically dependent character).
 
 Note that the details of this reconstruction rely on the attribution of
 ontologically dependent characters to specific principal characters.
-Changing the ontology of the previous matrix (but none of the scorings)
-such that two ontologically dependent characters depend on the beak,
-rather than the tail, results in a different outcome:
+Changing the ontology of the previous matrix (without modifying the
+scorings) such that two ontologically dependent characters depend on the
+beak, rather than the tail, results in a different outcome:
 
 \begin{table}
 
@@ -1867,6 +1868,259 @@ by reconstructing the ontologically dependent characters as homologous:
 
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-71-1.pdf}
 
+\hypertarget{implied-weighting}{%
+\section{Implied weighting}\label{implied-weighting}}
+
+The question here is how these counts ought to be considered in the
+context of implied weighting \citep{Goloboff1993, Goloboff2014}.
+
+Let's consider the case of a pollinator's tongue.
+
+\begin{quote}
+Tongue: Curvature: Straight / curved
+
+Tongue: Curvature: Direction: Up / down
+
+Tongue: Curvature: Uniformity: Uniform / uneven
+\end{quote}
+
+Let's assume that two taxa within an analysis have tongues that both
+curve uniformly up; other tongue-bearing taxa have straight tongues. In
+the absence of prior knowledge concerning the likely nature of tongue
+coiling, the probability that two tongues that evolved independently
+would both curve uniformly upwards is ¼. As such, the similarities
+between the coiling do not constitute strong evidence that coiling
+evolved once; two origins is less parsimonious, but not by much.
+
+Let's consider now some trees where the two curled-tongued taxa are
+separated by a number of straight-tongued taxa:
+
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-72-1.pdf}
+
+Each of these trees can be interpreted in one of two ways: there may
+have been two independent evolutionary events that gave rise to curved
+tongues (which both happened to curve uniformly upwards, by a small but
+unremarkable coincidence), or there was one evolutionary event that gave
+rise to a curved tongue, and 0, 1, 2, 3, 4, or 5 additional evolutionary
+events whereby a curved tongue was straightened.
+
+Let's consider the extra steps entailed for each tree under these two
+scenarios:
+
+\begin{table}
+
+\caption{\label{tab:iw-delaet-ew-a}One origin, many losses}
+\centering
+\begin{tabular}[t]{l|l|l|l|l|l|l}
+\hline
+Intervening taxa & 0 & 1 & 2 & 3 & 4 & 5\\
+\hline
+Curvature & 0 & 1 & 2 & 3 & 4 & 5\\
+\hline
+Direction & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+Uniformity & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+**Total** & **\textbackslash{}textcolor\{\#74add1\}\{0\}** & **\textbackslash{}textcolor\{\#74add1\}\{1\}** & **\textbackslash{}textcolor\{\#74add1\}\{2\}** & **\textbackslash{}textcolor\{\#74add1\}\{3\}** & **\textbackslash{}textcolor\{\#d73027\}\{4\}** & **\textbackslash{}textcolor\{\#d73027\}\{5\}**\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:iw-delaet-ew-b}Two origins, no losses}
+\centering
+\begin{tabular}[t]{l|l|l|l|l|l|l}
+\hline
+Intervening taxa & 0 & 1 & 2 & 3 & 4 & 5\\
+\hline
+Curvature & 1 & 1 & 1 & 1 & 1 & 1\\
+\hline
+Direction & 1 & 1 & 1 & 1 & 1 & 1\\
+\hline
+Uniformity & 1 & 1 & 1 & 1 & 1 & 1\\
+\hline
+**Total** & **\textbackslash{}textcolor\{\#d73027\}\{3\}** & **\textbackslash{}textcolor\{\#d73027\}\{3\}** & **\textbackslash{}textcolor\{\#d73027\}\{3\}** & **\textbackslash{}textcolor\{\#74add1\}\{3\}** & **\textbackslash{}textcolor\{\#74add1\}\{3\}** & **\textbackslash{}textcolor\{\#74add1\}\{3\}**\\
+\hline
+\end{tabular}
+\end{table}
+
+On this view, if there are fewer than three intervening taxa, then it is
+more homologous to reconstruct a single origin and zero, one or two
+losses; if there are more than three intervening taxa, it is more
+homologous to reconstruct two separate origins of curvature.
+
+However, under implied weights \citep{Goloboff1993}, each additional
+homoplasy in a character is afforded less cost than the one before,
+according to a `goodness of fit' function \(\frac{e}{e + k}\). The
+preferable reconstruction now is the one that minimises total cost,
+which will depend on the value of \emph{k} selected. Under any value of
+of \emph{k}, it takes at least four intervening taxa for two origins of
+the tail to be preferable to multiple losses:
+
+\hypertarget{k-10}{%
+\subsection{\texorpdfstring{\emph{k} = 10}{k = 10}}\label{k-10}}
+
+\textbackslash{}begin\{table\}
+
+\textbackslash{}caption\{\label{tab:unnamed-chunk-73}One origin, many
+losses; \emph{k} = 10\} \centering
+
+\begin{tabular}[t]{l|l|l|l|l|l|l}
+\hline
+Intervening taxa & 0 & 1 & 2 & 3 & 4 & 5\\
+\hline
+Curvature & 0 & 0.0909 & 0.167 & 0.231 & 0.286 & 0.333\\
+\hline
+Direction & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+Uniformity & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+**Total** & **\textbackslash{}textcolor\{\#74add1\}\{0\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.0909\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.167\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.231\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.286\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.333\}**\\
+\hline
+\end{tabular}
+
+\textbackslash{}end\{table\} \textbackslash{}begin\{table\}
+
+\textbackslash{}caption\{\label{tab:unnamed-chunk-74}Two origins, no losses;
+\emph{k} = 10\} \centering
+
+\begin{tabular}[t]{l|l|l|l|l|l|l}
+\hline
+Intervening taxa & 0 & 1 & 2 & 3 & 4 & 5\\
+\hline
+Curvature & 0.0909 & 0.0909 & 0.0909 & 0.0909 & 0.0909 & 0.0909\\
+\hline
+Direction & 0.0909 & 0.0909 & 0.0909 & 0.0909 & 0.0909 & 0.0909\\
+\hline
+Uniformity & 0.0909 & 0.0909 & 0.0909 & 0.0909 & 0.0909 & 0.0909\\
+\hline
+**Total** & **\textbackslash{}textcolor\{\#d73027\}\{0.273\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.273\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.273\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.273\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.273\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.273\}**\\
+\hline
+\end{tabular}
+
+\textbackslash{}end\{table\}
+
+And at smaller values of \emph{k}, progressively more losses of the tail
+are preferable to a single coincidence:
+
+\hypertarget{k-5}{%
+\subsection{\texorpdfstring{\emph{k} = 5}{k = 5}}\label{k-5}}
+
+\textbackslash{}begin\{table\}
+
+\textbackslash{}caption\{\label{tab:unnamed-chunk-75}One origin, many
+losses; \emph{k} = 5\} \centering
+
+\begin{tabular}[t]{l|l|l|l|l|l|l}
+\hline
+Intervening taxa & 0 & 1 & 2 & 3 & 4 & 5\\
+\hline
+Curvature & 0 & 0.167 & 0.286 & 0.375 & 0.444 & 0.5\\
+\hline
+Direction & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+Uniformity & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+**Total** & **\textbackslash{}textcolor\{\#74add1\}\{0\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.167\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.286\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.375\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.444\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.5\}**\\
+\hline
+\end{tabular}
+
+\textbackslash{}end\{table\} \textbackslash{}begin\{table\}
+
+\textbackslash{}caption\{\label{tab:unnamed-chunk-76}Two origins, no losses;
+\emph{k} = 5\} \centering
+
+\begin{tabular}[t]{l|l|l|l|l|l|l}
+\hline
+Intervening taxa & 0 & 1 & 2 & 3 & 4 & 5\\
+\hline
+Curvature & 0.167 & 0.167 & 0.167 & 0.167 & 0.167 & 0.167\\
+\hline
+Direction & 0.167 & 0.167 & 0.167 & 0.167 & 0.167 & 0.167\\
+\hline
+Uniformity & 0.167 & 0.167 & 0.167 & 0.167 & 0.167 & 0.167\\
+\hline
+**Total** & **\textbackslash{}textcolor\{\#d73027\}\{0.5\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.5\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.5\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.5\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.5\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.5\}**\\
+\hline
+\end{tabular}
+
+\textbackslash{}end\{table\}
+
+\hypertarget{k-3}{%
+\subsection{\texorpdfstring{\emph{k} = 3}{k = 3}}\label{k-3}}
+
+\textbackslash{}begin\{table\}
+
+\textbackslash{}caption\{\label{tab:unnamed-chunk-77}One origin, many
+losses; \emph{k} = 3\} \centering
+
+\begin{tabular}[t]{l|l|l|l|l|l|l|l|l|l|l|l}
+\hline
+Intervening taxa & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\hline
+Curvature & 0 & 0.25 & 0.4 & 0.5 & 0.571 & 0.625 & 0.667 & 0.7 & 0.727 & 0.75 & 0.769\\
+\hline
+Direction & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+Uniformity & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+**Total** & **\textbackslash{}textcolor\{\#74add1\}\{0\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.25\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.4\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.5\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.571\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.625\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.667\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.7\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.727\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.769\}**\\
+\hline
+\end{tabular}
+
+\textbackslash{}end\{table\} \textbackslash{}begin\{table\}
+
+\textbackslash{}caption\{\label{tab:unnamed-chunk-78}Two origins, no losses;
+\emph{k} = 3\} \centering
+
+\begin{tabular}[t]{l|l|l|l|l|l|l|l|l|l|l|l}
+\hline
+Intervening taxa & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\hline
+Curvature & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25\\
+\hline
+Direction & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25\\
+\hline
+Uniformity & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25 & 0.25\\
+\hline
+**Total** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#d73027\}\{0.75\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.75\}** & **\textbackslash{}textcolor\{\#74add1\}\{0.75\}**\\
+\hline
+\end{tabular}
+
+\textbackslash{}end\{table\}
+
+\hypertarget{generalization}{%
+\section{Generalization}\label{generalization}}
+
+In general, if there are even a small number of similarities between
+ontologically dependent characters, then the maximal-fit reconstruction
+will infer a very high number of secondary losses rather than
+attributing a small number of similarities to convergence. This is
+especially true at small to medium values of \emph{k}.
+
+\includegraphics{Inapplicable_data_files/figure-latex/small-k-single-origin-1.pdf}
+
+It is important to recall that two features that evolve independently
+are expected to share a number of similarities due to chance:
+
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-79-1.pdf}
+
+In the conservative case that binary attributes are equally probable, a
+character with 12 ontologically dependent binary characters is expected
+to share, by chance, six attributes with any taxon that independently
+gained that character.
+
+However, a model that seeks to maximise global homology would prefer to
+reconstruct seven independent losses to two independent gains, in order
+to attribute these chance similarities to common ancestry. In practice,
+of course, it is likely that one of two binary features of a character
+is more probable than another, whether due to fitness, contingency or
+evolutionary constraint, increasing still further the expected
+similarities between two independently evolved instances of a character,
+and making it harder for global homology maximisation to identify
+genuine cases of evolutionary convergence.
+
 \hypertarget{examples}{%
 \chapter{Examples}\label{examples}}
 
@@ -1892,8 +2146,8 @@ is one example:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-73-1.pdf}
-\caption{\label{fig:unnamed-chunk-73}An optimal tree: Total score 2}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-81-1.pdf}
+\caption{\label{fig:unnamed-chunk-81}An optimal tree: Total score 2}
 \end{figure}
 
 If we insist that the tail evolves twice, then the best score is
@@ -1904,8 +2158,8 @@ innovation in a tail-less taxon of a tail that has a different colour:
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-74-1.pdf}
-\caption{\label{fig:unnamed-chunk-74}Two tail innovations: Total score 2
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-82-1.pdf}
+\caption{\label{fig:unnamed-chunk-82}Two tail innovations: Total score 2
 (best possible)}
 \end{figure}
 
@@ -1917,8 +2171,8 @@ instance of homoplasy.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-75-1.pdf}
-\caption{\label{fig:unnamed-chunk-75}Tree A: Total score 4}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-83-1.pdf}
+\caption{\label{fig:unnamed-chunk-83}Tree A: Total score 4}
 \end{figure}
 
 \hypertarget{three-equally-suboptimal-alternatives}{%
@@ -1938,8 +2192,8 @@ to blue somewhere between edges 7 and 9 (three homoplasies).
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-76-1.pdf}
-\caption{\label{fig:unnamed-chunk-76}Tree B: Total score 9}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-84-1.pdf}
+\caption{\label{fig:unnamed-chunk-84}Tree B: Total score 9}
 \end{figure}
 
 In the second, our algorithm reconstructs the tail as ancestrally
@@ -1951,8 +2205,8 @@ somewhere between edges 7 and 9 (two homoplasies).
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-77-1.pdf}
-\caption{\label{fig:unnamed-chunk-77}Tree C: Total score 9}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-85-1.pdf}
+\caption{\label{fig:unnamed-chunk-85}Tree C: Total score 9}
 \end{figure}
 
 The third configuration reconstructs the tail as ancestrally present,
@@ -1962,8 +2216,8 @@ colour from red to blue on edge 8.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-78-1.pdf}
-\caption{\label{fig:unnamed-chunk-78}Tree D: Total score 9}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-86-1.pdf}
+\caption{\label{fig:unnamed-chunk-86}Tree D: Total score 9}
 \end{figure}
 
 \hypertarget{a-better-caterpillar-tree}{%
@@ -1977,8 +2231,8 @@ for a combined score of 7.
 
 \begin{figure}
 \centering
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-79-1.pdf}
-\caption{\label{fig:unnamed-chunk-79}Tree E: Total score 7}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-87-1.pdf}
+\caption{\label{fig:unnamed-chunk-87}Tree E: Total score 7}
 \end{figure}
 
 \hypertarget{de-laets-caterpillars}{%
@@ -1991,7 +2245,7 @@ version of his example:
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-81}Coding}
+\caption{\label{tab:unnamed-chunk-89}Coding}
 \centering
 \begin{tabular}[t]{l|l|l|l|l|l|l|l|l}
 \hline
@@ -2008,7 +2262,7 @@ When optimising tail colour, we reconstruct the tail as present at all
 internal nodes, with independent losses of the tail in each of the three
 tailless taxa (i.e.~edges 1, 9, 11).
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-82-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-90-1.pdf}
 
 The Fitch algorithm identifies other reconstructions as equally
 parsimonious: for example, a tail may have been lost on edge 6 and
@@ -2027,7 +2281,7 @@ In this particular case, there is an equally-parsimonious character
 reconstruction that our algorithm excludes, which invokes two gains (and
 one loss) of the tail:
 
-\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-83-1.pdf}
+\includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-91-1.pdf}
 
 This has no effect on tree scoring, but may be relevant if complete
 internal nodal reconstructions are desired.

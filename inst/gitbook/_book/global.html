@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-06-29">
+<meta name="date" content="2018-07-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -181,6 +181,12 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6" data-path="global.html"><a href="global.html"><i class="fa fa-check"></i><b>6</b> Global optimization</a><ul>
 <li class="chapter" data-level="6.1" data-path="global.html"><a href="global.html#global-optima-may-be-locally-suboptimal"><i class="fa fa-check"></i><b>6.1</b> Global optima may be locally suboptimal</a></li>
 <li class="chapter" data-level="6.2" data-path="global.html"><a href="global.html#ontology"><i class="fa fa-check"></i><b>6.2</b> Ontology</a></li>
+<li class="chapter" data-level="6.3" data-path="global.html"><a href="global.html#implied-weighting"><i class="fa fa-check"></i><b>6.3</b> Implied weighting</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="global.html"><a href="global.html#k-10"><i class="fa fa-check"></i><b>6.3.1</b> <em>k</em> = 10</a></li>
+<li class="chapter" data-level="6.3.2" data-path="global.html"><a href="global.html#k-5"><i class="fa fa-check"></i><b>6.3.2</b> <em>k</em> = 5</a></li>
+<li class="chapter" data-level="6.3.3" data-path="global.html"><a href="global.html#k-3"><i class="fa fa-check"></i><b>6.3.3</b> <em>k</em> = 3</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="global.html"><a href="global.html#generalization"><i class="fa fa-check"></i><b>6.4</b> Generalization</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7</b> Examples</a><ul>
 <li class="chapter" data-level="7.1" data-path="examples.html"><a href="examples.html#some-caterpillars"><i class="fa fa-check"></i><b>7.1</b> Some caterpillars</a></li>
@@ -323,7 +329,7 @@ reconstructs two separate origins of the tail:</p>
 </div>
 <div id="ontology" class="section level2">
 <h2><span class="header-section-number">6.2</span> Ontology</h2>
-<p>Note that the details of this reconstruction rely on the attribution of ontologically dependent characters to specific principal characters. Changing the ontology of the previous matrix (but none of the scorings) such that two ontologically dependent characters depend on the beak, rather than the tail, results in a different outcome:</p>
+<p>Note that the details of this reconstruction rely on the attribution of ontologically dependent characters to specific principal characters. Changing the ontology of the previous matrix (without modifying the scorings) such that two ontologically dependent characters depend on the beak, rather than the tail, results in a different outcome:</p>
 <table>
 <caption><span id="tab:unnamed-chunk-69">Table 6.2: </span>Coding</caption>
 <thead>
@@ -424,7 +430,525 @@ compensate for the additional cost of unparsimoniously reconstructing its own di
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-70-1.png" width="768" /></p>
 <p>On the other hand, reconstructing a beak and a tail as present in the common ancestor requires four independent losses in each character – a total of eight homoplasies, which does not outweigh the benefit obtained by reconstructing the ontologically dependent characters as homologous:</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-71-1.png" width="768" /></p>
+</div>
+<div id="implied-weighting" class="section level2">
+<h2><span class="header-section-number">6.3</span> Implied weighting</h2>
+<p>The question here is how these counts ought to be considered in the context of implied weighting <span class="citation">(Goloboff, <a href="#ref-Goloboff1993">1993</a>, <a href="#ref-Goloboff2014">2014</a>)</span>.</p>
+<p>Let’s consider the case of a pollinator’s tongue.</p>
+<blockquote>
+<p>Tongue: Curvature: Straight / curved</p>
+<p>Tongue: Curvature: Direction: Up / down</p>
+<p>Tongue: Curvature: Uniformity: Uniform / uneven</p>
+</blockquote>
+<p>Let’s assume that two taxa within an analysis have tongues that both curve uniformly up;
+other tongue-bearing taxa have straight tongues. In the absence of prior knowledge concerning the likely nature of tongue coiling, the probability that two tongues that evolved independently would both curve uniformly upwards is ¼. As such, the similarities between the coiling do not constitute strong evidence that coiling evolved once; two origins is less parsimonious, but not by much.</p>
+<p>Let’s consider now some trees where the two curled-tongued taxa are separated by a number of straight-tongued taxa:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-72-1.png" width="768" /></p>
+<p>Each of these trees can be interpreted in one of two ways: there may have been two independent evolutionary events that gave rise to curved tongues (which both happened to curve uniformly upwards, by a small but unremarkable coincidence), or there was one evolutionary event that gave rise to a curved tongue, and 0, 1, 2, 3, 4, or 5 additional evolutionary events whereby a curved tongue was straightened.</p>
+<p>Let’s consider the extra steps entailed for each tree under these two scenarios:</p>
+<table>
+<caption><span id="tab:iw-delaet-ew-a">Table 6.3: </span>One origin, many losses</caption>
+<thead>
+<tr class="header">
+<th align="left">Intervening taxa</th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Curvature</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">3</td>
+<td align="left">4</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">Direction</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Uniformity</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Total</strong></td>
+<td align="left"><strong><font color='#74add1'>0</font></strong></td>
+<td align="left"><strong><font color='#74add1'>1</font></strong></td>
+<td align="left"><strong><font color='#74add1'>2</font></strong></td>
+<td align="left"><strong><font color='#74add1'>3</font></strong></td>
+<td align="left"><strong><font color='#d73027'>4</font></strong></td>
+<td align="left"><strong><font color='#d73027'>5</font></strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:iw-delaet-ew-b">Table 6.4: </span>Two origins, no losses</caption>
+<thead>
+<tr class="header">
+<th align="left">Intervening taxa</th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Curvature</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">Direction</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Uniformity</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Total</strong></td>
+<td align="left"><strong><font color='#d73027'>3</font></strong></td>
+<td align="left"><strong><font color='#d73027'>3</font></strong></td>
+<td align="left"><strong><font color='#d73027'>3</font></strong></td>
+<td align="left"><strong><font color='#74add1'>3</font></strong></td>
+<td align="left"><strong><font color='#74add1'>3</font></strong></td>
+<td align="left"><strong><font color='#74add1'>3</font></strong></td>
+</tr>
+</tbody>
+</table>
+<p>On this view, if there are fewer than three intervening taxa, then it is more homologous to reconstruct a single origin and zero, one or two losses; if there are more than three intervening taxa, it is more homologous to reconstruct two separate origins of curvature.</p>
+<p>However, under implied weights <span class="citation">(Goloboff, <a href="#ref-Goloboff1993">1993</a>)</span>, each additional homoplasy in a character is afforded less cost than the one before, according to a ‘goodness of fit’ function <span class="math inline">\(\frac{e}{e + k}\)</span>. The preferable reconstruction now is the one that minimises total cost, which will depend on the value of <em>k</em> selected. Under any value of of <em>k</em>, it takes at least four intervening taxa for two origins of the tail to be preferable to multiple losses:</p>
+<div id="k-10" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> <em>k</em> = 10</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-73">Table 6.5: </span>One origin, many losses; <em>k</em> = 10</caption>
+<thead>
+<tr class="header">
+<th align="left">Intervening taxa</th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Curvature</td>
+<td align="left">0</td>
+<td align="left">0.0909</td>
+<td align="left">0.167</td>
+<td align="left">0.231</td>
+<td align="left">0.286</td>
+<td align="left">0.333</td>
+</tr>
+<tr class="even">
+<td align="left">Direction</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Uniformity</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Total</strong></td>
+<td align="left"><strong><font color='#74add1'>0</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.0909</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.167</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.231</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.286</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.333</font></strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:unnamed-chunk-74">Table 6.6: </span>Two origins, no losses; <em>k</em> = 10</caption>
+<thead>
+<tr class="header">
+<th align="left">Intervening taxa</th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Curvature</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+</tr>
+<tr class="even">
+<td align="left">Direction</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+</tr>
+<tr class="odd">
+<td align="left">Uniformity</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+<td align="left">0.0909</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Total</strong></td>
+<td align="left"><strong><font color='#d73027'>0.273</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.273</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.273</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.273</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.273</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.273</font></strong></td>
+</tr>
+</tbody>
+</table>
+<p>And at smaller values of <em>k</em>, progressively more losses of the tail are preferable to a single coincidence:</p>
+</div>
+<div id="k-5" class="section level3">
+<h3><span class="header-section-number">6.3.2</span> <em>k</em> = 5</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-75">Table 6.7: </span>One origin, many losses; <em>k</em> = 5</caption>
+<thead>
+<tr class="header">
+<th align="left">Intervening taxa</th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Curvature</td>
+<td align="left">0</td>
+<td align="left">0.167</td>
+<td align="left">0.286</td>
+<td align="left">0.375</td>
+<td align="left">0.444</td>
+<td align="left">0.5</td>
+</tr>
+<tr class="even">
+<td align="left">Direction</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Uniformity</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Total</strong></td>
+<td align="left"><strong><font color='#74add1'>0</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.167</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.286</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.375</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.444</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.5</font></strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:unnamed-chunk-76">Table 6.8: </span>Two origins, no losses; <em>k</em> = 5</caption>
+<thead>
+<tr class="header">
+<th align="left">Intervening taxa</th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Curvature</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+</tr>
+<tr class="even">
+<td align="left">Direction</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+</tr>
+<tr class="odd">
+<td align="left">Uniformity</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+<td align="left">0.167</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Total</strong></td>
+<td align="left"><strong><font color='#d73027'>0.5</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.5</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.5</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.5</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.5</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.5</font></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="k-3" class="section level3">
+<h3><span class="header-section-number">6.3.3</span> <em>k</em> = 3</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-77">Table 6.9: </span>One origin, many losses; <em>k</em> = 3</caption>
+<thead>
+<tr class="header">
+<th align="left">Intervening taxa</th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">5</th>
+<th align="left">6</th>
+<th align="left">7</th>
+<th align="left">8</th>
+<th align="left">9</th>
+<th align="left">10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Curvature</td>
+<td align="left">0</td>
+<td align="left">0.25</td>
+<td align="left">0.4</td>
+<td align="left">0.5</td>
+<td align="left">0.571</td>
+<td align="left">0.625</td>
+<td align="left">0.667</td>
+<td align="left">0.7</td>
+<td align="left">0.727</td>
+<td align="left">0.75</td>
+<td align="left">0.769</td>
+</tr>
+<tr class="even">
+<td align="left">Direction</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Uniformity</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Total</strong></td>
+<td align="left"><strong><font color='#74add1'>0</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.25</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.4</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.5</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.571</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.625</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.667</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.7</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.727</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.769</font></strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:unnamed-chunk-78">Table 6.10: </span>Two origins, no losses; <em>k</em> = 3</caption>
+<thead>
+<tr class="header">
+<th align="left">Intervening taxa</th>
+<th align="left">0</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">5</th>
+<th align="left">6</th>
+<th align="left">7</th>
+<th align="left">8</th>
+<th align="left">9</th>
+<th align="left">10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Curvature</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+</tr>
+<tr class="even">
+<td align="left">Direction</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+</tr>
+<tr class="odd">
+<td align="left">Uniformity</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+<td align="left">0.25</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Total</strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#d73027'>0.75</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.75</font></strong></td>
+<td align="left"><strong><font color='#74add1'>0.75</font></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="generalization" class="section level2">
+<h2><span class="header-section-number">6.4</span> Generalization</h2>
+<p>In general, if there are even a small number of similarities between ontologically dependent characters, then the maximal-fit reconstruction will infer a very high number of secondary losses rather than attributing a small number of similarities to convergence. This is especially true at small to medium values of <em>k</em>.</p>
+<p><img src="Inapplicable_data_files/figure-html/small-k-single-origin-1.png" width="672" /></p>
+<p>It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance:</p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+<p>In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary characters is expected to share, by chance, six attributes with any taxon that independently gained that character.</p>
+<p>However, a model that seeks to maximise global homology would prefer to reconstruct seven independent losses to two independent gains, in order to attribute these chance similarities to common ancestry. In practice, of course, it is likely that one of two binary features of a character is more probable than another, whether due to fitness, contingency or evolutionary constraint, increasing still further the expected similarities between two independently evolved instances of a character, and making it harder for global homology maximisation to identify genuine cases of evolutionary convergence.</p>
+<!-- MS: Might keep this for a later contribution.
+## Impact
 
+The central distinction between our approach (which insists that each principal character has a parsimonious distribution of states) and De Laet's (which seeks the global optimum) concerns the evaluation of regions of the tree where the principal character is conceivably absent.  De Laet's approach emphasizes homology in ontologically dependant characters to a greater extent than ours, but both approaches are greatly influenced by the inclusion of 'parsimony uninformative' characters.
+
+What is missing from the parsimony framework is a consideration of the evidential weight of these similarities.  Clearly, if there are only two possible states for an ontologically dependant character (e.g. 'rigid / flexible'), then there is a high chance (50%) that two independently-arising tails will share a characteristic by chance, rather than by common ancestry.  If, in constrast, there are ten thousand different pigments that are equally likely to be employed to colour a tail, and two different tails share a common pigment, then the probability of this commonality arising by chance is low; it represents strong evidence for common ancestry.-->
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Goloboff1993">
+<p>Goloboff, P. A. (1993). Estimating character weights during tree search. <em>Cladistics</em>, <em>9</em>(1), 83–91. doi:<a href="https://doi.org/10.1111/j.1096-0031.1993.tb00209.x">10.1111/j.1096-0031.1993.tb00209.x</a></p>
+</div>
+<div id="ref-Goloboff2014">
+<p>Goloboff, P. A. (2014). Extended implied weighting. <em>Cladistics</em>, <em>30</em>(3), 260–272. doi:<a href="https://doi.org/10.1111/cla.12047">10.1111/cla.12047</a></p>
 </div>
 </div>
             </section>
@@ -474,6 +998,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

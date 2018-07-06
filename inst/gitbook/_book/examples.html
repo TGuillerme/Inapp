@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-06-29">
+<meta name="date" content="2018-07-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -181,6 +181,12 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6" data-path="global.html"><a href="global.html"><i class="fa fa-check"></i><b>6</b> Global optimization</a><ul>
 <li class="chapter" data-level="6.1" data-path="global.html"><a href="global.html#global-optima-may-be-locally-suboptimal"><i class="fa fa-check"></i><b>6.1</b> Global optima may be locally suboptimal</a></li>
 <li class="chapter" data-level="6.2" data-path="global.html"><a href="global.html#ontology"><i class="fa fa-check"></i><b>6.2</b> Ontology</a></li>
+<li class="chapter" data-level="6.3" data-path="global.html"><a href="global.html#implied-weighting"><i class="fa fa-check"></i><b>6.3</b> Implied weighting</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="global.html"><a href="global.html#k-10"><i class="fa fa-check"></i><b>6.3.1</b> <em>k</em> = 10</a></li>
+<li class="chapter" data-level="6.3.2" data-path="global.html"><a href="global.html#k-5"><i class="fa fa-check"></i><b>6.3.2</b> <em>k</em> = 5</a></li>
+<li class="chapter" data-level="6.3.3" data-path="global.html"><a href="global.html#k-3"><i class="fa fa-check"></i><b>6.3.3</b> <em>k</em> = 3</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="global.html"><a href="global.html#generalization"><i class="fa fa-check"></i><b>6.4</b> Generalization</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7</b> Examples</a><ul>
 <li class="chapter" data-level="7.1" data-path="examples.html"><a href="examples.html#some-caterpillars"><i class="fa fa-check"></i><b>7.1</b> Some caterpillars</a></li>
@@ -223,8 +229,8 @@ We follow the example of a tail coded using two characters:</p>
 taxa have tails (and eight do not), four of which are red, four of which are blue.</p>
 <p>An optimal tree with this character invokes a single origin of the tail, and a single
 change in tail colour, thus incurring a score of two. Here is one example:</p>
-<div class="figure"><span id="fig:unnamed-chunk-73"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-73-1.png" alt="An optimal tree: Total score 2" width="681.6" />
+<div class="figure"><span id="fig:unnamed-chunk-81"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-81-1.png" alt="An optimal tree: Total score 2" width="681.6" />
 <p class="caption">
 Figure 7.1: An optimal tree: Total score 2
 </p>
@@ -234,8 +240,8 @@ by reconstructing a different colour of tail in each of the two regions
 in which the tail is present. On a caterpillar tree, this means the loss of a
 tail that has one colour, and an independent innovation in a tail-less taxon
 of a tail that has a different colour:</p>
-<div class="figure"><span id="fig:unnamed-chunk-74"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-74-1.png" alt="Two tail innovations: Total score 2 (best possible)" width="681.6" />
+<div class="figure"><span id="fig:unnamed-chunk-82"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-82-1.png" alt="Two tail innovations: Total score 2 (best possible)" width="681.6" />
 <p class="caption">
 Figure 7.2: Two tail innovations: Total score 2 (best possible)
 </p>
@@ -243,8 +249,8 @@ Figure 7.2: Two tail innovations: Total score 2 (best possible)
 <p>Under the parsimony criterion, it is considered less optimal if a tail, when it re-evolves, happens to independently re-evolve a colour that has already been observed –
 “blueness” has evolved twice on the following tree, meaning that
 the second innovation of “blueness” represents an instance of homoplasy.</p>
-<div class="figure"><span id="fig:unnamed-chunk-75"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-75-1.png" alt="Tree A: Total score 4" width="681.6" />
+<div class="figure"><span id="fig:unnamed-chunk-83"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-83-1.png" alt="Tree A: Total score 4" width="681.6" />
 <p class="caption">
 Figure 7.3: Tree A: Total score 4
 </p>
@@ -260,8 +266,8 @@ and gained on edge 14 (a total of six homoplasies). It further reconstructs
 independent, homoplastic origins of tail redness on edge 5, tail blueness on
 edge 14, and a change in tail colour from red to blue somewhere between edges
 7 and 9 (three homoplasies).</p>
-<div class="figure"><span id="fig:unnamed-chunk-76"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-76-1.png" alt="Tree B: Total score 9" width="681.6" />
+<div class="figure"><span id="fig:unnamed-chunk-84"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-84-1.png" alt="Tree B: Total score 9" width="681.6" />
 <p class="caption">
 Figure 7.4: Tree B: Total score 9
 </p>
@@ -271,8 +277,8 @@ being lost in tips B, D, E, H, and I, and on edge 11, before being independently
 gained on edge 14 (a total of seven homoplasies).<br />
 It further reconstructs an independent, homoplastic origins of tail blueness on
 edge 14, and a change in tail colour from red to blue somewhere between edges 7 and 9 (two homoplasies).</p>
-<div class="figure"><span id="fig:unnamed-chunk-77"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-77-1.png" alt="Tree C: Total score 9" width="681.6" />
+<div class="figure"><span id="fig:unnamed-chunk-85"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-85-1.png" alt="Tree C: Total score 9" width="681.6" />
 <p class="caption">
 Figure 7.5: Tree C: Total score 9
 </p>
@@ -281,8 +287,8 @@ Figure 7.5: Tree C: Total score 9
 being lost in tips B, D, F, H, J, L, N and P (a total of eight homoplastic losses).
 It further reconstructs a single change in tail colour from red to blue
 on edge 8.</p>
-<div class="figure"><span id="fig:unnamed-chunk-78"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-78-1.png" alt="Tree D: Total score 9" width="681.6" />
+<div class="figure"><span id="fig:unnamed-chunk-86"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-86-1.png" alt="Tree D: Total score 9" width="681.6" />
 <p class="caption">
 Figure 7.6: Tree D: Total score 9
 </p>
@@ -294,8 +300,8 @@ Figure 7.6: Tree D: Total score 9
 a loss of the tail at edge 2, a gain at edge 6, a loss at edge 10, and a gain at
 edge 14; it invokes a homoplastic origin of redness at edge 6, one of blueness
 at edge 14, and a change in colour at edge 8, for a combined score of 7.</p>
-<div class="figure"><span id="fig:unnamed-chunk-79"></span>
-<img src="Inapplicable_data_files/figure-html/unnamed-chunk-79-1.png" alt="Tree E: Total score 7" width="681.6" />
+<div class="figure"><span id="fig:unnamed-chunk-87"></span>
+<img src="Inapplicable_data_files/figure-html/unnamed-chunk-87-1.png" alt="Tree E: Total score 7" width="681.6" />
 <p class="caption">
 Figure 7.7: Tree E: Total score 7
 </p>
@@ -305,7 +311,7 @@ Figure 7.7: Tree E: Total score 7
 <h2><span class="header-section-number">7.4</span> De Laet’s caterpillars</h2>
 <p>De Laet <span class="citation">(<a href="#ref-DeLaet2017">2017</a>)</span> identifies a case in which our algorithm <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2018</a>)</span> will not reconstruct every equally-parsimonious character reconstruction. Below is a simplified version of his example:</p>
 <table>
-<caption><span id="tab:unnamed-chunk-81">Table 7.1: </span>Coding</caption>
+<caption><span id="tab:unnamed-chunk-89">Table 7.1: </span>Coding</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -345,11 +351,11 @@ Figure 7.7: Tree E: Total score 7
 </tbody>
 </table>
 <p>When optimising tail colour, we reconstruct the tail as present at all internal nodes, with independent losses of the tail in each of the three tailless taxa (i.e. edges 1, 9, 11).</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-82-1.png" width="768" /></p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-90-1.png" width="768" /></p>
 <p>The Fitch algorithm identifies other reconstructions as equally parsimonious: for example, a tail may have been lost on edge 6 and re-gained on edge 12. This also incurs three steps for the tail character, and (in De Laet’s parlance) attributes three similarities to common ancestry: the presence of a tail in tips B and C, the absence of the tail in tips E and F, and the presence of a tail in tips G and H.</p>
 <p>We prefer reconstructions that attribute the presence of a feature to common ancestry where possible – a philosophy that shares something with Dollo’s contention that it is easier to lose a feature than to gain it. On a pragmatic level, this maximises the opportunity for subsidiary traits of the tail to be attributed to common ancestry.</p>
 <p>In this particular case, there is an equally-parsimonious character reconstruction that our algorithm excludes, which invokes two gains (and one loss) of the tail:</p>
-<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-83-1.png" width="768" /></p>
+<p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-91-1.png" width="768" /></p>
 <p>This has no effect on tree scoring, but may be relevant if complete internal nodal reconstructions are desired.</p>
 
 </div>
@@ -410,6 +416,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

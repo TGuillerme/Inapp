@@ -15,7 +15,7 @@
 #' @param col.states \code{logical}, whether to colour the states of the tips (\code{TRUE}) or not (\code{FALSE}, default).
 #' @param state.labels vector of mode \code{character} containing labels for
 #'                     each state of the character, in order, to be plotted if
-#'                     col.states is \code{TRUE}.
+#'                     col.states is \code{TRUE}.  Set to `NA` to suppress state legend.
 #' @param legend.pos \code{character}, where to position the legend -- e.g. `bottomleft`.
 #'                   Sent as `x` parameter to \code{\link{legend}}.
 #'                   Specify `none` to hide the legend.`
@@ -291,23 +291,25 @@ plot.states.matrix <- function(
     if (col.states) {
         ape::tiplabels(tips_labels, cex = 1, adj = 1,
                        bg = paste0(state_colours[tips_colours])) #, 'aa'
-        if (length(state.labels) == 0) {
-            state_labels <- names(edge_palette)
-        } else {
-            if (length(state.labels) == length(edge_palette) - 2) {
-                state.labels <- c(state.labels, 'Ambiguous', 'Inapplicable')
-            } else if (length(state.labels) == length(edge_palette) - 1) {
-                state.labels <- c(state.labels, 'Ambiguous')
-            } else if (length(state.labels) != length(edge_palette)) {
-                warning("State labels do not seem to match states.  You need to label all states from 0 to the maximum observed.")
+        if (length(state.labels) != 1 || !is.na(state.labels)) {
+            if (length(state.labels) == 0) {
+                state_labels <- names(edge_palette)
+            } else {
+                if (length(state.labels) == length(edge_palette) - 2) {
+                    state.labels <- c(state.labels, 'Ambiguous', 'Inapplicable')
+                } else if (length(state.labels) == length(edge_palette) - 1) {
+                    state.labels <- c(state.labels, 'Ambiguous')
+                } else if (length(state.labels) != length(edge_palette)) {
+                    warning("State labels do not seem to match states.  You need to label all states from 0 to the maximum observed.")
+                }
+                state_labels <- paste(names(edge_palette), gsub("^['\"]|['\"]$", "", state.labels), sep=": ")
             }
-            state_labels <- paste(names(edge_palette), gsub("^['\"]|['\"]$", "", state.labels), sep=": ")
+            observed <- names(edge_palette) %in% edge_final
+            graphics::legend('bottomright', legend=state_labels[observed], cex=1.2,
+                             col=edge_palette[observed], x.intersp=1,
+                             pch=15, pt.cex=1, lty=1, lwd=2,
+                             bty='n', bg=NULL)
         }
-        observed <- names(edge_palette) %in% edge_final
-        graphics::legend('bottomright', legend=state_labels[observed], cex=1.2,
-                         col=edge_palette[observed], x.intersp=1,
-                         pch=15, pt.cex=1, lty=1, lwd=2,
-                         bty='n', bg=NULL)
     } else {
       ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
     }

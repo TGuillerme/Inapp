@@ -178,7 +178,12 @@ vignettePlot(sep4, tongue, legend.pos='none', FALSE, passes=0, counts=0,
 vignettePlot(sep5, tongue, legend.pos='none', FALSE, passes=0, counts=0,
              main='Five intercalated taxa', state.labels = NA,
              state.override=c(0,0,1,0,0,0,0,0,1, 0, 0, 2, 2, 2, 2, 2, 2))
-nInter <- 6
+```
+
+Each of these trees can be interpreted in one of two ways: there may have been two independent evolutionary events that gave rise to curved tongues (which both happened to curve uniformly upwards, by a small but unremarkable coincidence), or there was one evolutionary event that gave rise to a curved tongue, and 0, 1, 2, 3, 4, or 5 additional evolutionary events whereby a curved tongue was straightened.
+
+Let's consider the extra steps entailed for each tree under these two scenarios:
+```{r iw-table-setup, echo=FALSE}
 ColouredText <- function(text, colour) {
   if(knitr::is_latex_output())
     paste0("\\textcolor{", colour, "}{", text, "}")
@@ -197,16 +202,12 @@ Table <- function (input, caption, greens=0) {
     cells <- rbind(signif(cells, 3),
                    paste0('**', ColouredText(signif(colSums(cells), 3), colours), '**'))
     colnames(cells) <- seq_len(nInter) - 1
-    cells <- cbind(c('Taxa between', 'Curvature', 'Direction', 'Uniformity', '**Total**'), cells)
+    cells <- cbind('Intervening taxa' = c('Curvature', 'Direction', 'Uniformity', '**Total**'), cells)
     knitr::kable(cells, caption=caption)
 }
 Fit <- function (e, k) e / (e + k)
+nInter <- 6
 ```
-
-Each of these trees can be interpreted in one of two ways: there may have been two independent evolutionary events that gave rise to curved tongues (which both happened to curve uniformly upwards, by a small but unremarkable coincidence), or there was one evolutionary event that gave rise to a curved tongue, and 0, 1, 2, 3, 4, or 5 additional evolutionary events whereby a curved tongue was straightened.
-
-Let's consider the extra steps entailed for each tree under these two scenarios:
-
 
 ```{r iw-delaet-ew-a, echo = FALSE, results='asis'}
 parent_extra_1 <- function() seq_len(nInter) - 1
@@ -220,7 +221,7 @@ subchar_homoplasies_2 <- function() rep(1, nInter)
 Table(c(parent_extra_2(), rep(subchar_homoplasies_2(), 2)), caption="Two origins, no losses", -3)
 ```
 
-On this view, if there are fewer than three intervening taxa, then it is more homologous to reconstruct a single origin and zero, one or two losses; if there are more than three intervening taxa, it is more homologous to reconstruct two separate origins.
+On this view, if there are fewer than three intervening taxa, then it is more homologous to reconstruct a single origin and zero, one or two losses; if there are more than three intervening taxa, it is more homologous to reconstruct two separate origins of curvature.
 
 However, under implied weights [@Goloboff1993], each additional homoplasy in a character is afforded less cost than the one before, according to a 'goodness of fit' function $\frac{e}{e + k}$.  The preferable reconstruction now is the one that minimises total cost, which will depend on the value of _k_ selected.  Under any value of of _k_, it takes at least four intervening taxa for two origins of the tail to be preferable to multiple losses:
 
@@ -254,26 +255,60 @@ Table(c(Fit(parent_extra_2(), k), rep(Fit(subchar_homoplasies_2(), k), 2)),
 
 ```{r, echo = FALSE, results='asis'}
 k <- 3
-nInter <- 9
+nInter <- 11
 Table(c(Fit(parent_extra_1(), k), rep(Fit(subchar_homoplasies_1(), k), 2)),
-      caption=paste("One origin, many losses; _k_ =", k))
+      caption=paste("One origin, many losses; _k_ =", k), 9)
 ```
 ```{r, echo = FALSE, results='asis'}
 Table(c(Fit(parent_extra_2(), k), rep(Fit(subchar_homoplasies_2(), k), 2)),
-      caption=paste("Two origins, no losses; _k_ =", k))
+      caption=paste("Two origins, no losses; _k_ =", k), -2)
 ```
 
-### _k_ = 2
+## Generalization
 
-```{r, echo = FALSE, results='asis'}
-k <- 2
-Table(c(Fit(parent_extra_1(), k), rep(Fit(subchar_homoplasies_1(), k), 2)),
-      caption=paste("One origin, many losses; _k_ =", k))
+In general, if there are even a small number of similarities between ontologically dependent characters, then the maximal-fit reconstruction will infer a very high number of secondary losses rather than attributing a small number of similarities to convergence.  This is especially true at small to medium values of _k_.
+
+```{r small-k-single-origin, echo = FALSE}
+k <- 1+1.05^(0:100)
+plot((3 * k) / (k - 2) ~ k, log='x', pch='.', ylab='Intervening taxa', col='#ffffff00', ylim=c(1, 15), xlim=c(2, 160))
+lines((2 * k) / (k - 2) ~ k, col=brewer[[7]][1])
+lines((3 * k) / (k - 2) ~ k, col=brewer[[7]][2])
+lines((4 * k) / (k - 2) ~ k, col=brewer[[7]][3])
+lines((5 * k) / (k - 2) ~ k, col=brewer[[7]][4])
+lines((6 * k) / (k - 2) ~ k, col=brewer[[7]][6])
+lines((7 * k) / (k - 2) ~ k, col=brewer[[7]][7])
+
+text(156, 2, '1', col=brewer[[7]][1], adj=c(1, 0.3))
+text(156, 3, '2', col=brewer[[7]][2], adj=c(1, 0.3))
+text(156, 4, '3', col=brewer[[7]][3], adj=c(1, 0.3))
+text(156, 5, '4', col=brewer[[7]][4], adj=c(1, 0.3))
+text(156, 6, '5', col=brewer[[7]][6], adj=c(1, 0.3))
+text(156, 7, '6', col=brewer[[7]][7], adj=c(1, 0.3))
+text(110, 8, 'Ontologically\ndependent\nsimilarities:', pos=3)
+text(2, 1.3, 'Single origin (multiple losses)', adj=0, font=3)
+text(20, 13, 'Two origins (no losses)', adj=0, font=3)
 ```
-```{r, echo = FALSE, results='asis'}
-Table(c(Fit(parent_extra_2(), k), rep(Fit(subchar_homoplasies_2(), k), 2)),
-      caption=paste("Two origins, no losses; _k_ =", k))
+
+It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance:
+
+```{r, echo = FALSE}
+x <- 0:20
+p <- 0.5
+E <- function (x, p) x * ((p * p) + ((1-p) * (1-p)))
+plot(E(x, 0.5) ~ x, pch='.', col='#ffffff00', xlim=c(1, 17),
+     xlab='Number of ontologically dependent characters',
+     ylab='Expected similarities due to chance')
+lines(E(x, 0.5) ~ x, col=brewer[[3]][1])
+lines(E(x, 2/3) ~ x, col=brewer[[3]][2])
+lines(E(x, 0.1) ~ x, col=brewer[[3]][3])
+legend('bottomright', bty='n', col=brewer[[3]], lty='solid', c('Both states equally probable', 'One state twice as likely', 'One state 90% probable'))
 ```
+
+In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary characters is expected to share, by chance, six attributes with any taxon that independently gained that character.
+
+However, a model that seeks to maximise global homology would prefer to reconstruct seven independent losses to two independent gains, in order to attribute these chance similarities to common ancestry.  In practice, of course, it is likely that one of two binary features of a character is more probable than another, whether due to fitness, contingency or evolutionary constraint, increasing still further the expected similarities between two independently evolved instances of a character, and making it harder for global homology maximisation to identify genuine cases of evolutionary convergence.
+
+
 
 <!-- MS: Might keep this for a later contribution.
 ## Impact

@@ -20,4 +20,4 @@ tmp
 *.paupjob.sh
 
 # Git book garbage
-inst/gitbook/_book/Inapplicable_data_files/*
+inst/gitbook/_bookdown_files/Inapplicable_data_files/*

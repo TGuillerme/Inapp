@@ -917,14 +917,6 @@ For the second pass (first uppass):
   inapplicable state.
 \end{itemize}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## Plotting the NA two first passes}
-\KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\DataTypeTok{counts =} \DecValTok{0}\NormalTok{, }
-     \DataTypeTok{legend.pos =} \StringTok{'none'}\NormalTok{, }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{figure}
 \centering
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-34-1.pdf}
@@ -935,17 +927,6 @@ passes}
 The parent character can be considered as a binary character ``presence
 (\texttt{1}) or absence (\texttt{0}) of a tail'' that would be
 \texttt{11001??00111}. The character would be reconstructed as:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## The parent character}
-\NormalTok{parent_character <-}\StringTok{ "11001??00111"}
-
-\NormalTok{## Applying the Fitch algorithm}
-\NormalTok{matrix_parent <-}\StringTok{ }\KeywordTok{apply.reconstruction}\NormalTok{(tree, parent_character, }\DataTypeTok{method =} \StringTok{"Fitch"}\NormalTok{)}
-\KeywordTok{plot}\NormalTok{(matrix_parent, }\DataTypeTok{passes =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DataTypeTok{legend.pos=}\StringTok{'none'}\NormalTok{, }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{figure}
 \centering
@@ -993,12 +974,6 @@ the applicable states only}:
   that the node, and its descendants have a least one applicable state,
   increment the tree score.
 \end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DataTypeTok{counts =} \DecValTok{2}\NormalTok{, }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{figure}
 \centering
@@ -1059,12 +1034,6 @@ inapplicable and applicable region are counted as follows:
   leads to a region of applicable states, increment the region count.
 \end{itemize}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DataTypeTok{counts =} \DecValTok{1}\NormalTok{, }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{figure}
 \centering
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-37-1.pdf}
@@ -1090,13 +1059,6 @@ only count the \emph{additional} regions.
 Combining both scores -- the number of changes in character states and
 the number of additional applicable regions -- we get indeed a total
 tree score of 5 for this character on this tree.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## Plotting the NA two first passes}
-\KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DataTypeTok{counts =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-38-1.pdf}
 
@@ -1146,12 +1108,6 @@ solved):
     descendants have no inapplicable state.
   \end{enumerate}
 \end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(matrix, }\DataTypeTok{passes =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{), }\DataTypeTok{counts =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\DataTypeTok{show.labels =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}\CommentTok{#, col.states=TRUE)}
-\end{Highlighting}
-\end{Shaded}
 
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-39-1.pdf}
 
@@ -1766,142 +1722,6 @@ rigidity, convexness, glossiness).
 An alternative is to reconstruct the tail as ancestrally present, and
 lost independently in C, D and E.
 
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "changes.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "changes.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "regions.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "regions.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "regions.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "changes.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "regions.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "regions.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "regions.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "changes.override" is not a graphical parameter
-\end{verbatim}
-
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-68-1.pdf}
 
 Considering only the tail, this is an unparsimonious reconstruction: it
@@ -1960,142 +1780,6 @@ On the other hand, reconstructing a beak and a tail as present in the
 common ancestor requires four independent losses in each character -- a
 total of eight homoplasies, which does not outweigh the benefit obtained
 by reconstructing the ontologically dependent characters as homologous:
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "changes.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "changes.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "regions.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "regions.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "regions.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "changes.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "regions.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "regions.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "changes.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "regions.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "changes.override" is not a graphical parameter
-\end{verbatim}
 
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-71-1.pdf}
 
@@ -2157,110 +1841,6 @@ evolved once; two origins is less parsimonious, but not by much.
 
 Let's consider now some trees where the two curled-tongued taxa are
 separated by a number of straight-tongued taxa:
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.window(...): "state.override" is not a graphical parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in plot.xy(xy, type, ...): "state.override" is not a graphical
-## parameter
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in title(...): "state.override" is not a graphical parameter
-\end{verbatim}
 
 \includegraphics{Inapplicable_data_files/figure-latex/unnamed-chunk-73-1.pdf}
 

@@ -1077,7 +1077,7 @@ For the second pass (first uppass):
  * If the focal node has both applicable and inapplicable states, set it to be the inapplicable state only if its ancestor has also only the inapplicable state, else remove the inapplicable state.
  * If the focal node has only an inapplicable state and it's ancestor has not only the inapplicable state, set it to be the union between it's descendants states if their are both applicable, else, leave it as the inapplicable state.
 
-```{r, fig.width = 7.1, fig.height = 7.1, fig.cap = "Inapplicable reconstruction after two passes"}
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap = "Inapplicable reconstruction after two passes", echo=FALSE}
 ## Plotting the NA two first passes
 plot(matrix, passes = c(1,2), counts = 0, 
      legend.pos = 'none', show.labels = c(1, 2))
@@ -1086,7 +1086,7 @@ plot(matrix, passes = c(1,2), counts = 0,
 The parent character can be considered as a binary character "presence (`1`) or absence (`0`) of a tail" that would be `11001??00111`.
 The character would be reconstructed as:
 
-```{r, fig.width = 7.1, fig.height = 7.1, fig.cap = "Fitch reconstruction of the parent character"}
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap = "Fitch reconstruction of the parent character", echo=FALSE}
 ## The parent character
 parent_character <- "11001??00111"
 
@@ -1114,7 +1114,7 @@ The changes of states are calculated the same way as Fitch **for the applicable 
 
  * If there is no state in common between both node's descendants and that the node, and its descendants have a least one applicable state, increment the tree score.
 
-```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="State changes"}
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="State changes", echo=FALSE}
 plot(matrix, passes = c(1,2,3), counts = 2, show.labels = c(1, 2))
 ```
 
@@ -1142,7 +1142,7 @@ The switch to or from an inapplicable and applicable region are counted as follo
   * If the node is applicable, but has an inapplicable descendant that leads to a region of applicable states, increment the region count.
 
 
-```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="Counting applicable regions"}
+```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="Counting applicable regions", echo=FALSE}
 plot(matrix, passes = c(1,2,3), counts = 1, show.labels = c(1, 2))
 ```
 
@@ -1156,7 +1156,7 @@ This node does thus not imply an independent change in the parent character.
 
 Combining both scores -- the number of changes in character states and the number of additional applicable regions -- we get indeed a total tree score of 5 for this character on this tree.
 
-```{r, fig.width = 7.1, fig.height = 7.1}
+```{r, fig.width = 7.1, fig.height = 7.1, echo=FALSE}
 ## Plotting the NA two first passes
 plot(matrix, passes = c(1,2,3), counts = c(1,2), show.labels = c(1,2))
 ```
@@ -1179,7 +1179,7 @@ It follows these rules and only applies to nodes and ancestors that have at leas
     2. being the union of the ancestor's and the descendants' states if the any of the descendants have at least one inapplicable and have at least one state in common with the ancestor.
     3. being the union of the ancestor's and the current node states the descendants have no inapplicable state.
 
-```{r, fig.width = 7.1, fig.height = 7.1}
+```{r, fig.width = 7.1, fig.height = 7.1, echo=FALSE}
 plot(matrix, passes = c(1,2,3,4), counts = c(1,2), show.labels = c(1,2))#, col.states=TRUE)
 ```
 
@@ -1744,7 +1744,7 @@ employing a more homoplasious reconstruction of a principal character.
 
 Consider the following minimal example:
 
-```{r, echo=FALSE, asis=TRUE}
+```{r, echo=FALSE, asis=TRUE, warning=FALSE}
 tail <- "11000011"
 tailCodings <- strsplit(tail, '')[[1]]
 clr  <- "11----11"
@@ -1767,7 +1767,7 @@ knitr::kable(mDep, caption="Coding")
 On a tree where tail-less taxa separate A and B from F and G, our algorithm 
 reconstructs two separate origins of the tail:
 
-```{r, echo=FALSE, fig.width=8, fig.height=4}
+```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
 goloPar()
 
 vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
@@ -1787,7 +1787,7 @@ This reconstruction implies `r number(2 + ontd)` homoplasies across these charac
 
 An alternative is to reconstruct the tail as ancestrally present, and lost independently in C, D and E.  
 
-```{r, echo=FALSE, fig.width=8, fig.height=4}
+```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
 goloPar()
 nodeStates <- rep(1, nchar(tail) - 1)
 myStates <- c(tailCodings, as.list(nodeStates))
@@ -1814,7 +1814,7 @@ Considering only the tail, this is an unparsimonious reconstruction: it requires
 
 Note that the details of this reconstruction rely on the attribution of ontologically dependent characters to specific principal characters.  Changing the ontology of the previous matrix (without modifying the scorings) such that two ontologically dependent characters depend on the beak, rather than the tail, results in a different outcome:
 
-```{r, echo=FALSE, asis=TRUE}
+```{r, echo=FALSE, asis=TRUE, warning=FALSE}
 rownames(mDep)[nrow(mDep) - 1:0] <- c("**Beak**, curvature: (1), convex; (2), concave.",
                     "**Beak**, lustre: (1), glossy; (2), matt.")
 knitr::kable(mDep, caption="Coding")
@@ -1823,7 +1823,7 @@ knitr::kable(mDep, caption="Coding")
 Now, neither principal character has enough ontologically dependent characters to 
 compensate for the additional cost of unparsimoniously reconstructing its own distribution. Following the individually parsimonious reconstruction of the tail and beak entails a minimum of `r number(1 + 1 + ontd)` homoplasies: one additional gain of each of the beak and the tail, and an independent origin of redness, longness, rigidity, curvature and lustre:
 
-```{r, echo=FALSE, fig.width=8, fig.height=4}
+```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
 goloPar()
 
 vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
@@ -1841,7 +1841,7 @@ nodelabels(c('-', '-', 1, '-', '-', '-', 1), cex=1.6, frame='none')
 
 On the other hand, reconstructing a beak and a tail as present in the common ancestor requires four independent losses in each character -- a total of `r number(2 * losses)` homoplasies, which does not outweigh the benefit obtained by reconstructing the ontologically dependent characters as homologous:
 
-```{r, echo=FALSE, fig.width=8, fig.height=4}
+```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
 goloPar()
 nodeStates <- rep(1, nchar(tail) - 1)
 myStates <- c(strsplit(tail, '')[[1]], as.list(nodeStates))
@@ -1868,7 +1868,7 @@ It is important to recall that two features that evolve independently are expect
 
 On this basis, if a character has a number of ontologically dependent binary characters, then mathematically one must expect two independent origins of the parent character to bear a number of similarities by chance:
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, warning=FALSE}
 x <- 0:20
 p <- 0.5
 E <- function (x, p) x * ((p * p) + ((1-p) * (1-p)))
@@ -1910,7 +1910,7 @@ other tongue-bearing taxa have straight tongues.  In the absence of prior knowle
 Let's consider now some trees where the two curled-tongued taxa are separated by a number of straight-tongued taxa:
 
 
-```{r, echo=FALSE, fig.width=8, fig.height=4}
+```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
 goloPar()
 par(mfrow=c(2, 3))
 tongue <- "110000000"
@@ -1942,7 +1942,8 @@ vignettePlot(sep5, tongue, legend.pos='none', FALSE, passes=0, counts=0,
 Each of these trees can be interpreted in one of two ways: there may have been two independent evolutionary events that gave rise to curved tongues (which both happened to curve uniformly upwards, by a small but unremarkable coincidence), or there was one evolutionary event that gave rise to a curved tongue, and 0, 1, 2, 3, 4, or 5 additional evolutionary events whereby a curved tongue was straightened.
 
 Let's consider the extra steps entailed for each tree under these two scenarios:
-```{r iw-table-setup, echo=FALSE}
+
+```{r iw-table-setup, echo=FALSE, warning=FALSE}
 ColouredText <- function(text, colour) {
   if(knitr::is_latex_output())
     paste0("\\textcolor{", colour, "}{", text, "}")
@@ -1968,7 +1969,7 @@ Fit <- function (e, k) e / (e + k)
 nInter <- 6
 ```
 
-```{r iw-delaet-ew-a, echo = FALSE, results='asis'}
+```{r iw-delaet-ew-a, echo = FALSE, results='asis', warning=FALSE}
 parent_extra_1 <- function() seq_len(nInter) - 1
 subchar_homoplasies_1 <- function() rep(0, nInter)
 Table(c(parent_extra_1(), rep(subchar_homoplasies_1(), 2)), caption="One origin, many losses", 4)
@@ -1986,7 +1987,7 @@ However, under implied weights [@Goloboff1993], each additional homoplasy in a c
 
 ### _k_ = 10
 
-```{r, echo = FALSE, results='asis'}
+```{r, echo = FALSE, results='asis', warning=FALSE}
 k <- 10
 Table(c(Fit(parent_extra_1(), k), rep(Fit(subchar_homoplasies_1(), k), 2)),
       caption=paste("One origin, many losses; _k_ =", k), 4)
@@ -2000,7 +2001,7 @@ And at smaller values of _k_, progressively more losses of the tail are preferab
 
 ### _k_ = 5
 
-```{r, echo = FALSE, results='asis'}
+```{r, echo = FALSE, results='asis', warning=FALSE}
 k <- 5
 Table(c(Fit(parent_extra_1(), k), rep(Fit(subchar_homoplasies_1(), k), 2)),
       caption=paste("One origin, many losses; _k_ =", k), 6)
@@ -2012,7 +2013,7 @@ Table(c(Fit(parent_extra_2(), k), rep(Fit(subchar_homoplasies_2(), k), 2)),
 
 ### _k_ = 3
 
-```{r, echo = FALSE, results='asis'}
+```{r, echo = FALSE, results='asis', warning=FALSE}
 k <- 3
 nInter <- 11
 Table(c(Fit(parent_extra_1(), k), rep(Fit(subchar_homoplasies_1(), k), 2)),
@@ -2027,7 +2028,7 @@ Table(c(Fit(parent_extra_2(), k), rep(Fit(subchar_homoplasies_2(), k), 2)),
 
 In general, if there are even a small number of similarities between ontologically dependent characters, then the maximal-fit reconstruction will infer a very high number of secondary losses rather than attributing a small number of similarities to convergence.  This is especially true at small to medium values of _k_.
 
-```{r small-k-single-origin, echo = FALSE}
+```{r small-k-single-origin, echo = FALSE, warning=FALSE}
 k <- 1+1.05^(0:100)
 plot((3 * k) / (k - 2) ~ k, log='x', pch='.', ylab='Intervening taxa', col='#ffffff00', ylim=c(1, 15), xlim=c(2, 160))
 lines((2 * k) / (k - 2) ~ k, col=brewer[[7]][1])

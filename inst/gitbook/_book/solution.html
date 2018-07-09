@@ -300,9 +300,6 @@ matrix &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span
 <li>If the focal node has both applicable and inapplicable states, set it to be the inapplicable state only if its ancestor has also only the inapplicable state, else remove the inapplicable state.</li>
 <li>If the focal node has only an inapplicable state and it’s ancestor has not only the inapplicable state, set it to be the union between it’s descendants states if their are both applicable, else, leave it as the inapplicable state.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
-<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">counts =</span> <span class="dv">0</span>, 
-     <span class="dt">legend.pos =</span> <span class="st">&#39;none&#39;</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
 <div class="figure"><span id="fig:unnamed-chunk-34"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-34-1.png" alt="Inapplicable reconstruction after two passes" width="681.6" />
 <p class="caption">
@@ -310,12 +307,6 @@ Figure 3.3: Inapplicable reconstruction after two passes
 </p>
 </div>
 <p>The parent character can be considered as a binary character “presence (<code>1</code>) or absence (<code>0</code>) of a tail” that would be <code>11001??00111</code>. The character would be reconstructed as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## The parent character
-parent_character &lt;-<span class="st"> &quot;11001??00111&quot;</span>
-
-## Applying the Fitch algorithm
-matrix_parent &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span>(tree, parent_character, <span class="dt">method =</span> <span class="st">&quot;Fitch&quot;</span>)
-<span class="kw">plot</span>(matrix_parent, <span class="dt">passes =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">legend.pos=</span><span class="st">&#39;none&#39;</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
 <div class="figure"><span id="fig:unnamed-chunk-35"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-35-1.png" alt="Fitch reconstruction of the parent character" width="681.6" />
 <p class="caption">
@@ -336,7 +327,6 @@ Figure 3.4: Fitch reconstruction of the parent character
 <ul>
 <li>If there is no state in common between both node’s descendants and that the node, and its descendants have a least one applicable state, increment the tree score.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">counts =</span> <span class="dv">2</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
 <div class="figure"><span id="fig:unnamed-chunk-36"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-36-1.png" alt="State changes" width="681.6" />
 <p class="caption">
@@ -357,7 +347,6 @@ Figure 3.5: State changes
 <li>If the node is inapplicable and both descendants lead to regions of applicable states, increment the region count.</li>
 <li>If the node is applicable, but has an inapplicable descendant that leads to a region of applicable states, increment the region count.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">counts =</span> <span class="dv">1</span>, <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
 <div class="figure"><span id="fig:unnamed-chunk-37"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-37-1.png" alt="Counting applicable regions" width="681.6" />
 <p class="caption">
@@ -369,8 +358,6 @@ Figure 3.6: Counting applicable regions
 <p>Note that the number of applicable regions for a character is always at least 1 (unless every taxa has the inapplicable state) and therefore, we only count the <em>additional</em> regions.</p>
 </blockquote>
 <p>Combining both scores – the number of changes in character states and the number of additional applicable regions – we get indeed a total tree score of 5 for this character on this tree.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Plotting the NA two first passes
-<span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">counts =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-38-1.png" width="681.6" /></p>
 <p>Using the first three passes is enough to get the tree score (while taking into account inapplicable data!) but does not solve all ancestral reconstructions. A fourth pass (second uppass) might be necessary to finalise the node states reconstructions.</p>
 </div>
@@ -387,7 +374,6 @@ Figure 3.6: Counting applicable regions
 <li>being the union of the ancestor’s and the current node states the descendants have no inapplicable state.</li>
 </ol></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(matrix, <span class="dt">passes =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="dt">counts =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">show.labels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))<span class="co">#, col.states=TRUE)</span></code></pre></div>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-39-1.png" width="681.6" /></p>
 </div>
 </div>

@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-07-06">
+<meta name="date" content="2018-07-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -60,57 +60,41 @@ $(function(){
 
 
 <style type="text/css">
-div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource div.sourceLine, .numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em; }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; color = initial; }
-}
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
-code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -218,25 +202,17 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
             <section class="normal" id="section-">
 <div id="problems" class="section level1">
 <h1><span class="header-section-number">2</span> Problems with the Fitch algorithm</h1>
-<p>The Fitch algorithm <span class="citation">(Fitch, <a href="#ref-Fitch1971">1971</a>)</span> counts changes in a character.
-It assumes that the character is applicable throughout the tree.
-This assumption does not lead to error if:</p>
+<p>The Fitch algorithm <span class="citation">(Fitch, <a href="#ref-Fitch1971">1971</a>)</span> counts changes in a character. It assumes that the character is applicable throughout the tree. This assumption does not lead to error if:</p>
 <ul>
 <li><p>The character is inapplicable in fewer than three tips; or</p></li>
-<li><p>In the trees being considered, applicable and inapplicable tokens occur
-in distinct regions of the tree <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>.</p></li>
+<li><p>In the trees being considered, applicable and inapplicable tokens occur in distinct regions of the tree <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>.</p></li>
 </ul>
 <div id="red-tails-blue-tails" class="section level2">
 <h2><span class="header-section-number">2.1</span> Red tails, blue tails</h2>
-<p>Maddison <span class="citation">(<a href="#ref-Maddison1993">1993</a>)</span> provided the following example to demonstrate
-the problem encountered by the Fitch algorithm when inapplicable
-characters were present.</p>
-<p>Consider the following tree, each node of which is supported by a number of
-characters. Tail colour (illustrated; 0 = red, 1 = blue) has not yet been
-considered, but has the potential to resolve the polytomy on the left hand side (bold).</p>
+<p>Maddison <span class="citation">(<a href="#ref-Maddison1993">1993</a>)</span> provided the following example to demonstrate the problem encountered by the Fitch algorithm when inapplicable characters were present.</p>
+<p>Consider the following tree, each node of which is supported by a number of characters. Tail colour (illustrated; 0 = red, 1 = blue) has not yet been considered, but has the potential to resolve the polytomy on the left hand side (bold).</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-14-1.png" width="681.6" /></p>
-<p>In the bold region, tail colour should group the red-tailed tips together, and the blue-tailed tips together,
-but does not establish whether the ancestor of the left-hand tail-bearing clade had a red or blue tail.</p>
+<p>In the bold region, tail colour should group the red-tailed tips together, and the blue-tailed tips together, but does not establish whether the ancestor of the left-hand tail-bearing clade had a red or blue tail.</p>
 <div class="figure"><span id="fig:unnamed-chunk-15"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-15-1.png" alt="Possible resolutions for bold region of tree. Good resolutions imply one change; bad ones, two." width="576" />
 <p class="caption">
@@ -251,14 +227,10 @@ Figure 2.1: Possible resolutions for bold region of tree. Good resolutions imply
 <p>Tail: (0), absent; (1), present.</p>
 <p>Tail, colour: (0), red; (1), blue; (?), inapplicable.</p>
 </blockquote>
-<p>Consider the following two trees, each of which receives a score of two for the first
-character (presence of tail). The score of the second character (tail colour)
-is not as desired.</p>
-<p>The Fitch algorithm will prefer trees in which the left-hand tail-bearing clade
-has a blue tail, simply because the right-hand tail-bearing clade ancestrally did.</p>
+<p>Consider the following two trees, each of which receives a score of two for the first character (presence of tail). The score of the second character (tail colour) is not as desired.</p>
+<p>The Fitch algorithm will prefer trees in which the left-hand tail-bearing clade has a blue tail, simply because the right-hand tail-bearing clade ancestrally did.</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-16-1.png" width="681.6" /></p>
-<p>Notice the additional step reconstructed at the root node: the Fitch algorithm
-reconstructs a change in tail colour in a taxon that doesn’t have a tail!</p>
+<p>Notice the additional step reconstructed at the root node: the Fitch algorithm reconstructs a change in tail colour in a taxon that doesn’t have a tail!</p>
 <p>This reconstruction is not logically consistent.</p>
 <div id="an-exception" class="section level3">
 <h3><span class="header-section-number">2.2.1</span> An exception</h3>
@@ -274,38 +246,24 @@ reconstructs a change in tail colour in a taxon that doesn’t have a tail!</p>
 </blockquote>
 <p>This seems to resolve the problem case that we encountered with reductive coding:</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-17-1.png" width="681.6" /></p>
-<p>Both trees now receive the same score for the ‘tail colour’ character, which
-contributes four steps. Two of these steps, however, correspond to steps that have
-already been counted in the parent character, reflecting the two gains of a tail.</p>
-<p>Although this reconstruction is logically consistent, the gain (or loss) of the tail
-is now reflected in two characters – characters are not independent of one another.</p>
-<p>The outcome is that each ontologically dependent character serves to increase
-the weight of its parent character. The loss of a tail, for example, would
-incur a cost of one step in the tail character and one step in each
-ontologically dependent character, even though it represents a single
-evolutionary event.</p>
+<p>Both trees now receive the same score for the ‘tail colour’ character, which contributes four steps. Two of these steps, however, correspond to steps that have already been counted in the parent character, reflecting the two gains of a tail.</p>
+<p>Although this reconstruction is logically consistent, the gain (or loss) of the tail is now reflected in two characters – characters are not independent of one another.</p>
+<p>The outcome is that each ontologically dependent character serves to increase the weight of its parent character. The loss of a tail, for example, would incur a cost of one step in the tail character and one step in each ontologically dependent character, even though it represents a single evolutionary event.</p>
 </div>
 <div id="a-single-multi-state-character" class="section level2">
 <h2><span class="header-section-number">2.4</span> A single multi-state character</h2>
-<p>A different approach is to use a single character to denote both the
-presence and the colour of the tail:</p>
+<p>A different approach is to use a single character to denote both the presence and the colour of the tail:</p>
 <blockquote>
 <p>Tail: (0), absent; (1), present, red; (2), present, blue.</p>
 </blockquote>
 <p>This seems to resolve the problem case that we encountered with reductive coding:</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-18-1.png" width="681.6" /></p>
-<p>However, we now have a situation where the gain/loss of a tail is afforded the same weight
-as a change in tail colour. We ought to prefer a tree where the tail evolved once
-(and changed colour) to one where it evolved twice (being a different colour each time).</p>
+<p>However, we now have a situation where the gain/loss of a tail is afforded the same weight as a change in tail colour. We ought to prefer a tree where the tail evolved once (and changed colour) to one where it evolved twice (being a different colour each time).</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-19-1.png" width="576" /></p>
 </div>
 <div id="sankoff-matrices" class="section level2">
 <h2><span class="header-section-number">2.5</span> Sankoff matrices</h2>
-<p>It would be possible to establish a Sankoff matrix <span class="citation">(Sankoff &amp; Cedergren, <a href="#ref-Sankoff1983">1983</a>; Sankoff &amp; Rousseau, <a href="#ref-Sankoff1975">1975</a>)</span>
-such that a change between absent and red or absent and blue cost more than
-a change between red and blue, but this effectively up-weights the tail character,
-and it’s not clear that this is desirable – or how much this extra weight
-should be <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>.</p>
+<p>It would be possible to establish a Sankoff matrix <span class="citation">(Sankoff &amp; Cedergren, <a href="#ref-Sankoff1983">1983</a>; Sankoff &amp; Rousseau, <a href="#ref-Sankoff1975">1975</a>)</span> such that a change between absent and red or absent and blue cost more than a change between red and blue, but this effectively up-weights the tail character, and it’s not clear that this is desirable – or how much this extra weight should be <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>.</p>
 <div id="symmetric" class="section level3">
 <h3><span class="header-section-number">2.5.1</span> Symmetric</h3>
 <p>Consider a character with three ontologically dependent characters:</p>
@@ -422,19 +380,12 @@ should be <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>
 </tr>
 </tbody>
 </table>
-<p>The first thing to note is that each additional ontologically depedent character
-generates disproportionately more complexity in the Sankoff matrix.</p>
-<p>Even if this additional complexity could be handled, the underlying issue remains
-that losing a tail, which arguably corresponds to a single evolutionary
-event, is allocated a large cost (here, 4) that grows in line with the number of
-ontogenetically dependant characters.</p>
+<p>The first thing to note is that each additional ontologically depedent character generates disproportionately more complexity in the Sankoff matrix.</p>
+<p>Even if this additional complexity could be handled, the underlying issue remains that losing a tail, which arguably corresponds to a single evolutionary event, is allocated a large cost (here, 4) that grows in line with the number of ontogenetically dependant characters.</p>
 </div>
 <div id="gain-and-loss-asymmetric" class="section level3">
 <h3><span class="header-section-number">2.5.2</span> Gain and loss asymmetric</h3>
-<p>At the cost of symmetry, one could argue that the loss of a tail requires a single
-transformation, whereas the gain requires the addition of a tail and the “setting”
-of each ontologically dependent character, rendering an asymmetric Sankoff
-matrix that nevertheless respects triangular inequality <span class="citation">(Wheeler, <a href="#ref-Wheeler1993">1993</a>)</span>:</p>
+<p>At the cost of symmetry, one could argue that the loss of a tail requires a single transformation, whereas the gain requires the addition of a tail and the “setting” of each ontologically dependent character, rendering an asymmetric Sankoff matrix that nevertheless respects triangular inequality <span class="citation">(Wheeler, <a href="#ref-Wheeler1993">1993</a>)</span>:</p>
 <table>
 <caption><span id="tab:unnamed-chunk-21">Table 2.2: </span>Tail: Cost to go from left state to top state:</caption>
 <thead>
@@ -541,18 +492,14 @@ matrix that nevertheless respects triangular inequality <span class="citation">(
 </tr>
 </tbody>
 </table>
-<p>Here, though, we encounter a new problem: reconstructions involving very many losses
-are preferred to those involving a single gain.</p>
+<p>Here, though, we encounter a new problem: reconstructions involving very many losses are preferred to those involving a single gain.</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-22-1.png" width="633.6" /></p>
 </div>
 </div>
 <div id="why-counting-steps-cannot-work" class="section level2">
 <h2><span class="header-section-number">2.6</span> Why counting steps cannot work</h2>
-<p>The failure of the Sankoff approach illustrates a more general problem:
-if the only thing that is counted is the number of steps, then trees that
-imply multiple gains and losses of a principal character are not adequately penalised.</p>
-<p>To illustrate this point, consider counting only transitions between applicable states
-(i.e. steps), but not transitions from the applicable state to the inapplicable state:</p>
+<p>The failure of the Sankoff approach illustrates a more general problem: if the only thing that is counted is the number of steps, then trees that imply multiple gains and losses of a principal character are not adequately penalised.</p>
+<p>To illustrate this point, consider counting only transitions between applicable states (i.e. steps), but not transitions from the applicable state to the inapplicable state:</p>
 <div class="figure"><span id="fig:unnamed-chunk-23"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-23-1.png" alt="Tail colour optimization" width="576" />
 <p class="caption">
@@ -564,9 +511,7 @@ Figure 2.2: Tail colour optimization
 </div>
 <div id="conclusion" class="section level2">
 <h2><span class="header-section-number">2.7</span> Conclusion</h2>
-<p>No coding mechanism can generate consistent and logically meaningful tree scores
-when employing the Fitch algorithm. A new algorithm is needed: one that counts
-homoplasies instead of steps.</p>
+<p>No coding mechanism can generate consistent and logically meaningful tree scores when employing the Fitch algorithm. A new algorithm is needed: one that counts homoplasies instead of steps.</p>
 
 </div>
 </div>
@@ -640,7 +585,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
+    var src = "";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

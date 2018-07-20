@@ -16,7 +16,7 @@ Imports:
     ape,
     phangorn,
     shiny,
-    TreeSearch (>= 0.0.8)
+    TreeSearch (> 0.1.2)
 Suggests:
     devtools,
     knitr,

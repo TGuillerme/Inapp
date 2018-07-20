@@ -24,8 +24,8 @@ r_binary_packages:
   - shiny
   - testthat
 
-r_packages:
-  - TreeSearch
+github_packages:
+  - ms609/TreeSearch
 
 # Code coverage
 after_success:

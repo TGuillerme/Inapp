@@ -1,9 +1,10 @@
 Package: Inapp
 Title: Reconstruction of Inapplicable Discrete Characters on Phylogenetic Trees
-Version: 0.3
+Version: 0.3.1
+Date: 2018-07-20
 Author: c(person("Thomas", "Guillerme", email = "guillert@tcd.ie", role = c("aut",
     "cre")), person("Martin D.", "Brazeau", role = c("aut")), person("Martin R.",
-    "Smith", role = c("aut")))
+    "Smith", role = c("aut"), comment=c(ORCID = "0000-0001-5660-1727")))
 Maintainer: Thomas Guillerme <guillert@tcd.ie>
 Description: An algorithm allowing states reconstruction and tree length counting for inapplicable discrete characters.
 Depends:
@@ -16,7 +17,7 @@ Imports:
     ape,
     phangorn,
     shiny,
-    TreeSearch (>= 0.0.8)
+    TreeSearch (> 0.1.2)
 Suggests:
     devtools,
     knitr,

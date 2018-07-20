@@ -4,7 +4,7 @@
 \alias{SVGTree}
 \title{SVG Tree}
 \usage{
-SVGTree(treeNo, canvas, char, stateLabels, treeNames,
+SVGTree(treeNo, canvas, char, stateLabels, treeNames, charNo = 0,
   analysisLabels = character(0))
 }
 \arguments{
@@ -19,10 +19,13 @@ of the character}
 
 \item{treeNames}{Character string naming the analysis used to generate each tree}
 
+\item{charNo}{Character string specifying the number of the character,
+for inclusion under the SVG element's \code{data-char} attribute.}
+
 \item{analysisLabels}{Character vector specifying label for each analysis}
 }
 \value{
-A string describing an SVG object that depicts the tree, which can be
+Character string describing an SVG object that depicts the tree, which can be
 written to file or included in markdown destined for HTML output.
 }
 \description{

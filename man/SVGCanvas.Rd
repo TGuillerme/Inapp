@@ -5,7 +5,8 @@
 \title{SVG canvas}
 \usage{
 SVGCanvas(trees, outgroupTips, analysisNames = character(0), width = 682,
-  height = 682, xMargins = c(10L, 10L), yMargins = c(10L, 10L))
+  height = 682, xMargins = c(10L, 10L), yMargins = c(10L, 10L),
+  textY = 3L)
 }
 \arguments{
 \item{trees}{A list of trees, perhaps of class multiPhylo}

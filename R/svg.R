@@ -17,7 +17,7 @@
 #'
 SVGCanvas <- function (trees, outgroupTips, analysisNames=character(0),
                        width = 682, height = 682,
-                       xMargins=c(10L, 10L), yMargins=c(10L, 10L)) {
+                       xMargins=c(10L, 10L), yMargins=c(10L, 10L), textY = 3L) {
     uniqueTrees <- unique(trees)
     rootedTrees <- lapply(uniqueTrees, RootTree, outgroupTips=outgroupTips)
     nTree <- length(uniqueTrees)
@@ -38,7 +38,6 @@ SVGCanvas <- function (trees, outgroupTips, analysisNames=character(0),
     parents <- children <- matrix(0, nTree, nEdge)
     xStep <- nodeX <- nodeY <- vector('list', nTree)
     yStep <- round((height - yMargins[2] - yMargins[1]) / nTip, 1)
-    textY <- 3L
     nAnalyses <- length(analysisNames)
     for (i in eachTree) {
         tree <- rootedTrees[[i]]
@@ -58,14 +57,17 @@ SVGCanvas <- function (trees, outgroupTips, analysisNames=character(0),
             tmpNodeY[nodeI] <- mean(tmpNodeY[Children(tree, nodeI)])
         }
         nodeY[[i]] <- round(tmpNodeY, 1)
-        nodeSupport[i, ] <- round(SplitFrequency(tree, trees) / length(allTrees), 2)
+        nodeSupport[i, ] <- round(SplitFrequency(tree, trees) / length(trees), 2)
     }
     structure( # For a S3 object
         list(height=height, width=width,
              rootedTrees = rootedTrees,
              analysisNames = analysisNames,
              nTree = nTree, eachTree = eachTree, treeIndex=treeIndex,
-             nodeX = nodeX, nodeY = nodeY,
+             parents = parents, children = children,
+             internal = internal, terminal = terminal,
+             nodeX = nodeX, nodeY = nodeY, textY = textY, yStep = yStep,
+             tipLabel = tipLabel,
              nodeSupport = nodeSupport),
         class = 'SVGCanvas')
 }
@@ -81,21 +83,32 @@ length.SVGCanvas <- function (x) x$nTree
 #' @template canvasParam
 #' @template treeNamesParam
 #' @param char Character string specifying character to optimise on the tree
+#' @param charNo Character string specifying the number of the character,
+#'        for inclusion under the SVG element's `data-char` attribute.
 #' @param stateLabels Character vector specifying label for each applicable state
-#' of the character
+#'        of the character
 #' @param analysisLabels Character vector specifying label for each analysis
 #'
-#' @return A string describing an SVG object that depicts the tree, which can be
+#' @return Character string describing an SVG object that depicts the tree, which can be
 #' written to file or included in markdown destined for HTML output.
+#' @importFrom TreeSearch SupportColour
 #' @export
 #'
 #' @author Martin R. Smith
 SVGTree <- function (treeNo, canvas, char, stateLabels,
-                     treeNames, analysisLabels=character(0)) {
+                     treeNames, charNo = 0, analysisLabels=character(0)) {
+    # Cache details from canvas
     tree <- canvas$rootedTree[[treeNo]]
     nodeX <- canvas$nodeX[[treeNo]]
     nodeY <- canvas$nodeY[[treeNo]]
+    parents <- canvas$parents
+    children <- canvas$children
+    internal <- canvas$internal
+    terminal <- canvas$terminal
+    textY <- canvas$textY
+    yStep <- canvas$yStep
     nodeSupport <- canvas$nodeSupport[treeNo, ]
+
     statesMatrix <- apply.reconstruction(tree, char, match.tip.char=TRUE)
     fitchStates <- apply.reconstruction(tree, char, method='Fitch',
                                         inapplicable=1, match.tip.char=TRUE)
@@ -163,7 +176,8 @@ SVGTree <- function (treeNo, canvas, char, stateLabels,
     dudSteps <- matrixData$dud_steps
 
     svgSource <- paste0('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="',
-                        canvas$width, '" height="', canvas$height, '" class="tree" data-char="', i, '">',
+                        canvas$width, '" height="', canvas$height,
+                        '" class="tree" data-char="', charNo, '">',
                         ciCaption, tips, edges, nodes,
                         '</svg>')
     # Return:

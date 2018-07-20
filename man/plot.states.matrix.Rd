@@ -31,7 +31,7 @@ and the nodes at which regions are counted.}
 
 \item{state.labels}{vector of mode \code{character} containing labels for
 each state of the character, in order, to be plotted if
-col.states is \code{TRUE}.}
+col.states is \code{TRUE}.  Set to \code{NA} to suppress state legend.}
 
 \item{legend.pos}{\code{character}, where to position the legend -- e.g. \code{bottomleft}.
 Sent as \code{x} parameter to \code{\link{legend}}.

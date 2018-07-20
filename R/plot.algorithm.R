@@ -175,7 +175,7 @@ plot.states.matrix <- function(
 
         ## Select the palette
         max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
-        state_colours <- c(Inapp::brewer[[max_colour + 1]], "grey")
+        state_colours <- c(TreeSearch::brewer[[max_colour + 1]], "grey")
         names(state_colours) <- c(0:max_colour, "?")
         if ('-' %in% tips_labels) state_colours <- c(state_colours, '-' = 'lightgrey')
 

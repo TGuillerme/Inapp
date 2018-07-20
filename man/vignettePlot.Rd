@@ -6,7 +6,8 @@
 \usage{
 vignettePlot(tree, character, na = TRUE, legend.pos = "bottomleft",
   passes = if (na) 1:4 else 1:2, state.labels = character(0), counts = if
-  (na) 1:2 else 2, ...)
+  (na) 1:2 else 2, state.override = NULL, score.override = NULL,
+  changes.override = NULL, regions.override = NULL, ...)
 }
 \arguments{
 \item{tree}{Tree to plot}
@@ -23,6 +24,12 @@ tokens will be matched to labels in alphabetical order.}
 \item{state.labels}{Will be passed directly to \code{\link{plot.states.matrix}}}
 
 \item{counts}{\code{integer} vector specifying which counts to show: see \link{plot.states.matrix} for details}
+
+\item{state.override}{\code{list} specifying states to reconstruct at each tip
+and node, instead of those reconstructed}
+
+\item{score.override, changes.override, regions.override}{\code{integer}s to
+override the values calculated}
 
 \item{\dots}{Additional parameters to pass to \code{\link{plot.states.matrix}}.}
 }

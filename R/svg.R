@@ -346,3 +346,19 @@ PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,
         legend('bottomleft',  bty='n', legendText)
     }
 }
+
+
+#' Print Switcher
+#'
+#' Prints an input box that allows the tree displayed to be toggled, in HTML output
+#'
+#' @export
+PrintSwitcher <- function (nTrees) {
+    if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
+        cat(paste0('<div class="switcher">',
+                   '<span class="selectTree">Tree number:</span>',
+                   '<input class="switcherNumber" type="number" min="1" max="',
+                   nTrees, '"  oninput="switchTree(this)" value="', nTrees, '"></input>',
+                   '</div><div class="toggleDetails">[Show details]</div>'))
+    }
+}

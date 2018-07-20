@@ -5,8 +5,9 @@ server.R
 ui.R
 Analysis/
 data-raw/
-Writing/
+man-roxygen/
 support/
+Writing/
 www/
 ^.*.yml$
 ^.*.md$

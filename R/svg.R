@@ -64,7 +64,7 @@ SVGCanvas <- function (trees, outgroupTips, analysisNames=character(0),
              rootedTrees = rootedTrees,
              analysisNames = analysisNames,
              nTree = nTree, eachTree = eachTree, treeIndex=treeIndex,
-             parents = parents, children = children,
+             parents = parents, children = children, tipLabel = tipLabel,
              internal = internal, terminal = terminal,
              nodeX = nodeX, nodeY = nodeY, textY = textY, yStep = yStep,
              tipLabel = tipLabel,
@@ -105,6 +105,7 @@ SVGTree <- function (treeNo, canvas, char, stateLabels,
     children <- canvas$children
     internal <- canvas$internal
     terminal <- canvas$terminal
+    tipLabel <- canvas$tipLabel
     textY <- canvas$textY
     yStep <- canvas$yStep
     nodeSupport <- canvas$nodeSupport[treeNo, ]

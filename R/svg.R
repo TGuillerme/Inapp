@@ -109,9 +109,9 @@ SVGTree <- function (treeNo, canvas, char, stateLabels,
     yStep <- canvas$yStep
     nodeSupport <- canvas$nodeSupport[treeNo, ]
 
-    statesMatrix <- apply.reconstruction(tree, char, match.tip.char=TRUE)
-    fitchStates <- apply.reconstruction(tree, char, method='Fitch',
-                                        inapplicable=1, match.tip.char=TRUE)
+    statesMatrix <- apply.reconstruction(tree, char[tree$tip.label])
+    fitchStates <- apply.reconstruction(tree, char[tree$tip.label],
+                                        method='Fitch', inapplicable=1)
     matrixData <- MatrixData(statesMatrix, fitchStates, state.labels=stateLabels)
     legendLabels <- matrixData$legend
     legendCol <- matrixData$legend_col

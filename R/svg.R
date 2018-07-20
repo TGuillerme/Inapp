@@ -362,3 +362,25 @@ PrintSwitcher <- function (nTrees) {
                    '</div><div class="toggleDetails">[Show details]</div>'))
     }
 }
+
+#' Print Javascript
+#'
+#' @param filepath Path to Javascript template
+#'
+#' @return Prints to stdout the javascript file, executing any R code included
+#' in \`r ...\`.
+#' @export
+#'
+#' @author Martin R. Smith
+PrintJavascript <- function (filepath) {
+    javaLines <- c('<script>', readLines(filepath), '</script>')
+    REGEXP_inlineR <- '(.*)(`r (.*)`)(.*)'
+    inlineR <- grep(REGEXP_inlineR, javaLines)
+    javaLines[inlineR] <- vapply(javaLines[inlineR], function (line) {
+        rCode <- gsub(REGEXP_inlineR, "\\3", line)
+        gsub(REGEXP_inlineR,
+             sprintf("\\1%s\\3", eval(parse(text=rCode))),
+             line)
+    }, character(1))
+    writeLines(javaLines)
+}

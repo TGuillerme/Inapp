@@ -277,7 +277,7 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
 #'
 #' Plot a tree with a character reconstruction plotted upon it
 #'
-#' @param char Character string specifying distribution of tokens among taxa
+#' @param char Character vector specifying distribution of tokens among (named) taxa
 #' @param stateLabels Character vector specifying the labels to apply to each state
 #' @param singleTree A single tree to be plotted in Latex output
 #' @param legendText Character giving legend text to print in Latex output

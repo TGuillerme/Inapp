@@ -11,6 +11,7 @@
 #' @return An object of class SVGCanvas
 #' @exportClass SVGCanvas
 #' @importFrom phangorn Ancestors Children
+#' @importFrom TreeSearch SplitFrequency
 #'
 #' @author Martin R. Smith
 #'
@@ -21,6 +22,11 @@ SVGCanvas <- function (trees, outgroupTips, analysisNames=character(0),
     rootedTrees <- lapply(uniqueTrees, RootTree, outgroupTips=outgroupTips)
     nTree <- length(uniqueTrees)
     eachTree <- seq_len(nTree)
+    treeIndex <- vapply(trees,
+                     function (tr1)
+                       which(vapply(uniqueTrees, all.equal, logical(1), tr1,
+                                    use.tip.label=TRUE, use.edge.length=FALSE)),
+                     integer(1))
     nTip <- length(uniqueTrees[[1]]$tip.label)
     nNode <- nTip - 1L
     internal <- nTip + seq_len(nNode)
@@ -58,17 +64,22 @@ SVGCanvas <- function (trees, outgroupTips, analysisNames=character(0),
         list(height=height, width=width,
              rootedTrees = rootedTrees,
              analysisNames = analysisNames,
-             nTree = nTree, eachTree = eachTree,
+             nTree = nTree, eachTree = eachTree, treeIndex=treeIndex,
              nodeX = nodeX, nodeY = nodeY,
              nodeSupport = nodeSupport),
         class = 'SVGCanvas')
 }
 
+#' @export
+is.SVGCanvas <- function (x) inherits(x, 'SVGCanvas')
+#' @export
+length.SVGCanvas <- function (x) x$nTree
 
 #' SVG Tree
 #'
 #' @param treeNo Integer specifying which of the trees on the SVGForest to plot
 #' @template canvasParam
+#' @template treeNamesParam
 #' @param char Character string specifying character to optimise on the tree
 #' @param stateLabels Character vector specifying label for each applicable state
 #' of the character
@@ -85,8 +96,9 @@ SVGTree <- function (treeNo, canvas, char, stateLabels,
     nodeX <- canvas$nodeX[[treeNo]]
     nodeY <- canvas$nodeY[[treeNo]]
     nodeSupport <- canvas$nodeSupport[treeNo, ]
-    statesMatrix <- apply.reconstruction(tree, char)
-    fitchStates <- apply.reconstruction(tree, char, method='Fitch', inapplicable=1)
+    statesMatrix <- apply.reconstruction(tree, char, match.tip.char=TRUE)
+    fitchStates <- apply.reconstruction(tree, char, method='Fitch',
+                                        inapplicable=1, match.tip.char=TRUE)
     matrixData <- MatrixData(statesMatrix, fitchStates, state.labels=stateLabels)
     legendLabels <- matrixData$legend
     legendCol <- matrixData$legend_col
@@ -144,7 +156,7 @@ SVGTree <- function (treeNo, canvas, char, stateLabels,
                         '<tspan dy="16" fill="#34caaf">An optimal tree under:</tspan>',
                         paste0('<tspan x="', canvas$width - 2L,
                                '" style="font-style:italic" class="',
-                               ifelse(analysisLabels %in% treeNames[treeIndex==treeNo],
+                               ifelse(analysisLabels %in% treeNames[canvas$treeIndex==treeNo],
                                       'this', 'notThis'),
                                'An" dy="1.2em">', analysisLabels, '</tspan>', collapse=''),
                         '</text>')
@@ -282,20 +294,20 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
 #' @param singleTree A single tree to be plotted in Latex output
 #' @param legendText Character giving legend text to print in Latex output
 #' @template canvasParam
-#' @param treeNames Character string naming the analysis used to generate each tree
+#' @template treeNamesParam
 #' @param analysisLabels Characte vector specifying names of each analysis, in order to be printed
 #' @param svgFilename Character string specifying location to save each file,
-#' containing the expression `%s`, which will be replaced with the number of the tree.
-#' @param SetPar Graphical parameters to set before plotting PNG tree for Latex output
+#'   containing the expression \code{\%s}, which will be replaced with the number of the tree.
+#' @param SetPar Graphical parameters to set before plotting PNG tree for Latex output.
 #'
 #' @return Prints the tree in an appropriate markdown format
+#' @importFrom TreeSearch RootTree
 #' @export
 #' @author Martin R. Smith
-#'
 PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,
                                   SetPar=par(mar=rep(0.2, 4), cex=0.7),
                                   canvas, treeNames,
-                                  analysisLabels=svgCanvas$analysisNames,
+                                  analysisLabels=canvas$analysisNames,
                                   svgFilename) {
     if (char[1] == '?' && length(unique(char)) == 1) {
         cat("<p>All taxa are coded as ambiguous for this character.</p>")
@@ -312,7 +324,7 @@ PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,
         cat(svgSource)
     } else {
         SetPar
-        plot.states.matrix(apply.reconstruction(singleTree, char),
+        plot.states.matrix(apply.reconstruction(singleTree, char, match.tip.char=TRUE),
                            passes=0, counts=1:2, show.labels=1,
                            col.states=TRUE, state.labels=stateLabels,
                            use.edge.length=TRUE, legend.pos='topright')

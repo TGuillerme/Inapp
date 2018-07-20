@@ -6,7 +6,7 @@
 \usage{
 PlotCharacterMapping(char, stateLabels, singleTree, legendText,
   SetPar = par(mar = rep(0.2, 4), cex = 0.7), canvas, treeNames,
-  analysisLabels = svgCanvas$analysisNames, svgFilename)
+  analysisLabels = canvas$analysisNames, svgFilename)
 }
 \arguments{
 \item{char}{Character vector specifying distribution of tokens among (named) taxa}
@@ -17,7 +17,7 @@ PlotCharacterMapping(char, stateLabels, singleTree, legendText,
 
 \item{legendText}{Character giving legend text to print in Latex output}
 
-\item{SetPar}{Graphical parameters to set before plotting PNG tree for Latex output}
+\item{SetPar}{Graphical parameters to set before plotting PNG tree for Latex output.}
 
 \item{canvas}{an object of class SVGForest.}
 
@@ -26,7 +26,7 @@ PlotCharacterMapping(char, stateLabels, singleTree, legendText,
 \item{analysisLabels}{Characte vector specifying names of each analysis, in order to be printed}
 
 \item{svgFilename}{Character string specifying location to save each file,
-containing the expression \code{%s}, which will be replaced with the number of the tree.}
+containing the expression \code{\%s}, which will be replaced with the number of the tree.}
 }
 \value{
 Prints the tree in an appropriate markdown format

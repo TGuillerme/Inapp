@@ -17,6 +17,8 @@ SVGTree(treeNo, canvas, char, stateLabels, treeNames,
 \item{stateLabels}{Character vector specifying label for each applicable state
 of the character}
 
+\item{treeNames}{Character string naming the analysis used to generate each tree}
+
 \item{analysisLabels}{Character vector specifying label for each analysis}
 }
 \value{

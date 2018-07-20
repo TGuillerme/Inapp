@@ -379,7 +379,7 @@ PrintJavascript <- function (filepath) {
     javaLines[inlineR] <- vapply(javaLines[inlineR], function (line) {
         rCode <- gsub(REGEXP_inlineR, "\\3", line)
         gsub(REGEXP_inlineR,
-             sprintf("\\1%s\\3", eval(parse(text=rCode))),
+             sprintf("\\1%s\\4", eval(parse(text=rCode))),
              line)
     }, character(1))
     writeLines(javaLines)

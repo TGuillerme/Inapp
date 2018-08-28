@@ -135,7 +135,7 @@ nodelabels(nodeStates, cex=1.6, frame='none')
 
 ## Equivalence to Sankoff matrices
 
-The effect of calculating global optimality is to assign a nominal weight (one step) to each independent loss of a parent character, whilst assigning a large weight (proportional to the number of similarities expected by chance) to each independent gain.  This closely mirrors a Sankoff Matrix approach with [problems.html#gain-and-loss-asymmetric](asymmetric gain and loss), albeit with a lower (and variable) cost associated with gaining a character.
+The effect of calculating global optimality is to assign a nominal weight (one step) to each independent loss of a parent character, whilst assigning a large weight (proportional to the number of similarities expected by chance) to each independent gain.  This closely mirrors a Sankoff Matrix approach with [asymmetric gain and loss](problems.html#gain-and-loss-asymmetric), albeit with a lower (and variable) cost associated with gaining a character.
 
 The previous character combination can be re-expressed as the following pair of Sankoff matrices:
 
@@ -163,7 +163,7 @@ nodelabels(nodeStates, cex=1.6, frame='none')
 tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
 
 vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
-             main='Tail', state.labels = c('absent', 'present, convex, glossy'),
+             main='Beak', state.labels = c('absent', 'present, convex, glossy'),
              state.override=myStates, changes.override = integer(losses))
 nodelabels(pch=16, cex=6, col=c(whitey, greeny, greeny, whitey, greeny, greeny, whitey))
 nodelabels(nodeStates, cex=1.6, frame='none')

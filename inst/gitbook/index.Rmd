@@ -28,6 +28,36 @@ goloPlot <- function (tai, clr, nodeLabels=FALSE) {
         text((1:14) + 2.5 , (1:14) - 0.5, 1:14)
     }
 }
+SankoffMatrix <- function (states) {
+  nr <- prod(vapply(states, length, 0L)) + 1L
+  nchar <- length(states)
+  ret <- matrix(0, nr, nr)
+  ret[1, ] <- nchar + 1L # +1 for gain of character
+  ret[, 1] <- 1L # Just a loss
+  ret[1, 1] <- 0
+  listing <- vapply(seq_len(nr - 1L) - 1L, function (x) {
+      ret <- integer(nchar)
+      if (x == 0) return (ret)
+      bin <- TreeSearch::AsBinary(x)
+      ret[seq_along(bin)] <- bin
+      ret
+  }, double(nchar))
+  rownames(ret) <- c('(0), absent', vapply(seq_len(nr - 1L), function (x) {
+      paste0(paste0('(', x, '), present, '), 
+             paste(vapply(seq_len(nchar), 
+                          function (char) states[[char]][listing[char, x]+ 1L],
+                          character(1)),
+                   collapse=', ')
+             )
+      }, character(1)))
+  ret[-1, -1] <- vapply(seq_len(nr-1), function (i) 
+      vapply(seq_len(nr-1), function (j) sum(listing[, i] != listing[, j]), 0L),
+      integer(nr - 1L))
+  colnames(ret) <- paste0('**', seq_len(nr) - 1L, '**')
+  
+  # Return: 
+  ret
+}
 ap <- c('Absent', 'Present')
 rb <- c('Red', 'Blue')
 oap <- c('', ap)

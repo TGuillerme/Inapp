@@ -133,44 +133,6 @@ nodelabels(nodeStates, cex=1.6, frame='none')
 
 ```
 
-## Equivalence to Sankoff matrices
-
-The effect of calculating global optimality is to assign a nominal weight (one step) to each independent loss of a parent character, whilst assigning a large weight (proportional to the number of similarities expected by chance) to each independent gain.  This closely mirrors a Sankoff Matrix approach with [asymmetric gain and loss](problems.html#gain-and-loss-asymmetric), albeit with a lower (and variable) cost associated with gaining a character.
-
-The previous character combination can be re-expressed as the following pair of Sankoff matrices:
-
-```{r, echo=FALSE, asis=TRUE, warning=FALSE}
-costs <- SankoffMatrix( list(c('red', 'blue'), c('long', 'short'), c('rigid', 'flexible')))
-sankoffCaption <- "Tail: Cost to go from left state to top state:"
-knitr::kable(costs, caption=sankoffCaption)
-```
-
-```{r, echo=FALSE, asis=TRUE, warning=FALSE}
-costs <- SankoffMatrix(list(c('convex', 'convave'), c('glossy', 'matt')))
-sankoffCaption <- "Beak: Cost to go from left state to top state:"
-knitr::kable(costs, caption=sankoffCaption)
-```
-
-```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
-goloPar()
-nodeStates <- rep(1, nchar(tail) - 1)
-myStates <- c(strsplit(tail, '')[[1]], as.list(nodeStates))
-vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
-             main='Tail', state.labels = c('absent', 'present, red, long, rigid'),
-             state.override=myStates, changes.override = integer(losses))
-nodelabels(pch=16, cex=6, col=c(whitey, greeny, greeny, whitey, greeny, greeny, whitey))
-nodelabels(nodeStates, cex=1.6, frame='none')
-tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
-
-vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
-             main='Beak', state.labels = c('absent', 'present, convex, glossy'),
-             state.override=myStates, changes.override = integer(losses))
-nodelabels(pch=16, cex=6, col=c(whitey, greeny, greeny, whitey, greeny, greeny, whitey))
-nodelabels(nodeStates, cex=1.6, frame='none')
-
-
-```
-
 ## Similarity due to chance
 
 It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance.  A curved beak, for example, must be either convex or concave, and must be either glossy or matt.  If curved beaks evolved twice, then there is at least a $\frac{1}{4}$ chance that the two innovations will have the same lustre and direction of curvature.  (In practice, fitness, developmental constraints and contingency are likely to make one curvature or lustre more likely, increasing the likelihood of a chance similarity.)
@@ -193,6 +155,77 @@ legend('bottomright', bty='n', col=TreeSearch::brewer[[3]], lty='solid', c('Both
 In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary characters is expected to share, by chance, six attributes with any taxon that independently gained that character.  Because a parsimony approach does not acknowledge this expectation, an attempt to maximise global homology places undue weight on similarities that could potentially be attributed to chance.
 
 Whether a character has 6, 12 or 120 ontologically dependent characters, if six of these characters bear the same state, then global homology will be maximised by reconstructing seven independent losses, in order to attribute these similarities to common ancestry -- even though in the latter cases the similarities are likely due to chance, and the additional losses of the character implied by maximising global homoplasy are unlikely to represent evolutionary history.
+
+
+## Equivalence to Sankoff matrices
+
+The effect of calculating global optimality is therefore to assign a nominal weight (one step) to each independent loss of a parent character, whilst assigning a large weight (proportional to the number of similarities expected by chance) to each independent gain.  
+One way to account for the expected similarities due to chance is to employ a Sankoff Matrix approach with [asymmetric gain and loss](problems.html#gain-and-loss-asymmetric), where the cost for an independent gain encapsulates the expected similarities due to chance.
+
+A loss represents a single evolutionary step, and is thus assigned a cost of one; the cost of a gain equates to one plus the expected number of chance similarities in independently-originating tails and beaks, here calcuated assuming an equal probability of each character state:
+
+```{r, echo=FALSE, asis=TRUE, warning=FALSE}
+states <- list(c('red', 'blue'), c('long', 'short'), c('rigid', 'flexible'))
+costs <- SankoffMatrix(states)
+costs[1, -1] <- 1L + sum(1 / vapply(states, length, 0L))
+sankoffCaption <- "Tail: Cost to go from left state to top state:"
+knitr::kable(costs, caption=sankoffCaption)
+```
+
+```{r, echo=FALSE, asis=TRUE, warning=FALSE}
+states <- list(c('convex', 'convave'), c('glossy', 'matt'))
+costs <- SankoffMatrix(states)
+costs[1, -1] <- 1L + sum(1 / vapply(states, length, 0L))
+sankoffCaption <- "Beak: Cost to go from left state to top state:"
+knitr::kable(costs, caption=sankoffCaption)
+```
+
+In the case of the tail, a single origin with multiple losses is supported:
+
+```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
+goloPar()
+nodeStates <- rep(1, nchar(tail) - 1)
+myStates <- c(strsplit(tail, '')[[1]], as.list(nodeStates))
+vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
+             main='Tail', state.labels = c('absent', 'present, red, long, rigid'),
+             state.override=myStates, changes.override = integer(losses))
+nodelabels(pch=16, cex=6, col=c(whitey, greeny, greeny, whitey, greeny, greeny, whitey))
+nodelabels(nodeStates, cex=1.6, frame='none')
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+
+myStates <- c(strsplit(tail, '')[[1]], as.list(rep(0, 7)))
+vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
+             main='Tail', state.labels = c('absent', 'present, red, long, rigid'),
+             state.override=myStates, changes.override = integer(5)
+             )
+nodelabels(pch=16, cex=6, col=c(whitey, whitey, whitey, greeny, whitey, whitey, greeny))
+nodelabels(c(0, 0, 0, 2.5, 0, 0, 2.5), cex=1.6, frame='none')
+
+```
+
+
+In the case of the beak, two origins incur the same cost as a single origin with multiple losses.
+
+```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
+goloPar()
+nodeStates <- rep(1, nchar(tail) - 1)
+myStates <- c(strsplit(tail, '')[[1]], as.list(nodeStates))
+vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
+             main='Beak', state.labels = c('absent', 'present, red, long, rigid'),
+             state.override=myStates, changes.override = integer(losses))
+nodelabels(pch=16, cex=6, col=c(whitey, greeny, greeny, whitey, greeny, greeny, whitey))
+nodelabels(nodeStates, cex=1.6, frame='none')
+tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
+
+myStates <- c(strsplit(tail, '')[[1]], as.list(rep(0, 7)))
+vignettePlot(bifH, tail, legend.pos='topleft', FALSE, passes=0,
+             main='Beak', state.labels = c('absent', 'present, convex, glossy'),
+             state.override=myStates, changes.override = integer(4)
+             )
+nodelabels(pch=16, cex=6, col=c(whitey, whitey, whitey, greeny, whitey, whitey, greeny))
+nodelabels(c(0, 0, 0, 2, 0, 0, 2), cex=1.6, frame='none')
+
+```
 
 <!-- MS: Might keep this for a later contribution.
 ## Impact

@@ -32,9 +32,9 @@ SankoffMatrix <- function (states) {
   nr <- prod(vapply(states, length, 0L)) + 1L
   nchar <- length(states)
   ret <- matrix(0, nr, nr)
-  ret[1, ] <- nchar + 1L # +1 for gain of character
-  ret[, 1] <- 1L # Just a loss
-  ret[1, 1] <- 0
+  ret[1, -1] <- nchar + 1L # +1 for gain of character
+  ret[-1, 1] <- 1L # Just a loss
+  
   listing <- vapply(seq_len(nr - 1L) - 1L, function (x) {
       ret <- integer(nchar)
       if (x == 0) return (ret)

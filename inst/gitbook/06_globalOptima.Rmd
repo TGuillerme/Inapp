@@ -156,10 +156,17 @@ In the conservative case that binary attributes are equally probable, a characte
 
 Whether a character has 6, 12 or 120 ontologically dependent characters, if six of these characters bear the same state, then global homology will be maximised by reconstructing seven independent losses, in order to attribute these similarities to common ancestry -- even though in the latter cases the similarities are likely due to chance, and the additional losses of the character implied by maximising global homoplasy are unlikely to represent evolutionary history.
 
+<!--
+MS: Sankoff matrices may contribute to an eventual information based solution.
 
 ## Equivalence to Sankoff matrices
 
+The central distinction between our approach (which insists that each principal character has a parsimonious distribution of states) and De Laet's (which seeks the global optimum) concerns the evaluation of regions of the tree where the principal character is conceivably absent.  De Laet's approach emphasizes homology in ontologically dependant characters to a greater extent than ours, but both approaches are greatly influenced by the inclusion of 'parsimony uninformative' characters.
+
+What is missing from the parsimony framework is a consideration of the evidential weight of these similarities.  Clearly, if there are only two possible states for an ontologically dependant character (e.g. 'rigid / flexible'), then there is a high chance (perhaps 50%) that two independently-arising tails will share a characteristic by chance, rather than by common ancestry.  If, in constrast, there are ten thousand different pigments that are equally likely to be employed to colour a tail, and two different tails share a common pigment, then it is much more likely that this similarity arose through common ancestry than by random chance.
+
 The effect of calculating global optimality is therefore to assign a nominal weight (one step) to each independent loss of a parent character, whilst assigning a large weight (proportional to the number of similarities expected by chance) to each independent gain.  
+
 One way to account for the expected similarities due to chance is to employ a Sankoff Matrix approach with [asymmetric gain and loss](problems.html#gain-and-loss-asymmetric), where the cost for an independent gain encapsulates the expected similarities due to chance.
 
 A loss represents a single evolutionary step, and is thus assigned a cost of one; the cost of a gain equates to one plus the expected number of chance similarities in independently-originating tails and beaks, here calcuated assuming an equal probability of each character state:
@@ -226,14 +233,7 @@ nodelabels(pch=16, cex=6, col=c(whitey, whitey, whitey, greeny, whitey, whitey, 
 nodelabels(c(0, 0, 0, 2, 0, 0, 2), cex=1.6, frame='none')
 
 ```
-
-<!-- MS: Might keep this for a later contribution.
-## Impact
-
-The central distinction between our approach (which insists that each principal character has a parsimonious distribution of states) and De Laet's (which seeks the global optimum) concerns the evaluation of regions of the tree where the principal character is conceivably absent.  De Laet's approach emphasizes homology in ontologically dependant characters to a greater extent than ours, but both approaches are greatly influenced by the inclusion of 'parsimony uninformative' characters.
-
-What is missing from the parsimony framework is a consideration of the evidential weight of these similarities.  Clearly, if there are only two possible states for an ontologically dependant character (e.g. 'rigid / flexible'), then there is a high chance (50%) that two independently-arising tails will share a characteristic by chance, rather than by common ancestry.  If, in constrast, there are ten thousand different pigments that are equally likely to be employed to colour a tail, and two different tails share a common pigment, then the probability of this commonality arising by chance is low; it represents strong evidence for common ancestry.-->
-
+-->
 ## Implied weighting
 
 This matter is exaggerated further in the context of implied weighting [@Goloboff1993;@Goloboff2014].

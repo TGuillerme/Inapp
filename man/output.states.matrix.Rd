@@ -29,8 +29,6 @@ Specifically, per data output type:
 -\code{"csv"} A matrix containing the different state reconstructions and score for each tip and node.
 -\code{"pdf"} A pdf version of the states_matrix plotted with \code{plot.states.matrix}.
 -\code{"C-test"} a text version that can be used for testing in C (for DEBUG).
-
-[Dp1:X,Up1:X,Dp2:X,Up2:X,Change:X,Applicable:X]: R:Dp1:X,Up1:X,Dp2:X,Up2:X,Change:X,Applicable:X%5C
 }
 \examples{
 ## A random 5 taxa tree

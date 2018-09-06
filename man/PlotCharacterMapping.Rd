@@ -6,7 +6,8 @@
 \usage{
 PlotCharacterMapping(char, stateLabels, singleTree, legendText,
   SetPar = par(mar = rep(0.2, 4), cex = 0.7), canvas, treeNames,
-  analysisLabels = canvas$analysisNames, svgFilename)
+  analysisLabels = canvas$analysisNames, charIndex = character(0),
+  svgFilename)
 }
 \arguments{
 \item{char}{Character vector specifying distribution of tokens among (named) taxa}
@@ -24,6 +25,9 @@ PlotCharacterMapping(char, stateLabels, singleTree, legendText,
 \item{treeNames}{Character string naming the analysis used to generate each tree}
 
 \item{analysisLabels}{Characte vector specifying names of each analysis, in order to be printed}
+
+\item{charIndex}{Character vector providing a reference for the character,
+typically its number, to be sent to \link{SVGTree}}
 
 \item{svgFilename}{Character string specifying location to save each file,
 containing the expression \code{\%s}, which will be replaced with the number of the tree.}

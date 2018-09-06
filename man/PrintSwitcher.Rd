@@ -6,6 +6,10 @@
 \usage{
 PrintSwitcher(nTrees)
 }
+\arguments{
+\item{nTrees}{Integer specifying the number of trees that can be switched,
+used to enforce the highest allowed value in the switcher box}
+}
 \description{
 Prints an input box that allows the tree displayed to be toggled, in HTML output
 }

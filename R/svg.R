@@ -181,8 +181,8 @@ SVGTree <- function (treeNo, canvas, char, stateLabels,
                         '</text>')
     dudSteps <- matrixData$dud_steps
 
-    svgSource <- paste0('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="',
-                        canvas$width, '" height="', canvas$height,
+    svgSource <- paste0('<svg xmlns="http://www.w3.org/2000/svg" version="1.1',
+                        '" viewBox="0 0 ', canvas$width, ' ', canvas$height,
                         '" class="tree" data-char="', charNo, '">',
                         ciCaption, tips, edges, nodes,
                         '</svg>')

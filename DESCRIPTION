@@ -12,7 +12,7 @@ Depends:
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Imports:
     ape,
     phangorn,
@@ -26,4 +26,5 @@ Suggests:
 Remotes:
     ms609/TreeSearch
 VignetteBuilder: knitr
+Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

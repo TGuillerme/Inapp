@@ -5,9 +5,10 @@
 \title{Vignette Plot}
 \usage{
 vignettePlot(tree, character, na = TRUE, legend.pos = "bottomleft",
-  passes = if (na) 1:4 else 1:2, state.labels = character(0), counts = if
-  (na) 1:2 else 2, state.override = NULL, score.override = NULL,
-  changes.override = NULL, regions.override = NULL, ...)
+  passes = if (na) 1:4 else 1:2, state.labels = character(0),
+  counts = if (na) 1:2 else 2, state.override = NULL,
+  score.override = NULL, changes.override = NULL,
+  regions.override = NULL, ...)
 }
 \arguments{
 \item{tree}{Tree to plot}

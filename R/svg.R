@@ -184,6 +184,7 @@ SVGTree <- function (treeNo, canvas, char, stateLabels,
 
     svgSource <- paste0('<svg xmlns="http://www.w3.org/2000/svg" version="1.1',
                         '" viewBox="0 0 ', canvas$width, ' ', canvas$height,
+                        '" preserveAspectRatio="xMidYMid meet',
                         '" class="tree" data-char="', charIndex, '">',
                         ciCaption, tips, edges, nodes,
                         '</svg>')

@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-07-10">
+<meta name="date" content="2018-10-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -60,41 +60,57 @@ $(function(){
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; }
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource div.sourceLine, .numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; color = initial; }
+}
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.bn { color: #40a070; } /* BaseN */
+code span.fl { color: #40a070; } /* Float */
+code span.ch { color: #4070a0; } /* Char */
+code span.st { color: #4070a0; } /* String */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.ot { color: #007020; } /* Other */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: #06287e; } /* Function */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.cn { color: #880000; } /* Constant */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: #19177c; } /* Variable */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.op { color: #666666; } /* Operator */
+code span.bu { } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.at { color: #7d9029; } /* Attribute */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -172,6 +188,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.4.3" data-path="global.html"><a href="global.html#k-3"><i class="fa fa-check"></i><b>6.4.3</b> <em>k</em> = 3</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="global.html"><a href="global.html#generalization"><i class="fa fa-check"></i><b>6.5</b> Generalization</a></li>
+<li class="chapter" data-level="6.6" data-path="global.html"><a href="global.html#section"><i class="fa fa-check"></i><b>6.6</b> </a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7</b> Examples</a><ul>
 <li class="chapter" data-level="7.1" data-path="examples.html"><a href="examples.html#some-caterpillars"><i class="fa fa-check"></i><b>7.1</b> Some caterpillars</a></li>
@@ -202,10 +219,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="coding" class="section level1">
 <h1><span class="header-section-number">4</span> Coding data</h1>
-<p>The availability of our algorithm has some implications for how investigators might choose to code characters.</p>
+<p>The availability of our algorithm has some implications for how investigators
+might choose to code characters.</p>
 <div id="multiple-dependencies" class="section level2">
 <h2><span class="header-section-number">4.1</span> Multiple dependencies</h2>
-<p>It’s not a problem to have characters dependent on characters that are dependent on characters. Consider the following characters, whose descriptions are written in order to emphasize their heirarchical nature <span class="citation">(following the recommendations of Sereno, <a href="#ref-Sereno2007">2007</a>)</span>:</p>
+<p>It’s not a problem to have characters dependent on characters that are dependent
+on characters. Consider the following characters, whose descriptions are written in order to emphasize their heirarchical nature <span class="citation">(following the recommendations of Sereno, <a href="#ref-Sereno2007">2007</a>)</span>:</p>
 <blockquote>
 <ol style="list-style-type: decimal">
 <li><p>Appendages: (0), absent; (1), present.</p></li>
@@ -214,12 +233,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p>Appendages, claws, morphology: (0), smooth; (1), serrated.</p></li>
 </ol>
 </blockquote>
-<p>The included taxa may or may not bear appendages; if they do, then the appendages may end either with either claws or suckers, or neither (but not both). Claws come in two flavours, smooth and serrated; suckers come in two shapes, rounded and polygonal.</p>
+<p>The included taxa may or may not bear appendages; if they do, then the
+appendages may end either with either claws or suckers, or neither (but not both).
+Claws come in two flavours, smooth and serrated; suckers come in two shapes,
+rounded and polygonal.</p>
 <ul>
-<li><p>If character 1 (appendages) is absent, then characters 2–4 are inapplicable. Otherwise, charcter 2 (appendage termination) must take one of the three applicable values.</p></li>
-<li><p>If character 2 (termination) has state 0 (blunt), then characters 3 and 4 (morphology of sucker / claw) are inapplicable.</p></li>
-<li><p>If character 2 (termination) has state 1 (sucker), then character 3 (sucker morphology) is applicable and character 4 (claw morphology) is inapplicable.</p></li>
-<li><p>If character 2 (termination) has state 2 (claw), then character 3 (sucker morphology) is inapplicable and character 4 (claw morphology) is applicable.</p></li>
+<li><p>If character 1 (appendages) is absent, then characters 2–4 are inapplicable.
+Otherwise, charcter 2 (appendage termination) must take one of the three applicable values.</p></li>
+<li><p>If character 2 (termination) has state 0 (blunt), then characters 3 and 4
+(morphology of sucker / claw) are inapplicable.</p></li>
+<li><p>If character 2 (termination) has state 1 (sucker), then character 3
+(sucker morphology) is applicable and character 4 (claw morphology) is inapplicable.</p></li>
+<li><p>If character 2 (termination) has state 2 (claw), then character 3
+(sucker morphology) is inapplicable and character 4 (claw morphology) is
+applicable.</p></li>
 </ul>
 <p>A sample character matrix might look like this:</p>
 <table>
@@ -323,8 +350,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="invariant-characters-can-inform-parsimony" class="section level2">
 <h2><span class="header-section-number">4.2</span> Invariant characters can inform parsimony</h2>
-<p>Consider a situation in which every tail in the observed taxa is blue – but the same complex molecular machinery is responsible for this blue colouration in every taxon.</p>
-<p>If its underlying mechanism is considered biologically and evolutionarily meaningful, then a systematist might opt to include tail colour as an additional character, even though it is invariant in the taxa of interest. Reconstructions that attribute this common colouration to common ancestry will be more parsimonious than those that do not.</p>
+<p>Consider a situation in which every tail in the observed taxa is blue – but
+the same complex molecular machinery is responsible for this blue colouration in
+every taxon.</p>
+<p>If its underlying mechanism is considered biologically and evolutionarily meaningful, then
+a systematist might opt to include tail colour as an additional character, even
+though it is invariant in the taxa of interest. Reconstructions that attribute this
+common colouration to common ancestry will be more parsimonious than those that do not.</p>
 <table>
 <caption><span id="tab:unnamed-chunk-44">Table 4.2: </span>An invariant character, tail colour, contributes as much to tree score as a variable one, body colour.</caption>
 <thead>
@@ -376,7 +408,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 </tbody>
 </table>
-<p>Let’s compare two trees. The first groups taxa based on the presence of tails; the other groups taxa based on body colour.</p>
+<p>Let’s compare two trees. The first groups taxa based on the presence of tails; the other
+groups taxa based on body colour.</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-45-1.png" width="768" /><img src="Inapplicable_data_files/figure-html/unnamed-chunk-45-2.png" width="768" /><img src="Inapplicable_data_files/figure-html/unnamed-chunk-45-3.png" width="768" /></p>
 <p>Where the tail has a single origin (one step), blue colouration also evolves once (zero steps), but body colour must change twice (two steps; total score = three). But where body colour changes only once (one step), the tail necessarily arises twice (two steps), meaning two independent origins of its distinctive blue colouration (one extra homoplasy; total score = four)</p>
 <p>If the invariant tail colour character had not been included, both trees would have the same score, and there would be nothing to choose between them. As such, the inclusion or exclusion of invariant characters must be carefully evaluated: if there is a case that an invariant (ontologically dependent) character implies an exclusive common ancestry between those taxa that share it, then it should be included; if not, then it should be excluded.</p>
@@ -449,10 +482,13 @@ Figure 4.1: Tail colour
 </div>
 <div id="this-may-not-be-desirable-in-neomorphic-characters" class="section level2">
 <h2><span class="header-section-number">4.4</span> This may not be desirable in neomorphic characters</h2>
-<p>The more general rule is that any tree that reconstructs the same state arising twice, independently, in an ontologically dependent character will incur a penalty relative to one that reconstructs that same state arising once.</p>
+<p>The more general rule is that any tree that reconstructs the same state arising twice,
+independently, in an ontologically dependent character will incur a penalty relative to one that reconstructs that same state arising once.</p>
 <p>With transformational characters, this is often a desideratum – as discussed above.</p>
 <p>In certain neomorphic characters, however, it may not be desirable to penalise trees in which the <em>absence</em> of a character arises multiple times.</p>
-<p>Let us imagine that there is a biological reason to believe that tails in a particular group lacked poisoned barbs when they first evolved: that is, poisoned barbs are an evolutionary innovation that can only be added to a tail once a tail is already present.</p>
+<p>Let us imagine that there is a biological reason to believe that tails in a particular
+group lacked poisoned barbs when they first evolved: that is, poisoned barbs are an
+evolutionary innovation that can only be added to a tail once a tail is already present.</p>
 <table>
 <caption><span id="tab:unnamed-chunk-48">Table 4.4: </span>A neomorphic character, poison barbs, present in some but not all tails</caption>
 <thead>
@@ -602,7 +638,8 @@ Figure 4.6: Presence of a tail and presence of poison barbs will have the same d
 </div>
 <div id="does-absence-contain-phylogenetic-information" class="section level3">
 <h3><span class="header-section-number">4.4.2</span> Does absence contain phylogenetic information?</h3>
-<p>In some cases, the absence of a feature (e.g. serrations) may represent a transformational character and should thus be coded as such. But this decision is significant, and merits careful thought. A researcher may or may not be justified in including properties of a tail that occur in only one, or even in none, of the taxa of interest, for if absence is informative for parsimony, then such characters will influence tree topology: <a href="coding.html#puip">parsimony uninformative characters inform parsimony</a>.</p>
+<p>In some cases, the absence of a feature (e.g. serrations) may represent a transformational character and should thus be coded as such. But this decision is significant, and merits careful thought. A researcher may or may not be justified in including properties of a tail that occur in only one, or even in none, of the taxa of interest, for if absence is informative for parsimony, then such characters will influence tree topology: <a href="coding.html#puip">parsimony uninformative characters inform
+parsimony</a>.</p>
 <table>
 <caption><span id="tab:unnamed-chunk-56">Table 4.6: </span>Absences treated as transformational characters</caption>
 <thead>
@@ -787,7 +824,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

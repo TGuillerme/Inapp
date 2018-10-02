@@ -54,7 +54,7 @@ nodelabels(c('-', '-', 1, '-', '-', '-', 1), cex=1.6, frame='none')
 
 This reconstruction implies `r number(2 + ontd)` homoplasies: one independent gain of the tail, one of the beak, and one independent origin of each ontologically dependent property (redness, longness, rigidity, convexness, glossiness).
 
-An alternative is to reconstruct the tail as ancestrally present, and lost independently in C, D, E and F.  
+An alternative is to reconstruct the tail as ancestrally present, and lost independently in `C`, `D`, `E` and `F`.  
 
 ```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
 goloPar()

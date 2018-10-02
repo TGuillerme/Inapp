@@ -4,6 +4,7 @@
 .Rproj.user
 *.Rproj
 .Rprofile
+.RData
 
 # Data
 *.tre

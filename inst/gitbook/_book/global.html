@@ -188,7 +188,6 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.4.3" data-path="global.html"><a href="global.html#k-3"><i class="fa fa-check"></i><b>6.4.3</b> <em>k</em> = 3</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="global.html"><a href="global.html#generalization"><i class="fa fa-check"></i><b>6.5</b> Generalization</a></li>
-<li class="chapter" data-level="6.6" data-path="global.html"><a href="global.html#section"><i class="fa fa-check"></i><b>6.6</b> </a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7</b> Examples</a><ul>
 <li class="chapter" data-level="7.1" data-path="examples.html"><a href="examples.html#some-caterpillars"><i class="fa fa-check"></i><b>7.1</b> Some caterpillars</a></li>
@@ -435,16 +434,14 @@ compensate for the additional cost of unparsimoniously reconstructing its own di
 <div id="similarity-due-to-chance" class="section level2">
 <h2><span class="header-section-number">6.3</span> Similarity due to chance</h2>
 <p>It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance. A curved beak, for example, must be either convex or concave, and must be either glossy or matt. If curved beaks evolved twice, then there is at least a <span class="math inline">\(\frac{1}{4}\)</span> chance that the two innovations will have the same lustre and direction of curvature. (In practice, fitness, developmental constraints and contingency are likely to make one curvature or lustre more likely, increasing the likelihood of a fluke similarity.)</p>
-<p>If beaks did evolve twice, however, then they should not be used as a character: character statements are theories that a thing (here a beak) is homologous in all the taxa in which it occurs <span class="citation">(Platnick, <a href="#ref-Platnick1979">1979</a>)</span>; if this theory is false, then comparisons between attributes of the thing are invalid.</p>
-<p>For this reason, parsimony methods have no satisfactory means of attributing chance similarity in attributes of things that are not homologous to coincidence rather than common descent.</p>
-<p>If a character has a number of ontologically dependent binary characters, then mathematically one must expect two independent origins of the character to bear a number of similarities by coincidence (rather than by common descent):</p>
+<p>If beaks did evolve twice, however, then “beak” should not be used as a character: character statements are theories that a thing (here a beak) is homologous in all the taxa in which the thing is observed <span class="citation">(Platnick, <a href="#ref-Platnick1979">1979</a>)</span>; if this theory is false, then comparisons between attributes of the thing are invalid.</p>
+<p>For this reason, parsimony methods have no satisfactory means of attributing chance similarity in attributes of non-homologous things to coincidence rather than common descent. If several ontologically dependent binary transformation series are established to reflect attributes of a character that, in truth, denotes a thing with two independent origins, the a number of similarities in the attributes are expected at each origin of the “character” by coincidence (rather than by common descent):</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
-<p>In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary transformation series is expected to share, by chance, six attributes with any taxon that independently gained that character.</p>
-<p>An independent gain of the character, however, violates the theory of homology implicit in the definition of both the character <span class="citation">(<span class="citeproc-not-found" data-reference-id="Platnik1979"><strong>???</strong></span>)</span> and the transformation series that describe its attributes. The differences between existing algorithms, those that minimise global homoplasy, and our own reflect different approaches to tackling this violation. There is a tension between two extremes: (i), taking similarities that can be attributed to coincidence as evidence for homology in the parent character; and (ii) being quick to attribute genuine homologies to independent gains of the parent character.
+<p>In the conservative case that binary attributes are equally probable, two independent origins of a character with 12 ontologically dependent binary transformation series are expected to exhibit, by chance, six attributes in common.</p>
+<p>An independent origin of the character, however, violates the theory of homology implicit in the definition of both the character <span class="citation">(Platnick, <a href="#ref-Platnick1979">1979</a>)</span> and the transformation series that describe its attributes. The differences between algorithms that minimise global homoplasy and our own reflect different approaches to tackling this violation. There is a tension between two extremes: (i), taking similarities that can be attributed to coincidence as evidence for homology in the parent character; and (ii) being quick to attribute genuine homologies to independent gains of the parent character.
 The approach of maximising homology lies closer to the first extreme; our approach lies closer to the second.</p>
 <p>As the number of subcharacters increases, the divergence between our approaches becomes more manifest.
 Whether a character has 6, 12 or 120 ontologically dependent characters, if six of these characters bear the same state, then global homology will be maximised by reconstructing seven independent losses, in order to attribute these similarities to common ancestry – even though in the latter cases the similarities are likely due to chance, and the additional losses of the character implied by maximising global homoplasy are unlikely to represent evolutionary history.</p>
-<p>Ultimately, a balanced approach to this issue requires the application of conditional probabilistic approaches, which to our knowledge have not been applied in a parsimony context.</p>
 <!--
 MS: Sankoff matrices may contribute to an eventual information based solution.
 
@@ -994,9 +991,8 @@ other tongue-bearing taxa have straight tongues. In the absence of prior knowled
 <h2><span class="header-section-number">6.5</span> Generalization</h2>
 <p>In general, if there are even a small number of similarities between ontologically dependent characters, then the maximal-fit reconstruction will infer a very high number of secondary losses rather than attributing a small number of similarities to convergence. This is especially true at small to medium values of <em>k</em>.</p>
 <p><img src="Inapplicable_data_files/figure-html/small-k-single-origin-1.png" width="672" /></p>
-</div>
-<div id="section" class="section level2">
-<h2><span class="header-section-number">6.6</span> </h2>
+<p>This behaviour seems undesirable, even if it has a more secure theoretical underpinning than our own algorithm.</p>
+<p>Ultimately, the issue is that a “step-counting” approach is a useful heuristic for a deeper quantity that evaluates the characters themselves as well as their fit to a particular tree; characters are hypotheses of homology just as trees are hypotheses of relationship, and the ultimate quantity of interest corresponds to a likelihood that observed similarities correspond to common descent rather than chance. A balanced approach to this issue requires the application of conditional probabilistic approaches, which to our knowledge have not yet been applied in a parsimony context.</p>
 
 </div>
 </div>

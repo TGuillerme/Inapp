@@ -77,7 +77,7 @@ nodelabels(nodeStates, cex=1.6, frame='none')
 
 ```
 
-Considering only the tail, this is an unparsimonious reconstruction: it requires `r number(losses)` independent evolutionary events (losses), whereas the former required only two independent evolutionary events (gains).  Globally, however, this allows the similarity between ontologically dependent characters to be attributed to common ancestry (i.e. homology), resulting in a lower overall score of `r number(losses + 2)` homoplasies (the `r number(losses)` in the tail, plus the two in the beak, reconstructed as before, but none in any ontologically dependent character).
+Considering only the tail, this is an unparsimonious reconstruction: it requires `r number(losses)` independent evolutionary events (losses), whereas the former required only two independent evolutionary events (gains).  Globally, however, this allows the similarity between ontologically dependent characters to be attributed to common ancestry (i.e. homology), resulting in a lower overall score of `r number(losses + 2)` homoplasies (the `r number(losses)` in the tail, plus the two in the beak, reconstructed as before, but none in any ontologically dependent character).  As such, this latter reconstruction attains the lowest overall score and should be considered the least homoplasious.
 
 ## Ontology
 

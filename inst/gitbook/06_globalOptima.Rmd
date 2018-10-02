@@ -8,12 +8,10 @@ author: "Martin R. Smith"
 
 ## Global optima may be locally suboptimal
 
-Our algorithm only considers reconstructions of principal characters that are 
-parsimonious.  Jan De Laet (personal communication) drew our attention to 
-situations where it is possible to reconstruct less global homoplasy by
-employing a more homoplasious reconstruction of a principal character.
+Our algorithm only considers parsimonious reconstructions of principal characters.
+Jan De Laet (personal communication) has identified situations where a locally non-parsimonious reconstruction of the principal character minimizes global homoplasy.
 
-Consider the following minimal example:
+Consider the following:
 
 ```{r, echo=FALSE, asis=TRUE, warning=FALSE}
 tail <- "11000011"
@@ -35,8 +33,8 @@ rownames(mDep) <- c("Tail: (0), absent; (1), present.",
 knitr::kable(mDep, caption="Coding")
 ```
 
-On a tree where tail-less taxa separate A and B from F and G, our algorithm 
-reconstructs two separate origins of the tail:
+On a tree where two tail-bearing clades (`AB` & `GH`) are separated by four taxa without tails (`C`, `D`, `E` & `F`),
+our algorithm reconstructs two separate origins of the tail:
 
 ```{r, echo=FALSE, fig.width=8, fig.height=4, warning=FALSE}
 goloPar()
@@ -48,13 +46,13 @@ nodelabels(c(0, 0, 0, 1, 0, 0, 1), cex=1.6, frame='none')
 
 tiplabels(cex=1.6, frame='none', LETTERS[1:8], adj=c(2.5, 0.5))
 vignettePlot(bifH, clr, legend.pos='topleft', passes=0,
-             main='Tail colour (etc.)', state.labels=orb)
+             main='Tail colour (etc.)', state.labels=c('', 'Red'))
 nodelabels(pch=16, cex=6, col=c(purply, rep(whitey, 6)))
 nodelabels(c('-', '-', 1, '-', '-', '-', 1), cex=1.6, frame='none')
 
 ```
 
-This reconstruction implies `r number(2 + ontd)` homoplasies across these characters: one independent gain of the tail, one of the beak, and one independent origin of each ontologically dependent property (redness, longness, rigidity, convexness, glossiness).
+This reconstruction implies `r number(2 + ontd)` homoplasies: one independent gain of the tail, one of the beak, and one independent origin of each ontologically dependent property (redness, longness, rigidity, convexness, glossiness).
 
 An alternative is to reconstruct the tail as ancestrally present, and lost independently in C, D, E and F.  
 
@@ -391,4 +389,6 @@ text(110, 8, 'Ontologically\ndependent\nsimilarities:', pos=3)
 text(2, 1.3, 'Single origin (multiple losses)', adj=0, font=3)
 text(20, 13, 'Two origins (no losses)', adj=0, font=3)
 ```
+
+## 
 

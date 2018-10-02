@@ -325,7 +325,7 @@ our algorithm reconstructs two separate origins of the tail:</p>
 <p>This reconstruction implies seven homoplasies: one independent gain of the tail, one of the beak, and one independent origin of each ontologically dependent property (redness, longness, rigidity, convexness, glossiness).</p>
 <p>An alternative is to reconstruct the tail as ancestrally present, and lost independently in <code>C</code>, <code>D</code>, <code>E</code> and <code>F</code>.</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-68-1.png" width="768" /></p>
-<p>Considering only the tail, this is an unparsimonious reconstruction: it requires four independent evolutionary events (losses), whereas the former required only two independent evolutionary events (gains). Globally, however, this allows the similarity between ontologically dependent characters to be attributed to common ancestry (i.e. homology), resulting in a lower overall score of six homoplasies (the four in the tail, plus the two in the beak, reconstructed as before, but none in any ontologically dependent character).</p>
+<p>Considering only the tail, this is an unparsimonious reconstruction: it requires four independent evolutionary events (losses), whereas the former required only two independent evolutionary events (gains). Globally, however, this allows the similarity between ontologically dependent characters to be attributed to common ancestry (i.e. homology), resulting in a lower overall score of six homoplasies (the four in the tail, plus the two in the beak, reconstructed as before, but none in any ontologically dependent character). As such, this latter reconstruction attains the lowest overall score and should be considered the least homoplasious.</p>
 </div>
 <div id="ontology" class="section level2">
 <h2><span class="header-section-number">6.2</span> Ontology</h2>
@@ -430,14 +430,21 @@ compensate for the additional cost of unparsimoniously reconstructing its own di
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-70-1.png" width="768" /></p>
 <p>On the other hand, reconstructing a beak and a tail as present in the common ancestor requires four independent losses in each character – a total of eight homoplasies, which does not outweigh the benefit obtained by reconstructing the ontologically dependent characters as homologous:</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-71-1.png" width="768" /></p>
+<p>Our algorithm does not always select the tree that minimizes global homology as the optimal tree. Doing so requires the explicit specification of character ontologies, and is thus not possible from character state data alone.</p>
 </div>
 <div id="similarity-due-to-chance" class="section level2">
 <h2><span class="header-section-number">6.3</span> Similarity due to chance</h2>
-<p>It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance. A curved beak, for example, must be either convex or concave, and must be either glossy or matt. If curved beaks evolved twice, then there is at least a <span class="math inline">\(\frac{1}{4}\)</span> chance that the two innovations will have the same lustre and direction of curvature. (In practice, fitness, developmental constraints and contingency are likely to make one curvature or lustre more likely, increasing the likelihood of a chance similarity.)</p>
-<p>On this basis, if a character has a number of ontologically dependent binary characters, then mathematically one must expect two independent origins of the parent character to bear a number of similarities by chance:</p>
+<p>It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance. A curved beak, for example, must be either convex or concave, and must be either glossy or matt. If curved beaks evolved twice, then there is at least a <span class="math inline">\(\frac{1}{4}\)</span> chance that the two innovations will have the same lustre and direction of curvature. (In practice, fitness, developmental constraints and contingency are likely to make one curvature or lustre more likely, increasing the likelihood of a fluke similarity.)</p>
+<p>If beaks did evolve twice, however, then they should not be used as a character: character statements are theories that a thing (here a beak) is homologous in all the taxa in which it occurs <span class="citation">(Platnick, <a href="#ref-Platnick1979">1979</a>)</span>; if this theory is false, then comparisons between attributes of the thing are invalid.</p>
+<p>For this reason, parsimony methods have no satisfactory means of attributing chance similarity in attributes of things that are not homologous to coincidence rather than common descent.</p>
+<p>If a character has a number of ontologically dependent binary characters, then mathematically one must expect two independent origins of the character to bear a number of similarities by coincidence (rather than by common descent):</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
-<p>In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary characters is expected to share, by chance, six attributes with any taxon that independently gained that character. Because a parsimony approach does not acknowledge this expectation, an attempt to maximise global homology places undue weight on similarities that could potentially be attributed to chance.</p>
-<p>Whether a character has 6, 12 or 120 ontologically dependent characters, if six of these characters bear the same state, then global homology will be maximised by reconstructing seven independent losses, in order to attribute these similarities to common ancestry – even though in the latter cases the similarities are likely due to chance, and the additional losses of the character implied by maximising global homoplasy are unlikely to represent evolutionary history.</p>
+<p>In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary transformation series is expected to share, by chance, six attributes with any taxon that independently gained that character.</p>
+<p>An independent gain of the character, however, violates the theory of homology implicit in the definition of both the character <span class="citation">(<span class="citeproc-not-found" data-reference-id="Platnik1979"><strong>???</strong></span>)</span> and the transformation series that describe its attributes. The differences between existing algorithms, those that minimise global homoplasy, and our own reflect different approaches to tackling this violation. There is a tension between two extremes: (i), taking similarities that can be attributed to coincidence as evidence for homology in the parent character; and (ii) being quick to attribute genuine homologies to independent gains of the parent character.
+The approach of maximising homology lies closer to the first extreme; our approach lies closer to the second.</p>
+<p>As the number of subcharacters increases, the divergence between our approaches becomes more manifest.
+Whether a character has 6, 12 or 120 ontologically dependent characters, if six of these characters bear the same state, then global homology will be maximised by reconstructing seven independent losses, in order to attribute these similarities to common ancestry – even though in the latter cases the similarities are likely due to chance, and the additional losses of the character implied by maximising global homoplasy are unlikely to represent evolutionary history.</p>
+<p>Ultimately, a balanced approach to this issue requires the application of conditional probabilistic approaches, which to our knowledge have not been applied in a parsimony context.</p>
 <!--
 MS: Sankoff matrices may contribute to an eventual information based solution.
 
@@ -995,6 +1002,9 @@ other tongue-bearing taxa have straight tongues. In the absence of prior knowled
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-Platnick1979">
+<p>Platnick, N. I. (1979). Philosophy and the transformation of cladistics. <em>Systematic Biology</em>, <em>28</em>(4), 537–546. doi:<a href="https://doi.org/10.2307/sysbio/28.4.537">10.2307/sysbio/28.4.537</a></p>
+</div>
 <div id="ref-Goloboff1993">
 <p>Goloboff, P. A. (1993). Estimating character weights during tree search. <em>Cladistics</em>, <em>9</em>(1), 83–91. doi:<a href="https://doi.org/10.1111/j.1096-0031.1993.tb00209.x">10.1111/j.1096-0031.1993.tb00209.x</a></p>
 </div>

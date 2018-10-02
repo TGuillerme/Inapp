@@ -131,11 +131,17 @@ nodelabels(nodeStates, cex=1.6, frame='none')
 
 ```
 
+Our algorithm does not always select the tree that minimizes global homology as the optimal tree.  Doing so requires the explicit specification of character ontologies, and is thus not possible from character state data alone.
+
 ## Similarity due to chance
 
-It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance.  A curved beak, for example, must be either convex or concave, and must be either glossy or matt.  If curved beaks evolved twice, then there is at least a $\frac{1}{4}$ chance that the two innovations will have the same lustre and direction of curvature.  (In practice, fitness, developmental constraints and contingency are likely to make one curvature or lustre more likely, increasing the likelihood of a chance similarity.)
+It is important to recall that two features that evolve independently are expected to share a number of similarities due to chance.  A curved beak, for example, must be either convex or concave, and must be either glossy or matt.  If curved beaks evolved twice, then there is at least a $\frac{1}{4}$ chance that the two innovations will have the same lustre and direction of curvature.  (In practice, fitness, developmental constraints and contingency are likely to make one curvature or lustre more likely, increasing the likelihood of a fluke similarity.)
 
-On this basis, if a character has a number of ontologically dependent binary characters, then mathematically one must expect two independent origins of the parent character to bear a number of similarities by chance:
+If beaks did evolve twice, however, then they should not be used as a character: character statements are theories that a thing (here a beak) is homologous in all the taxa in which it occurs [@Platnick1979]; if this theory is false, then comparisons between attributes of the thing are invalid.
+
+For this reason, parsimony methods have no satisfactory means of attributing chance similarity in attributes of things that are not homologous to coincidence rather than common descent.
+
+If a character has a number of ontologically dependent binary characters, then mathematically one must expect two independent origins of the character to bear a number of similarities by coincidence (rather than by common descent):
 
 ```{r, echo = FALSE, warning=FALSE}
 x <- 0:20
@@ -150,9 +156,15 @@ lines(E(x, 0.1) ~ x, col=TreeSearch::brewer[[3]][3])
 legend('bottomright', bty='n', col=TreeSearch::brewer[[3]], lty='solid', c('Both states equally probable', 'One state twice as likely', 'One state 90% probable'))
 ```
 
-In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary characters is expected to share, by chance, six attributes with any taxon that independently gained that character.  Because a parsimony approach does not acknowledge this expectation, an attempt to maximise global homology places undue weight on similarities that could potentially be attributed to chance.
+In the conservative case that binary attributes are equally probable, a character with 12 ontologically dependent binary transformation series is expected to share, by chance, six attributes with any taxon that independently gained that character.  
 
+An independent gain of the character, however, violates the theory of homology implicit in the definition of both the character [@Platnik1979] and the transformation series that describe its attributes.  The differences between existing algorithms, those that minimise global homoplasy, and our own reflect different approaches to tackling this violation.  There is a tension between two extremes: (i), taking similarities that can be attributed to coincidence as evidence for homology in the parent character; and (ii) being quick to attribute genuine homologies to independent gains of the parent character.
+The approach of maximising homology lies closer to the first extreme; our approach lies closer to the second.  
+
+As the number of subcharacters increases, the divergence between our approaches becomes more manifest.
 Whether a character has 6, 12 or 120 ontologically dependent characters, if six of these characters bear the same state, then global homology will be maximised by reconstructing seven independent losses, in order to attribute these similarities to common ancestry -- even though in the latter cases the similarities are likely due to chance, and the additional losses of the character implied by maximising global homoplasy are unlikely to represent evolutionary history.
+
+Ultimately, a balanced approach to this issue requires the application of conditional probabilistic approaches, which to our knowledge have not been applied in a parsimony context.
 
 <!--
 MS: Sankoff matrices may contribute to an eventual information based solution.

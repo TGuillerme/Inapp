@@ -24,7 +24,7 @@ runGitHub("Inapp", "TGuillerme")
 Not much more complicated! In `R`, copy/paste the following:
 ```r
 if(!require(devtools)) install.packages("devtools")
-install_github("TGuillerme/Inapp")
+devtools::install_github("TGuillerme/Inapp")
 library(Inapp)
 
 ## Running the App:

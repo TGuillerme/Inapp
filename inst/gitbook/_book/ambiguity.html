@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-10-02">
+<meta name="date" content="2018-10-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -244,31 +244,31 @@ coded accordingly.</p>
 <p>For example:</p>
 <blockquote>
 <p>Tail: (0), absent; (1), present</p>
-<p>Tail margin: (0), smooth; (1), serrated.</p>
+<p>Tail margin: (1), smooth; (2), serrated.</p>
 </blockquote>
 <p>Assume that the tail margin must either be smooth or serrated, and there is no
 reason to assume that either state is ancestral (i.e. the character is strictly
-transformational). Tail margin should then be coded as <code>{01}</code>: i.e. the tail
-is known to have taken one of the two states 0 or 1.</p>
+transformational). Tail margin should then be coded as <code>{12}</code>: i.e. the tail
+is known to have taken one of the two states 1 or 2.</p>
 </div>
 <div id="subordinate-character-may-have-unobserved-states" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Subordinate character may have unobserved states</h3>
 <p>A more complicated situation arises where a subordinate character may have
 unobserved states, as with</p>
 <blockquote>
-<p>Tail colour: (0), red; (1), blue.</p>
+<p>Tail colour: (1), red; (2), blue.</p>
 </blockquote>
 <p>A taxon that is known to have a tail, but whose tail colour is uncertain, should
 generally be coded as <code>?</code>.</p>
-<p>Coding it as <code>{01}</code> would be appropriate if the tail was
-known to certainly be homologous with other tails in the dataset, in which case
+<p>Coding it as <code>{12}</code> would be appropriate if the tail was known with preternatural
+certainty to be homologous with other tails in the dataset, in which case
 it would be most parsimonious to assume that the tail colour is the same colour
 as the ancestor of the tip, which was necessarily either red or blue.</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-62-1.png" width="384" /></p>
 <p>But if, as will more often be the case, homology of the tails is not known
 <em>a priori</em>, then it is possible that this taxon has a tail
 that is not homologous with any other tail whose colour has been observed.</p>
-<p>In this case, coding the tail colour as <code>{01}</code> denotes that the tail is the same
+<p>In this case, coding the tail colour as <code>{12}</code> denotes that the tail is the same
 colour as a tail that has already been observed. This means that the independent
 origin of the tail also represents an independent
 origin of this particular colour – and hence an instance of homoplasy.</p>
@@ -306,13 +306,13 @@ tail is known to be present, ambiguous, or known to be absent:</p>
 <td align="left">0</td>
 </tr>
 <tr class="even">
-<td>Tail margin: (0), smooth; (1), serrated.</td>
+<td>Tail margin: (1), smooth; (2), serrated.</td>
 <td align="left">{01}</td>
 <td align="left">?</td>
 <td align="left">-</td>
 </tr>
 <tr class="odd">
-<td>Tail colour: (0), red; (1), blue.</td>
+<td>Tail colour: (1), red; (2), blue.</td>
 <td align="left">?</td>
 <td align="left">?</td>
 <td align="left">-</td>

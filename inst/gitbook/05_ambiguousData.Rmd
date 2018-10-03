@@ -30,10 +30,10 @@ setPar()
 hasTail   <- ape::read.tree(text="((a, (b, (c, d))), (e, ((f, (g, X)), (h, i))));")
 lacksTail <- ape::read.tree(text="((a, (b, (X, (c, d)))), (e, ((f, g), (h, i))));")
 tail <- "000001111?"
-col  <- "-----0011?"
+col  <- "-----1122?"
 
 vignettePlot(hasTail, tail, legend.pos='topleft', na=FALSE, main="Tail", state.labels = ap)
-vignettePlot(hasTail, col, legend.pos='topleft', main="Tail colour", state.labels = rb)
+vignettePlot(hasTail, col, legend.pos='topleft', main="Tail colour", state.labels = orb)
 
 ```
 
@@ -43,7 +43,7 @@ a homoplasious origin, the tail colour will be reconstructed as inapplicable:
 ```{r, echo=FALSE, fig.width=8, fig.height=4}
 setPar()
 vignettePlot(lacksTail, tail, legend.pos='topleft', na=FALSE, main="Tail", state.labels = ap)
-vignettePlot(lacksTail, col, legend.pos='topleft', main="Tail colour", state.labels = rb)
+vignettePlot(lacksTail, col, legend.pos='topleft', main="Tail colour", state.labels = orb)
 ```
 
 ## Principal character known
@@ -61,39 +61,39 @@ For example:
 
 > Tail: (0), absent; (1), present
 >
-> Tail margin: (0), smooth; (1), serrated.
+> Tail margin: (1), smooth; (2), serrated.
   
 Assume that the tail margin must either be smooth or serrated, and there is no 
 reason to assume that either state is ancestral (i.e. the character is strictly
-transformational).  Tail margin should then be coded as `{01}`: i.e. the tail
-is known to have taken one of the two states 0 or 1.
+transformational).  Tail margin should then be coded as `{12}`: i.e. the tail
+is known to have taken one of the two states 1 or 2.
 
 ### Subordinate character may have unobserved states
 
 A more complicated situation arises where a subordinate character may have 
 unobserved states, as with 
 
-> Tail colour: (0), red; (1), blue.
+> Tail colour: (1), red; (2), blue.
   
 A taxon that is known to have a tail, but whose tail colour is uncertain, should 
 generally be coded as `?`.
 
-Coding it as `{01}` would be appropriate if the tail was 
-known to certainly be homologous with other tails in the dataset, in which case
+Coding it as `{12}` would be appropriate if the tail was known with preternatural
+certainty to be homologous with other tails in the dataset, in which case
 it would be most parsimonious to assume that the tail colour is the same colour
 as the ancestor of the tip, which was necessarily either red or blue.
 
 ```{r, echo=FALSE, fig.width=4, fig.height=4}
 setPar(c(1, 1))
 vignettePlot(ape::read.tree(text="(a, (b, (c, (d, (e, (f, (g, (h, (i1, i2)))))))));"),
-             '---00011{01}{01}', legend.pos='topleft', state.labels = rb, passes=4)
+             '---11122{12}{12}', legend.pos='topleft', state.labels = orb, passes=4)
 ```
 
 But if, as will more often be the case, homology of the tails is not known 
 _a priori_, then it is possible that this taxon has a tail 
 that is not homologous with any other tail whose colour has been observed.
 
-In this case, coding the tail colour as `{01}` denotes that the tail is the same 
+In this case, coding the tail colour as `{12}` denotes that the tail is the same 
 colour as a tail that has already been observed.  This means that the independent
 origin of the tail also represents an independent
 origin of this particular colour -- and hence an instance of homoplasy.
@@ -101,7 +101,7 @@ origin of this particular colour -- and hence an instance of homoplasy.
 ```{r, echo=FALSE, fig.width=4, fig.height=4}
 setPar(c(1, 1))
 vignettePlot(ape::read.tree(text="((a, (i1, i2)), (b, (c, (d, (e, (f, (g, h)))))));"),
-             '---00011{01}{01}', legend.pos='topleft', state.labels = rb, passes=4)
+             '---11122{12}{12}', legend.pos='topleft', state.labels = orb, passes=4)
 ```
 
 Coding the tail colour as `?` allows the possibility that the independently-evolved
@@ -117,7 +117,7 @@ tail colour as being inapplicable in such a taxon.
 ```{r, echo=FALSE, fig.width=4, fig.height=4}
 setPar(c(1, 1))
 vignettePlot(ape::read.tree(text="((a, (i1, i2)), (b, (c, (d, (e, (f, (g, h)))))));"),
-             '---00011??', legend.pos='topleft', state.labels = rb, passes=4)
+             '---11122??', legend.pos='topleft', state.labels = orb, passes=4)
 ```
 
 ## Recommendation 
@@ -131,8 +131,8 @@ mDep <- matrix(c("1", "?", "0",
                  "?", "?", "-"), byrow=TRUE, ncol=3)
 colnames(mDep) <- c('Present', 'Unknown', 'Absent')
 rownames(mDep) <- c("Tail: (0), absent; (1), present.",
-                    "Tail margin: (0), smooth; (1), serrated.",
-                    "Tail colour: (0), red; (1), blue.")
+                    "Tail margin: (1), smooth; (2), serrated.",
+                    "Tail colour: (1), red; (2), blue.")
 knitr::kable(mDep, caption="Recommended coding for unknown contingent characters")
 ```
 

@@ -23,12 +23,12 @@ runGitHub("Inapp", "TGuillerme")
 ## Running Inapp in your R console
 Not much more complicated! In `R`, copy/paste the following:
 ```r
+## Installing the App:
 if(!require(devtools)) install.packages("devtools")
 devtools::install_github("TGuillerme/Inapp")
-library(Inapp)
 
 ## Running the App:
-runInapp()
+Inapp::runInapp()
 ```
 
 Check out the package [vignette](https://cdn.rawgit.com/TGuillerme/Inapp/2d7de88b/inst/gitbook/_book/index.html) for (many) more details on the GUI possibilities.

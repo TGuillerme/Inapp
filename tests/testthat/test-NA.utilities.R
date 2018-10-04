@@ -1,3 +1,5 @@
+require(ape)
+
 ## convert.char
 context("convert.char")
 test_that("convert.char works", {
@@ -152,4 +154,17 @@ test_that("get.union.excl works", {
     expect_equal(get.union.excl(c(4,2,5,1),c(2,1)), c(4,5))
     expect_equal(get.union.excl(2,1), c(1,2))
     expect_equal(get.union.excl(1,2), c(1,2))
+})
+
+
+
+context("print.states.matrix")
+test_that("print.states.matrix works", {
+
+    tree <- ape::read.tree(text = "((a,b),(c,d));")
+    character <- "01?-"
+    test <- make.states.matrix(tree, character)
+    out <- capture.output(test)
+    
+    expect_equal(out, c(" ---- Tree ---- " , "((a,b),(c,d)); "  , " ---- States matrix---- " , "Number of tips = 4 "  , "Character states = -, 0, 1 "  , "No reconstructions calculated. See:"  , " ?apply.reconstruction" , "to reconstruct ancestral states and score the tree."))
 })

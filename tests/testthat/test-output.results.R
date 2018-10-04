@@ -68,3 +68,73 @@ test_that("write.tree.commented works", {
     }
 
 })
+
+
+
+test_that("write.nexus.commented works", {
+
+    ## Check writing the notes
+    set.seed(1)
+    tree <- ape::rtree(5, br = NULL)
+    node_notes <- lapply(as.list(seq(1:9)), function(X){paste("[", X, "]", sep = "")})
+    out <- capture.output(write.nexus.commented(tree, comments = node_notes, file = ""))
+    
+    expect_equal(out[-2], c(
+        "#NEXUS",
+        "[More for at https://github.com/TGuillerme/Inapp/]",
+        "",
+        "BEGIN TAXA;",
+        "\tDIMENSIONS NTAX = 5;",
+        "\tTAXLABELS",
+        "\t\tt3",
+        "\t\tt4",
+        "\t\tt1",
+        "\t\tt2",
+        "\t\tt5",
+        "\t;",
+        "END;",
+        "BEGIN TREES;",
+        "\tTRANSLATE",
+        "\t\t1\tt3,",
+        "\t\t2\tt4,",
+        "\t\t3\tt1,",
+        "\t\t4\tt2,",
+        "\t\t5\tt5",
+        "\t;",
+        "\tTREE * UNTITLED = [&R] ((1[1],2[2])[7],(3[3],(4[4],5[5])[9])[8])[6];",
+        "END;"
+        ))
+
+})
+
+
+
+test_that("read.key work", {
+    expect_message(read.key("a", "b", scan = FALSE))
+    # expect_message(read.key("a", "b", scan = TRUE))
+})
+
+
+test_that("output.results works properly", {
+    ## A random 5 taxa tree
+    set.seed(1)
+    tree <- ape::rtree(5, br = NULL)
+    ## A character with inapplicable data
+    character <- "01-?1"
+    ## NA algorithm
+    NA_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
+
+
+    ## Errors
+    expect_error(output.states.matrix("NA_matrix", output = NULL, file = "Inapp_reconstruction", path = "."))
+    expect_error(output.states.matrix(NA_matrix, output = "NULL", file = "Inapp_reconstruction", path = "."))
+
+    ## Exporting the results as an annotated newick tree
+    expect_null(output.states.matrix(NA_matrix, output = "newick"))
+    ## Exporting the results and notes in a nexus file
+    expect_null(output.states.matrix(NA_matrix, output = "nexus"))
+    ## Exporting the result in a csv
+    expect_null(output.states.matrix(NA_matrix, output = "csv"))
+    ## Exporting the plot as a pdf
+    expect_null(output.states.matrix(NA_matrix, output = "pdf"))
+})

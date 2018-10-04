@@ -15,12 +15,12 @@ LazyData: true
 RoxygenNote: 6.1.0
 Imports:
     ape,
+    knitr,
     phangorn,
     shiny,
     TreeSearch (> 0.1.2)
 Suggests:
     devtools,
-    knitr,
     rmarkdown,
     testthat
 Remotes:

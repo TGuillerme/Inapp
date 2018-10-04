@@ -390,7 +390,7 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
 #' This function will plot a reconstruction of the distribution of character `char`
 #' on a set of phylogenetic trees.
 #' The function is intended for use in R Markdown (`.Rmd`) documents, which might
-#' be rendered using the `knitr`, `markdown` or `bookdown` pacakges.
+#' be rendered using the `knitr`, `rmarkdown` or `bookdown` pacakges.
 #' These packages can produce output in PDF or HTML format; this package will
 #' generate SVG files for HTML output, and a static PNG otherwise.
 #'
@@ -486,7 +486,7 @@ PrintSwitcher <- function (nTrees) {
 #' Print Javascript
 #'
 #' Allows arbitrary JavaScript content to be imported into an HTML document
-#' produced with `bookdown` or `markdown`.  Suggested for use in Rmd documents
+#' produced with `bookdown` or `rmarkdown`.  Suggested for use in Rmd documents
 #' that will be rendered in HTML; useful in supoprting user interaction with
 #' SVG elements produced by [PlotCharacterMapping].
 #'

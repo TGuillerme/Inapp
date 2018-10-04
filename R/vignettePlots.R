@@ -21,7 +21,8 @@
 #'
 #' @importFrom graphics par
 #' @importFrom grDevices dev.new dev.off
-#' @export
+#' 
+
 vignettePlot <- function (tree, character, na=TRUE, legend.pos='bottomleft',
                           passes=if(na) 1:4 else 1:2, state.labels = character(0),
                           counts=if(na) 1:2 else 2, state.override = NULL,

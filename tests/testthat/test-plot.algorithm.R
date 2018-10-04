@@ -1,5 +1,5 @@
-context("plot.convert.state")
-test_that("plot.convert.state works", {
+context("plot.algorithm")
+test_that("plot.algorithm works", {
     ## A balanced 12 taxa tree
     tree <- ape::read.tree(
                      text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
@@ -10,11 +10,11 @@ test_that("plot.convert.state works", {
     ## Plotting the tree and the states
     expect_null(plot(NA_matrix))
     ## Plotting the tree and the states with the state changes and regions
-    expect_null(plot(NA_matrix, counts = c(1,2)))
+    expect_warning(expect_null(plot(NA_matrix, counts = c(1,2))))
     ## Plot the tree with tip/node labels, and only the 1st and 2nd downpass
     expect_null(plot(NA_matrix, passes = c(1,3), show.labels = c(1,2)))
     ## Plot the tree only the 2nd uppass with the state changes in green
-    expect_null(plot(NA_matrix, show.labels = 2, col.tips.nodes = c("red", "pink", "green"),
-         counts = c(1,2), passes = c(3,4)))
+    expect_warning(expect_null(plot(NA_matrix, show.labels = 2, col.tips.nodes = c("red", "pink", "green"),
+         counts = c(1,2), passes = c(3,4))))
 })
 

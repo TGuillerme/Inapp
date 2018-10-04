@@ -1,3 +1,14 @@
+################################################################################
+##                                                                            ##
+## This file contains functions that allow the visualization of the           ##
+## inapplicable algorithm to be rendered as an SVG element in HTML documents. ##
+##                                                                            ##
+## This makes it possible to build interactive JavaScript functions to allow  ##
+## users to engage with the visualization in Javascript, and to style the     ##
+## graphical output using CSS.                                                ##
+##                                                                            ##
+################################################################################
+
 #' SVG canvas
 #'
 #' @param trees A list of trees, perhaps of class multiPhylo

@@ -47,7 +47,7 @@ Plot a tree depicting a character reconstruction
 This function will plot a reconstruction of the distribution of character \code{char}
 on a set of phylogenetic trees.
 The function is intended for use in R Markdown (\code{.Rmd}) documents, which might
-be rendered using the \code{knitr}, \code{markdown} or \code{bookdown} pacakges.
+be rendered using the \code{knitr}, \code{rmarkdown} or \code{bookdown} pacakges.
 These packages can produce output in PDF or HTML format; this package will
 generate SVG files for HTML output, and a static PNG otherwise.
 

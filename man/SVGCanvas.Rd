@@ -65,8 +65,14 @@ style the output and enable users to interact with the visualizations.
                        analysisNames=treesGeneratedBy,
                        width=300, height=300)
 
+   PlotCharacterMapping(char = '0011----11',
+                        stateLabels = c('Absent', 'Present'),
+                        singleTree = trees[[1]],
+                        legendText = 'This is printed on PNGs',
+                        canvas = canvas,
+                        svgFilename = 'tree_number_\%s.svg')
 
-}
+  }
 }
 }
 \author{

@@ -7,7 +7,7 @@
 PlotCharacterMapping(char, stateLabels, singleTree, legendText,
   SetPar = par(mar = rep(0.2, 4), cex = 0.7), canvas, treeNames,
   analysisLabels = canvas$analysisNames, charIndex = character(0),
-  svgFilename)
+  svgFilename = "tree_\%s.svg")
 }
 \arguments{
 \item{char}{Character vector specifying distribution of tokens among (named)
@@ -47,7 +47,7 @@ Plot a tree depicting a character reconstruction
 This function will plot a reconstruction of the distribution of character \code{char}
 on a set of phylogenetic trees.
 The function is intended for use in R Markdown (\code{.Rmd}) documents, which might
-be rendered using the \code{knitr}, \code{markdown} or \code{bookdown} pacakges.
+be rendered using the \code{knitr}, \code{rmarkdown} or \code{bookdown} pacakges.
 These packages can produce output in PDF or HTML format; this package will
 generate SVG files for HTML output, and a static PNG otherwise.
 
@@ -58,6 +58,9 @@ implicit in PDF documents, the PNG images include only a single tree,
 specified by \code{singleTree}.
 
 HTML output can be forced by setting \code{setOption('localInstance', TRUE)}.
+}
+\examples{
+  # An example is given in the help page for SVGCanvas; type ?SVGCanvas
 }
 \author{
 Martin R. Smith

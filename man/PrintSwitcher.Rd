@@ -11,5 +11,9 @@ PrintSwitcher(nTrees)
 used to enforce the highest allowed value in the switcher box}
 }
 \description{
-Prints an input box that allows the tree displayed to be toggled, in HTML output
+Prints an input box that allows the SVG tree displayed to be toggled,
+in HTML output.  To be used alongside \link{PlotCharacterMapping}.
+}
+\author{
+Martin R. Smith
 }

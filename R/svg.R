@@ -131,7 +131,9 @@ length.SVGCanvas <- function (x) x$nTree
 
 #' SVG Tree
 #'
-#' Plots a phylogenetic tree on an [SVGCanvas].
+#' Plots one of the character reconstructions embodied within an [SVGCanvas]
+#' object on a specified phylogenetic tree, returning SVG text that can be
+#' saved to file or included directly in an HTML document.
 #'
 #' @param treeNo Integer specifying which of the trees on the SVGForest to plot
 #' @template canvasParam
@@ -143,8 +145,10 @@ length.SVGCanvas <- function (x) x$nTree
 #'        of the character
 #' @param analysisLabels Character vector specifying label for each analysis
 #'
-#' @return Character string describing an SVG object that depicts the tree, which can be
-#' written to file or included in markdown destined for HTML output.
+#' @return Character string describing an SVG object that depicts the tree,
+#'   which can be written to file or included in markdown destined for HTML
+#'   output.
+#'
 #' @importFrom TreeSearch SupportColour
 #' @export
 #'
@@ -357,23 +361,43 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
 
 #' Plot character mapping
 #'
-#' Plot a tree with a character reconstruction plotted upon it
+#' Plot a tree depicting a character reconstruction
 #'
-#' @param char Character vector specifying distribution of tokens among (named) taxa
+#' This function will plot a reconstruction of the distribution of character `char`
+#' on a set of phylogenetic trees.
+#' The function is intended for use in R Markdown (`.Rmd`) documents, which might
+#' be rendered using the `knitr`, `markdown` or `bookdown` pacakges.
+#' These packages can produce output in PDF or HTML format; this package will
+#' generate SVG files for HTML output, and a static PNG otherwise.
+#'
+#' The SVG output will generate a separate plot for each tree in `canvas`;
+#' JavaScript can be specified using [PrintSwitcher] or [PrintJavascript] in order
+#' to allow the user to switch between trees.  Due to the space considerations
+#' implicit in PDF documents, the PNG images include only a single tree,
+#' specified by `singleTree`.
+#'
+#' HTML output can be forced by setting `setOption('localInstance', TRUE)`.
+#'
+#' @param char Character vector specifying distribution of tokens among (named)
+#'   taxa
 #' @param charIndex Character vector providing a reference for the character,
-#'                  typically its number, to be sent to [SVGTree]
-#' @param stateLabels Character vector specifying the labels to apply to each state
+#'   typically its number, to be sent to [SVGTree]
+#' @param stateLabels Character vector specifying the labels to apply to each
+#'   state
 #' @param singleTree A single tree to be plotted in Latex output
 #' @param legendText Character giving legend text to print in Latex output
 #' @template canvasParam
 #' @template treeNamesParam
-#' @param analysisLabels Characte vector specifying names of each analysis, in order to be printed
+#' @param analysisLabels Character vector specifying names of each analysis,
+#'   to be printed on plot
 #' @param svgFilename Character string specifying location to save each file,
-#'   containing the expression \code{\%s}, which will be replaced with the number of the tree.
-#' @param SetPar Graphical parameters to set before plotting PNG tree for Latex output.
+#'   containing the expression \code{\%s}, which will be replaced with the number
+#'   of the tree.
+#' @param SetPar Graphical parameters to set before plotting PNG tree
+#'   in Latex output.
 #'
 #' @return Prints the tree in an appropriate markdown format
-#' @importFrom TreeSearch RootTree
+#' @importFrom knitr is_html_output
 #' @export
 #' @author Martin R. Smith
 PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,
@@ -389,7 +413,7 @@ PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,
         cat("<p>All taxa are coded as ambiguous or inapplicable for this character.</p>")
         legendLabels <- c("?: Not scored", "-: Inapplicable")
         legendCol <- "darkgrey"
-    } else if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
+    } else if (!is.null(getOption('localInstance')) || is_html_output()) {
         for (treeNo in canvas$eachTree) {
             svgSource <- SVGTree(treeNo=treeNo, canvas=canvas,
                                  char=char, charIndex=charIndex,
@@ -412,14 +436,18 @@ PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,
 
 #' Print Switcher
 #'
-#' Prints an input box that allows the tree displayed to be toggled, in HTML output
+#' Prints an input box that allows the SVG tree displayed to be toggled,
+#' in HTML output.  To be used alongside [PlotCharacterMapping].
 #'
 #' @param nTrees Integer specifying the number of trees that can be switched,
 #'               used to enforce the highest allowed value in the switcher box
 #'
+#' @importFrom knitr is_html_output
 #' @export
+#'
+#' @author Martin R. Smith
 PrintSwitcher <- function (nTrees) {
-    if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
+    if (!is.null(getOption('localInstance')) || is_html_output()) {
         cat(paste0('<div class="switcher">',
                    '<span class="selectTree">Tree number:</span>',
                    '<input class="switcherNumber" type="number" min="1" max="',
@@ -430,10 +458,17 @@ PrintSwitcher <- function (nTrees) {
 
 #' Print Javascript
 #'
+#' Allows arbitrary JavaScript content to be imported into an HTML document
+#' produced with `bookdown` or `markdown`.  Suggested for use in Rmd documents
+#' that will be rendered in HTML; useful in supoprting user interaction with
+#' SVG elements produced by [PlotCharacterMapping].
+#'
+#' Note that the content will be ignored when files are compiled for PDF output.
+#'
 #' @param filepath Path to Javascript template
 #'
-#' @return Prints to stdout the javascript file, executing any R code included
-#' in \`r ...\`.
+#' @return Prints the contents of the Javascript file to to stdout,
+#'  executing any R code included in \`r ...\` blocks in the file.
 #' @export
 #'
 #' @author Martin R. Smith

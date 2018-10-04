@@ -47,6 +47,28 @@ as stand-alone SVG files, or included in HTML documents.
 If incorporated in an HTML vignette, Javascript and CSS can be used to
 style the output and enable users to interact with the visualizations.
 }
+\examples{
+{
+\dontrun{
+ # Generate multiPhylo object containing four trees, with first and last identical:
+   trees <- structure(list(
+     ape::rtree(10, br=NULL),
+     ape::rtree(10, br=NULL),
+     ape::rtree(10, br=NULL),
+     NULL), class='multiPhylo')
+   trees[[4]] <- trees[[1]]
+
+   treesGeneratedBy <- c('rtree', 'rtree', 'rtree', 'duplication')
+
+   canvas <- SVGCanvas(trees=trees,
+                       outgroupTips='t1',
+                       analysisNames=treesGeneratedBy,
+                       width=300, height=300)
+
+
+}
+}
+}
 \author{
 Martin R. Smith
 }

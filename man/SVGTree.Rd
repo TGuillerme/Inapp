@@ -25,11 +25,14 @@ for inclusion under the SVG element's \code{data-char} attribute.}
 \item{analysisLabels}{Character vector specifying label for each analysis}
 }
 \value{
-Character string describing an SVG object that depicts the tree, which can be
-written to file or included in markdown destined for HTML output.
+Character string describing an SVG object that depicts the tree,
+which can be written to file or included in markdown destined for HTML
+output.
 }
 \description{
-Plots a phylogenetic tree on an \link{SVGCanvas}.
+Plots one of the character reconstructions embodied within an \link{SVGCanvas}
+object on a specified phylogenetic tree, returning SVG text that can be
+saved to file or included directly in an HTML document.
 }
 \author{
 Martin R. Smith

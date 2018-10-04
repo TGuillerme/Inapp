@@ -82,7 +82,7 @@ SVGCanvas <- function (trees, outgroupTips=NULL, analysisNames=character(0),
     internal <- nTip + seq_len(nNode)
     terminal <- seq_len(nTip)
     tipLabel <- matrix('', nTree, nTip)
-    nEdge <- dim(tree$edge)[1]
+    nEdge <- dim(uniqueTrees[[1]]$edge)[1]
     eachEdge <- seq_len(nEdge)
     nodeSupport <- matrix(0, nTree, nNode - 2L) # Two root nodes irrelevant
     parents <- children <- matrix(0, nTree, nEdge)

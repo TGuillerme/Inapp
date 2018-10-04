@@ -59,6 +59,9 @@ specified by \code{singleTree}.
 
 HTML output can be forced by setting \code{setOption('localInstance', TRUE)}.
 }
+\examples{
+  # An example is given in the help page for SVGCanvas; type ?SVGCanvas
+}
 \author{
 Martin R. Smith
 }

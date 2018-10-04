@@ -60,6 +60,7 @@
 #'                        outgroupTips='t1',
 #'                        analysisNames=treesGeneratedBy,
 #'                        width=300, height=300)
+#'
 #'    PlotCharacterMapping(char = '0011----11',
 #'                         stateLabels = c('Absent', 'Present'),
 #'                         singleTree = trees[[1]],
@@ -421,8 +422,8 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
 #'
 #' @return Prints the tree in an appropriate markdown format
 #' @importFrom knitr is_html_output
-#' @example # An example is given in the help page for SVGCanvas; type ?SVGCanvas
-#' }
+#' @examples
+#'   # An example is given in the help page for SVGCanvas; type ?SVGCanvas
 #' @export
 #' @author Martin R. Smith
 PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,

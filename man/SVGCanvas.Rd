@@ -64,6 +64,7 @@ style the output and enable users to interact with the visualizations.
                        outgroupTips='t1',
                        analysisNames=treesGeneratedBy,
                        width=300, height=300)
+
    PlotCharacterMapping(char = '0011----11',
                         stateLabels = c('Absent', 'Present'),
                         singleTree = trees[[1]],

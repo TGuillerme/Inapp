@@ -29,7 +29,7 @@ Character string describing an SVG object that depicts the tree, which can be
 written to file or included in markdown destined for HTML output.
 }
 \description{
-SVG Tree
+Plots a phylogenetic tree on an \link{SVGCanvas}.
 }
 \author{
 Martin R. Smith

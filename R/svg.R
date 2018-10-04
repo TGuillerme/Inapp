@@ -60,9 +60,14 @@
 #'                        outgroupTips='t1',
 #'                        analysisNames=treesGeneratedBy,
 #'                        width=300, height=300)
+#'    PlotCharacterMapping(char = '0011----11',
+#'                         stateLabels = c('Absent', 'Present'),
+#'                         singleTree = trees[[1]],
+#'                         legendText = 'This is printed on PNGs',
+#'                         canvas = canvas,
+#'                         svgFilename = 'tree_number_%s.svg')
 #'
-#'
-#' }
+#'   }
 #' }
 SVGCanvas <- function (trees, outgroupTips=NULL, analysisNames=character(0),
                        width = 682, height = 682,
@@ -244,6 +249,24 @@ SVGTree <- function (treeNo, canvas, char, stateLabels,
     svgSource
 }
 
+#' Matrix data
+#'
+#' Generates and summarises data from a `states_matrix` that has been output
+#' by `apply.reconstruction`.
+#'
+#' @param states_matrix The output of `apply.reconstruction`
+#' @param fitch_states The output of `apply.reconstruction(method='Fitch')`
+#' @param state.labels Character vector translating tokens into characer states,
+#'   e.g. `c('0: Absent', '1: Present')`
+#'
+#' @return A list summarising details of the matrix, with named entries;
+#'  `edge_col` (edge colours); `edge_col_array` (formatted as a Javascript array),
+#'   `legend` (detailing what colours mean); `legend_col` (colour for legend entries);
+#'  `tips_labels`; `tips_colours`; `dud_steps` (Steps reconstructed by Fitch,
+#'  but not the inapplicable algorithm)
+#' @export
+#' @keywords internal
+#' @author Martin R. Smith
 MatrixData <- function (states_matrix, fitch_states, state.labels) {
     tree <- states_matrix$tree
     regions <- states_matrix$regions
@@ -398,13 +421,16 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
 #'
 #' @return Prints the tree in an appropriate markdown format
 #' @importFrom knitr is_html_output
+#' @example # An example is given in the help page for SVGCanvas; type ?SVGCanvas
+#' }
 #' @export
 #' @author Martin R. Smith
 PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,
                                   SetPar=par(mar=rep(0.2, 4), cex=0.7),
                                   canvas, treeNames,
                                   analysisLabels=canvas$analysisNames,
-                                  charIndex=character(0), svgFilename) {
+                                  charIndex=character(0),
+                                  svgFilename='tree_%s.svg') {
     if (char[1] == '?' && length(unique(char)) == 1) {
         cat("<p>All taxa are coded as ambiguous for this character.</p>")
         legendLabels <- "?: Not scored"

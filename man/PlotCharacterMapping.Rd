@@ -10,33 +10,54 @@ PlotCharacterMapping(char, stateLabels, singleTree, legendText,
   svgFilename)
 }
 \arguments{
-\item{char}{Character vector specifying distribution of tokens among (named) taxa}
+\item{char}{Character vector specifying distribution of tokens among (named)
+taxa}
 
-\item{stateLabels}{Character vector specifying the labels to apply to each state}
+\item{stateLabels}{Character vector specifying the labels to apply to each
+state}
 
 \item{singleTree}{A single tree to be plotted in Latex output}
 
 \item{legendText}{Character giving legend text to print in Latex output}
 
-\item{SetPar}{Graphical parameters to set before plotting PNG tree for Latex output.}
+\item{SetPar}{Graphical parameters to set before plotting PNG tree
+in Latex output.}
 
 \item{canvas}{an object of class SVGForest.}
 
 \item{treeNames}{Character string naming the analysis used to generate each tree}
 
-\item{analysisLabels}{Characte vector specifying names of each analysis, in order to be printed}
+\item{analysisLabels}{Character vector specifying names of each analysis,
+to be printed on plot}
 
 \item{charIndex}{Character vector providing a reference for the character,
 typically its number, to be sent to \link{SVGTree}}
 
 \item{svgFilename}{Character string specifying location to save each file,
-containing the expression \code{\%s}, which will be replaced with the number of the tree.}
+containing the expression \code{\%s}, which will be replaced with the number
+of the tree.}
 }
 \value{
 Prints the tree in an appropriate markdown format
 }
 \description{
-Plot a tree with a character reconstruction plotted upon it
+Plot a tree depicting a character reconstruction
+}
+\details{
+This function will plot a reconstruction of the distribution of character \code{char}
+on a set of phylogenetic trees.
+The function is intended for use in R Markdown (\code{.Rmd}) documents, which might
+be rendered using the \code{knitr}, \code{markdown} or \code{bookdown} pacakges.
+These packages can produce output in PDF or HTML format; this package will
+generate SVG files for HTML output, and a static PNG otherwise.
+
+The SVG output will generate a separate plot for each tree in \code{canvas};
+JavaScript can be specified using \link{PrintSwitcher} or \link{PrintJavascript} in order
+to allow the user to switch between trees.  Due to the space considerations
+implicit in PDF documents, the PNG images include only a single tree,
+specified by \code{singleTree}.
+
+HTML output can be forced by setting \code{setOption('localInstance', TRUE)}.
 }
 \author{
 Martin R. Smith

@@ -10,11 +10,17 @@ PrintJavascript(filepath)
 \item{filepath}{Path to Javascript template}
 }
 \value{
-Prints to stdout the javascript file, executing any R code included
-in `r ...`.
+Prints the contents of the Javascript file to to stdout,
+executing any R code included in `r ...` blocks in the file.
 }
 \description{
-Print Javascript
+Allows arbitrary JavaScript content to be imported into an HTML document
+produced with \code{bookdown} or \code{markdown}.  Suggested for use in Rmd documents
+that will be rendered in HTML; useful in supoprting user interaction with
+SVG elements produced by \link{PlotCharacterMapping}.
+}
+\details{
+Note that the content will be ignored when files are compiled for PDF output.
 }
 \author{
 Martin R. Smith

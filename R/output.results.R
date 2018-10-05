@@ -156,11 +156,11 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         node_var <- paste0(node_var, 1:4, "[", ape::Ntip(states_matrix$tree)+ape::Nnode(states_matrix$tree), "] = ")
 
         ## Translate the tip labels
-        if(!all(sates_matrix$tree$tip.label == "numeric")) {
-            if(length(grep("t", sates_matrix$tree$tip.label)) == states_matrix$n_tip) {
-                sates_matrix$tree$tip.label <- gsub("t", "", sates_matrix$tree$tip.label)
+        if(!all(states_matrix$tree$tip.label == "numeric")) {
+            if(length(grep("t", states_matrix$tree$tip.label)) == states_matrix$n_tip) {
+                states_matrix$tree$tip.label <- gsub("t", "", states_matrix$tree$tip.label)
             } else {
-                tsates_matrix$ree$tip.label <- seq(1:ape::Ntip(sates_matrix$tree))
+                tstates_matrix$ree$tip.label <- seq(1:ape::Ntip(states_matrix$tree))
             }
         }
 

@@ -179,8 +179,6 @@ test_that("output.results works properly", {
     expect_null(output.states.matrix(NA_matrix, output = NULL, file = "Inapp_reconstruction", path = "."))
 
 
-    expect_error(output.states.matrix(NA_matrix, output = 1, file = "Inapp_reconstruction", path = "."))
-
     ## Exporting the results as an annotated newick tree
     expect_null(output.states.matrix(NA_matrix, output = "newick"))
     ## Exporting the results and notes in a nexus file

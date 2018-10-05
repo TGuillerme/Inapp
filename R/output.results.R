@@ -63,7 +63,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
             stop("output argument must be one of the following: ", paste(all_outputs[1:4], collapse = ", "), ".")
         } else {
             if(length(output) != 1) {
-                stop("output argument must be one of the following: ", paste(all_outputs[1:4], collapse = ", "), ".")
+                stop("output argument must be only one of the following: ", paste(all_outputs[1:4], collapse = ", "), ".")
             } else {
                 if(!(output %in% all_outputs)) {
                     stop("output argument must be one of the following: ", paste(all_outputs[1:4], collapse = ", "), ".")
@@ -81,10 +81,10 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 
     ## Filename and path
     if(class(file) != "character" || length(file) != 1) {
-        stop(paste(match_call$file, "must be a single character string."))
+        stop(paste(as.expression(match_call$file), "must be a single character string."))
     } else {
         if(class(path) != "character" || length(path) != 1) {
-            stop(paste(match_call$path, "must be a single character string."))
+            stop(paste(as.expression(match_call$path), "must be a single character string."))
         } else {
 
             if(output != "txt") {

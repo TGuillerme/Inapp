@@ -138,7 +138,12 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 
     if(output %in% "pdf") {
         ## Outputs a pdf
-        grDevices::pdf(file = full_path)
+        # pdf_height <- Ntip(states_matrix$tree)
+        # pdf_height <- ifelse(pdf_height < 7, 7, pdf_height)
+        # pdf_height <- ifelse(pdf_height > 100, 100, pdf_height)
+        # pdf_width <- ifelse(pdf_height == 7, 7, pdf_height * 0.75)
+        pdf_width <- pdf_height <- 7
+        grDevices::pdf(file = full_path, height = pdf_height, width = pdf_width)
         plot.states.matrix(states_matrix, ...)
         # plot.states.matrix(states_matrix) ; warning("DEBUG output")
         grDevices::dev.off()

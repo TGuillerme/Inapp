@@ -115,6 +115,46 @@ test_that("read.key work", {
 })
 
 
+test_that("convert.binary.value work", {
+    ## A random 5 taxa tree
+    set.seed(1)
+    tree <- ape::rtree(5, br = NULL)
+    ## A character with inapplicable data
+    character <- "01-?1"
+    ## NA algorithm
+    states_matrix <- apply.reconstruction(tree, character, passes = 4, method = "NA")
+    expect_equal(unlist(convert.binary.value(states_matrix[[1]], states_matrix)), c(2, 4, 1, 7, 4, 0, 0, 0, 0))
+
+    ## Individual conversions work
+    ## NA = 0
+    expect_equal(unlist(convert.binary.value(list(NULL), states_matrix)), 0)
+    ## -1 = 1
+    expect_equal(unlist(convert.binary.value(list(-1), states_matrix)), 1)
+    ## 0 = 2
+    expect_equal(unlist(convert.binary.value(list(0), states_matrix)), 2)
+    ## c(-1,0) = 3
+    expect_equal(unlist(convert.binary.value(list(c(-1, 0)), states_matrix)), 3)
+    ## 1 = 4
+    expect_equal(unlist(convert.binary.value(list(1), states_matrix)), 4)
+    ## c(-1, 1) = 5
+    expect_equal(unlist(convert.binary.value(list(c(-1,1)), states_matrix)), 5)
+    ## c(0, 1) = 6
+    expect_equal(unlist(convert.binary.value(list(c(0,1)), states_matrix)), 6)
+    ## c(-1, 0, 1) = 7
+    expect_equal(unlist(convert.binary.value(list(c(-1,0,1)), states_matrix)), 7)
+
+})
+
+
+test_that("get.missing work", {
+    all_states <- c(1,2)
+    expect_equal(get.missing(1, all_states), 1)
+    expect_equal(get.missing(2, all_states), 2)
+    expect_equal(get.missing(c(1,2), all_states), "?")
+
+})
+
+
 test_that("output.results works properly", {
     ## A random 5 taxa tree
     set.seed(1)
@@ -128,6 +168,16 @@ test_that("output.results works properly", {
     ## Errors
     expect_error(output.states.matrix("NA_matrix", output = NULL, file = "Inapp_reconstruction", path = "."))
     expect_error(output.states.matrix(NA_matrix, output = "NULL", file = "Inapp_reconstruction", path = "."))
+    expect_error(output.states.matrix(NA_matrix, output = 1, file = "Inapp_reconstruction", path = "."))
+    expect_error(output.states.matrix(NA_matrix, output = c("pdf", "csv"), file = "Inapp_reconstruction", path = "."))
+    expect_error(output.states.matrix(NA_matrix, output = "csv", file = c("a", "b"), path = "."))
+    expect_error(output.states.matrix(NA_matrix, output = "csv", file = "Inapp_reconstruction", path = c("a", "b")))
+
+
+
+    ## NULL return
+    expect_null(output.states.matrix(NA_matrix, output = NULL, file = "Inapp_reconstruction", path = "."))
+
 
     ## Exporting the results as an annotated newick tree
     expect_null(output.states.matrix(NA_matrix, output = "newick"))
@@ -137,4 +187,6 @@ test_that("output.results works properly", {
     expect_null(output.states.matrix(NA_matrix, output = "csv"))
     ## Exporting the plot as a pdf
     expect_null(output.states.matrix(NA_matrix, output = "pdf"))
+    ## Exporting the plot as C-test
+    expect_null(output.states.matrix(NA_matrix, output = "C-test"))
 })

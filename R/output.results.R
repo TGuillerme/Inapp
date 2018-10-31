@@ -63,7 +63,7 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
             stop("output argument must be one of the following: ", paste(all_outputs[1:4], collapse = ", "), ".")
         } else {
             if(length(output) != 1) {
-                stop("output argument must be one of the following: ", paste(all_outputs[1:4], collapse = ", "), ".")
+                stop("output argument must be only one of the following: ", paste(all_outputs[1:4], collapse = ", "), ".")
             } else {
                 if(!(output %in% all_outputs)) {
                     stop("output argument must be one of the following: ", paste(all_outputs[1:4], collapse = ", "), ".")
@@ -81,10 +81,10 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 
     ## Filename and path
     if(class(file) != "character" || length(file) != 1) {
-        stop(paste(match_call$file, "must be a single character string."))
+        stop(paste(as.expression(match_call$file), "must be a single character string."))
     } else {
         if(class(path) != "character" || length(path) != 1) {
-            stop(paste(match_call$path, "must be a single character string."))
+            stop(paste(as.expression(match_call$path), "must be a single character string."))
         } else {
 
             if(output != "txt") {
@@ -138,7 +138,12 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
 
     if(output %in% "pdf") {
         ## Outputs a pdf
-        grDevices::pdf(file = full_path)
+        # pdf_height <- Ntip(states_matrix$tree)
+        # pdf_height <- ifelse(pdf_height < 7, 7, pdf_height)
+        # pdf_height <- ifelse(pdf_height > 100, 100, pdf_height)
+        # pdf_width <- ifelse(pdf_height == 7, 7, pdf_height * 0.75)
+        pdf_width <- pdf_height <- 7
+        grDevices::pdf(file = full_path, height = pdf_height, width = pdf_width)
         plot.states.matrix(states_matrix, ...)
         # plot.states.matrix(states_matrix) ; warning("DEBUG output")
         grDevices::dev.off()
@@ -156,11 +161,11 @@ output.states.matrix <- function(states_matrix, output = NULL, file = "Inapp_rec
         node_var <- paste0(node_var, 1:4, "[", ape::Ntip(states_matrix$tree)+ape::Nnode(states_matrix$tree), "] = ")
 
         ## Translate the tip labels
-        if(!all(sates_matrix$tree$tip.label == "numeric")) {
-            if(length(grep("t", sates_matrix$tree$tip.label)) == states_matrix$n_tip) {
-                sates_matrix$tree$tip.label <- gsub("t", "", sates_matrix$tree$tip.label)
+        if(!all(states_matrix$tree$tip.label == "numeric")) {
+            if(length(grep("t", states_matrix$tree$tip.label)) == states_matrix$n_tip) {
+                states_matrix$tree$tip.label <- gsub("t", "", states_matrix$tree$tip.label)
             } else {
-                tsates_matrix$ree$tip.label <- seq(1:ape::Ntip(sates_matrix$tree))
+                tstates_matrix$ree$tip.label <- seq(1:ape::Ntip(states_matrix$tree))
             }
         }
 

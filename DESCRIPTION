@@ -11,8 +11,8 @@ Depends:
     R (>= 3.4.0),
 License: GPL-3
 Encoding: UTF-8
+Language: en-GB
 LazyData: true
-RoxygenNote: 6.1.0
 Imports:
     ape,
     knitr,
@@ -26,4 +26,5 @@ Suggests:
 Remotes:
     ms609/TreeSearch
 VignetteBuilder: knitr
+RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)

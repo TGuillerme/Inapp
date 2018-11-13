@@ -1,7 +1,7 @@
 Package: Inapp
 Title: Reconstruction of Inapplicable Discrete Characters on Phylogenetic Trees
-Version: 0.4.0
-Date: 2018-10-04
+Version: 0.4.1
+Date: 2018-11-13
 Author: c(person("Thomas", "Guillerme", email = "guillert@tcd.ie", role = c("aut",
     "cre")), person("Martin D.", "Brazeau", role = c("aut")), person("Martin R.",
     "Smith", role = c("aut"), comment=c(ORCID = "0000-0001-5660-1727")))

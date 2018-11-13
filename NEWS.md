@@ -1,12 +1,17 @@
 Patch notes
 ----
 
-Inapp v0.4 (2018/10/04)
+Inapp v0.4.1 (2018/11/13)
 =========================
   
 ### NEW FEATURES
+  
   * Graphical options greatly improved
   * Test coverage greatly improved
+
+### MINOR IMPROVEMENTS
+
+  * Corrected various typos in the vignette
 
 Inapp v0.3 (2018/01/19)
 =========================

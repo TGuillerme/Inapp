@@ -31,17 +31,16 @@ devtools::install_github("TGuillerme/Inapp")
 Inapp::runInapp()
 ```
 
-Check out the package [vignette](https://cdn.rawgit.com/TGuillerme/Inapp/2d7de88b/inst/gitbook/_book/index.html) for (many) more details on the GUI possibilities.
+Check out the package [vignette](https://tguillerme.github.io/inapp.html) for (many) more details on the GUI possibilities.
 
 
 Authors
 -------
 [Thomas Guillerme](http://tguillerme.github.io), [Martin Brazeau](http://www.imperial.ac.uk/people/m.brazeau), [Martin Smith](https://community.dur.ac.uk/martin.smith/)
 
-<!-- Citation
+
+Citations
 -------
-To cite the `Inapp` package, please use:
-[![DOI](https://zenodo.org/badge/84838115.svg)](https://zenodo.org/badge/latestdoi/84838115)
--->
+If you are using this package, please cite:
 
-
+* Brazeau MD, Guillerme T, Smith MR. (**2018**) An algorithm for morphological phylogenetic analysis with inapplicable data. *Systematic Biology*. [doi:10.1093/sysbio/syy083](10.1093/sysbio/syy083)

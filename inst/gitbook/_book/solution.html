@@ -25,7 +25,7 @@
 <meta name="author" content="Martin Brazeau (m.brazeau@imperial.ac.uk), Thomas Guillerme (guillert@tcd.ie) and Martin Smith (martin.smith@durham.ac.uk)">
 
 
-<meta name="date" content="2018-10-03">
+<meta name="date" content="2018-12-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -60,57 +60,41 @@ $(function(){
 
 
 <style type="text/css">
-div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource div.sourceLine, .numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em; }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; color = initial; }
-}
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
-code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -288,21 +272,20 @@ Figure 3.2: Reconstructions of tail presence and five contingent characters (onl
 </div>
 <div id="algorithm" class="section level2">
 <h2><span class="header-section-number">3.2</span> Algorithmic implementation</h2>
-<p>Consider a tree with 12 taxa and the following multi-state characters with inapplicable data <code>23--1??--032</code>; say the character is “colour of the tail” ranging from 0 to 3 (four colours).
-Four taxa in our example have no tail (hence the inapplicable data <code>-</code>) and for two taxa, the data is missing (<code>?</code>- we don’t known the colour of the tail or even whether the taxa have a tail or not).</p>
+<p>Consider a tree with 12 taxa and the following multi-state characters with inapplicable data <code>23--1??--032</code>; say the character is “colour of the tail” ranging from 0 to 3 (four colours). Four taxa in our example have no tail (hence the inapplicable data <code>-</code>) and for two taxa, the data is missing (<code>?</code>- we don’t known the colour of the tail or even whether the taxa have a tail or not).</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-32-1.png" width="681.6" /></p>
 <p>We can use the <code>Inapp</code> package to apply our four-pass inapplicable algorithm to this character on this tree.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><div class="sourceLine" id="1" href="#1" data-line-number="1">## Loading the Inapp package</div>
-<div class="sourceLine" id="2" href="#2" data-line-number="2"><span class="kw">library</span>(Inapp)</div>
-<div class="sourceLine" id="3" href="#3" data-line-number="3"></div>
-<div class="sourceLine" id="4" href="#4" data-line-number="4">## The tree</div>
-<div class="sourceLine" id="5" href="#5" data-line-number="5">tree &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="dt">text =</span> <span class="st">&quot;((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));&quot;</span>)</div>
-<div class="sourceLine" id="6" href="#6" data-line-number="6"></div>
-<div class="sourceLine" id="7" href="#7" data-line-number="7">## The character</div>
-<div class="sourceLine" id="8" href="#8" data-line-number="8">character &lt;-<span class="st"> &quot;23--1??--032&quot;</span></div>
-<div class="sourceLine" id="9" href="#9" data-line-number="9"></div>
-<div class="sourceLine" id="10" href="#10" data-line-number="10">## Applying the NA algorithm</div>
-<div class="sourceLine" id="11" href="#11" data-line-number="11">matrix &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span>(tree, character, <span class="dt">method =</span> <span class="st">&quot;NA&quot;</span>)</div></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Loading the Inapp package
+<span class="kw">library</span>(Inapp)
+
+## The tree
+tree &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="dt">text =</span> <span class="st">&quot;((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));&quot;</span>)
+
+## The character
+character &lt;-<span class="st"> &quot;23--1??--032&quot;</span>
+
+## Applying the NA algorithm
+matrix &lt;-<span class="st"> </span><span class="kw">apply.reconstruction</span>(tree, character, <span class="dt">method =</span> <span class="st">&quot;NA&quot;</span>)</code></pre></div>
 <p>Here is what is happening:</p>
 <div id="passes-1-2" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Passes 1 &amp; 2</h3>
@@ -323,24 +306,19 @@ Four taxa in our example have no tail (hence the inapplicable data <code>-</code
 Figure 3.3: Inapplicable reconstruction after two passes
 </p>
 </div>
-<p>The parent character can be considered as a binary character “presence (<code>1</code>) or absence (<code>0</code>) of a tail” that would be <code>11001??00111</code>.
-The character would be reconstructed as:</p>
+<p>The parent character can be considered as a binary character “presence (<code>1</code>) or absence (<code>0</code>) of a tail” that would be <code>11001??00111</code>. The character would be reconstructed as:</p>
 <div class="figure"><span id="fig:unnamed-chunk-35"></span>
 <img src="Inapplicable_data_files/figure-html/unnamed-chunk-35-1.png" alt="Fitch reconstruction of the parent character" width="681.6" />
 <p class="caption">
 Figure 3.4: Fitch reconstruction of the parent character
 </p>
 </div>
-<p>As you can see, both reconstructions are identical: nodes with no tail are denoted as <code>0</code> in the case of the “parent character” and as <code>-</code> for our current character.
-Note however that contrary to the Fitch algorithm, there is no tree score counting in our algorithm for the two first passes.
-Indeed, in the case of the Fitch reconstruction of the “parent character”, the gain or losses of a tail are counted but not the changes in states for the subtending character (the tree score is 3 in Fitch, 5 in our case).</p>
+<p>As you can see, both reconstructions are identical: nodes with no tail are denoted as <code>0</code> in the case of the “parent character” and as <code>-</code> for our current character. Note however that contrary to the Fitch algorithm, there is no tree score counting in our algorithm for the two first passes. Indeed, in the case of the Fitch reconstruction of the “parent character”, the gain or losses of a tail are counted but not the changes in states for the subtending character (the tree score is 3 in Fitch, 5 in our case).</p>
 </div>
 <div id="pass-3" class="section level3">
 <h3><span class="header-section-number">3.2.2</span> Pass 3</h3>
-<p>The third pass further resolves ambiguities at nodal states.
-If the node is applicable, the standard Fitch downpass comparisons between the descendants are applied (see <a href="fitch.html#fitch">Fitch algorithm</a>) but with the rules relative to the inapplicable state described for the first downpass above.</p>
-<p>During this pass, we can also count the tree score.
-This score is composed of both:</p>
+<p>The third pass further resolves ambiguities at nodal states. If the node is applicable, the standard Fitch downpass comparisons between the descendants are applied (see <a href="fitch.html#fitch">Fitch algorithm</a>) but with the rules relative to the inapplicable state described for the first downpass above.</p>
+<p>During this pass, we can also count the tree score. This score is composed of both:</p>
 <ul>
 <li>the change in states (e.g. the change in the colour of the tail)</li>
 <li>the change between applicable and inapplicable regions (e.g. the change in the parent character: a gain or a loss of the tail)</li>
@@ -355,22 +333,16 @@ This score is composed of both:</p>
 Figure 3.5: State changes
 </p>
 </div>
-<p>For example, for node <code>n23</code>, there is no state in common between the tip <code>12</code> (<code>2</code>) and <code>11</code> (<code>3</code>), the tree score is incremented at this node (case <code>1</code> above).
-Note, however, that for node <code>n21</code>, there is no state in common between node <code>n22</code> (<code>023</code>) and tip <code>9</code> (<code>-</code>) but the score is not incremented since it does not concern applicable states only.
-In other words, there is no change in state at the node <code>n21</code> from the tail having a colour 0, 2 or 3 to the tail not being present (<code>-</code>) but rather a change in the parent character between presence and absence of the tail (present is <code>023</code> and absent is <code>-</code>).</p>
+<p>For example, for node <code>n23</code>, there is no state in common between the tip <code>12</code> (<code>2</code>) and <code>11</code> (<code>3</code>), the tree score is incremented at this node (case <code>1</code> above). Note, however, that for node <code>n21</code>, there is no state in common between node <code>n22</code> (<code>023</code>) and tip <code>9</code> (<code>-</code>) but the score is not incremented since it does not concern applicable states only. In other words, there is no change in state at the node <code>n21</code> from the tail having a colour 0, 2 or 3 to the tail not being present (<code>-</code>) but rather a change in the parent character between presence and absence of the tail (present is <code>023</code> and absent is <code>-</code>).</p>
 <div id="tracking-applicable-regions" class="section level4">
 <h4><span class="header-section-number">3.2.2.1</span> Tracking applicable regions</h4>
-<p>To know whether any node leads to a region of applicable states we can use a “tracker” for each node that tells us at any moment whether descendants of a node contain applicable data or not.
-When a node is inapplicable and has a descendant whose lineage leads to applicable regions, an extra applicable region is implied by the tree.
-In other words, following our “colour of the tail” character, extra applicable regions imply independent appearances of the tail somewhere in the node’s descendants.</p>
-<p>The tracker is initialised during the <em>second pass</em> (first uppass) and is updated during the <em>third pass</em> (second downpass).
-The tracker works as follows for each node’s left and right descendants:</p>
+<p>To know whether any node leads to a region of applicable states we can use a “tracker” for each node that tells us at any moment whether descendants of a node contain applicable data or not. When a node is inapplicable and has a descendant whose lineage leads to applicable regions, an extra applicable region is implied by the tree. In other words, following our “colour of the tail” character, extra applicable regions imply independent appearances of the tail somewhere in the node’s descendants.</p>
+<p>The tracker is initialised during the <em>second pass</em> (first uppass) and is updated during the <em>third pass</em> (second downpass). The tracker works as follows for each node’s left and right descendants:</p>
 <ul>
 <li>If the descendant state is applicable or leads to an applicable region, then the node leads to an applicable region; else, it does not.</li>
 </ul>
 <p>The trackers are initialised for each node during the first uppass and then propagated back down the tree during the second downpass.</p>
-<p>Using these trackers, we can then increment the tree score for all changes that imply a new applicable region.
-The switch to or from an inapplicable and applicable region are counted as follows:</p>
+<p>Using these trackers, we can then increment the tree score for all changes that imply a new applicable region. The switch to or from an inapplicable and applicable region are counted as follows:</p>
 <ul>
 <li>If the node is inapplicable and both descendants lead to regions of applicable states, increment the region count.</li>
 <li>If the node is applicable, but has an inapplicable descendant that leads to a region of applicable states, increment the region count.</li>
@@ -381,27 +353,18 @@ The switch to or from an inapplicable and applicable region are counted as follo
 Figure 3.6: Counting applicable regions
 </p>
 </div>
-<p>For example, node <code>n15</code> is solved as inapplicable but both his descendants lead to two independent applicable regions (tip <code>5</code> with the state <code>1</code> and node <code>n18</code> with the states <code>1</code> and <code>2</code>).
-This implies an independent change in the parent character (in our example, tail is absent at node <code>n15</code> but evolves independently at tip <code>5</code> and node <code>n18</code>).
-Conversely, node <code>n21</code> is solved as inapplicable but not both his descendants lead to independent applicable regions.
-This node does thus not imply an independent change in the parent character.</p>
+<p>For example, node <code>n15</code> is solved as inapplicable but both his descendants lead to two independent applicable regions (tip <code>5</code> with the state <code>1</code> and node <code>n18</code> with the states <code>1</code> and <code>2</code>). This implies an independent change in the parent character (in our example, tail is absent at node <code>n15</code> but evolves independently at tip <code>5</code> and node <code>n18</code>). Conversely, node <code>n21</code> is solved as inapplicable but not both his descendants lead to independent applicable regions. This node does thus not imply an independent change in the parent character.</p>
 <blockquote>
 <p>Note that the number of applicable regions for a character is always at least 1 (unless every taxa has the inapplicable state) and therefore, we only count the <em>additional</em> regions.</p>
 </blockquote>
 <p>Combining both scores – the number of changes in character states and the number of additional applicable regions – we get indeed a total tree score of 5 for this character on this tree.</p>
 <p><img src="Inapplicable_data_files/figure-html/unnamed-chunk-38-1.png" width="681.6" /></p>
-<p>Using the first three passes is enough to get the tree score (while taking into account inapplicable data!) but does not solve all ancestral reconstructions.
-A fourth pass (second uppass) might be necessary to finalise the node states reconstructions.</p>
+<p>Using the first three passes is enough to get the tree score (while taking into account inapplicable data!) but does not solve all ancestral reconstructions. A fourth pass (second uppass) might be necessary to finalise the node states reconstructions.</p>
 </div>
 </div>
 <div id="pass-4" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Pass 4</h3>
-<p>In the example above, the node <code>n23</code> is still not correctly solved after the third pass.
-It could conceivably be state 0 (with transformations to states <code>2</code> and <code>3</code> occurring on the branches leading to tips 11 and 12 respectively).
-As such, its final state reconstruction should be <code>023</code>.
-To reach the correct final reconstructions, we apply a final pass of the algorithm.
-This algorithm, similarly to the second pass of the Fitch algorithm is used to solve ambiguities in the ancestral nodes reconstructions (although the score of the tree is already known).
-It follows these rules and only applies to nodes and ancestors that have at least one applicable token for themselves and their ancestor(nodes that are inapplicable are already solved):</p>
+<p>In the example above, the node <code>n23</code> is still not correctly solved after the third pass. It could conceivably be state 0 (with transformations to states <code>2</code> and <code>3</code> occurring on the branches leading to tips 11 and 12 respectively). As such, its final state reconstruction should be <code>023</code>. To reach the correct final reconstructions, we apply a final pass of the algorithm. This algorithm, similarly to the second pass of the Fitch algorithm is used to solve ambiguities in the ancestral nodes reconstructions (although the score of the tree is already known). It follows these rules and only applies to nodes and ancestors that have at least one applicable token for themselves and their ancestor(nodes that are inapplicable are already solved):</p>
 <ul>
 <li>If there is a state <em>in common</em> between the node and its ancestor or between the ancestor and the states <em>in common</em> of its descendants, resolve the node to be this state in common.</li>
 <li>If there is nothing in common between the node and its ancestor or between its descendants, solve the node as either:
@@ -416,14 +379,10 @@ It follows these rules and only applies to nodes and ancestors that have at leas
 </div>
 <div id="software" class="section level2">
 <h2><span class="header-section-number">3.3</span> Software implementation</h2>
-<p>This algorithm has been implemented in two <code>R</code> packages. <a href="https://github.com/TGuillerme/Inapp">Inapp</a> provides an interactive
-visualization of how the score of a user-specified tree is calculated for any
-character under different approaches to inapplicable data. This package was used to generate many of the figures in this document.</p>
-<p><a href="https://github.com/ms609/TreeSearch">TreeSearch</a> allows for parsimony tree
-searches with the inapplicable algorithm <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2018</a>)</span>.<br />
+<p>This algorithm has been implemented in two <code>R</code> packages. <a href="https://github.com/TGuillerme/Inapp">Inapp</a> provides an interactive visualization of how the score of a user-specified tree is calculated for any character under different approaches to inapplicable data. This package was used to generate many of the figures in this document.</p>
+<p><a href="https://github.com/ms609/TreeSearch">TreeSearch</a> allows for parsimony tree searches with the inapplicable algorithm <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2018</a>)</span>.<br />
 It includes heuristic search options that make it possible to search reasonable-sized matrices, and includes an option for equal or implied weighting.</p>
-<p>TreeSearch is a front-end to the <a href="https://github.com/mbrazeau/morphylib">morphylib</a>
-<code>C</code> library, which will eventually implemented in the standalone <a href="http://www.morphyproject.org/">Morphy</a> program for rapid phylogenetic searches.</p>
+<p>TreeSearch is a front-end to the <a href="https://github.com/mbrazeau/morphylib">morphylib</a> <code>C</code> library, which will eventually implemented in the standalone <a href="http://www.morphyproject.org/">Morphy</a> program for rapid phylogenetic searches.</p>
 
 </div>
 </div>
@@ -436,7 +395,7 @@ It includes heuristic search options that make it possible to search reasonable-
 <p>De Laet, J. (2015). Parsimony analysis of unaligned sequence data: maximization of homology and minimization of homoplasy, not minimization of operationally defined total cost or minimization of equally weighted transformations. <em>Cladistics</em>, <em>31</em>, 550–567. doi:<a href="https://doi.org/10.1111/cla.12098">10.1111/cla.12098</a></p>
 </div>
 <div id="ref-Brazeau2018">
-<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2018). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>. doi:<a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2018). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>. doi:<a href="https://doi.org/10.1093/sysbio/syy083">10.1093/sysbio/syy083</a></p>
 </div>
 </div>
             </section>
@@ -491,7 +450,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
+    var src = "";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

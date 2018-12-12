@@ -8,8 +8,10 @@
 <a href="https://figshare.com/articles/Guillerme_Evolution2017_pdf/5140222"><img src="http://tguillerme.github.io/images/logo-FS.png" height="15" widht="15"/></a> 
 Check out the [presentation](https://figshare.com/articles/Guillerme_Evolution2017_pdf/5140222). 
 
-This package allows to run the algorithm described in [this preprint](https://www.biorxiv.org/content/early/2017/10/26/209775) (stay tuned for the accepted version in Systematic Biology comming soon!).
+This package allows to run the algorithm described in [this paper](https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syy083/5238046).
 You can either directly run the package on your web browser (Graphical User Interface mode!), or install it in `R` as a proper package (or both!).
+
+The `C` implementation of the algorithm is available in [morphylib](https://github.com/mbrazeau/morphylib) and the algorithm is implemented in the [TreeSearch](https://github.com/ms609/TreeSearch) `R` package.
 
 ## Running Inapp on your web browser
 That's easy! In `R`, simply copy/paste the following:
@@ -43,4 +45,4 @@ Citations
 -------
 If you are using this package, please cite:
 
-* Brazeau MD, Guillerme T, Smith MR. (**2018**) An algorithm for morphological phylogenetic analysis with inapplicable data. *Systematic Biology*. [doi:10.1093/sysbio/syy083](10.1093/sysbio/syy083)
+* Brazeau MD, Guillerme T, Smith MR. (**2018**) An algorithm for morphological phylogenetic analysis with inapplicable data. *Systematic Biology*. [doi:10.1093/sysbio/syy083](https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syy083/5238046)

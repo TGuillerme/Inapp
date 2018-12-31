@@ -3,6 +3,9 @@ cache: packages
 sudo: required
 warnings_are_errors: false
 
+r:
+- release
+
 # blacklist
 # branches:
 #   except:

@@ -17,16 +17,16 @@ branches:
     - master
     - release
 
-#r_binary_packages:
-#  - ape
-#  - covr
-#  - devtools
-#  - knitr
-#  - phangorn
-#  - roxygen2
-#  - shiny
-#  - testthat
-#  - TreeSearch
+r_binary_packages:
+  - ape
+  - covr
+  - devtools
+  - knitr
+  - phangorn
+  - roxygen2
+  - shiny
+  - testthat
+  - TreeSearch
 
 #github_packages:
 #  - ms609/TreeSearch

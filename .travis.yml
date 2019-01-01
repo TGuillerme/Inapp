@@ -26,7 +26,7 @@ r_binary_packages:
   - roxygen2
   - shiny
   - testthat
-  - TreeSearch
+#  - TreeSearch
 
 #github_packages:
 #  - ms609/TreeSearch

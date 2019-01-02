@@ -33,7 +33,7 @@ r_binary_packages:
   - testthat
 #  - TreeSearch
 
-github_packages:
+r_github_packages:
   - ms609/TreeSearch
 
 # Code coverage

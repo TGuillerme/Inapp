@@ -6,6 +6,11 @@ warnings_are_errors: false
 r:
 - release
 
+addons:
+  apt:
+    packages:
+      - libv8-dev
+
 # blacklist
 # branches:
 #   except:
@@ -26,10 +31,10 @@ r_binary_packages:
   - roxygen2
   - shiny
   - testthat
-  - TreeSearch
+#  - TreeSearch
 
-#github_packages:
-#  - ms609/TreeSearch
+github_packages:
+  - ms609/TreeSearch
 
 # Code coverage
 after_success:

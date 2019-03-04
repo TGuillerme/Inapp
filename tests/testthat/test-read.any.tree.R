@@ -8,8 +8,8 @@ test_that("read.any.tree works", {
     cat(newick, file = "example_newick.tre", sep = "\n")
     multi_newick <- paste(rep(newick, 3), sep = "\n")
     cat(multi_newick, file = "example_multi_newick.tre", sep = "\n")
-    write.nexus(rtree(3), file = "example_nexus.nex")
-    write.nexus(rmtree(2,3), file = "example_multi_nexus.nex")
+    ape::write.nexus(ape::rtree(3), file = "example_nexus.nex")
+    ape::write.nexus(ape::rmtree(2,3), file = "example_multi_nexus.nex")
 
     ## Right output
     expect_is(

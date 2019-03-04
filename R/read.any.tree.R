@@ -15,7 +15,7 @@
 #' unlink("example_newick.tre")
 #' 
 #' ## Generating a multiple nexus file
-#' ape::write.nexus(rmtree(2,3), file = "example_multi_nexus.nex")
+#' ape::write.nexus(ape::rmtree(2,3), file = "example_multi_nexus.nex")
 #' ## Reading a multiple nexus file
 #' read.any.tree("example_multi_nexus.nex")
 #' ## Removing the file

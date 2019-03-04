@@ -174,7 +174,6 @@ test_that("output.results works properly", {
     expect_error(output.states.matrix(NA_matrix, output = "csv", file = "Inapp_reconstruction", path = c("a", "b")))
 
 
-
     ## NULL return
     expect_null(output.states.matrix(NA_matrix, output = NULL, file = "Inapp_reconstruction", path = "."))
 
@@ -189,4 +188,6 @@ test_that("output.results works properly", {
     expect_null(output.states.matrix(NA_matrix, output = "pdf"))
     ## Exporting the plot as C-test
     expect_null(output.states.matrix(NA_matrix, output = "C-test"))
+
+    error_catch <- try(file.remove(list.files(pattern = "Inapp_reconstruction")))
 })

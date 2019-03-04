@@ -1,6 +1,18 @@
 Patch notes
 ----
 
+
+Inapp v0.5 (2019/03/04)
+=========================
+
+### NEW FEATURES
+ 
+  * `Inapp` can now read any user input tree files (newick or nexus with one or multiple topologies).
+
+### MINOR IMPROVEMENTS
+
+  * Some error messages have been improved
+
 Inapp v0.4.1 (2018/11/13)
 =========================
   

@@ -15,11 +15,12 @@ runInapp()
 
 }
 \references{
-Brazeau, M. D., Guillerme, T., and Smith, M. R. 2017. Morphological
-phylogenetic analysis with inapplicable data. Biorxiv. \url{https://doi.org/10.1101/209775}
+Brazeau, M. D., Guillerme, T., and Smith, M. R. (2018). An algorithm for Morphological
+Phylogenetic Analysis with Inapplicable Data. Systematic Biology.
+\url{https://dx.doi.org/10.1093/sysbio/syy083}
 }
 \author{
-Thomas Guillerme \href{mailto:guillert@tcd.ie}{guillert@tcd.ie}
+Thomas Guillerme \href{mailto:guillert@tcd.ie}{guillert@tcd.ie} & Martin D. Brazeau & Martin R. Smith.
 }
 \keyword{characters,}
 \keyword{inapplicable}

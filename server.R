@@ -28,7 +28,26 @@ read.newick.tree <- function (newick_text) {
 
 ## Get the tree details
 ## Return a tree, or an error message to be written to output.
-get.tree <- function(input, simple = FALSE) {
+get.tree <- function(input, session, simple = FALSE) {
+
+    ## Wrapper for getting an input tree
+    get.input.tree <- function(input, session) {
+        nexus_tree <- input$nexus_tree
+        if(!is.null(nexus_tree)) {
+            ## Read the tree
+            tree <- read.any.tree(nexus_tree$datapath)
+            ## Check if the tree is multiPhylo
+            if(class(tree) == "multiPhylo") {
+                ## Update max tree selection
+                shiny::updateNumericInput(session, "tree_num", max = length(tree))
+                ## Select the tree
+                tree <- tree[[input$tree_num]]
+            }
+            return(tree)
+        } else {
+            return("Load a tree in nexus or newick format.")
+        }        
+    }
 
     # Initialize to avoid returning unset variable
     tree <- "No tree specified."
@@ -79,17 +98,9 @@ get.tree <- function(input, simple = FALSE) {
 
         ## Nexus tree
         if(input$tree == 3) {
-            nexus_tree <- input$nexus_tree
-            if(!is.null(nexus_tree)) {
-                tree <- ape::read.nexus(nexus_tree$datapath)
-                ## Check if the tree is multiPhylo
-                if(class(tree) == "multiPhylo") {
-                    tree <- tree[[1]]
-                }
-            } else {
-              return("Load a tree in nexus format.")
-            }
+            tree <- get.input.tree(input, session)
         }
+
     } else {
         ## Get the simplest tree (for tip count)
         if(input$tree == 1) {
@@ -104,16 +115,8 @@ get.tree <- function(input, simple = FALSE) {
 
         ## Nexus tree
         if(input$tree == 3) {
-            nexus_tree <- input$nexus_tree
-            if(!is.null(nexus_tree)) {
-                tree <- ape::read.nexus(nexus_tree$datapath)
-                ## Check if the tree is multiPhylo
-                if(class(tree) == "multiPhylo") {
-                    tree <- tree[[1]]
-                }
-            }
+            tree <- get.input.tree(input, session)
         }
-
     }
 
     return(tree)
@@ -138,7 +141,7 @@ get.character <- function(input, tree, session) {
     if(input$character == 2) {
         character <- as.character(input$character_string)
         if(is.null(character)) {
-            return(list("Enter a character as a string (e.g. 0123)."))
+            return(list("Enter the character as a string (e.g. 0123)."))
         }
     }
 
@@ -151,7 +154,7 @@ get.character <- function(input, tree, session) {
                 return (list("Character selection must be numeric."))
             }
 
-            character <- TreeSearch::ReadCharacters(nexus_matrix$datapath, input$character_num, session=session)
+            character <- TreeSearch::ReadCharacters(nexus_matrix$datapath, input$character_num, session = session)
             if (class(character) == 'list') return (character)
             matrix_taxa <- rownames(character)
             if (all(tree$tip.label %in% matrix_taxa)) {
@@ -159,8 +162,7 @@ get.character <- function(input, tree, session) {
               #data_matrix <- vapply(tree$tip.label, function (tip) data_matrix[[tip]], data_matrix[[1]])
             } else {
               missingTaxa <- tree$tip.label[!tree$tip.label %in% matrix_taxa]
-              return(list("Tree contains taxa [", paste(missingTaxa, collapse=", "),
-                   "] not found in Nexus matrix."))
+              return(list("Tree contains taxa [", paste(missingTaxa, collapse = ", "), "] not found in Nexus matrix."))
             }
         } else {
             return(list("Load a matrix in Nexus format."))
@@ -183,15 +185,16 @@ shinyServer(
 
 
             ## Getting the parameters
-            tree <- get.tree(input)
+            tree <- get.tree(input, session)
             if (class(tree) == 'character') {
               return(plotError(tree))
             } else if (class(tree) != 'phylo'){
               return(plotError("The tree must be of class 'phylo'."))
             }
+            
             character <- get.character(input, tree, session)
             if (class(character) == 'list') {
-              return(plotError(paste(character, sep='', collapse='')))
+              return(plotError(paste(character, sep = '', collapse = '')))
             }
 
             if (length(character) == 0) {
@@ -364,7 +367,7 @@ shinyServer(
         ## Output plot
         output$plot.ui <- renderUI({
 
-            tree <- get.tree(input, simple = TRUE)
+            tree <- get.tree(input, session, simple = TRUE)
             if (class(tree) == "character") {
                 plotOutput("plot_out", width ="100%", height = "40px")
                 plotError(tree)

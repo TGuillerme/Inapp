@@ -4,16 +4,17 @@ shinyUI(fluidPage(
   wellPanel(
 
     titlePanel("Inapplicable data reconstruction"),
-    p("Brazeau, M. D., Guillerme, T., and Smith, M. R. (2017).  Morphological phylogenetic analysis with inapplicable data. Biorxiv. doi:", a(href="https://doi.org/10.1101/209775", "10.1101/209775"), "."),
+    p("Brazeau, M. D., Guillerme, T., and Smith, M. R. (2018). An algorithm for Morphological Phylogenetic Analysis with Inapplicable Data. Systematic Biology. doi:", a(href="https://dx.doi.org/10.1093/sysbio/syy083", "10.1093/sysbio/syy083"), "."),
     hr(),
 
     fluidRow(
+
         ## ---------------
         ## Tree parameters
         ## ---------------
         column(width = 4,
           ## Tree input - input$tree
-          radioButtons("tree", label = h3("Tree input method"), choices = list("Random" = 1, "User" = 2, "Nexus input" = 3), selected = 1),
+          radioButtons("tree", label = h3("Tree input method"), choices = list("Random" = 1, "User (Newick)" = 2, "Nexus input" = 3), selected = 1),
 
           ## Random trees
           conditionalPanel(condition = "input.tree == 1",
@@ -39,7 +40,9 @@ shinyUI(fluidPage(
           ## Nexus trees
           conditionalPanel(condition = "input.tree == 3",
             ## Upload some nexus tree
-            fileInput("nexus_tree", label = h5("Select a newick format tree"))
+            fileInput("nexus_tree", label = h5("Select a newick or nexus format tree")),
+            ## Tree number input - input$tree_num
+            numericInput("tree_num", label = h5("Selected tree:"), value = 1, min = 1)
           ),
 
           ## Tips and nodes options
@@ -60,8 +63,7 @@ shinyUI(fluidPage(
           ## Manual character input
           conditionalPanel(condition = "input.character == 2",
             ## Character string - input$character_string
-            textInput("character_string", label = h5("Enter a character string:"),
-                      value = "1?2-"),
+            textInput("character_string", label = h5("Enter a character string:"), value = "0?1-"),
             ## Help text for the character string
             helpText("Accepted character states are any values from 0 to 9 as well ",
                      "as - for the inapplicable token and ? for all states (missing ",
@@ -76,10 +78,9 @@ shinyUI(fluidPage(
           ## Nexus character
           conditionalPanel(condition = "input.character == 3",
             ## Nexus matrix input - input$nexus_matrix
-            fileInput("nexus_matrix", label = h5("Select a newick format matrix")),
+            fileInput("nexus_matrix", label = h5("Select a nexus format matrix")),
             ## Character number input - input$character_num
-            numericInput("character_num", label = h5("Selected character:"),
-                         value = 1, min = 1)
+            numericInput("character_num", label = h5("Selected character:"), value = 1, min = 1)
           ),
 
           ## Colour states

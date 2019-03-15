@@ -13,8 +13,17 @@ You can either directly run the package on your web browser (Graphical User Inte
 
 The `C` implementation of the algorithm is available in [morphylib](https://github.com/mbrazeau/morphylib) and the algorithm is implemented in the [TreeSearch](https://github.com/ms609/TreeSearch) `R` package.
 
-## Running Inapp on your web browser
-That's easy! In `R`, simply copy/paste the following:
+## Running Inapp online
+Super easy! Simply click on the following link:
+
+<a href="https://tguillerme.shinyapps.io/inapp/"><img src="http://tguillerme.github.io/images/shiny.png" height="100" widht="100"/></a> 
+
+[https://tguillerme.shinyapps.io/inapp/](https://tguillerme.shinyapps.io/inapp/)
+
+
+
+## Running Inapp localy on your web browser
+Not hard! In `R`, simply copy/paste the following:
 ```r
 if(!require(devtools)) install.packages("devtools")
 if(!require(shiny)) install.packages("shiny")

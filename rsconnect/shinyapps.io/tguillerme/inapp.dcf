@@ -1,0 +1,10 @@
+name: inapp
+title:
+username:
+account: tguillerme
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 760245
+bundleId: 1913350
+url: https://tguillerme.shinyapps.io/inapp/
+when: 1551686199.71524

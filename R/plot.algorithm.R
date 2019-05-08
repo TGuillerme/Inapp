@@ -154,7 +154,7 @@ plot.states.matrix <- function(
     }
 
     ## counts
-    if (any(counts != 0) && !(counts %in% c(1,2))) {
+    if (any(counts != 0) && all(!(counts %in% c(1,2)))) {
         stop("counts argument must be either 1 for displaying activations and/or 2 for homoplasies.")
     }
 

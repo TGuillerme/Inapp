@@ -59,7 +59,7 @@ test_that("make.states.matrix works", {
 
     ## Right output values
     expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1))
-    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2, match.tip.char = TRUE)[[1]]), c(2,0,1,2,0,1))
+    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2, match.tip.char = TRUE)[[1]]), c(2,0,1,0,1,2))
 
 
     ## Matching the character to the tips
@@ -105,7 +105,7 @@ test_that("desc.anc works", {
     expect_is(desc.anc(6, tree), "integer")
 
     ## Right answers
-    answers <- list(c(5), c(6), c(7), c(7), c(1, 6), c(2, 7, 5), c(3, 4, 6))
+    answers <- list(c(5), c(7), c(7), c(6), c(1, 6), c(7, 4, 5), c(2, 3, 6))
     for(test in 1:7) {
         expect_equal(desc.anc(test, tree), answers[[test]])
     }

@@ -12,7 +12,7 @@ SVGCanvas(trees, outgroupTips = NULL, analysisNames = character(0),
 \item{trees}{A list of trees, perhaps of class multiPhylo}
 
 \item{outgroupTips}{Character vector specifying tips to include in the outgroup,
-to be sent to [TreeSearch::RootTree].}
+to be sent to \link[TreeSearch:RootTree]{TreeSearch::RootTree}.}
 
 \item{analysisNames}{Character vector of length \code{length(trees)}, to be used to
 specify the analytical method under which each tree in \code{trees} was generated

@@ -1,6 +1,11 @@
 Patch notes
 ----
+Inapp v0.5.1 (2019/05/08)
+=========================
 
+### MINOR IMPROVEMENTS
+
+  * Updated package to R version 3.6.0
 
 Inapp v0.5 (2019/03/04)
 =========================

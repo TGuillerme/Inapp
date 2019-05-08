@@ -61,7 +61,7 @@ test_that("write.tree.commented works", {
     newick <- write.tree.commented(tree, comments = node_notes, file = "")
     newick_decomp <- unlist(strsplit(strsplit(newick, split = ",")[[1]], split = ")"))
 
-    expect_results <- unlist(node_notes)[c(1,2,7,3,4,5,9,8,6)]
+    expect_results <- unlist(node_notes)[c(1,2,3,4,9,8,5,7,6)]
 
     for(i in 1:length(newick_decomp)) {
         expect_equal(length(grep(expect_results[i], newick_decomp[i])), 1)
@@ -86,22 +86,22 @@ test_that("write.nexus.commented works", {
         "BEGIN TAXA;",
         "\tDIMENSIONS NTAX = 5;",
         "\tTAXLABELS",
+        "\t\tt2",
+        "\t\tt1",
         "\t\tt3",
         "\t\tt4",
-        "\t\tt1",
-        "\t\tt2",
         "\t\tt5",
         "\t;",
         "END;",
         "BEGIN TREES;",
         "\tTRANSLATE",
-        "\t\t1\tt3,",
-        "\t\t2\tt4,",
-        "\t\t3\tt1,",
-        "\t\t4\tt2,",
+        "\t\t1\tt2,",
+        "\t\t2\tt1,",
+        "\t\t3\tt3,",
+        "\t\t4\tt4,",
         "\t\t5\tt5",
         "\t;",
-        "\tTREE * UNTITLED = [&R] ((1[1],2[2])[7],(3[3],(4[4],5[5])[9])[8])[6];",
+        "\tTREE * UNTITLED = [&R] (1[1],((2[2],(3[3],4[4])[9])[8],5[5])[7])[6];",
         "END;"
         ))
 

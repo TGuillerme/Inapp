@@ -55,9 +55,9 @@ Citations
 If you are using this package, please cite both the published description of this algorithm:
 
 * Brazeau MD, Guillerme T, Smith MR. (**2018**) An algorithm for morphological phylogenetic analysis with inapplicable data. *Systematic Biology*. [doi:10.1093/sysbio/syy083](https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syy083/5238046)
-###### [BibTeX](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=2), [RIS](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=0), [EndNote](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=1), [more...](https://academic.oup.com/sysbio/article/68/4/619/5238046#)
+    ###### [BibTeX](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=2), [RIS](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=0), [EndNote](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=1), [more...](https://academic.oup.com/sysbio/article/68/4/619/5238046#)
 
 And the DOI of this package:
 
  * Guillerme T, Brazeau MD, Smith MR. (**2018**). Inapp: Reconstruction of Inapplicable Discrete Characters on Phylogenetic Trees. *Zenodo*. [doi:10.5281/zenodo.1484656](http://doi.org/10.5281/zenodo.1484656)
-###### [BibTeX](https://zenodo.org/record/1484656/export/hx), [CSL](https://zenodo.org/record/1484656/export/csl), [DataCite](https://zenodo.org/record/1484656/export/dcite3), [Dublin core](https://zenodo.org/record/1484656/export/xd), [Mendeley](https://www.mendeley.com/import/?url=https://zenodo.org/record/1484656), [more...](https://zenodo.org/record/1484656/#.XTpLtlBS8W8)
+    ###### [BibTeX](https://zenodo.org/record/1484656/export/hx), [CSL](https://zenodo.org/record/1484656/export/csl), [DataCite](https://zenodo.org/record/1484656/export/dcite3), [Dublin core](https://zenodo.org/record/1484656/export/xd), [Mendeley](https://www.mendeley.com/import/?url=https://zenodo.org/record/1484656), [more...](https://zenodo.org/record/1484656/#.XTpLtlBS8W8)

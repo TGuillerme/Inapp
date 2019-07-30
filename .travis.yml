@@ -1,20 +1,16 @@
 language: r
-cache: packages
-sudo: required
-warnings_are_errors: false
 
-r:
-- release
+cache: packages
+warnings_are_errors: false
 
 addons:
   apt:
+    update: true
+    sources:
+      - sourceline: 'ppa:opencpu/imagemagick'
     packages:
+      - libmagick++-dev
       - libv8-dev
-
-# blacklist
-# branches:
-#   except:
-#     - master
 
 # whitelist
 branches:
@@ -22,20 +18,11 @@ branches:
     - master
     - release
 
-r_binary_packages:
-  - ape
-  - covr
-  - devtools
-  - knitr
-  - phangorn
-  - roxygen2
-  - shiny
-  - testthat
-#  - TreeSearch
-
 r_github_packages:
   - ms609/TreeSearch
 
 # Code coverage
+r_packages:
+  - covr
 after_success:
 - Rscript -e 'library("covr"); codecov(line_exclusions = list("R/svg.R" = c(1:514)))'

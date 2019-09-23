@@ -22,7 +22,7 @@ Super easy! Simply click on the following link:
 
 
 
-## Running Inapp localy on your web browser
+## Running Inapp locally on your web browser
 Not hard! In `R`, simply copy/paste the following:
 ```r
 if(!require(devtools)) install.packages("devtools")

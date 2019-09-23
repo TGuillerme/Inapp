@@ -54,7 +54,7 @@ Citations
 -------
 If you are using this package, please cite both the published description of this algorithm:
 
-* Brazeau MD, Guillerme T, Smith MR. (**2018**) An algorithm for morphological phylogenetic analysis with inapplicable data. *Systematic Biology*. [doi:10.1093/sysbio/syy083](https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syy083/5238046)
+* Brazeau MD, Guillerme T, Smith MR. (**2019**) An algorithm for morphological phylogenetic analysis with inapplicable data. *Systematic Biology* 68(4): 619--631. [doi:10.1093/sysbio/syy083](https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syy083/5238046)
     ###### [BibTeX](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=2), [RIS](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=0), [EndNote](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=1), [more...](https://academic.oup.com/sysbio/article/68/4/619/5238046#)
 
 And the DOI of this package:

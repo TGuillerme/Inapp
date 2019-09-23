@@ -1,12 +1,13 @@
 Package: Inapp
 Title: Reconstruction of Inapplicable Discrete Characters on Phylogenetic Trees
 Version: 0.4.2
-Date: 2019-05-08
 Author: c(person("Thomas", "Guillerme", email = "guillert@tcd.ie", role = c("aut",
     "cre")), person("Martin D.", "Brazeau", role = c("aut")), person("Martin R.",
     "Smith", role = c("aut"), comment=c(ORCID = "0000-0001-5660-1727")))
 Maintainer: Thomas Guillerme <guillert@tcd.ie>
-Description: An algorithm allowing states reconstruction and tree length counting for inapplicable discrete characters.
+Description: Visualizes the algorithm of Brazeau et al. (2019) 
+  <doi:10.1093/sysbio/syy083>, which allows state reconstruction and tree length
+  counting for inapplicable discrete characters.
 Depends:
     R (>= 3.4.0),
 License: GPL-3
@@ -23,8 +24,6 @@ Suggests:
     devtools,
     rmarkdown,
     testthat
-Remotes:
-    ms609/TreeSearch
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)

@@ -4,7 +4,7 @@ shinyUI(fluidPage(
   wellPanel(
 
     titlePanel("Inapplicable data reconstruction"),
-    p("Brazeau, M. D., Guillerme, T., and Smith, M. R. (2018). An algorithm for Morphological Phylogenetic Analysis with Inapplicable Data. Systematic Biology. doi:", a(href="https://dx.doi.org/10.1093/sysbio/syy083", "10.1093/sysbio/syy083"), "."),
+    p("Brazeau, M. D., Guillerme, T., and Smith, M. R. (2019). An algorithm for Morphological Phylogenetic Analysis with Inapplicable Data. Systematic Biology 68 (4), 619-631. doi:", a(href="https://dx.doi.org/10.1093/sysbio/syy083", "10.1093/sysbio/syy083"), "."),
     hr(),
 
     fluidRow(

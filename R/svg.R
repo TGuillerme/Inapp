@@ -268,7 +268,8 @@ SVGTree <- function (treeNo, canvas, char, stateLabels,
 #' @export
 #' @keywords internal
 #' @author Martin R. Smith
-MatrixData <- function (states_matrix, fitch_states, state.labels) {
+MatrixData <- function (states_matrix, fitch_states = states_matrix,
+                        state.labels) {
     tree <- states_matrix$tree
     regions <- states_matrix$regions
     changes <- states_matrix$changes
@@ -315,9 +316,9 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     palette <- generate.palette(tips_labels)
-    tips_colours <- palette[[2]]
+    tips_colours <- palette[[1]]
     state_colours <- palette[[2]]
-    edge_palette <- palette[[1]]
+    edge_palette <- palette[[3]]
 
     if (!is.null(unlist(states_matrix$Up2))) {
         na_edges <- get.NA.edges(states_matrix, tree, pass = 4) ==

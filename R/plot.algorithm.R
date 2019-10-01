@@ -170,8 +170,9 @@ plot.states.matrix <- function(
 
     if (col.states) {
         palette <- generate_palette(tips_labels)
-        state_colours <- palette[[1]]
-        edge_palette <- palette[[2]]
+        tips_colours <- palette[[1]]
+        state_colours <- palette[[2]]
+        edge_palette <- palette[[3]]
     }
 
     if (any(counts == 1) && !is.null(unlist(states_matrix$Up2))) {
@@ -215,14 +216,13 @@ plot.states.matrix <- function(
 
     ## Plotting the tree
     if (is.null(y.lim)) y.lim <- c(if(legend.pos=='none' && length(state.labels) == 0) 0 else -3,
-                                   n_tip+0.3)
+                                   n_tip + 0.3)
     tree$tip.label <- paste("_", tree$tip.label) # Prefix with space to avoid the tiplabels() boxes
-    graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram",
+    ape::plot.phylo(tree, show.tip.label = show.tip.label, type = "phylogram",
                    use.edge.length = use.edge.length, cex = cex,
                    adj = 0, edge.color = edge_col, edge.width = 2,
                    y.lim=y.lim, edge.lty=ifelse(edge_final == '-', 'twodash', 'solid'),
                    ...)
-    # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
 
     if (legend.pos != "none") {
         ## Setting up the legend parameters
@@ -379,5 +379,5 @@ generate_palette <- function (labels) {
   edge_palette <- state_colours
   edge_palette["?"] <- "darkgrey"
   # Return:
-  list(state_colours, edge_palette)
+  list(tips_colours, state_colours, edge_palette)
 }

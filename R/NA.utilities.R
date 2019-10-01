@@ -49,7 +49,8 @@
 #' @author Thomas Guillerme
 #' @export
 
-make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.char = FALSE) {
+make.states.matrix <- function(tree, character, inapplicable = NULL,
+                               match.tip.char = FALSE) {
 
     ## Check if the tree is a tree!
     if(class(tree) != "phylo") {
@@ -99,7 +100,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Sorting the character to match the tip.labels entry
     if (all(tip_labels %in% names(character))) {
         ordering <- match(tip_labels, names(character))
-        
+
     } else {
         if (match.tip.char == TRUE) {
             ## Check if tips are alphanumeric

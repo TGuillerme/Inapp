@@ -169,7 +169,7 @@ plot.states.matrix <- function(
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     if (col.states) {
-        palette <- generate_palette(tips_labels)
+        palette <- generate.palette(tips_labels)
         tips_colours <- palette[[1]]
         state_colours <- palette[[2]]
         edge_palette <- palette[[3]]
@@ -360,7 +360,7 @@ plot.states.matrix <- function(
 #'
 #' @keywords internal
 #' @export
-generate_palette <- function (labels) {
+generate.palette <- function (labels) {
   ## Matching the states and colours
   tips_colours <- labels
   tips_colours[nchar(labels) > 1] <- "?"
@@ -373,7 +373,7 @@ generate_palette <- function (labels) {
     state_colours <- 'grey'
   }
   names(state_colours) <- c(seq_len(max_colour + 1L) - 1L, "?")
-  if ('-' %in% tips_labels) state_colours <- c(state_colours, '-' = 'lightgrey')
+  if ('-' %in% labels) state_colours <- c(state_colours, '-' = 'lightgrey')
 
   ## Get the edge palette
   edge_palette <- state_colours

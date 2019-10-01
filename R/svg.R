@@ -314,7 +314,7 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     edge_col <- "black"
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
-    palette <- generate_palette(tips_labels)
+    palette <- generate.palette(tips_labels)
     tips_colours <- palette[[2]]
     state_colours <- palette[[2]]
     edge_palette <- palette[[1]]
@@ -333,8 +333,9 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     } else {
         final_state <- states_matrix$Up1
     }
-    all_states <- -1:max_colour
-    col_states <- c("-", 0:max_colour)
+    max_final <- max(unlist(final_state))
+    all_states <- -1:max_final
+    col_states <- c("-", seq_len(max_final + 1L) - 1L)
     colour.edge <- function(edge) {
         parent <- all_states %in% final_state[[edge[1]]]
         child <- all_states %in% final_state[[edge[2]]]

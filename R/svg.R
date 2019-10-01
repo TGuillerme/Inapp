@@ -314,21 +314,9 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     edge_col <- "black"
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
-    tips_colours <- tips_labels
-    tips_colours[nchar(tips_labels) > 1L] <- "?"
-    if (any(tips_colours %in% 0:9)) {
-        max_colour <- max(as.integer(tips_colours[tips_colours %in%
-                                                      0:9]))
-        state_colours <- c(TreeSearch::brewer[[max_colour + 1L]],
-                           "grey")
-    } else {
-        max_colour <- -1L
-        state_colours <- 'grey'
-    }
-    names(state_colours) <- c(seq_len(max_colour + 1L) - 1L, "?")
-    if ("-" %in% tips_labels) state_colours <- c(state_colours, `-` = "lightgrey")
-    edge_palette <- state_colours
-    edge_palette["?"] <- "darkgrey"
+    palette <- generate_palette(tips_labels)
+    state_colours <- palette[[1]]
+    edge_palette <- palette[[2]]
 
     if (!is.null(unlist(states_matrix$Up2))) {
         na_edges <- get.NA.edges(states_matrix, tree, pass = 4) ==

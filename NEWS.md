@@ -1,5 +1,13 @@
 Patch notes
 ----
+Inapp v0.5.1.9000 (development)
+=========================
+
+### MINOR IMPROVEMENTS
+
+  * Support characters where all tokens are inapplicable
+  * Update citation information
+
 Inapp v0.5.1 (2019/05/08)
 =========================
 

@@ -54,11 +54,11 @@
 #' @export
 
 plot.states.matrix <- function(
-  x, passes = c(1,2,3,4), show.labels = 0,
+  x, passes = 1:4, show.labels = 0,
   col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
   counts = 0, use.edge.length = FALSE,
-  col.states = FALSE, state.labels=character(0),
-  legend.pos='bottomleft', y.lim=NULL, ...) {
+  col.states = FALSE, state.labels = character(0),
+  legend.pos = 'bottomleft', y.lim = NULL, ...) {
 
     states_matrix <- x
     tree <- states_matrix$tree
@@ -123,12 +123,12 @@ plot.states.matrix <- function(
     ## tree character done in make.states.matrix
 
     ## Passes
-    if (!(class(passes) %in% c("numeric", "integer"))
-       || any(is.na(match(passes, c(1,2,3,4))))) {
+    if (!(mode(passes) == "numeric")
+       || any(is.na(match(passes, 1:4)))) {
         if (length(passes) > 1 || !(passes %in% c(0, NULL, NA))) {
             warning("passes argument must be NULL, or any integer(s) between 1 and 4.")
         }
-        passes = integer(0)
+        passes <- integer(0)
     }
 
     ## show.labels
@@ -169,20 +169,10 @@ plot.states.matrix <- function(
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     if (col.states) {
-        ## Matching the states and colours
-        tips_colours <- tips_labels
-        tips_colours[nchar(tips_labels) > 1] <- "?"
-
-        ## Select the palette
-        max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
-        state_colours <- c(TreeSearch::brewer[[max_colour + 1]], "grey")
-        names(state_colours) <- c(0:max_colour, "?")
-        if ('-' %in% tips_labels) state_colours <- c(state_colours, '-' = 'lightgrey')
-
-
-        ## Get the edge palette
-        edge_palette <- state_colours
-        edge_palette["?"] <- "darkgrey"
+        palette <- generate.palette(tips_labels)
+        tips_colours <- palette[[1]]
+        state_colours <- palette[[2]]
+        edge_palette <- palette[[3]]
     }
 
     if (any(counts == 1) && !is.null(unlist(states_matrix$Up2))) {
@@ -202,8 +192,9 @@ plot.states.matrix <- function(
         } else {
             final_state <- states_matrix$Up1
         }
-        all_states <- -1:max_colour
-        col_states <- c('-', 0:max_colour)
+        max_final <- max(unlist(final_state))
+        all_states <- -1:max_final
+        col_states <- c('-', seq_len(max_final + 1L) - 1L)
 
         ## Get the edge colours
         colour.edge <- function (edge) {
@@ -225,14 +216,13 @@ plot.states.matrix <- function(
 
     ## Plotting the tree
     if (is.null(y.lim)) y.lim <- c(if(legend.pos=='none' && length(state.labels) == 0) 0 else -3,
-                                   n_tip+0.3)
+                                   n_tip + 0.3)
     tree$tip.label <- paste("_", tree$tip.label) # Prefix with space to avoid the tiplabels() boxes
-    graphics::plot(tree, show.tip.label = show.tip.label, type = "phylogram",
+    ape::plot.phylo(tree, show.tip.label = show.tip.label, type = "phylogram",
                    use.edge.length = use.edge.length, cex = cex,
                    adj = 0, edge.color = edge_col, edge.width = 2,
                    y.lim=y.lim, edge.lty=ifelse(edge_final == '-', 'twodash', 'solid'),
                    ...)
-    # plot(tree, show.tip.label = show.tip.label, type = "phylogram", use.edge.length = FALSE, cex = cex, adj = 0.5, edge.color = edge_col,  edge.width = 2) ; warning("DEBUG plot")
 
     if (legend.pos != "none") {
         ## Setting up the legend parameters
@@ -362,4 +352,32 @@ plot.states.matrix <- function(
     }
 
     return(invisible())
+}
+
+#' Generate palette for tips
+#' @param labels Characters, for example from c(0:9, '-'), labelling the state
+#' of each tip.
+#'
+#' @keywords internal
+#' @export
+generate.palette <- function (labels) {
+  ## Matching the states and colours
+  tips_colours <- labels
+  tips_colours[nchar(labels) > 1] <- "?"
+
+  if (any(tips_colours %in% 0:9)) {
+    max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
+    state_colours <- c(TreeSearch::brewer[[max_colour + 1L]], "grey")
+  } else {
+    max_colour <- -1L
+    state_colours <- 'grey'
+  }
+  names(state_colours) <- c(seq_len(max_colour + 1L) - 1L, "?")
+  if ('-' %in% labels) state_colours <- c(state_colours, '-' = 'lightgrey')
+
+  ## Get the edge palette
+  edge_palette <- state_colours
+  edge_palette["?"] <- "darkgrey"
+  # Return:
+  list(tips_colours, state_colours, edge_palette)
 }

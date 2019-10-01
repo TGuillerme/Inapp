@@ -18,11 +18,20 @@ branches:
     - master
     - release
 
-r_github_packages:
-  - ms609/TreeSearch
+r_packages:
+  - TreeSearch
+  - vdiffr
 
 # Code coverage
-r_packages:
+r_binary_packages:
+  - ape
+  - devtools
+  - knitr
+  - phangorn
+  - rmarkdown
+  - shiny
+  - testthat
   - covr
+
 after_success:
 - Rscript -e 'library("covr"); codecov(line_exclusions = list("R/svg.R" = c(1:514)))'

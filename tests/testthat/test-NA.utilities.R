@@ -39,8 +39,7 @@ test_that("convert.char works", {
 
 context("make.states.matrix")
 test_that("make.states.matrix works", {
-    set.seed(1)
-    tree <- rtree(4, br = NULL)
+    tree <- read.tree(text='(t3, (t4, (t1, t2)));')
     character <- "01-?"
 
     ## Not working (error)
@@ -50,16 +49,30 @@ test_that("make.states.matrix works", {
     ## Right output style
     matrix <- make.states.matrix(tree, character)
     expect_is(matrix, "states.matrix")
-    expect_equal(unique(unlist(lapply(matrix, class))), c("list", "integer", "phylo"))
+    expect_equal(unlist(lapply(matrix, class)),
+                 c(Char = "list",
+                   Dp1 = 'list',
+                   Up1 = 'list',
+                   Dp2 = 'list',
+                   Up2 = 'list',
+                   tracker = 'list',
+                   regions = "integer",
+                   changes = 'integer',
+                   score = 'integer',
+                   tree = "phylo",
+                   n_tip = 'integer',
+                   n_node = 'integer'))
     expect_equal(unique(unlist(lapply(matrix, length))), c(7,4,0,3,1))
     expect_equal(length(matrix), 12)
-    expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "regions", "changes", "score",  "tree", "n_tip", "n_node"))
     expect_equal(ape::Ntip(matrix$tree), matrix$n_tip)
     expect_equal(ape::Nnode(matrix$tree), matrix$n_node)
 
     ## Right output values
-    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1))
-    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2, match.tip.char = TRUE)[[1]]), c(2,0,1,0,1,2))
+    expect_equal(c(0,1,0,1,0,1),
+                 unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]))
+    expect_equal(list(2, 0:2, 0, 1, NULL, NULL, NULL),
+                 lapply(make.states.matrix(tree, character, inapplicable = 2,
+                                           match.tip.char = TRUE)[[1]], sort))
 
 
     ## Matching the character to the tips
@@ -92,8 +105,7 @@ test_that("make.states.matrix works", {
 
 context("desc.anc")
 test_that("desc.anc works", {
-    set.seed(1)
-    tree <- rtree(4)
+    tree <- read.tree(text='(t3, (t4, (t1, t2)));')
 
     ## Not working (wrong input)
     expect_error(desc.anc(1, "tree"))
@@ -105,7 +117,7 @@ test_that("desc.anc works", {
     expect_is(desc.anc(6, tree), "integer")
 
     ## Right answers
-    answers <- list(c(5), c(7), c(7), c(6), c(1, 6), c(7, 4, 5), c(2, 3, 6))
+    answers <- list(5, 6, 7, 7, c(1, 6), c(2, 7, 5), c(3, 4, 6))
     for(test in 1:7) {
         expect_equal(desc.anc(test, tree), answers[[test]])
     }
@@ -165,6 +177,6 @@ test_that("print.states.matrix works", {
     character <- "01?-"
     test <- make.states.matrix(tree, character)
     out <- capture.output(test)
-    
+
     expect_equal(out, c(" ---- Tree ---- " , "((a,b),(c,d)); "  , " ---- States matrix---- " , "Number of tips = 4 "  , "Character states = -, 0, 1 "  , "No reconstructions calculated. See:"  , " ?apply.reconstruction" , "to reconstruct ancestral states and score the tree."))
 })

@@ -34,4 +34,4 @@ r_binary_packages:
   - covr
 
 after_success:
-- Rscript -e 'library("covr"); codecov(line_exclusions = list("R/svg.R" = c(1:514)))'
+- Rscript -e 'library("covr"); codecov()'

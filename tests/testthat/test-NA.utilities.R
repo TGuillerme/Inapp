@@ -105,8 +105,7 @@ test_that("make.states.matrix works", {
 
 context("desc.anc")
 test_that("desc.anc works", {
-    set.seed(1)
-    tree <- rtree(4)
+    tree <- read.tree(text='(t3, (t4, (t1, t2)));')
 
     ## Not working (wrong input)
     expect_error(desc.anc(1, "tree"))
@@ -118,7 +117,7 @@ test_that("desc.anc works", {
     expect_is(desc.anc(6, tree), "integer")
 
     ## Right answers
-    answers <- list(c(5), c(7), c(7), c(6), c(1, 6), c(7, 4, 5), c(2, 3, 6))
+    answers <- list(5, 6, 7, 7, c(1, 6), c(2, 7, 5), c(3, 4, 6))
     for(test in 1:7) {
         expect_equal(desc.anc(test, tree), answers[[test]])
     }

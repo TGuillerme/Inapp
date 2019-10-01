@@ -315,12 +315,17 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
     tips_colours <- tips_labels
-    tips_colours[nchar(tips_labels) > 1] <- "?"
-    max_colour <- max(as.integer(tips_colours[tips_colours %in%
-                                                  0:9]))
-    state_colours <- c(TreeSearch::brewer[[max_colour + 1]],
-                       "grey")
-    names(state_colours) <- c(0:max_colour, "?")
+    tips_colours[nchar(tips_labels) > 1L] <- "?"
+    if (any(tips_colours %in% 0:9)) {
+        max_colour <- max(as.integer(tips_colours[tips_colours %in%
+                                                      0:9]))
+        state_colours <- c(TreeSearch::brewer[[max_colour + 1L]],
+                           "grey")
+    } else {
+        max_colour <- -1L
+        state_colours <- 'grey'
+    }
+    names(state_colours) <- c(seq_len(max_colour + 1L) - 1L, "?")
     if ("-" %in% tips_labels) state_colours <- c(state_colours, `-` = "lightgrey")
     edge_palette <- state_colours
     edge_palette["?"] <- "darkgrey"
@@ -333,7 +338,7 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     } else {
         edge_final = 0
     }
-    #if (!is.null(unlist(states_matrix$Up1))) {
+
     if (!is.null(unlist(states_matrix$Up2))) {
         final_state <- states_matrix$Up2
     } else {
@@ -359,7 +364,6 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     }
     edge_final <- apply(tree$edge, 1, colour.edge)
     edge_col <- as.character(edge_palette[edge_final])
-    #}
 
     if (length(state.labels) == length(edge_palette) - 2) {
         state.labels <- c(state.labels, "Ambiguous", "Inapplicable")

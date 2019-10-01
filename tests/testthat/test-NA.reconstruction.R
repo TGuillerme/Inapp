@@ -1,11 +1,11 @@
 library(ape)
 context('Inapplicable reconstruction')
+tree3 <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 
 test_that('Inapplicable passes work', {
   ## Trees for testing
   tree1 <- read.tree(text = "((((1,2),((3,4),(5,6))),7),8);")
   tree2 <- read.tree(text = "((((((((1,2),3),4),5),6),7),8),9);")
-  tree3 <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
 
   ## Characters for testing - duplicated from test-Fitch.reconstruction.R
   character1   <- "-125-2-1"

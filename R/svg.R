@@ -426,7 +426,8 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
 #'   # An example is given in the help page for SVGCanvas; type ?SVGCanvas
 #' @export
 #' @author Martin R. Smith
-PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,
+PlotCharacterMapping <- function (char, stateLabels, singleTree,
+                                  legendText = '',
                                   SetPar=par(mar=rep(0.2, 4), cex=0.7),
                                   canvas, treeNames,
                                   analysisLabels=canvas$analysisNames,

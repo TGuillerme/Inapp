@@ -1,5 +1,5 @@
 library(ape)
-context("preparing Fitch matrices")
+context("Fitch reconstruction")
 test_that('Fitch passes work', {
   ## Trees for testing
   tree1 <- read.tree(text = "((((1,2),((3,4),(5,6))),7),8);")

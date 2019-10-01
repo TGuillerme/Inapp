@@ -99,7 +99,7 @@ make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.c
     ## Sorting the character to match the tip.labels entry
     if (all(tip_labels %in% names(character))) {
         ordering <- match(tip_labels, names(character))
-        
+
     } else {
         if (match.tip.char == TRUE) {
             ## Check if tips are alphanumeric
@@ -313,42 +313,20 @@ desc.anc <- function (node, tree) {
     child  <- tree.edge[, 2]
     descendants <- child[parent == node]
     ancestor <- parent[child == node]
-    return(c(descendants, ancestor))
-}
-
-## Get an union (&)
-get.common <- function(a, b) {
-    if(length(a) >= length(b)) {
-        out <- sort(a[a %in% b])
-    } else {
-        out <- sort(b[b %in% a])
-    }
-
-    if(length(out) == 0) {
-        out <- NULL
-    }
-    return(unique(out))
-}
-
-## Get an intersection inclusive (|)
-get.union.incl <- function(a, b) {
-    out <- unique(c(a,b))
-    if(length(out) == 0) {
-        return(NULL)
-    } else {
-        return(sort(unique(out)))
-    }
+    # Return:
+    c(descendants, ancestor)
 }
 
 ## Get an intersection exclusive (^)
 get.union.excl <- function(a, b) {
-    out <- get.union.incl(a,b)
-    out <- out[!(out %in% get.common(a,b))]
-    if(length(out) == 0) {
-        return(NULL)
-    } else {
-        return(sort(unique(out)))
-    }
+  #return(c(setdiff(a, b), setdiff(b, a)))
+  out <- union(a,b)
+  out <- out[!(out %in% intersect(a, b))]
+  if(length(out) == 0) {
+    return(NULL)
+  } else {
+    return(sort(unique(out)))
+  }
 }
 
 

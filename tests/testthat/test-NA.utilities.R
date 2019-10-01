@@ -1,7 +1,7 @@
 require(ape)
+context("NA utilities")
 
 ## convert.char
-context("convert.char")
 test_that("convert.char works", {
     character <- "01---?010101"
     list_out <- list(0,1,-1,-1,-1,c(-1,0,1),0,1,0,1,0,1)
@@ -37,10 +37,12 @@ test_that("convert.char works", {
     }
 })
 
-context("make.states.matrix")
 test_that("make.states.matrix works", {
-    set.seed(1)
-    tree <- rtree(4, br = NULL)
+    tree <- structure(list(edge = structure(c(5L, 5L, 6L, 6L, 7L, 7L, 1L, 6L,
+                                              2L, 7L, 3L, 4L),
+                                            .Dim = c(6L, 2L)),
+                           tip.label = c("t3", "t4", "t1", "t2"), Nnode = 3L),
+                      class = "phylo", order = "cladewise")
     character <- "01-?"
 
     ## Not working (error)
@@ -58,8 +60,11 @@ test_that("make.states.matrix works", {
     expect_equal(ape::Nnode(matrix$tree), matrix$n_node)
 
     ## Right output values
-    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 1)[[1]]), c(0,1,0,1,0,1))
-    expect_equal(unlist(make.states.matrix(tree, character, inapplicable = 2, match.tip.char = TRUE)[[1]]), c(2,0,1,0,1,2))
+    expect_equal(list(0, 1, 0:1, 0:1, NULL, NULL, NULL),
+                 make.states.matrix(tree, character, inapplicable = 1)[[1]])
+    expect_equal(list(2, 0:2, 0, 1, NULL, NULL, NULL),
+                 make.states.matrix(tree, character, inapplicable = 2,
+                                    match.tip.char = TRUE)[[1]])
 
 
     ## Matching the character to the tips
@@ -90,10 +95,12 @@ test_that("make.states.matrix works", {
     expect_true(all(unlist(make.states.matrix(tree2, character, match.tip.char = TRUE)$Char) == c(3,1,2)))
 })
 
-context("desc.anc")
 test_that("desc.anc works", {
-    set.seed(1)
-    tree <- rtree(4)
+    tree <- structure(list(edge = structure(c(5L, 5L, 6L, 6L, 7L, 7L, 1L, 6L,
+                                              2L, 7L, 3L, 4L),
+                                            .Dim = c(6L, 2L)),
+                           tip.label = c("t3", "t4", "t1", "t2"), Nnode = 3L),
+                      class = "phylo", order = "cladewise")
 
     ## Not working (wrong input)
     expect_error(desc.anc(1, "tree"))
@@ -105,43 +112,11 @@ test_that("desc.anc works", {
     expect_is(desc.anc(6, tree), "integer")
 
     ## Right answers
-    answers <- list(c(5), c(7), c(7), c(6), c(1, 6), c(7, 4, 5), c(2, 3, 6))
-    for(test in 1:7) {
-        expect_equal(desc.anc(test, tree), answers[[test]])
-    }
+    expected <- list(5, 6, 7, 7, c(1, 6), c(2, 7, 5), c(3, 4, 6))
+    obtained <- lapply(1:7, desc.anc, tree)
+    expect_equal(expected, obtained)
 })
 
-context("get.common")
-test_that("get.common works", {
-    ## Not working
-    expect_error(get.common(matrix(1), tree))
-    expect_error(get.common(1))
-
-    ## Right output
-    expect_equal(get.common(1,1), 1)
-    expect_equal(get.common(c(1,1,1,1),1), 1)
-    expect_equal(get.common(c(1,2,3,4),1), 1)
-    expect_equal(get.common(c(4,2,5,1),c(2,1)), c(1,2))
-    expect_null(get.common(2,1))
-    expect_null(get.common(1,2))
-})
-
-context("get.union.incl")
-test_that("get.union.incl works", {
-    ## Not working
-    expect_error(get.union.incl(matrix(1), tree))
-    expect_error(get.union.incl(1))
-
-    ## Right output
-    expect_equal(get.union.incl(1,1), 1)
-    expect_equal(get.union.incl(c(1,1,1,1),1), 1)
-    expect_equal(get.union.incl(c(1,2,3,4),1), c(1,2,3,4))
-    expect_equal(get.union.incl(c(4,2,5,1),c(2,1)), c(1,2,4,5))
-    expect_equal(get.union.incl(2,1), c(1,2))
-    expect_equal(get.union.incl(1,2), c(1,2))
-})
-
-context("get.union.excl")
 test_that("get.union.excl works", {
     ## Not working
     expect_error(get.union.excl(matrix(1), tree))
@@ -156,15 +131,11 @@ test_that("get.union.excl works", {
     expect_equal(get.union.excl(1,2), c(1,2))
 })
 
-
-
-context("print.states.matrix")
 test_that("print.states.matrix works", {
-
     tree <- ape::read.tree(text = "((a,b),(c,d));")
     character <- "01?-"
     test <- make.states.matrix(tree, character)
     out <- capture.output(test)
-    
+
     expect_equal(out, c(" ---- Tree ---- " , "((a,b),(c,d)); "  , " ---- States matrix---- " , "Number of tips = 4 "  , "Character states = -, 0, 1 "  , "No reconstructions calculated. See:"  , " ?apply.reconstruction" , "to reconstruct ancestral states and score the tree."))
 })

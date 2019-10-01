@@ -24,4 +24,10 @@ test_that('SVG can be plotted', {
                       canvas = canvas,
                       svgFilename = 'tree_number_%s.svg')
   expect_doppelganger('SVG example', PlotExample)
+
+  states_matrix <- apply.reconstruction(trees[[1]], '0011----11')
+  matrix_data <- MatrixData(states_matrix, states_matrix, state.labels=c('Zero', 'One'))
+  expect_equal(c('0: Zero', '1: One', '-: Inapplicable'), matrix_data$legend)
+  expect_equal(c('0' = "#fc8d59", '1' ="#91bfdb", '-' = "lightgrey"),
+               matrix_data$legend_col)
 })

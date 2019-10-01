@@ -49,7 +49,8 @@
 #' @author Thomas Guillerme
 #' @export
 
-make.states.matrix <- function(tree, character, inapplicable = NULL, match.tip.char = FALSE) {
+make.states.matrix <- function(tree, character, inapplicable = NULL,
+                               match.tip.char = FALSE) {
 
     ## Check if the tree is a tree!
     if(class(tree) != "phylo") {

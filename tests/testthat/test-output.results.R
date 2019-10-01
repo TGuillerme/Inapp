@@ -45,7 +45,9 @@ test_that("write.tree.commented works", {
 
 
     ## Create the notes
-    node_notes <- lapply(as.list(1:(ape::Ntip(NA_matrix$tree) + ape::Nnode(NA_matrix$tree))), create.note, test_NA)
+    node_notes <- lapply(as.list(seq_len(ape::Ntip(NA_matrix$tree) +
+                                             ape::Nnode(NA_matrix$tree))),
+                         create.note, test_NA)
 
     expect_is(node_notes, "list")
     expect_equal(length(node_notes), 23)
@@ -53,32 +55,37 @@ test_that("write.tree.commented works", {
     expect_equal(node_notes[[1]], "[Dp1=2,Up1=2,Dp2=2,Up2=2,Changes=FALSE,Regions=TRUE]")
     expect_equal(node_notes[[10]], "[Dp1=0,Up1=0,Dp2=0,Up2=0,Changes=FALSE,Regions=TRUE]")
     expect_equal(node_notes[[23]], "[Dp1=23,Up1=23,Dp2=23,Up2=023,Changes=TRUE,Regions=TRUE]")
+})
 
-    ## Check writing the notes
-    set.seed(1)
-    tree <- ape::rtree(5, br = NULL)
-    node_notes <- lapply(as.list(seq(1:9)), function(X){paste("[", X, "]", sep = "")})
+test_that('write.tree.commented writes notes to tree', {
+    tree <- structure(list(edge = structure(c(6L, 7L, 7L, 6L, 8L, 8L, 9L, 9L,
+                                              7L, 1L, 2L, 8L, 3L, 9L, 4L, 5L),
+                                            .Dim = c(8L, 2L)),
+                           tip.label = c("t3", "t4", "t1", "t2", "t5"),
+                           Nnode = 4L), class = "phylo", order = "cladewise")
+    node_notes <- paste("[", 1:9, "]", sep = "")
     newick <- write.tree.commented(tree, comments = node_notes, file = "")
     newick_decomp <- unlist(strsplit(strsplit(newick, split = ",")[[1]], split = ")"))
 
-    expect_results <- unlist(node_notes)[c(1,2,3,4,9,8,5,7,6)]
+    expect_results <- unlist(node_notes)[c(1,2,7, 3,4,5,9, 8,6)]
 
-    for(i in 1:length(newick_decomp)) {
+    for(i in seq_along(newick_decomp)) {
         expect_equal(length(grep(expect_results[i], newick_decomp[i])), 1)
     }
 
 })
 
-
-
-test_that("write.nexus.commented works", {
-
-    ## Check writing the notes
-    set.seed(1)
-    tree <- ape::rtree(5, br = NULL)
-    node_notes <- lapply(as.list(seq(1:9)), function(X){paste("[", X, "]", sep = "")})
+test_that("write.nexus.commented writes notes to file", {
+    tree <- structure(list(edge = structure(c(6L, 7L, 7L, 6L, 8L, 8L, 9L, 9L,
+                                              7L, 1L, 2L, 8L, 3L, 9L, 4L, 5L),
+                                            .Dim = c(8L, 2L)),
+                           tip.label = c("t3", "t4", "t1", "t2", "t5"),
+                           Nnode = 4L), class = "phylo", order = "cladewise")
+    node_notes <- paste("[", 1:9, "]", sep = "")
     out <- capture.output(write.nexus.commented(tree, comments = node_notes, file = ""))
-    
+
+    translated_tree <- tree
+    translated_tree$tip.label <- 1:5
     expect_equal(out[-2], c(
         "#NEXUS",
         "[More for at https://github.com/TGuillerme/Inapp/]",
@@ -86,25 +93,19 @@ test_that("write.nexus.commented works", {
         "BEGIN TAXA;",
         "\tDIMENSIONS NTAX = 5;",
         "\tTAXLABELS",
-        "\t\tt2",
-        "\t\tt1",
-        "\t\tt3",
-        "\t\tt4",
-        "\t\tt5",
+        paste0("\t\t", tree$tip.label),
         "\t;",
         "END;",
         "BEGIN TREES;",
         "\tTRANSLATE",
-        "\t\t1\tt2,",
-        "\t\t2\tt1,",
-        "\t\t3\tt3,",
-        "\t\t4\tt4,",
-        "\t\t5\tt5",
+        paste0("\t\t", 1:5, '\t', tree$tip.label, ',')[-5],
+        paste0("\t\t5\t", tree$tip.label[5]),
         "\t;",
-        "\tTREE * UNTITLED = [&R] (1[1],((2[2],(3[3],4[4])[9])[8],5[5])[7])[6];",
+        paste0("\tTREE * UNTITLED = [&R] ",
+               # write.tree.commented is tested above, so this isn't cheating!
+               write.tree.commented(translated_tree, comments = node_notes, file = "")),
         "END;"
         ))
-
 })
 
 

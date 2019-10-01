@@ -38,11 +38,7 @@ test_that("convert.char works", {
 })
 
 test_that("make.states.matrix works", {
-    tree <- structure(list(edge = structure(c(5L, 5L, 6L, 6L, 7L, 7L, 1L, 6L,
-                                              2L, 7L, 3L, 4L),
-                                            .Dim = c(6L, 2L)),
-                           tip.label = c("t3", "t4", "t1", "t2"), Nnode = 3L),
-                      class = "phylo", order = "cladewise")
+    tree <- read.tree(text='(t3, (t4, (t1, t2)));')
     character <- "01-?"
 
     ## Not working (error)
@@ -52,10 +48,21 @@ test_that("make.states.matrix works", {
     ## Right output style
     matrix <- make.states.matrix(tree, character)
     expect_is(matrix, "states.matrix")
-    expect_equal(unique(unlist(lapply(matrix, class))), c("list", "integer", "phylo"))
+    expect_equal(unlist(lapply(matrix, class)),
+                 c(Char = "list",
+                   Dp1 = 'list',
+                   Up1 = 'list',
+                   Dp2 = 'list',
+                   Up2 = 'list',
+                   tracker = 'list',
+                   regions = "integer",
+                   changes = 'integer',
+                   score = 'integer',
+                   tree = "phylo",
+                   n_tip = 'integer',
+                   n_node = 'integer'))
     expect_equal(unique(unlist(lapply(matrix, length))), c(7,4,0,3,1))
     expect_equal(length(matrix), 12)
-    expect_equal(names(matrix), c("Char", "Dp1", "Up1", "Dp2", "Up2", "tracker", "regions", "changes", "score",  "tree", "n_tip", "n_node"))
     expect_equal(ape::Ntip(matrix$tree), matrix$n_tip)
     expect_equal(ape::Nnode(matrix$tree), matrix$n_node)
 
@@ -65,7 +72,6 @@ test_that("make.states.matrix works", {
     expect_equal(list(2, 0:2, 0, 1, NULL, NULL, NULL),
                  make.states.matrix(tree, character, inapplicable = 2,
                                     match.tip.char = TRUE)[[1]])
-
 
     ## Matching the character to the tips
     tree1 <- read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
@@ -96,11 +102,7 @@ test_that("make.states.matrix works", {
 })
 
 test_that("desc.anc works", {
-    tree <- structure(list(edge = structure(c(5L, 5L, 6L, 6L, 7L, 7L, 1L, 6L,
-                                              2L, 7L, 3L, 4L),
-                                            .Dim = c(6L, 2L)),
-                           tip.label = c("t3", "t4", "t1", "t2"), Nnode = 3L),
-                      class = "phylo", order = "cladewise")
+    tree <- read.tree(text='(t3, (t4, (t1, t2)));')
 
     ## Not working (wrong input)
     expect_error(desc.anc(1, "tree"))

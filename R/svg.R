@@ -314,16 +314,10 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     edge_col <- "black"
     tips_labels <- plot.convert.state(states_matrix[[1]][1:n_tip], missing = TRUE)
 
-    tips_colours <- tips_labels
-    tips_colours[nchar(tips_labels) > 1] <- "?"
-    max_colour <- max(as.integer(tips_colours[tips_colours %in%
-                                                  0:9]))
-    state_colours <- c(TreeSearch::brewer[[max_colour + 1]],
-                       "grey")
-    names(state_colours) <- c(0:max_colour, "?")
-    if ("-" %in% tips_labels) state_colours <- c(state_colours, `-` = "lightgrey")
-    edge_palette <- state_colours
-    edge_palette["?"] <- "darkgrey"
+    palette <- generate.palette(tips_labels)
+    tips_colours <- palette[[2]]
+    state_colours <- palette[[2]]
+    edge_palette <- palette[[1]]
 
     if (!is.null(unlist(states_matrix$Up2))) {
         na_edges <- get.NA.edges(states_matrix, tree, pass = 4) ==
@@ -333,14 +327,15 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     } else {
         edge_final = 0
     }
-    #if (!is.null(unlist(states_matrix$Up1))) {
+
     if (!is.null(unlist(states_matrix$Up2))) {
         final_state <- states_matrix$Up2
     } else {
         final_state <- states_matrix$Up1
     }
-    all_states <- -1:max_colour
-    col_states <- c("-", 0:max_colour)
+    max_final <- max(unlist(final_state))
+    all_states <- -1:max_final
+    col_states <- c("-", seq_len(max_final + 1L) - 1L)
     colour.edge <- function(edge) {
         parent <- all_states %in% final_state[[edge[1]]]
         child <- all_states %in% final_state[[edge[2]]]
@@ -359,7 +354,6 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
     }
     edge_final <- apply(tree$edge, 1, colour.edge)
     edge_col <- as.character(edge_palette[edge_final])
-    #}
 
     if (length(state.labels) == length(edge_palette) - 2) {
         state.labels <- c(state.labels, "Ambiguous", "Inapplicable")
@@ -426,7 +420,8 @@ MatrixData <- function (states_matrix, fitch_states, state.labels) {
 #'   # An example is given in the help page for SVGCanvas; type ?SVGCanvas
 #' @export
 #' @author Martin R. Smith
-PlotCharacterMapping <- function (char, stateLabels, singleTree, legendText,
+PlotCharacterMapping <- function (char, stateLabels, singleTree,
+                                  legendText = '',
                                   SetPar=par(mar=rep(0.2, 4), cex=0.7),
                                   canvas, treeNames,
                                   analysisLabels=canvas$analysisNames,

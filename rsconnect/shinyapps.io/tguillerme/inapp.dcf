@@ -5,6 +5,6 @@ account: tguillerme
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 760245
-bundleId: 2457344
+bundleId: 2460616
 url: https://tguillerme.shinyapps.io/inapp/
-when: 1569891577.43368
+when: 1569976370.28203

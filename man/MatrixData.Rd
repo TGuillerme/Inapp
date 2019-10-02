@@ -4,7 +4,7 @@
 \alias{MatrixData}
 \title{Matrix data}
 \usage{
-MatrixData(states_matrix, fitch_states, state.labels)
+MatrixData(states_matrix, fitch_states = states_matrix, state.labels)
 }
 \arguments{
 \item{states_matrix}{The output of \code{apply.reconstruction}}

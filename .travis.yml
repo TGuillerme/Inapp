@@ -18,10 +18,6 @@ branches:
     - master
     - release
 
-r_packages:
-  - TreeSearch
-  - vdiffr
-
 # Code coverage
 r_binary_packages:
   - ape

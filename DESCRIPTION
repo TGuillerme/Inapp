@@ -21,8 +21,7 @@ Imports:
     shiny,
     TreeTools
 Suggests:
-    testthat,
-    vdiffr
+    testthat
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)

@@ -155,7 +155,7 @@ length.SVGCanvas <- function (x) x$nTree
 #'   which can be written to file or included in markdown destined for HTML
 #'   output.
 #'
-#' @importFrom TreeSearch SupportColour
+#' @importFrom TreeTools SupportColour
 #' @export
 #'
 #' @author Martin R. Smith

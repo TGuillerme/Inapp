@@ -11,7 +11,7 @@ PrintJavascript(filepath)
 }
 \value{
 Prints the contents of the Javascript file to to stdout,
-executing any R code included in `r ...` blocks in the file.
+executing any R code included in r blocks in the file.
 }
 \description{
 Allows arbitrary JavaScript content to be imported into an HTML document

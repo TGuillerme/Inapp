@@ -1,12 +1,13 @@
 Patch notes
 ----
-Inapp v0.5.1.9000 (development)
+Inapp v0.5.2 (2020/04/30)
 =========================
 
 ### MINOR IMPROVEMENTS
 
   * Support characters where all tokens are inapplicable
   * Update citation information
+  * Updated package for `R 4.0.0`
 
 Inapp v0.5.1 (2019/05/08)
 =========================

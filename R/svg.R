@@ -40,7 +40,7 @@
 #' @return An object of class SVGCanvas
 #' @exportClass SVGCanvas
 #' @importFrom phangorn Ancestors Children
-#' @importFrom TreeSearch SplitFrequency RootTree
+#' @importFrom TreeTools SplitFrequency RootTree
 #'
 #' @author Martin R. Smith
 #'
@@ -491,7 +491,7 @@ PrintSwitcher <- function (nTrees) {
 #' @param filepath Path to Javascript template
 #'
 #' @return Prints the contents of the Javascript file to to stdout,
-#'  executing any R code included in \`r ...\` blocks in the file.
+#'  executing any R code included in r blocks in the file.
 #' @export
 #'
 #' @author Martin R. Smith

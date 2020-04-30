@@ -367,7 +367,7 @@ generate.palette <- function (labels) {
 
   if (any(tips_colours %in% 0:9)) {
     max_colour <- max(as.integer(tips_colours[tips_colours %in% 0:9]))
-    state_colours <- c(TreeSearch::brewer[[max_colour + 1L]], "grey")
+    state_colours <- c(TreeTools::brewer[[max_colour + 1L]], "grey")
   } else {
     max_colour <- -1L
     state_colours <- 'grey'

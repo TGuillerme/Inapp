@@ -4,8 +4,13 @@
 \alias{output.states.matrix}
 \title{Outputs results}
 \usage{
-output.states.matrix(states_matrix, output = NULL,
-  file = "Inapp_reconstruction", path = ".", ...)
+output.states.matrix(
+  states_matrix,
+  output = NULL,
+  file = "Inapp_reconstruction",
+  path = ".",
+  ...
+)
 }
 \arguments{
 \item{states_matrix}{A \code{states.matrix} list from \code{\link{apply.reconstruction}}.}

@@ -4,10 +4,18 @@
 \alias{PlotCharacterMapping}
 \title{Plot character mapping}
 \usage{
-PlotCharacterMapping(char, stateLabels, singleTree, legendText = "",
-  SetPar = par(mar = rep(0.2, 4), cex = 0.7), canvas, treeNames,
-  analysisLabels = canvas$analysisNames, charIndex = character(0),
-  svgFilename = "tree_\%s.svg")
+PlotCharacterMapping(
+  char,
+  stateLabels,
+  singleTree,
+  legendText = "",
+  SetPar = par(mar = rep(0.2, 4), cex = 0.7),
+  canvas,
+  treeNames,
+  analysisLabels = canvas$analysisNames,
+  charIndex = character(0),
+  svgFilename = "tree_\%s.svg"
+)
 }
 \arguments{
 \item{char}{Character vector specifying distribution of tokens among (named)

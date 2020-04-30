@@ -4,8 +4,15 @@
 \alias{SVGTree}
 \title{SVG Tree}
 \usage{
-SVGTree(treeNo, canvas, char, stateLabels, treeNames, charIndex = 0,
-  analysisLabels = character(0))
+SVGTree(
+  treeNo,
+  canvas,
+  char,
+  stateLabels,
+  treeNames,
+  charIndex = 0,
+  analysisLabels = character(0)
+)
 }
 \arguments{
 \item{treeNo}{Integer specifying which of the trees on the SVGForest to plot}

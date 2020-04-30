@@ -4,8 +4,12 @@
 \alias{make.states.matrix}
 \title{Sates matrix}
 \usage{
-make.states.matrix(tree, character, inapplicable = NULL,
-  match.tip.char = FALSE)
+make.states.matrix(
+  tree,
+  character,
+  inapplicable = NULL,
+  match.tip.char = FALSE
+)
 }
 \arguments{
 \item{tree}{\code{phylo}, a tree}

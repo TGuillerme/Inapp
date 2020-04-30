@@ -29,7 +29,7 @@ if(!require(devtools)) install.packages("devtools")
 if(!require(shiny)) install.packages("shiny")
 runGitHub("Inapp", "TGuillerme")
 ```
-<!-- Upload the whole thing on shiny servers -->
+
 
 ## Running Inapp in your R console
 Not much more complicated! In `R`, copy/paste the following:

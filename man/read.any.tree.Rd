@@ -17,7 +17,7 @@ Reads any type of tree, whether it's a nexus or newick one.
 \examples{
 ## Generating a single newick file
 newick <- "(((Strix_aluco:4.2,Asio_otus:4.2):3.1,Athene_noctua:7.3):6.3,Tyto_alba:13.5);"
-cat(newick, file = "example_newick.tre", sep = "\\n")
+cat(newick, file = "example_newick.tre", sep = "\n")
 ## Reading a single newick file
 read.any.tree("example_newick.tre")
 ## Removing the file

@@ -18,6 +18,9 @@ branches:
     - master
     - release
 
+r_packages:
+  - digest
+
 # Code coverage
 r_binary_packages:
   - ape

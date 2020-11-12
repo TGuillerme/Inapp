@@ -414,7 +414,7 @@ MatrixData <- function (states_matrix, fitch_states = states_matrix,
 #'   containing the expression \code{\%s}, which will be replaced with the number
 #'   of the tree.
 #' @param SetPar Graphical parameters to set before plotting PNG tree
-#'   in Latex output.
+#'   in Latex output.  Specify `NULL` to retain existing parameters.
 #'
 #' @return Prints the tree in an appropriate markdown format
 #' @importFrom knitr is_html_output
@@ -424,11 +424,11 @@ MatrixData <- function (states_matrix, fitch_states = states_matrix,
 #' @author Martin R. Smith
 PlotCharacterMapping <- function (char, stateLabels, singleTree,
                                   legendText = '',
-                                  SetPar=par(mar=rep(0.2, 4), cex=0.7),
-                                  canvas, treeNames,
-                                  analysisLabels=canvas$analysisNames,
-                                  charIndex=character(0),
-                                  svgFilename='tree_%s.svg') {
+                                  SetPar = par(mar = rep(0.2, 4), cex = 0.7),
+                                  canvas = NULL, treeNames = NULL,
+                                  analysisLabels = canvas$analysisNames,
+                                  charIndex = character(0),
+                                  svgFilename = 'tree_%s.svg') {
     if (char[1] == '?' && length(unique(char)) == 1) {
         cat("<p>All taxa are coded as ambiguous for this character.</p>")
         legendLabels <- "?: Not scored"
@@ -437,7 +437,8 @@ PlotCharacterMapping <- function (char, stateLabels, singleTree,
         cat("<p>All taxa are coded as ambiguous or inapplicable for this character.</p>")
         legendLabels <- c("?: Not scored", "-: Inapplicable")
         legendCol <- "darkgrey"
-    } else if (!is.null(getOption('localInstance')) || is_html_output()) {
+    } else if (!is.null(canvas) && (
+        !is.null(getOption('localInstance')) || is_html_output())) {
         for (treeNo in canvas$eachTree) {
             svgSource <- SVGTree(treeNo=treeNo, canvas=canvas,
                                  char=char, charIndex=charIndex,
@@ -448,12 +449,14 @@ PlotCharacterMapping <- function (char, stateLabels, singleTree,
         # Just write a single tree to HTML output
         cat(svgSource)
     } else {
-        SetPar
-        plot.states.matrix(apply.reconstruction(singleTree, char, match.tip.char=TRUE),
-                           passes=0, counts=1:2, show.labels=1,
-                           col.states=TRUE, state.labels=stateLabels,
-                           use.edge.length=TRUE, legend.pos='topright')
-        legend('bottomleft',  bty='n', legendText)
+        origPar <- SetPar
+        plot.states.matrix(apply.reconstruction(singleTree, char,
+                                                match.tip.char = TRUE),
+                           passes = 0, counts = 1:2, show.labels = 1,
+                           col.states = TRUE, state.labels = stateLabels,
+                           use.edge.length = TRUE, legend.pos = 'topright')
+        legend('bottomleft',  bty = 'n', legendText)
+        if(!is.null(origPar)) par(origPar)
     }
 }
 

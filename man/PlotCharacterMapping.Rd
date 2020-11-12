@@ -39,7 +39,7 @@ in Latex output.}
 to be printed on plot}
 
 \item{charIndex}{Character vector providing a reference for the character,
-typically its number, to be sent to \link{SVGTree}}
+typically its number, to be sent to \code{\link[=SVGTree]{SVGTree()}}}
 
 \item{svgFilename}{Character string specifying location to save each file,
 containing the expression \code{\%s}, which will be replaced with the number
@@ -60,12 +60,13 @@ These packages can produce output in PDF or HTML format; this package will
 generate SVG files for HTML output, and a static PNG otherwise.
 
 The SVG output will generate a separate plot for each tree in \code{canvas};
-JavaScript can be specified using \link{PrintSwitcher} or \link{PrintJavascript} in order
+JavaScript can be specified using \code{\link[=PrintSwitcher]{PrintSwitcher()}} or
+\code{\link[=PrintJavascript]{PrintJavascript()}} in order
 to allow the user to switch between trees.  Due to the space considerations
 implicit in PDF documents, the PNG images include only a single tree,
 specified by \code{singleTree}.
 
-HTML output can be forced by setting \code{setOption('localInstance', TRUE)}.
+HTML output can be forced by setting \code{options('localInstance' = TRUE)}.
 }
 \examples{
   # An example is given in the help page for SVGCanvas; type ?SVGCanvas

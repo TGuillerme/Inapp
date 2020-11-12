@@ -12,7 +12,7 @@ used to enforce the highest allowed value in the switcher box}
 }
 \description{
 Prints an input box that allows the SVG tree displayed to be toggled,
-in HTML output.  To be used alongside \link{PlotCharacterMapping}.
+in HTML output.  To be used alongside \code{\link[=PlotCharacterMapping]{PlotCharacterMapping()}}.
 }
 \author{
 Martin R. Smith

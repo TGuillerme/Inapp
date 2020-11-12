@@ -17,7 +17,7 @@ executing any R code included in r blocks in the file.
 Allows arbitrary JavaScript content to be imported into an HTML document
 produced with \code{bookdown} or \code{rmarkdown}.  Suggested for use in Rmd documents
 that will be rendered in HTML; useful in supoprting user interaction with
-SVG elements produced by \link{PlotCharacterMapping}.
+SVG elements produced by \code{\link[=PlotCharacterMapping]{PlotCharacterMapping()}}.
 }
 \details{
 Note that the content will be ignored when files are compiled for PDF output.

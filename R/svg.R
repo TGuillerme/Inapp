@@ -390,17 +390,18 @@ MatrixData <- function (states_matrix, fitch_states = states_matrix,
 #' generate SVG files for HTML output, and a static PNG otherwise.
 #'
 #' The SVG output will generate a separate plot for each tree in `canvas`;
-#' JavaScript can be specified using [PrintSwitcher] or [PrintJavascript] in order
+#' JavaScript can be specified using [`PrintSwitcher()`] or
+#' [`PrintJavascript()`] in order
 #' to allow the user to switch between trees.  Due to the space considerations
 #' implicit in PDF documents, the PNG images include only a single tree,
 #' specified by `singleTree`.
 #'
-#' HTML output can be forced by setting `setOption('localInstance', TRUE)`.
+#' HTML output can be forced by setting `options('localInstance' = TRUE)`.
 #'
 #' @param char Character vector specifying distribution of tokens among (named)
 #'   taxa
 #' @param charIndex Character vector providing a reference for the character,
-#'   typically its number, to be sent to [SVGTree]
+#'   typically its number, to be sent to [`SVGTree()`]
 #' @param stateLabels Character vector specifying the labels to apply to each
 #'   state
 #' @param singleTree A single tree to be plotted in Latex output
@@ -460,7 +461,7 @@ PlotCharacterMapping <- function (char, stateLabels, singleTree,
 #' Print Switcher
 #'
 #' Prints an input box that allows the SVG tree displayed to be toggled,
-#' in HTML output.  To be used alongside [PlotCharacterMapping].
+#' in HTML output.  To be used alongside [`PlotCharacterMapping()`].
 #'
 #' @param nTrees Integer specifying the number of trees that can be switched,
 #'               used to enforce the highest allowed value in the switcher box
@@ -484,7 +485,7 @@ PrintSwitcher <- function (nTrees) {
 #' Allows arbitrary JavaScript content to be imported into an HTML document
 #' produced with `bookdown` or `rmarkdown`.  Suggested for use in Rmd documents
 #' that will be rendered in HTML; useful in supoprting user interaction with
-#' SVG elements produced by [PlotCharacterMapping].
+#' SVG elements produced by [`PlotCharacterMapping()`].
 #'
 #' Note that the content will be ignored when files are compiled for PDF output.
 #'

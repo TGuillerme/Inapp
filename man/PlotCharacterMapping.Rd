@@ -10,8 +10,8 @@ PlotCharacterMapping(
   singleTree,
   legendText = "",
   SetPar = par(mar = rep(0.2, 4), cex = 0.7),
-  canvas,
-  treeNames,
+  canvas = NULL,
+  treeNames = NULL,
   analysisLabels = canvas$analysisNames,
   charIndex = character(0),
   svgFilename = "tree_\%s.svg"
@@ -29,7 +29,7 @@ state}
 \item{legendText}{Character giving legend text to print in Latex output}
 
 \item{SetPar}{Graphical parameters to set before plotting PNG tree
-in Latex output.}
+in Latex output.  Specify \code{NULL} to retain existing parameters.}
 
 \item{canvas}{an object of class SVGForest.}
 

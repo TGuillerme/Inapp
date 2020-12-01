@@ -84,14 +84,7 @@ shinyUI(fluidPage(
           ),
 
           ## Colour states
-          checkboxInput("colour_states", label = "Colour states", value = FALSE),
-
-          conditionalPanel(condition = "input.output_type == \"C-test\"",
-            ## Enter some traversal order - input$traversal_order
-            textInput("traversal_order", label = h5("Enter an optional traversal order for output:"), value = ""),
-            ## Help text for the traversal
-            helpText("The traversal must be written in a comma separated format (e.g. 1,2,3). If left as blank the order is: tips, root, right left nodes (traversal).")
-          )
+          checkboxInput("colour_states", label = "Colour states", value = TRUE)
 
         ),
 
@@ -146,11 +139,17 @@ shinyUI(fluidPage(
       sliderInput("font_size", "Text size", 0.4, 2, 1)
     ),
     column(width = 4,
-      h3("Export results"),
       ## Export format - input$export_type
-      selectInput("output_type", "Export format:",
+      selectInput("output_type", "Export results as:",
                   choices = c("csv", "pdf", "newick", "nexus", "C-test")),
       downloadButton('downloadData', 'Download')
+    ),
+
+    conditionalPanel(condition = "input.output_type == \"C-test\"",
+                     ## Enter some traversal order - input$traversal_order
+                     textInput("traversal_order", label = h5("Enter an optional traversal order for output:"), value = ""),
+                     ## Help text for the traversal
+                     helpText("The traversal must be written in a comma separated format (e.g. 1,2,3). If left as blank the order is: tips, root, right left nodes (traversal).")
     )
 
   )

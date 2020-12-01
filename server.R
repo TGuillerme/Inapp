@@ -332,7 +332,7 @@ shinyServer(
                         raw_matrix <- lapply(states_matrix$Char, get.missing, all_states)
                         ## Collapse multiple states
                         raw_matrix <- unlist(lapply(raw_matrix, paste, collapse = ""))
-                        ## Convert the NA
+                        ## Convert the NA
                         raw_matrix <- gsub("-1", "-", raw_matrix)
                         ## C output
                         raw_matrix_out <- paste0(char_var, " = \"", paste(raw_matrix, collapse = ""), "\";")

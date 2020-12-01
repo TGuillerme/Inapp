@@ -21,7 +21,8 @@ Imports:
     shiny,
     TreeTools
 Suggests:
-    testthat
+    testthat,
+    TreeSearch
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)

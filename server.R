@@ -30,7 +30,7 @@ read.newick.tree <- function (newick_text) {
 ## Return a tree, or an error message to be written to output.
 get.tree <- function(input, session, simple = FALSE) {
 
-    ## Wrapper for getting an input tree
+    ## Wrapper for getting an input tree
     get.input.tree <- function(input, session) {
         nexus_tree <- input$nexus_tree
         if(!is.null(nexus_tree)) {

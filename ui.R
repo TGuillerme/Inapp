@@ -157,6 +157,16 @@ shinyUI(fluidPage(
   fluidRow(
     ## Plots the algorithm results
     uiOutput("plot.ui")
+  ),
+
+  ## Plot configuration
+  fluidRow(
+    column(width = 6,
+      sliderInput("plot_height", 'Output height', 20, 2000, 600, post = 'px')
+    ),
+    column(width = 6,
+      sliderInput("font_size", "Text size", 0.4, 2, 1)
+    )
   )
 
 ))

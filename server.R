@@ -259,8 +259,9 @@ shinyServer(
                                show.labels = showlabels,
                                counts = as.vector(as.numeric(input$counts)),
                                col.states = input$colour_states,
-                               state.labels = state_labels)
-            mtext(side=c(1, 3), character_name, font=2)
+                               state.labels = state_labels,
+                               cex = input$font_size)
+            mtext(side=c(1, 3), character_name, font = 2)
 
             ## Exporting data
             output$downloadData <- downloadHandler(
@@ -374,7 +375,8 @@ shinyServer(
             } else {
                 n_tip <- length(tree$tip.label)
                 ## Set the plot window
-                plotOutput("plot_out", width ="100%", height = paste(round((n_tip + 3.3) * 0.4) * 90L, "px", sep = ""))
+                plotOutput("plot_out", width ="100%",
+                           height = paste0(input$plot_height, "px"))
             }
         })
     }

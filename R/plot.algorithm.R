@@ -22,6 +22,7 @@
 #' @param y.lim \code{numeric} _x_ and _y_ coordinates for limits of the plot,
 #'                    calculated automatically based on presence of legend if set to `NULL`
 #'                    (the default).
+#' @param cex `numeric` Character expansion scaling factor for text.
 #' @param \dots any optional arguments to be passed to \code{\link[ape]{plot.phylo}}
 #'
 #' @examples
@@ -58,7 +59,8 @@ plot.states.matrix <- function(
   col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0"),
   counts = 0, use.edge.length = FALSE,
   col.states = FALSE, state.labels = character(0),
-  legend.pos = 'bottomleft', y.lim = NULL, ...) {
+  legend.pos = 'bottomleft', y.lim = NULL,
+  cex = 1, ...) {
 
     states_matrix <- x
     tree <- states_matrix$tree
@@ -158,10 +160,6 @@ plot.states.matrix <- function(
         stop("counts argument must be either 1 for displaying activations and/or 2 for homoplasies.")
     }
 
-
-    ## Get the text plotting size
-    cex <- 1
-
     ## Initialize the edges' colors
     edge_col <- "black"
 
@@ -215,14 +213,17 @@ plot.states.matrix <- function(
     }
 
     ## Plotting the tree
-    if (is.null(y.lim)) y.lim <- c(if(legend.pos=='none' && length(state.labels) == 0) 0 else -3,
-                                   n_tip + 0.3)
+    if (is.null(y.lim)) {
+      y.lim <- c(if(legend.pos == 'none' && length(state.labels) == 0) 0 else -3,
+                 n_tip + 0.3)
+    }
     tree$tip.label <- paste("_", tree$tip.label) # Prefix with space to avoid the tiplabels() boxes
     ape::plot.phylo(tree, show.tip.label = show.tip.label, type = "phylogram",
-                   use.edge.length = use.edge.length, cex = cex,
-                   adj = 0, edge.color = edge_col, edge.width = 2,
-                   y.lim=y.lim, edge.lty=ifelse(edge_final == '-', 'twodash', 'solid'),
-                   ...)
+                    use.edge.length = use.edge.length, cex = cex,
+                    adj = 0, edge.color = edge_col, edge.width = 2,
+                    y.lim = y.lim,
+                    edge.lty = ifelse(edge_final == '-', 'twodash', 'solid'),
+                    ...)
 
     if (legend.pos != "none") {
         ## Setting up the legend parameters
@@ -272,14 +273,14 @@ plot.states.matrix <- function(
 
 
         ## Adding the legend
-        graphics::legend(legend.pos, legend = legend_text, cex = 1.2, pch = par_pch,
-                         lty = par_lty, lwd = par_lwd, col = par_col,
-                         pt.cex = par_cex, x.intersp = 0.5,
-                         bty='n', bg = NULL)
+        graphics::legend(legend.pos, legend = legend_text, cex = 1.2 * cex,
+                         pch = par_pch, lty = par_lty, lwd = par_lwd,
+                         col = par_col, pt.cex = par_cex, x.intersp = 0.5,
+                         bty = 'n', bg = NULL)
     }
     ## Colour the tip states.
     if (col.states) {
-        ape::tiplabels(tips_labels, cex = 1, adj = 1,
+        ape::tiplabels(tips_labels, cex = cex, adj = 1,
                        bg = paste0(state_colours[tips_colours])) #, 'aa'
         if (length(state.labels) != 1 || !is.na(state.labels)) {
             if (length(state.labels) == 0) {
@@ -295,13 +296,14 @@ plot.states.matrix <- function(
                 state_labels <- paste(names(edge_palette), gsub("^['\"]|['\"]$", "", state.labels), sep=": ")
             }
             observed <- names(edge_palette) %in% edge_final
-            graphics::legend('bottomright', legend=state_labels[observed], cex=1.2,
-                             col=edge_palette[observed], x.intersp=1,
-                             pch=15, pt.cex=1, lty=1, lwd=2,
-                             bty='n', bg=NULL)
+            graphics::legend('bottomright', legend = state_labels[observed],
+                             cex = 1.2 * cex,
+                             col = edge_palette[observed], x.intersp = 1,
+                             pch = 15, pt.cex = 1, lty = 1, lwd = 2,
+                             bty = 'n', bg = NULL)
         }
     } else {
-      ape::tiplabels(tips_labels, cex = 1, bg = col.tips.nodes[1], adj = 1)
+      ape::tiplabels(tips_labels, cex = cex, bg = col.tips.nodes[1], adj = 1)
     }
 
 
@@ -347,7 +349,7 @@ plot.states.matrix <- function(
         }
 
         ## Plot the node labels
-        ape::nodelabels(node_labels, cex = 0.90, bg = bg_col)
+        ape::nodelabels(node_labels, cex = 0.90 * cex, bg = bg_col)
         # ape::nodelabels(node_labels, cex = 0.5, bg = bg_col) ; warning("DEBUG")
     }
 

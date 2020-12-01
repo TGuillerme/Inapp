@@ -86,16 +86,6 @@ shinyUI(fluidPage(
           ## Colour states
           checkboxInput("colour_states", label = "Colour states", value = FALSE),
 
-
-          ## --------------------
-          ## Exports (in column "character")
-          ## --------------------
-          hr(),
-          h3("Export results"),
-          ## Export format - input$export_type
-          selectInput("output_type", "Export format:", choices = c("csv", "pdf", "newick", "nexus", "C-test")),
-          downloadButton('downloadData', 'Download'),
-
           conditionalPanel(condition = "input.output_type == \"C-test\"",
             ## Enter some traversal order - input$traversal_order
             textInput("traversal_order", label = h5("Enter an optional traversal order for output:"), value = ""),
@@ -103,18 +93,6 @@ shinyUI(fluidPage(
             helpText("The traversal must be written in a comma separated format (e.g. 1,2,3). If left as blank the order is: tips, root, right left nodes (traversal).")
           )
 
-
-          # hr(),
-          # ## Citation! - input$cite_type
-          # selectInput("cite_type", label = "Cite us", choices = list("format", "plain", "BibTeX"), selected = "format"),
-          # ## Plain text format
-          # conditionalPanel(condition = "input.cite_type == \"plain\"",
-          #   helpText("Bob, Bib and Bub (2001) Something shiny here!.")
-          # ),
-          # ## BibTeX format
-          # conditionalPanel(condition = "input.cite_type == \"BibTeX\"",
-          #     helpText("@article{ShinyApp","    author={Bob, and Bib, and Bab},","    title={Something shiny},","    journal={Combinatorics},","    volume={1},","    number={1},","    pages={1:2},","    year={2001}}")
-          # )
         ),
 
         ## -------
@@ -161,12 +139,20 @@ shinyUI(fluidPage(
 
   ## Plot configuration
   fluidRow(
-    column(width = 6,
+    column(width = 4,
       sliderInput("plot_height", 'Output height', 20, 2000, 600, post = 'px')
     ),
-    column(width = 6,
+    column(width = 4,
       sliderInput("font_size", "Text size", 0.4, 2, 1)
+    ),
+    column(width = 4,
+      h3("Export results"),
+      ## Export format - input$export_type
+      selectInput("output_type", "Export format:",
+                  choices = c("csv", "pdf", "newick", "nexus", "C-test")),
+      downloadButton('downloadData', 'Download')
     )
+
   )
 
 ))

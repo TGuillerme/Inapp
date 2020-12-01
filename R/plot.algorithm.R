@@ -222,7 +222,7 @@ plot.states.matrix <- function(
                     use.edge.length = use.edge.length, cex = cex,
                     adj = 0, edge.color = edge_col, edge.width = 2,
                     y.lim = y.lim,
-                    edge.lty = ifelse(edge_final == '-', 'twodash', 'solid'),
+                    edge.lty = ifelse(edge_final == '-', 6, 1),
                     ...)
 
     if (legend.pos != "none") {

@@ -8,10 +8,10 @@
 <a href="https://figshare.com/articles/Guillerme_Evolution2017_pdf/5140222"><img src="http://tguillerme.github.io/images/logo-FS.png" height="15" widht="15"/></a> 
 Check out the [presentation](https://figshare.com/articles/Guillerme_Evolution2017_pdf/5140222). 
 
-This package allows to run the algorithm described in [this paper](https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syy083/5238046).
+This package allows to run the algorithm described in [this paper](https://dx.doi.org/10.1093/sysbio/syy083/5238046).
 You can either directly run the package on your web browser (Graphical User Interface mode!), or install it in `R` as a proper package (or both!).
 
-The `C` implementation of the algorithm is available in [morphylib](https://github.com/mbrazeau/morphylib) and the algorithm is implemented in the [TreeSearch](https://github.com/ms609/TreeSearch) `R` package.
+The `C` implementation of the algorithm is available in [morphylib](https://github.com/mbrazeau/morphylib/) and the algorithm is implemented in the '[TreeSearch](https://github.com/ms609/TreeSearch/)' `R` package.
 
 ## Running Inapp online
 Super easy! Simply click on the following link:
@@ -54,7 +54,7 @@ Citations
 -------
 If you are using this package, please cite both the published description of this algorithm:
 
-* Brazeau MD, Guillerme T, Smith MR. (**2019**) An algorithm for morphological phylogenetic analysis with inapplicable data. *Systematic Biology* 68(4): 619--631. [doi:10.1093/sysbio/syy083](https://academic.oup.com/sysbio/advance-article/doi/10.1093/sysbio/syy083/5238046)
+* Brazeau MD, Guillerme T, Smith MR. (**2019**) An algorithm for morphological phylogenetic analysis with inapplicable data. *Systematic Biology* 68(4): 619--631. [doi:10.1093/sysbio/syy083](https://dx.doi.org/10.1093/sysbio/syy083/5238046)
     ###### [BibTeX](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=2), [RIS](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=0), [EndNote](https://academic.oup.com/Citation/Download?resourceId=5238046&resourceType=3&citationFormat=1), [more...](https://academic.oup.com/sysbio/article/68/4/619/5238046#)
 
 And the DOI of this package:

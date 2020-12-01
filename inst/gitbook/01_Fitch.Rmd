@@ -8,7 +8,7 @@ library('Inapp'); library('ape')
 setMargins <- function () par(mar=rep(0.2, 4))
 markChanges <- function (edges, labels='X') edgelabels(frame='none', edge=edges, labels, font=2)
 col.tips.nodes = c("#fc8d59", "#eeeeeed0", "#7fbf7be0", "#af8dc3e0")
-redBlue <- colours <- c(TreeSearch::brewer[[2]], 'grey')
+redBlue <- colours <- c(TreeTools::brewer[[2]], 'grey')
 deltran <- '<span style="font-variant:small-caps;">DelTran</span>'
 acctran <- '<span style="font-variant:small-caps;">AccTran</span>'
 choose1 <- "[01]=>1"
@@ -122,7 +122,7 @@ char <- c(1,0,0,1,1,0,0,1)
 ## Plotting the tree and characters
 setMargins()
 plot(tree, adj = 0.5)
-tiplabels(char, cex = 1, bg = TreeSearch::brewer[[2]][char + 1], adj = 1)
+tiplabels(char, cex = 1, bg = TreeTools::brewer[[2]][char + 1], adj = 1)
 nodelabels(paste0("n", 9:15), bg = "bisque")
 
 ```
@@ -160,7 +160,7 @@ In the following example, nodes that are in case 1 are in white and nodes in cas
 ```{r, fig.width = 7.1, fig.height = 7.1, fig.cap="Node reconstructions after downpass"}
 ## Plotting the first downpass
 plot.states.matrix(matrix, passes = 1, counts = 2, show.labels = c(1,2))
-tiplabels(char, cex = 1, bg = TreeSearch::brewer[[2]][char + 1], adj = 1)
+tiplabels(char, cex = 1, bg = TreeTools::brewer[[2]][char + 1], adj = 1)
 ```
 
 ## Uppass
@@ -215,8 +215,8 @@ tree <- read.tree(text = "((((a, b), c), d), (e, (f, (g, h))));")
 tree$tip.label <- paste("_", tree$tip.label)
 char <- c(1,0,0,1,1,0,0,1)
 
-edge_col <- TreeSearch::brewer[[2]][c(2,2,1,  2,1,1,2,
-                                 2,2,2,  1,1,1,2)]
+edge_col <- TreeTools::brewer[[2]][c(2,2,1,  2,1,1,2,
+                                     2,2,2,  1,1,1,2)]
 
 graphics::plot(tree, show.tip.label = TRUE, main='AccTran',
                type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
@@ -247,7 +247,7 @@ tiplabels(char, cex = 1, bg = colours[char + 1], adj = 1)
 markChanges(c(5, 6, 11, 13))
 
 plot(1, type="n", axes=F, xlab="", ylab="")
-#edge_col <- TreeSearch::brewer[[2]][3-c(2,2,1,1,  1,1,2,
+#edge_col <- TreeTools::brewer[[2]][3-c(2,2,1,1,  1,1,2,
 #                                 2,2,2,1,  1,1,2)]
 #
 #graphics::plot(tree, show.tip.label = TRUE, main='AccTran',
@@ -314,7 +314,7 @@ tree <- read.tree(text = "(H, (G, (F, (E, (D, (C, (B, A)))))));")
 tree$tip.label <- paste("_", tree$tip.label)
 char <- c(0,0,1,1,1,0,1,0)
 
-edge_col <- TreeSearch::brewer[[2]][c(1,1,1,rep(2, 7), 1, 2, 2, 1)]
+edge_col <- TreeTools::brewer[[2]][c(1,1,1,rep(2, 7), 1, 2, 2, 1)]
 
 graphics::plot(tree, show.tip.label = TRUE, main='A&M fig. 2',
                type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
@@ -341,7 +341,7 @@ tree <- read.tree(text = "(J, (I, (H, (G, (F, (E, (D, (C, (B, A)))))))));")
 tree$tip.label <- paste("_", tree$tip.label)
 char <- c(0,0,1,0,1,1,1,0,1,0)
 
-edge_col <- TreeSearch::brewer[[2]][c(1,1,1,2, 2, 2,1,2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1)]
+edge_col <- TreeTools::brewer[[2]][c(1,1,1,2, 2, 2,1,2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1)]
 
 graphics::plot(tree, show.tip.label = TRUE, main='A&M fig. 3',
                type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,
@@ -397,7 +397,7 @@ markChanges(4, '0->1')
 #vignettePlot(tree, rev(char), na=FALSE, passes=1:2, legend.pos='none')
 
 char <- c(0,0,'?', 1, 0, 1)
-edge_col <- TreeSearch::brewer[[2]][c(1,1,1,2,2, 2, 2, 2, 1, 2)]
+edge_col <- TreeTools::brewer[[2]][c(1,1,1,2,2, 2, 2, 2, 1, 2)]
 
 graphics::plot(tree, show.tip.label = TRUE, main='A&M fig. 4b',
                type = "phylogram", use.edge.length = TRUE, cex = 1, adj = 0,

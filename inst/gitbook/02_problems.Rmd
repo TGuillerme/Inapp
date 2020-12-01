@@ -8,7 +8,7 @@ library('Inapp')
 library('ape')
 ap <- c("Absent", "Present")
 rb <- c("Red", "Blue")
-redBlue <- TreeSearch::brewer[[2]]
+redBlue <- TreeTools::brewer[[2]]
 orb <- c('', rb)
 
 yesCol <- "#7fbf7be0"
@@ -47,8 +47,8 @@ edgeWidths <- rep(2, dim(treeUnresolved$edge)[1])
 edgeWidths[5:8] <- 4
 plot(treeUnresolved, direction='upwards', use.edge.length=TRUE, show.tip.label=FALSE,
      edge.width = edgeWidths)
-c0 <- TreeSearch::brewer[[2]][1]
-c1 <- TreeSearch::brewer[[2]][2]
+c0 <- TreeTools::brewer[[2]][1]
+c1 <- TreeTools::brewer[[2]][2]
 cX <- "#cccccc"
 tiplabels(c(0, 1, 0, 1, rep('-', 6), 1, 1, 0, 0), bg=c(c0, c1, c0, c1, rep(cX, 6), c1, c1, c0, c0))
      
@@ -269,9 +269,9 @@ par(mar=c(0.2, 0.2, 4.2, 0.2))
 sankTree <- ape::read.tree(text="(((((a, b), c), dX), eX), (fX, (gX, (p, (q, r)))));")
 #vignettePlot(sankTree, '1110000888', na=FALSE, legend='none', blankNodes=TRUE)
 sankTree$edge.length <- rep(1, dim(sankTree$edge)[1])
-c1 <- TreeSearch::brewer[[3]][1]
-c0 <- TreeSearch::brewer[[3]][2]
-c8 <- TreeSearch::brewer[[3]][3]
+c1 <- TreeTools::brewer[[3]][1]
+c0 <- TreeTools::brewer[[3]][2]
+c8 <- TreeTools::brewer[[3]][3]
 plot(sankTree, show.tip.label=FALSE, direction='upwards', edge.width=2,
      edge.col= c(c0, c0, c1, c1, c1, c1, c1, rep(c0, 6), rep(c8, 5)))
 tiplabels(c(1,1,1,0,0,0,0,8,8,8), bg=c(rep(c1, 3),

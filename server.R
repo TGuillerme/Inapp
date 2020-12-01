@@ -46,7 +46,7 @@ get.tree <- function(input, session, simple = FALSE) {
             return(tree)
         } else {
             return("Load a tree in nexus or newick format.")
-        }        
+        }
     }
 
     # Initialize to avoid returning unset variable
@@ -154,7 +154,7 @@ get.character <- function(input, tree, session) {
                 return (list("Character selection must be numeric."))
             }
 
-            character <- TreeSearch::ReadCharacters(nexus_matrix$datapath, input$character_num, session = session)
+            character <- TreeTools::ReadCharacters(nexus_matrix$datapath, input$character_num, session = session)
             if (class(character) == 'list') return (character)
             matrix_taxa <- rownames(character)
             if (all(tree$tip.label %in% matrix_taxa)) {
@@ -191,7 +191,7 @@ shinyServer(
             } else if (class(tree) != 'phylo'){
               return(plotError("The tree must be of class 'phylo'."))
             }
-            
+
             character <- get.character(input, tree, session)
             if (class(character) == 'list') {
               return(plotError(paste(character, sep = '', collapse = '')))

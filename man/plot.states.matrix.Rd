@@ -15,6 +15,7 @@
   state.labels = character(0),
   legend.pos = "bottomleft",
   y.lim = NULL,
+  cex = 1,
   ...
 )
 }
@@ -48,6 +49,8 @@ Specify \code{none} to hide the legend.`}
 \item{y.lim}{\code{numeric} \emph{x} and \emph{y} coordinates for limits of the plot,
 calculated automatically based on presence of legend if set to \code{NULL}
 (the default).}
+
+\item{cex}{\code{numeric} Character expansion scaling factor for text.}
 
 \item{\dots}{any optional arguments to be passed to \code{\link[ape]{plot.phylo}}}
 }

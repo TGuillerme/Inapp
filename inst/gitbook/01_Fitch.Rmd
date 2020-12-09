@@ -172,8 +172,8 @@ The present reconstruction seemingly indicates a change from state 1 to state 0 
 The uppass traversal employs the following rules [@Fitch1971]:
 
  1. If the current node and its ancestor have _all states in common_, the node is already resolved.
- 2. If there is _at least one state in common_ between both left and right tips or nodes directly descended from the current node, resolve the node as being _the states in common_ between its ancestor and both his descendants.
- 3. If there is _there are no states in common_ between its descendants, resolve the node as being _the states in common_ between the ancestor and the current node.
+ 2. If there is _at least one state in common_ between both left and right direct descendants of the current node, resolve the node as being _the states in common_ between its ancestor and both its descendants.
+ 3. If there is _no state in common_ between its descendants, resolve the node as being _the states in common_ between the ancestor and the current node.
 
 
 For example, node `n13` is already resolved (it has all its states in common with the ancestor - case 1).

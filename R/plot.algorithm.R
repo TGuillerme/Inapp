@@ -190,7 +190,8 @@ plot.states.matrix <- function(
         } else {
             final_state <- states_matrix$Up1
         }
-        max_final <- max(unlist(final_state))
+        # Include 0 so as not to fail when character contains only '?'s
+        max_final <- max(unlist(final_state), 0L)
         all_states <- -1:max_final
         col_states <- c('-', seq_len(max_final + 1L) - 1L)
 

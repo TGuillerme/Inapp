@@ -23,7 +23,9 @@ test_that('SVG can be plotted', {
                       legendText = 'This is printed on PNGs',
                       canvas = canvas,
                       svgFilename = 'tree_number_%s.svg')
-  # expect_doppelganger('SVG example', PlotExample)
+  if (requireNamespace('vdiffr', quietly = TRUE)) {
+    vdiffr::expect_doppelganger('SVG example', PlotExample)
+  }
 
   states_matrix <- apply.reconstruction(trees[[1]], '0011----11')
   matrix_data <- MatrixData(states_matrix, states_matrix, state.labels=c('Zero', 'One'))

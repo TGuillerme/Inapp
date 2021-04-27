@@ -11,7 +11,6 @@ test_that("plot.algorithm works", {
 
     ## Plotting the tree and the states
     plot_NA_matrix <- function () plot(NA_matrix, col.states = TRUE)
-    # expect_doppelganger('Plot NA matrix', plot_NA_matrix, col.states = TRUE)
     ## Plotting the tree and the states with the state changes and regions
     expect_warning(expect_null(plot(NA_matrix, counts = c(1, 2))))
     ## Plot the tree with tip/node labels, and only the 1st and 2nd downpass
@@ -24,7 +23,13 @@ test_that("plot.algorithm works", {
     no_applicables <- apply.reconstruction(tree, '??--??--??--',
                                            passes = 4, method = "NA")
     plot_no_applicables <- function () plot(no_applicables, col.states = TRUE)
-    # expect_doppelganger('Plot no applicables', plot_no_applicables)
+    plot_no_data <- function () plot.states.matrix(no_data)
+
+    no_data <- apply.reconstruction(tree, "????????????")
+    if (requireNamespace('vdiffr', quietly = TRUE)) {
+        vdiffr::expect_doppelganger('Plot NA matrix', plot_NA_matrix, col.states = TRUE)
+        vdiffr::expect_doppelganger('Plot no applicables', plot_no_applicables)
+        vdiffr::expect_doppelganger('Plot no data', plot_no_data)
+    }
 
 })
-

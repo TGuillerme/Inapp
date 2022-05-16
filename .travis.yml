@@ -3,8 +3,35 @@ language: r
 cache: packages
 warnings_are_errors: false
 
+addons:
+  apt:
+    update: true
+    sources:
+      - sourceline: 'ppa:opencpu/imagemagick'
+    packages:
+      - libmagick++-dev
+      - libv8-dev
+
 # whitelist
 branches:
   only:
     - master
     - release
+
+r_packages:
+  - TreeSearch
+  - vdiffr
+
+# Code coverage
+r_binary_packages:
+  - ape
+  - devtools
+  - knitr
+  - phangorn
+  - rmarkdown
+  - shiny
+  - testthat
+  - covr
+
+after_success:
+- Rscript -e 'library("covr"); codecov()'
